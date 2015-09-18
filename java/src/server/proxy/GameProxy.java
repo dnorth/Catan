@@ -1,13 +1,13 @@
 package server.proxy;
 
-public class GameProxy {
+import client.models.ClientModel;
+
+public class GameProxy extends ServerProxy{
 
 	public void getGameModel (){
-        try {
-            doPost("/game/model", null);
-        } catch (ClientException e) {
-        	e.printStackTrace();
-        }
+        
+		ClientModel model = null; //The API says "GameModel" Is this the same thing??
+		
     }
 	
 	public void resetGame (){

@@ -2,19 +2,22 @@ package server.proxy;
 
 public class UserProxy {
 
-	public void userLogin (){
-        try {
-            doPost("/user/login", null);
-        } catch (ClientException e) {
-        	e.printStackTrace();
-        }
+	public boolean userLogin (){
+        
+        String username;
+        String password;
+        // doPost("/user/login", null);
+        
+        return false;
+        
     }
 
-	public void userRegister (){
-        try {
-            doPost("/user/register", null);
-        } catch (ClientException e) {
-        	e.printStackTrace();
-        }
+	public boolean userRegister (){
+      
+       	String username;
+       	String password;
+        //doPost("/user/register", null);
+       	
+       	return false;
     }
 }

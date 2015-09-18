@@ -1,55 +1,74 @@
 package server.proxy;
 
+
+import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.cert.Certificate;
+import java.util.ArrayList;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
 
-public class ServerProxy extends HttpsURLConnection implements IServer{
 
-	protected ServerProxy(URL url) {
-		super(url);
-		// TODO Auto-generated constructor stub
-	}
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
-	@Override
-	public String getCipherSuite() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+abstract class ServerProxy {
 
-	@Override
-	public Certificate[] getLocalCertificates() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private static String SERVER_HOST = "localhost";
+    private static int SERVER_PORT = 8081;
+    private static String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT; //the path that we're given in the xml is relative. Must add this to it.
+    private static final String HTTP_GET = "GET";
+    private static final String HTTP_POST = "POST";
 
-	@Override
-	public Certificate[] getServerCertificates()
-			throws SSLPeerUnverifiedException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private XStream xmlStream;
 
-	@Override
-	public void disconnect() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean usingProxy() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void connect() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+    public ServerProxy() {
+        xmlStream = new XStream(new DomDriver());
+        SERVER_HOST = "localhost";
+        SERVER_PORT = 8081;
+        URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+    }    
+    
+    protected Object doGet(String urlPath) throws ClientException {
+        try {
+            URL url = new URL(URL_PREFIX + urlPath);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod(HTTP_GET);
+            connection.connect();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Object result = xmlStream.fromXML(connection.getInputStream());
+                return result;
+            }
+            else {
+                throw new ClientException(String.format("doGet failed: %s (http code %d)",
+                                            urlPath, connection.getResponseCode()));
+            }
+        }
+        catch (IOException e) {
+            throw new ClientException(String.format("doGet failed: %s", e.getMessage()), e);
+        }
+    }
+    
+    protected Object doPost(String urlPath, Object postData) throws ClientException {
+        try {
+            URL url = new URL(URL_PREFIX + urlPath);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod(HTTP_POST);
+            connection.setDoOutput(true);
+            connection.connect();
+            xmlStream.toXML(postData, connection.getOutputStream());
+            connection.getOutputStream().close();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Object result = xmlStream.fromXML(connection.getInputStream());
+                return result;
+            }
+            else {
+                throw new ClientException(String.format("doPost failed: %s (http code %d)",
+                        urlPath, connection.getResponseCode()));
+            }
+        }
+        catch (IOException e) {
+            throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
+        }
+    }
 }
