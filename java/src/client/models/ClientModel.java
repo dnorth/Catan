@@ -1,5 +1,4 @@
 package client.models;
-import client.models.communication;
 import client.models.ResourceList;
 import client.models.communication.MessageList;
 import client.models.mapData.Map;
