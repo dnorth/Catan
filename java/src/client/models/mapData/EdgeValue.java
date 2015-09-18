@@ -1,8 +1,10 @@
-package client.models;
+
+
+import shared.locations.EdgeLocation;
 
 public class EdgeValue
 {
 int owner;
-EdgeLocatrion location;
+EdgeLocation location;
 
 }
