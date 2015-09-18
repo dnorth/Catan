@@ -1,4 +1,9 @@
+package serverpoller;
 
+/**
+ * Polls server periodically to check for changes in model, then receives update
+ *
+ */
 public class ServerPoller {
 	
 	int currVersion; //use as an int, or seperate class?
