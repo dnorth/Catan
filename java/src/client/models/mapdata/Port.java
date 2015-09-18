@@ -1,9 +1,9 @@
-
+package client.models.mapdata;
 import shared.locations.HexLocation;
 import client.models.ResourceList;
 
 public class Port{
-	ResourceList.resource resource;
+	ResourceList resource;
 	HexLocation location;
 	String direction;
 	int ratio;
