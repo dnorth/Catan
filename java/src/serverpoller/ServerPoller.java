@@ -1,7 +1,8 @@
 package serverpoller;
 
 /**
- * Polls server periodically to check for changes in model, then receives update
+ * Polls server periodically to check for changes in model, then receives update <br>
+ * 
  *
  */
 public class ServerPoller {
