@@ -13,10 +13,4 @@ public class ClientModel
 	TurnTracker turnTracker;
 	int versionIndex;
 	int winnerIndex;
-
-
-
-
-
-	
 }
