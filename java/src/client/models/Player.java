@@ -1,4 +1,6 @@
-package client.models
+package client.models;
+
+import java.util.List;
 
 
 

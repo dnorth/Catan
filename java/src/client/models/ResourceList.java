@@ -1,6 +1,6 @@
 package client.models;
 
-public enum Resource
+public enum ResourceList
 {
 BRICK, ORE, SHEEP, WHEAT, WOOD
 }

@@ -1,5 +1,5 @@
 package client.models;
 
-public enum DevCard{
+public enum DevCardList{
 	MONOPOLY, MONUMENT, ROADBUILDING, SOLDIER, YEAROFPLENTY
 }

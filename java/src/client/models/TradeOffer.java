@@ -1,5 +1,7 @@
 package client.models;
 
-int sender;
-int receiver;
-resourceList offer;
+public class TradeOffer {
+	int sender;
+	int receiver;
+	ResourceList offer;
+}
