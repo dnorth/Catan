@@ -30,7 +30,7 @@ public class Player
 	 * @return if a player can buy a road.
 	 */
 	public boolean canBuyRoad(){
-		
+		return true;
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class Player
 	 * @return if a player can place a road on the board.
 	 */
 	public boolean canPlaceRoad(){
-		
+		return true;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Player
 	 * @return if the player can place a road at the HexLocation.
 	 */
 	public boolean canPlaceRoadAtLocation(Hex hex, EdgeDirection h){
-		
+		return true;
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class Player
 	 * @return if the player can offer a trade.
 	 */
 	public boolean canOfferTrade(){
-		
+		return true;
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class Player
 	 * @return if the player can accept the trade.
 	 */
 	public boolean canAcceptTrade(){	
-	
+		return true;
 	}
 	
 	
@@ -73,7 +73,7 @@ public class Player
 	 */
 	
 	public boolean canMaritimeTrade(){
-		
+		return true;
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class Player
 	 * @return if the player can buy a settlement.
 	 */
 	public boolean canBuySettlement(){
-		
+		return true;
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class Player
 	 * @return if the player can upgrade a settlement.
 	 */
 	public boolean canUpgradeSettlement(){
-		
+		return true;
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class Player
 	 * @return if there is a player that can be robbed.
 	 */
 	public boolean canRobPlayer(){
-		
+		return true;
 	}
 	
 	
@@ -106,7 +106,7 @@ public class Player
 	 * @return if the player can buy a dev card.
 	 */
 	public boolean canBuyDevCard(){
-		
+		return true;
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class Player
 	 * @return if the player can play any dev card.
 	 */
 	public boolean canPlayDevCard(){
-		
+		return true;
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class Player
 	 * @return if the player can play the Year of Plenty development card.
 	 */
 	public boolean canPlayYearOfPlenty(){
-		
+		return true;
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class Player
 	 */
 	
 	public boolean canPlaySoldier(){
-		
+		return true;
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class Player
 	 */
 	
 	public boolean canPlayMonopoly(){
-		
+		return true;
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class Player
 	 */
 	
 	public boolean canPlayMonument(){
-		
+		return true;
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Player
 	 */
 	
 	public boolean canPlayRoadBuilding(){
-		
+		return true;
 	}
 
 }

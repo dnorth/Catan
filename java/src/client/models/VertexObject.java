@@ -8,12 +8,12 @@ import shared.locations.EdgeLocation;
 public class VertexObject{
 	
 	/**
-	 * Refers to number of player who owns vertex, or 0 if not owned
+	 * Refers to number of player who owns vertex, or -1 if not owned
 	 */
 	int owner;
 	
 	/**
-	 * Location of edge
+	 * Locations of three edges touching vertex
 	 */
-	EdgeLocation location;
+	EdgeLocation[] location;
 }
