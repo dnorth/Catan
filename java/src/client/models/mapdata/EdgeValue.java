@@ -1,3 +1,5 @@
+package client.models.mapdata;
+
 import shared.locations.EdgeLocation;
 
 /**

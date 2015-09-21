@@ -1,3 +1,5 @@
+package client.models.mapdata;
+
 import client.models.VertexObject;
 
 /**

@@ -1,3 +1,6 @@
+package client.models.mapdata;
+
+
 import shared.locations.HexLocation;
 import client.models.ResourceList;
 
