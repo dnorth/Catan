@@ -9,11 +9,11 @@ public class GamesProxy extends ServerProxy{
 
 
 	/**
-	 * @pre Server is running
-	 * @post 
-	 * @return
+	 * @pre NA
+	 * @post NA
+	 * @return An ArrayList of all games in progress
 	 */
-	public List<Game> getGamesList (){
+	public ArrayList<Game> getGamesList (){
 		ArrayList<Game> games = null;
 		try {
 			games = (ArrayList<Game>)doGet("/games/list");
@@ -24,13 +24,13 @@ public class GamesProxy extends ServerProxy{
     }
 
 	/**
-	 * @pre
-	 * @post
+	 * @pre NA
+	 * @post New game has been created
 	 * @param randomTiles
 	 * @param randomNumbers
 	 * @param randomPorts
 	 * @param name
-	 * @return
+	 * @return newly created game
 	 */
 	public Game createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name){
 	
@@ -47,8 +47,8 @@ public class GamesProxy extends ServerProxy{
 	
 
 	/**
-	 * @pre
-	 * @post
+	 * @pre this is called with a specific player
+	 * @post catan.game HTTP cookie for player set
 	 * @param gameId
 	 * @param color
 	 * @return
@@ -67,11 +67,11 @@ public class GamesProxy extends ServerProxy{
     }
 
 	/**
-	 * @pre
-	 * @post
+	 * @pre there is a current state of the specified game to be saved
+	 * @post Game is saved
 	 * @param gameId
 	 * @param fileName
-	 * @return
+	 * @return boolean stating whether or not the save was successful
 	 */
 	public boolean saveGame (int gameId, String fileName){
 
@@ -86,10 +86,10 @@ public class GamesProxy extends ServerProxy{
     }
 
 	/**
-	 * @pre
-	 * @post
+	 * @pre There is a game to be loaded with intended name
+	 * @post Game is loaded correctly
 	 * @param gameName
-	 * @return
+	 * @return Game that was originally saved
 	 */
 	public Game loadGame (String gameName){
 
