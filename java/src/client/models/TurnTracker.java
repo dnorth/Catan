@@ -11,15 +11,15 @@ public class TurnTracker{
 	int currentTurn;
 	
 	/**
-	 * 
+	 * Indicator of what is happening now.  For example: Rolling, Robbing, Playing
 	 */
 	String status;
 	/**
-	 * Current length of longest road
+	 * Player index who owns longest road, -1 if no one
 	 */
 	int longestRoad;
 	/**
-	 * Current size of largest army
+	 * Player index who owns largest army, -1 if no one
 	 */
 	int largestArmy;
 }
