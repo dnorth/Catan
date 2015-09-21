@@ -1,7 +1,10 @@
 package server.proxy;
 
-public class UserProxy {
+public class UserProxy extends ServerProxy{
 
+	/**
+	 * @return
+	 */
 	public boolean userLogin (){
         
         String username;
@@ -12,6 +15,9 @@ public class UserProxy {
         
     }
 
+	/**
+	 * @return
+	 */
 	public boolean userRegister (){
       
        	String username;
