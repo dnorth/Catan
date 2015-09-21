@@ -1,5 +1,3 @@
-package client.models.mapdata;
-
 import shared.locations.EdgeLocation;
 
 /**
@@ -7,8 +5,7 @@ import shared.locations.EdgeLocation;
  *
  */
 
-public class EdgeValue
-{
+public class EdgeValue {
 	int owner;
 	EdgeLocation location;
 

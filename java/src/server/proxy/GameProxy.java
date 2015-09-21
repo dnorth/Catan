@@ -8,7 +8,7 @@ public class GameProxy extends ServerProxy{
 
 	/**
 	 * @return 
-	 * @pre Must log in and join a game
+	 * @pre Must log in and join a game. This comes from the model, not the server???
 	 * @post null if there is no game
 	 * 
 	 */

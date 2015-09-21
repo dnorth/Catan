@@ -1,6 +1,6 @@
 package server.proxy;
 
-public class UtilProxy {
+public class UtilProxy extends ServerProxy{
 
 	public void utilChangeLogLevel (){
 		

@@ -1,5 +1,3 @@
-package client.models.mapdata;
-
 import client.models.VertexObject;
 
 /**
@@ -10,7 +8,7 @@ import client.models.VertexObject;
  */
 
 public class Board {
-	
+
 	Hex[] hexes;
 	Port[] ports;
 	VertexObject[] settlements;
