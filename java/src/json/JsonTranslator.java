@@ -19,7 +19,7 @@ public class JsonTranslator {
 	 * Parent method to translate entire model
 	 * @return updated ClientModel
 	 */
-	ClientModel translateClientModel() {
+	public static ClientModel translateClientModel() {
 		return null;
 	}
 	
@@ -28,7 +28,7 @@ public class JsonTranslator {
 	 * Translates bank to put in updated client model
 	 * @return updated bank
 	 */
-	private ResourceList translateBank() {
+	public static ResourceList translateBank() {
 		return null;
 	}
 	
@@ -36,7 +36,7 @@ public class JsonTranslator {
 	 * Translates chat to put in updated client model
 	 * @return updated chat
 	 */
-	private MessageList translateChat() {
+	public static MessageList translateChat() {
 		return null;
 	}
 	
@@ -44,7 +44,7 @@ public class JsonTranslator {
 	 * Translates log to put in updated client model
 	 * @return updated log
 	 */
-	private MessageList translateLog() {
+	public static MessageList translateLog() {
 		return null;
 	}
 	
@@ -52,7 +52,7 @@ public class JsonTranslator {
 	 * Translates board to put in updated client model
 	 * @return updated board
 	 */
-	private Board translateBoard() {
+	public static Board translateBoard() {
 		return null;
 	}
 	
@@ -60,7 +60,7 @@ public class JsonTranslator {
 	 * Translates player list and info to put in updated client model
 	 * @return updated player list
 	 */
-	private Player[] translatePlayers() {
+	public static Player[] translatePlayers() {
 		return null;
 	}
 	
@@ -68,7 +68,7 @@ public class JsonTranslator {
 	 * Translates trade offer to put in updated client model
 	 * @return updated trade offer
 	 */
-	private TradeOffer translateTradeOffer() {
+	public static TradeOffer translateTradeOffer() {
 		return null;
 	}
 	
@@ -76,7 +76,7 @@ public class JsonTranslator {
 	 * Translates turn tracker to put in updated client model
 	 * @return updated turn tracker
 	 */
-	private TurnTracker translateTurnTracker() {
+	public static TurnTracker translateTurnTracker() {
 		return null;
 	}
 	
@@ -84,7 +84,7 @@ public class JsonTranslator {
 	 * Obtains version number from JSON
 	 * @return updated version number
 	 */
-	private int translateVersion() {
+	public static int translateVersion() {
 		return 0;
 	}
 	
@@ -92,7 +92,7 @@ public class JsonTranslator {
 	 * Obtains winner index from JSON
 	 * @return updated winner index
 	 */
-	private int translateWinner() {
+	public static int translateWinner() {
 		return 0;
 	}
 }
