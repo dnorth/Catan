@@ -18,7 +18,6 @@ public class ServerPoller {
 	 * @param serv pointer to server or mock proxy
 	 * @param cli pointer to client model
 	 */
-	
 	ServerPoller(IServer serv, ClientModel cli){} //calls initialize, gets current version, and sends to server
 	
 	/**

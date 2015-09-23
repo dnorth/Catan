@@ -13,6 +13,9 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 abstract class ServerProxy {
+	
+	//Create this with a constructor for the dependency injection stuff.
+	//Getters and setters for the server type stuffs.
 
     private static String SERVER_HOST = "localhost";
     private static int SERVER_PORT = 8081;
