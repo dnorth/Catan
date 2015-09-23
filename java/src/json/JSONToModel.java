@@ -1,5 +1,8 @@
 package json;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.ResourceList;
@@ -13,8 +16,7 @@ import client.models.mapdata.Board;
  *
  */
 
-public class JsonTranslator {
-	
+public class JSONToModel {
 	/**
 	 * Parent method to translate entire model
 	 * @return updated ClientModel
