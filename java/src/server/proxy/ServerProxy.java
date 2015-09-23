@@ -25,7 +25,7 @@ abstract class ServerProxy {
 
     private XStream xmlStream;
 
-    public ServerProxy() {
+    public ServerProxy() { 
         xmlStream = new XStream(new DomDriver());
         SERVER_HOST = "localhost";
         SERVER_PORT = 8081;

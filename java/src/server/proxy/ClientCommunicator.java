@@ -12,12 +12,19 @@ public class ClientCommunicator {
 	private IServer server;
 	private ClientModel clientModel;
 	
+	/**
+	 * @param serv
+	 * @param model
+	 */
 	ClientCommunicator(IServer serv, ClientModel model){
 		server = serv;
 		clientModel = model;
 		initialize();
 	}
 	
+	/**
+	 * 
+	 */
 	private void initialize() {
 		gameProxy = new GameProxy();
 		gamesProxy = new GamesProxy();
@@ -26,6 +33,9 @@ public class ClientCommunicator {
 		userProxy = new UserProxy();
 	}
 	
+	/**
+	 * @param newModel
+	 */
 	public void setClient(ClientModel newModel) {
 		clientModel = newModel;
 	}
