@@ -111,4 +111,9 @@ public class TurnManager
 	 */
 	public void playRoadBuilding(int playerIndex){buildRoad(playerIndex); buildRoad(playerIndex);}
 	
+	/**
+	 * ends player's turn.
+	 */
+	public void endTurn(){}
+	
 }
