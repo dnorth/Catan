@@ -6,6 +6,7 @@ client.data
 client.devcards
 client.discard
 client.domestic
+client.exceptions
 client.facade
 client.join
 client.login
@@ -21,9 +22,10 @@ client.resources
 client.roll
 client.turntracker
 client.utils
-json
+jsonTranslator
 server.IServer
 server.ServerPoller
+server.exceptions
 server.proxy
 shared.definitions
 shared.locations
