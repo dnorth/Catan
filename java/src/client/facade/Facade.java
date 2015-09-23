@@ -1,11 +1,13 @@
 package client.facade;
 
 import server.proxy.ClientCommunicator;
+import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 
@@ -22,6 +24,196 @@ public class Facade {
 		
 	}
 	
+	// DISCARD CONTROLLER
+	/**
+	 * This method is called when the user increases the amount of the specified
+	 * resource.
+	 * 
+	 * @param resource
+	 *            The resource that was increased
+	 */
+	void increaseAmount(ResourceType resource) {
+	}
+	
+	/**
+	 * This method is called when the user decreases the amount of the specified
+	 * resource.
+	 * 
+	 * @param resource
+	 *            The resource that was decreased
+	 */
+	void decreaseAmount(ResourceType resource) {
+	}
+	
+	/**
+	 * This method is called when the user clicks the discard button.
+	 */
+	void discard() {
+	}
+	
+	
+	// DOMESTIC TRADE CONTROLLER
+	/**
+	 * Called by the domestic trade view when the user clicks the domestic trade
+	 * button.
+	 */
+	void startTrade() {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user decreases the amount
+	 * of a resource.
+	 * 
+	 * @param resource
+	 *            The resource whose amount is being decreased
+	 */
+	void decreaseResourceAmount(ResourceType resource) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user increases the amount
+	 * of a resource.
+	 * 
+	 * @param resource
+	 *            The resource whose amount is being increased
+	 */
+	void increaseResourceAmount(ResourceType resource) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user clicks the trade
+	 * button.
+	 */
+	void sendTradeOffer() {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user selects a player to
+	 * trade with.
+	 * 
+	 * @param playerIndex
+	 *            The index [0, 3] of the selected trading partner, or -1 if
+	 *            "None" was selected
+	 */
+	void setPlayerToTradeWith(int playerIndex) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user selects a resource to
+	 * be received.
+	 * 
+	 * @param resource
+	 *            The resource to be received
+	 */
+	void setResourceToReceive(ResourceType resource) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user selects a resource to
+	 * be sent.
+	 * 
+	 * @param resource
+	 *            The resource to be sent
+	 */
+	void setResourceToSend(ResourceType resource) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when user selects "none" for a
+	 * resource.
+	 * 
+	 * @param resource
+	 *            The resource for which "none" was selected
+	 */
+	void unsetResource(ResourceType resource) {
+	}
+	
+	/**
+	 * Called by the domestic trade overlay when the user cancels a trade.
+	 */
+	void cancelTrade() {
+	}
+	
+	/**
+	 * Called by the accept trade overlay when the user either accepts or
+	 * rejects a trade.
+	 * 
+	 * @param willAccept
+	 *            Whether or not the user accepted the trade
+	 */
+	void acceptTrade(boolean willAccept) {
+	}
+	
+	
+	// JOIN GAME CONTROLLER
+	/**
+	 * Displays the join game view
+	 */
+	void start() {
+	}
+	
+	/**
+	 * Called by the join game view when the user clicks "Create new game"
+	 * button. Displays the new game view.
+	 */
+	void startCreateNewGame() {
+	}
+	
+	/**
+	 * Called by the new game view when the user clicks the "Cancel" button
+	 */
+	void cancelCreateNewGame() {
+	}
+	
+	/**
+	 * Called by the new game view when the user clicks the "Create Game" button
+	 */
+	void createNewGame() {
+	}
+	
+	/**
+	 * Called by the join game view when the user clicks a "Join" or "Re-join"
+	 * button. Displays the select color view.
+	 * 
+	 * @param game
+	 *            The game that the user is joining
+	 */
+	void startJoinGame(GameInfo game) {
+	}
+	
+	/**
+	 * Called by the select color view when the user clicks the "Cancel" button
+	 */
+	void cancelJoinGame() {
+	}
+	
+	/**
+	 * Called by the select color view when the user clicks the "Join Game"
+	 * button
+	 * 
+	 * @param color
+	 *            The color selected by the user
+	 */
+	void joinGame(CatanColor color) {
+	}
+	
+	
+	
+	
+	// PLAYER WAITING CONTROLLER
+	/**
+	 * Displays the player waiting view
+	 */
+	void start() {
+	}
+	
+	/**
+	 * Called when the "Add AI" button is clicked in the player waiting view
+	 */
+	void addAI() {
+	}
+	
+	// LOGIN CONTROLLER
 	/**
 	 * Displays the login view
 	 */
@@ -40,6 +232,10 @@ public class Facade {
 	void register() {
 	}
 	
+	
+	
+	
+	// MAP CONTROLLER
 	/**
 	 * This method is called whenever the user is trying to place a road on the
 	 * map. It is called by the view for each "mouse move" event. The returned
@@ -183,6 +379,11 @@ public class Facade {
 	void robPlayer(RobPlayerInfo victim) {
 	}
 	
+	
+	
+	
+	
+	// MARITIME TRADE CONTROLLER
 	/**
 	 * Called by the maritime trade view when the user clicks the maritime trade
 	 * button.
@@ -232,6 +433,14 @@ public class Facade {
 	void unsetGiveValue() {
 	}
 	
+	
+	// POINTS CONTROLLER
+	//There wasn't anything to put here in the facade
+	
+	
+	
+	// RESOURCE BAR CONTROLLER
+
 	/**
 	 * Called by the view then the user requests to build a road
 	 */
@@ -262,11 +471,19 @@ public class Facade {
 	void playCard() {
 	}
 	
+	
+	
+	// ROLL CONTROLLER
+	
 	/**
 	 * Called when the user clicks the "Roll!" button in the roll view
 	 */
 	void rollDice() {
 	}
+	
+	
+	
+	// TURN TRACKER CONTROLLER
 	
 	/**
 	 * This is called when the local player ends their turn
