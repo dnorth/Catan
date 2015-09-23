@@ -24,6 +24,76 @@ public class Facade {
 		
 	}
 	
+	//CHAT CONTROLLER
+	
+	/**
+	 * Used to send message, called by client, ChatController
+	 * @param message received from client
+	 */
+	void sendMessage (String message) {
+		
+	}
+	
+	//GAMEHISTORY CONTROLLER
+	
+	/**
+	 * Called by client to receive updated model, from GameHistoryController, PointsController
+	 * @return Client Model
+	 */
+	ClientModel getModel() {
+		return client;
+	}
+	
+	//DEVCARD CONTROLLER
+	
+	/**
+	 * Called by client to see if player can currently buy dev card
+	 * @return true if player can buy dev card, false if not
+	 */
+	boolean canBuyCard() {
+		return false;
+	}
+	
+	/**
+	 * Called by client to see if player can currently play dev card
+	 * @return true if player can play card, false if not
+	 */
+	boolean canPlayCard() {
+		return false;
+	}
+	
+	/**
+	 * Called by client when player wants to play Monopoly card
+	 * @param resource The resource to take from other players
+	 */
+	void playMonopolyCard(ResourceType resource) {
+		
+	}
+	
+	/**
+	 * Called by client when player wants to play Monument card
+	 */
+	void playMonumentCard() {
+		
+	}
+	
+	/**
+	 * Called by client when player wants to play Road Building card
+	 */
+	void playRoadBuildCard() {
+		
+	}
+	
+	
+	/**
+	 * Called by client when player wants to play Year of Plenty card
+	 * @param resource1 First resource to gain
+	 * @param resource2 Second resource to gain
+	 */
+	void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+		
+	}
+	
 	// DISCARD CONTROLLER
 	/**
 	 * This method is called when the user increases the amount of the specified
