@@ -30,7 +30,7 @@ public class Facade {
 	 * Used to send message, called by client, ChatController
 	 * @param message received from client
 	 */
-	void sendMessage (String message) {
+	public void sendMessage (String message) {
 		
 	}
 	
@@ -40,7 +40,7 @@ public class Facade {
 	 * Called by client to receive updated model, from GameHistoryController, PointsController
 	 * @return Client Model
 	 */
-	ClientModel getModel() {
+	public ClientModel getModel() {
 		return client;
 	}
 	
@@ -50,7 +50,7 @@ public class Facade {
 	 * Called by client to see if player can currently buy dev card
 	 * @return true if player can buy dev card, false if not
 	 */
-	boolean canBuyCard() {
+	public boolean canBuyCard() {
 		return false;
 	}
 	
@@ -58,7 +58,7 @@ public class Facade {
 	 * Called by client to see if player can currently play dev card
 	 * @return true if player can play card, false if not
 	 */
-	boolean canPlayCard() {
+	public boolean canPlayCard() {
 		return false;
 	}
 	
@@ -66,21 +66,21 @@ public class Facade {
 	 * Called by client when player wants to play Monopoly card
 	 * @param resource The resource to take from other players
 	 */
-	void playMonopolyCard(ResourceType resource) {
+	public void playMonopolyCard(ResourceType resource) {
 		
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
-	void playMonumentCard() {
+	public void playMonumentCard() {
 		
 	}
 	
 	/**
 	 * Called by client when player wants to play Road Building card
 	 */
-	void playRoadBuildCard() {
+	public void playRoadBuildCard() {
 		
 	}
 	
@@ -90,7 +90,7 @@ public class Facade {
 	 * @param resource1 First resource to gain
 	 * @param resource2 Second resource to gain
 	 */
-	void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		
 	}
 	
@@ -102,7 +102,7 @@ public class Facade {
 	 * @param resource
 	 *            The resource that was increased
 	 */
-	void increaseAmount(ResourceType resource) {
+	public void increaseAmount(ResourceType resource) {
 	}
 	
 	/**
@@ -112,13 +112,13 @@ public class Facade {
 	 * @param resource
 	 *            The resource that was decreased
 	 */
-	void decreaseAmount(ResourceType resource) {
+	public void decreaseAmount(ResourceType resource) {
 	}
 	
 	/**
 	 * This method is called when the user clicks the discard button.
 	 */
-	void discard() {
+	public void discard() {
 	}
 	
 	
@@ -127,8 +127,10 @@ public class Facade {
 	 * Called by the domestic trade view when the user clicks the domestic trade
 	 * button.
 	 */
-	void startTrade() {
+	public boolean canDomesticTrade() {
+		return false;
 	}
+	
 	
 	/**
 	 * Called by the domestic trade overlay when the user decreases the amount
@@ -137,7 +139,7 @@ public class Facade {
 	 * @param resource
 	 *            The resource whose amount is being decreased
 	 */
-	void decreaseResourceAmount(ResourceType resource) {
+	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {
 	}
 	
 	/**
@@ -147,14 +149,14 @@ public class Facade {
 	 * @param resource
 	 *            The resource whose amount is being increased
 	 */
-	void increaseResourceAmount(ResourceType resource) {
+	public void increaseDomesticTradeResourceAmount(ResourceType resource) {
 	}
 	
 	/**
 	 * Called by the domestic trade overlay when the user clicks the trade
 	 * button.
 	 */
-	void sendTradeOffer() {
+	public void sendTradeOffer() {
 	}
 	
 	/**
@@ -165,7 +167,7 @@ public class Facade {
 	 *            The index [0, 3] of the selected trading partner, or -1 if
 	 *            "None" was selected
 	 */
-	void setPlayerToTradeWith(int playerIndex) {
+	public void setPlayerToTradeWith(int playerIndex) {
 	}
 	
 	/**
@@ -175,7 +177,7 @@ public class Facade {
 	 * @param resource
 	 *            The resource to be received
 	 */
-	void setResourceToReceive(ResourceType resource) {
+	public void setResourceToReceive(ResourceType resource) {
 	}
 	
 	/**
@@ -185,7 +187,7 @@ public class Facade {
 	 * @param resource
 	 *            The resource to be sent
 	 */
-	void setResourceToSend(ResourceType resource) {
+	public void setResourceToSend(ResourceType resource) {
 	}
 	
 	/**
@@ -195,13 +197,7 @@ public class Facade {
 	 * @param resource
 	 *            The resource for which "none" was selected
 	 */
-	void unsetResource(ResourceType resource) {
-	}
-	
-	/**
-	 * Called by the domestic trade overlay when the user cancels a trade.
-	 */
-	void cancelTrade() {
+	public void unsetResource(ResourceType resource) {
 	}
 	
 	/**
@@ -211,7 +207,7 @@ public class Facade {
 	 * @param willAccept
 	 *            Whether or not the user accepted the trade
 	 */
-	void acceptTrade(boolean willAccept) {
+	public void acceptTrade(boolean willAccept) {
 	}
 	
 	
@@ -219,26 +215,22 @@ public class Facade {
 	/**
 	 * Displays the join game view
 	 */
-	void start() {
+	public boolean canJoinGame() { //we changed this from start()
+		return false;
 	}
 	
 	/**
 	 * Called by the join game view when the user clicks "Create new game"
 	 * button. Displays the new game view.
 	 */
-	void startCreateNewGame() {
-	}
-	
-	/**
-	 * Called by the new game view when the user clicks the "Cancel" button
-	 */
-	void cancelCreateNewGame() {
+	public boolean canStartCreateNewGame() {
+		return false;
 	}
 	
 	/**
 	 * Called by the new game view when the user clicks the "Create Game" button
 	 */
-	void createNewGame() {
+	public void createNewGame() {
 	}
 	
 	/**
@@ -248,13 +240,7 @@ public class Facade {
 	 * @param game
 	 *            The game that the user is joining
 	 */
-	void startJoinGame(GameInfo game) {
-	}
-	
-	/**
-	 * Called by the select color view when the user clicks the "Cancel" button
-	 */
-	void cancelJoinGame() {
+	public void startJoinGame(GameInfo game) {
 	}
 	
 	/**
@@ -264,7 +250,7 @@ public class Facade {
 	 * @param color
 	 *            The color selected by the user
 	 */
-	void joinGame(CatanColor color) {
+	public void joinGame(CatanColor color) {
 	}
 	
 	
@@ -274,32 +260,34 @@ public class Facade {
 	/**
 	 * Displays the player waiting view
 	 */
-	void start() {
+	public boolean canStartPlayerWaitingView() { //changed from start()
+		return false;
 	}
 	
 	/**
 	 * Called when the "Add AI" button is clicked in the player waiting view
 	 */
-	void addAI() {
+	public void addAI() {
 	}
 	
 	// LOGIN CONTROLLER
 	/**
 	 * Displays the login view
 	 */
-	void start() {
+	public boolean canLogin() { //changed from start()
+		return false;
 	}
 	
 	/**
 	 * Called when the user clicks the "Sign in" button in the login view
 	 */
-	void signIn() {
+	public void signIn() {
 	}
 	
 	/**
 	 * Called when the user clicks the "Register" button in the login view
 	 */
-	void register() {
+	public void register() {
 	}
 	
 	
@@ -316,7 +304,7 @@ public class Facade {
 	 *            The proposed road location
 	 * @return true if the road can be placed at edgeLoc, false otherwise
 	 */
-	boolean canPlaceRoad(EdgeLocation edgeLoc) {
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		return false;
 	}
 	
@@ -330,7 +318,7 @@ public class Facade {
 	 *            The proposed settlement location
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
-	boolean canPlaceSettlement(VertexLocation vertLoc) {
+	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -344,7 +332,7 @@ public class Facade {
 	 *            The proposed city location
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
-	boolean canPlaceCity(VertexLocation vertLoc) {
+	public boolean canPlaceCity(VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -358,7 +346,7 @@ public class Facade {
 	 *            The proposed robber location
 	 * @return true if the robber can be placed at hexLoc, false otherwise
 	 */
-	boolean canPlaceRobber(HexLocation hexLoc) {
+	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return false;
 	}
 	
@@ -368,7 +356,7 @@ public class Facade {
 	 * @param edgeLoc
 	 *            The road location
 	 */
-	void placeRoad(EdgeLocation edgeLoc) {
+	public void placeRoad(EdgeLocation edgeLoc) {
 	}
 	
 	/**
@@ -378,7 +366,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The settlement location
 	 */
-	void placeSettlement(VertexLocation vertLoc) {
+	public void placeSettlement(VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -387,7 +375,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The city location
 	 */
-	void placeCity(VertexLocation vertLoc) {
+	public void placeCity(VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -396,7 +384,7 @@ public class Facade {
 	 * @param hexLoc
 	 *            The robber location
 	 */
-	void placeRobber(HexLocation hexLoc) {
+	public void placeRobber(HexLocation hexLoc) {
 	}
 	
 	/**
@@ -413,22 +401,15 @@ public class Facade {
 	 *            true if the piece can be disconnected, false otherwise. Set to
 	 *            true only during initial setup.
 	 */
-	void startMove(PieceType pieceType, boolean isFree,
+	public void startMove(PieceType pieceType, boolean isFree,
 				   boolean allowDisconnected) {
-	}
-	
-	/**
-	 * This method is called from the modal map overlay when the cancel button
-	 * is pressed.
-	 */
-	void cancelMove() {
 	}
 	
 	/**
 	 * This method is called when the user plays a "soldier" development card.
 	 * It should initiate robber placement.
 	 */
-	void playSoldierCard() {
+	public void playSoldierCard() {
 	}
 	
 	/**
@@ -436,7 +417,7 @@ public class Facade {
 	 * development card. It should initiate the process of allowing the player
 	 * to place two roads.
 	 */
-	void playRoadBuildingCard() {
+	public void playRoadBuildingCard() {
 	}
 	
 	/**
@@ -446,7 +427,7 @@ public class Facade {
 	 * @param victim
 	 *            The player to be robbed
 	 */
-	void robPlayer(RobPlayerInfo victim) {
+	public void robPlayer(RobPlayerInfo victim) {
 	}
 	
 	
@@ -458,19 +439,13 @@ public class Facade {
 	 * Called by the maritime trade view when the user clicks the maritime trade
 	 * button.
 	 */
-	void startTrade() {
+	public void startMaritimeTrade() {
 	}
 	
 	/**
 	 * Make the specified trade with the bank.
 	 */
-	void makeTrade() {
-	}
-	
-	/**
-	 * Called by the maritime trade overlay when the user cancels a trade.
-	 */
-	void cancelTrade() {
+	public void makeMaritimeTrade() {
 	}
 	
 	/**
@@ -479,7 +454,7 @@ public class Facade {
 	 * @param resource
 	 *            The selected "get" resource
 	 */
-	void setGetResource(ResourceType resource) {
+	public void setGetResource(ResourceType resource) {
 	}
 	
 	/**
@@ -488,19 +463,19 @@ public class Facade {
 	 * @param resource
 	 *            The selected "give" resource
 	 */
-	void setGiveResource(ResourceType resource) {
+	public void setGiveResource(ResourceType resource) {
 	}
 	
 	/**
 	 * Called when the player "undoes" their get selection.
 	 */
-	void unsetGetValue() {
+	public void unsetGetValue() {
 	}
 	
 	/**
 	 * Called when the player "undoes" their give selection.
 	 */
-	void unsetGiveValue() {
+	public void unsetGiveValue() {
 	}
 	
 	
@@ -514,31 +489,31 @@ public class Facade {
 	/**
 	 * Called by the view then the user requests to build a road
 	 */
-	void buildRoad() {
+	public void buildRoad() {
 	}
 	
 	/**
 	 * Called by the view then the user requests to build a settlement
 	 */
-	void buildSettlement() {
+	public void buildSettlement() {
 	}
 	
 	/**
 	 * Called by the view then the user requests to build a city
 	 */
-	void buildCity() {
+	public void buildCity() {
 	}
 	
 	/**
 	 * Called by the view then the user requests to buy a card
 	 */
-	void buyCard() {
+	public void buyCard() {
 	}
 	
 	/**
 	 * Called by the view then the user requests to play a card
 	 */
-	void playCard() {
+	public void playCard() {
 	}
 	
 	
@@ -548,7 +523,7 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Roll!" button in the roll view
 	 */
-	void rollDice() {
+	public void rollDice() {
 	}
 	
 	
@@ -558,6 +533,6 @@ public class Facade {
 	/**
 	 * This is called when the local player ends their turn
 	 */
-	void endTurn() {
+	public void endTurn() {
 	}
 }
