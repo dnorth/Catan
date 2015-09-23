@@ -6,10 +6,10 @@ client.data
 client.devcards
 client.discard
 client.domestic
+client.facade
 client.join
 client.login
 client.main
-client.managers
 client.map
 client.maritime
 client.misc
