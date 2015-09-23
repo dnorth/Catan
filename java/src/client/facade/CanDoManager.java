@@ -1,4 +1,4 @@
-package client.managers;
+package client.facade;
 
 import shared.locations.EdgeDirection;
 import client.models.mapdata.Hex;
