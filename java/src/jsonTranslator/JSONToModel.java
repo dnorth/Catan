@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import client.models.ClientModel;
 import client.models.Player;
-import client.models.ResourceList;
+import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.TurnTracker;
 import client.models.communication.MessageList;
@@ -30,7 +30,7 @@ public class JSONToModel {
 	 * Translates bank to put in updated client model
 	 * @return updated bank
 	 */
-	public static ResourceList translateBank() {
+	public static Resources translateBank() {
 		return null;
 	}
 	
