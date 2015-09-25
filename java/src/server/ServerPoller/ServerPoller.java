@@ -1,6 +1,6 @@
 package server.ServerPoller;
 
-import server.proxy.IServer;
+import server.proxy.IProxy;
 import client.models.ClientModel;
 
 /**
@@ -9,14 +9,14 @@ import client.models.ClientModel;
 public class ServerPoller {
 	
 	int currVersion;
-	IServer server; //IServer can be real server or mock proxy
+	IProxy server; //IServer can be real server or mock proxy
 	ClientModel client;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
 	 * @param cli pointer to client model
 	 */
-	public ServerPoller(IServer serv, ClientModel cli){
+	public ServerPoller(IProxy serv, ClientModel cli){
 		server = serv;
 		client = cli;
 		initialize();
@@ -34,7 +34,7 @@ public class ServerPoller {
 	 * Set server or mock proxy
 	 * @param serv pointer to server or mock proxy
 	 */
-	public void setServer(IServer serv) {
+	public void setServer(IProxy serv) {
 		server = serv;
 	}
 	
