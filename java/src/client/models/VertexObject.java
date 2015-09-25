@@ -10,10 +10,26 @@ public class VertexObject{
 	/**
 	 * Refers to number of player who owns vertex, or -1 if not owned
 	 */
-	int owner;
+	private int owner;
 	
 	/**
 	 * Locations of three edges touching vertex
 	 */
-	EdgeLocation[] location;
+	private EdgeLocation[] location;
+
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+
+	public EdgeLocation[] getLocation() {
+		return location;
+	}
+
+	public void setLocation(EdgeLocation[] location) {
+		this.location = location;
+	}
 }

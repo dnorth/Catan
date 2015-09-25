@@ -9,20 +9,52 @@ public class TradeOffer {
 	/**
 	 *  Attribute sender refers to player number making offer
 	 */
-	int sender;
+	private int sender;
 	
 	/**
 	 * Attribute receiver refers to player number receiving offer
 	 */
-	int receiver;
+	private int receiver;
 	
 	/**
 	 *  Attribute senderNeeds refers to resources the sender needs
 	 */
-	ResourceList senderNeeds;
+	private Resources senderNeeds;
 	
 	/**
 	 * Attribute senderOffers refers to resources the sender is willing to give
 	 */
-	ResourceList senderOffers;
+	private Resources senderOffers;
+
+	public int getSender() {
+		return sender;
+	}
+
+	public void setSender(int sender) {
+		this.sender = sender;
+	}
+
+	public int getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(int receiver) {
+		this.receiver = receiver;
+	}
+
+	public Resources getSenderNeeds() {
+		return senderNeeds;
+	}
+
+	public void setSenderNeeds(Resources senderNeeds) {
+		this.senderNeeds = senderNeeds;
+	}
+
+	public Resources getSenderOffers() {
+		return senderOffers;
+	}
+
+	public void setSenderOffers(Resources senderOffers) {
+		this.senderOffers = senderOffers;
+	}
 }

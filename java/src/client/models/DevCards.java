@@ -4,6 +4,6 @@ package client.models;
  * List of possible development cards
  *
  */
-public enum DevCardList{
+public enum DevCards{
 	MONOPOLY, MONUMENT, ROADBUILDING, SOLDIER, YEAROFPLENTY
 }

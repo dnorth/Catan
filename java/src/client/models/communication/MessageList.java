@@ -8,5 +8,13 @@ import client.models.communication.MessageLine;
 
 public class MessageList
 {
-MessageLine[] lines	;
+	private MessageLine[] lines;
+
+	public MessageLine[] getLines() {
+		return lines;
+	}
+
+	public void setLines(MessageLine[] lines) {
+		this.lines = lines;
+	}
 }

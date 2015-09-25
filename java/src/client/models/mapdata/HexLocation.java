@@ -7,6 +7,19 @@ package client.models.mapdata;
  */
 
 public class HexLocation {
-	int xcoord;
-	int ycoord;
+	private int xcoord;
+	private int ycoord;
+	
+	public int getXcoord() {
+		return xcoord;
+	}
+	public void setXcoord(int xcoord) {
+		this.xcoord = xcoord;
+	}
+	public int getYcoord() {
+		return ycoord;
+	}
+	public void setYcoord(int ycoord) {
+		this.ycoord = ycoord;
+	}
 }
