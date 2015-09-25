@@ -8,6 +8,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.models.ResourceList;
+import client.models.Resources;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -241,7 +242,7 @@ public class MovesProxy extends ServerProxy{
      * @pre both player indicies are valid
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String offerTrade (int playerIndex, ResourceList resourceList, int receivingPlayerIndex){
+    public String offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex){
     	String clientModelJSON = null;
     	try {
     		clientModelJSON = (String)doPost("/moves/offerTrade", null);
@@ -280,7 +281,7 @@ public class MovesProxy extends ServerProxy{
     /**
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String discardCards (int playerIndex, ResourceList discardedCards){
+    public String discardCards (int playerIndex, Resources discardedCards){
     	String clientModelJSON = null;
     	try {
     		clientModelJSON = (String)doPost("/moves/discardCards", null);
