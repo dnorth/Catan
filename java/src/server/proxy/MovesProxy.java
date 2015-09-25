@@ -7,7 +7,6 @@ import java.net.URL;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.models.ResourceList;
 import client.models.Resources;
 
 import com.thoughtworks.xstream.XStream;

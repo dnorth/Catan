@@ -15,7 +15,7 @@ public class Player
 	private int monuments;
 	private String name;
 	private DevCards newDevCards;
-	private DevCards oldDevCards;
+	private DevCards currentDevCards;
 	private int playerIndex;
 	private boolean playedDevCard;
 	private int playerID;
@@ -62,10 +62,10 @@ public class Player
 		this.newDevCards = newDevCards;
 	}
 	public DevCards getOldDevCards() {
-		return oldDevCards;
+		return currentDevCards;
 	}
 	public void setOldDevCards(DevCards oldDevCards) {
-		this.oldDevCards = oldDevCards;
+		this.currentDevCards = oldDevCards;
 	}
 	public int getPlayerIndex() {
 		return playerIndex;

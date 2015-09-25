@@ -1,7 +1,13 @@
 package client.facade;
 
+import java.util.List;
+
 import shared.locations.EdgeDirection;
 import client.models.ClientModel;
+import client.models.Player;
+import client.models.Resources;
+import client.models.TradeOffer;
+import client.models.mapdata.EdgeValue;
 import client.models.mapdata.Hex;
 
 /**
@@ -11,40 +17,22 @@ import client.models.mapdata.Hex;
 
 public class PlayerManager {
 	
-	private ClientModel clientmodel;
+	private Player[] players;
 	
-	public PlayerManager(ClientModel client) {
-		clientmodel = client;
+	public PlayerManager(Player[] players) {
+		this.players = players;
 	}
-	
+
 	/**
 	 * Determines if a player has the resources needed to buy a road.
+	 * Player must have at least one brick and one wood
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if a player can buy a road.
 	 */
 	public boolean canBuyRoad(int playerIndex){
-		return true;
-	}
-	
-	/**
-	 * Determines if a player has a location where they can place a road
-	 * anywhere on the board.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if a player can place a road on the board.
-	 */
-	public boolean canPlaceRoad(int playerIndex){
-		return true;
-	}
-	
-	/**
-	 * Determines if a player can place a road on a specific hex edge.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @param hex Hex where road will be built
-	 * @param edge Edge on hex where road will be built
-	 * @return if the player can place a road at the HexLocation.
-	 */
-	public boolean canPlaceRoadAtLocation(int playerIndex, Hex hex, EdgeDirection edge){
-		return true;
+		Resources resources =  this.players[playerIndex].getResources();
+		if (resources.getBrickCount() > 1 && resources.getWoodCount() > 1) return true;
+		else return true;
 	}
 	
 	/**
@@ -52,7 +40,7 @@ public class PlayerManager {
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if the player can offer a trade.
 	 */
-	public boolean canOfferTrade(int playerIndex){
+	public boolean hasResources(int playerIndex){
 		return true;
 	}
 	
@@ -61,20 +49,10 @@ public class PlayerManager {
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if the player can accept the trade.
 	 */
-	public boolean canAcceptTrade(int playerIndex){	
+	public boolean hasSpecifiedResources(int playerIndex, TradeOffer tradeOffer){	
 		return true;
 	}
 	
-	
-	/**
-	 * Determines if the player has a settlement in a port.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player has a settlement in a port.
-	 */
-	
-	public boolean canMaritimeTrade(int playerIndex){
-		return true;
-	}
 	
 	/**
 	 * Determines if a player has the resources necessary to buy a settlement.
@@ -95,15 +73,6 @@ public class PlayerManager {
 	}
 	
 	/**
-	 * Determines if there are any players to rob after the robber is placed.
-	 * @return if there is a player that can be robbed.
-	 */
-	public boolean canRobPlayer(){
-		return true;
-	}
-	
-	
-	/**
 	 * Determines if a player has enough resources to buy a development card.
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if the player can buy a dev card.
@@ -121,53 +90,53 @@ public class PlayerManager {
 		return true;
 	}
 	
-	/**
-	 * Determines if the player can play the Year of Plenty development card.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player can play the Year of Plenty development card.
-	 */
-	public boolean canPlayYearOfPlenty(int playerIndex){
-		return true;
-	}
-	
-	/**
-	 * Determines if the player can play the Soldier development card.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player can play the Soldier development card.
-	 */
-	
-	public boolean canPlaySoldier(int playerIndex){
-		return true;
-	}
-	
-	/**
-	 * Determines if the player can play the Monopoly development card.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player can play the Monopoly development card.
-	 */
-	
-	public boolean canPlayMonopoly(int playerIndex){
-		return true;
-	}
-	
-	/**
-	 * Determines if the player can play the Monument development card.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player can play the Monument development card.
-	 */
-	
-	public boolean canPlayMonument(int playerIndex){
-		return true;
-	}
-
-	/**
-	 * Determines if the player can play the RoadBuilding development card.
-	 * @param playerIndex Number of player to determine ability to take action
-	 * @return if the player can play the RoadBuilding development card.
-	 */
-	
-	public boolean canPlayRoadBuilding(int playerIndex){
-		return true;
-	}
+//	/**
+//	 * Determines if the player can play the Year of Plenty development card.
+//	 * @param playerIndex Number of player to determine ability to take action
+//	 * @return if the player can play the Year of Plenty development card.
+//	 */
+//	public boolean canPlayYearOfPlenty(int playerIndex){
+//		return true;
+//	}
+//	
+//	/**
+//	 * Determines if the player can play the Soldier development card.
+//	 * @param playerIndex Number of player to determine ability to take action
+//	 * @return if the player can play the Soldier development card.
+//	 */
+//	
+//	public boolean canPlaySoldier(int playerIndex){
+//		return true;
+//	}
+//	
+//	/**
+//	 * Determines if the player can play the Monopoly development card.
+//	 * @param playerIndex Number of player to determine ability to take action
+//	 * @return if the player can play the Monopoly development card.
+//	 */
+//	
+//	public boolean canPlayMonopoly(int playerIndex){
+//		return true;
+//	}
+//	
+//	/**
+//	 * Determines if the player can play the Monument development card.
+//	 * @param playerIndex Number of player to determine ability to take action
+//	 * @return if the player can play the Monument development card.
+//	 */
+//	
+//	public boolean canPlayMonument(int playerIndex){
+//		return true;
+//	}
+//
+//	/**
+//	 * Determines if the player can play the RoadBuilding development card.
+//	 * @param playerIndex Number of player to determine ability to take action
+//	 * @return if the player can play the RoadBuilding development card.
+//	 */
+//	
+//	public boolean canPlayRoadBuilding(int playerIndex){
+//		return true;
+//	}
 
 }
