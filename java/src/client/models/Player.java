@@ -61,7 +61,7 @@ public class Player
 	public void setNewDevCards(DevCards newDevCards) {
 		this.newDevCards = newDevCards;
 	}
-	public DevCards getOldDevCards() {
+	public DevCards getCurrentDevCards() {
 		return currentDevCards;
 	}
 	public void setOldDevCards(DevCards oldDevCards) {
