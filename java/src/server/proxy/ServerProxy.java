@@ -1,9 +1,12 @@
 package server.proxy;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,19 +70,33 @@ abstract class ServerProxy {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
             connection.connect();
           //  xmlStream.toXML(postData, connection.getOutputStream());
-            OutputStream os = connection.getOutputStream();
-            os.write(postData.toString().getBytes("UTF-8"));
+            OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
+            os.write(postData.toString());
             os.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             	try {
-	            	Gson gson = new Gson();
+	            	/*Gson gson = new Gson();
 	                String result = gson.toJson(connection.getInputStream());
 	                JsonParser parser = new JsonParser();
-	                return (JsonObject)parser.parse(result);
+	                return (JsonObject)parser.parse(result);*/
+            		
+            		//Test to read in input
+            		BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line+"\n");
+                    }
+                    br.close();
+                    System.out.print("What is returned: ");
+                    System.out.println(sb.toString());
+                    return null;
             	}
             	catch (ClassCastException e) {
             		System.out.println("ServerProxy JSON translator ClassCast Exception");
@@ -87,8 +104,8 @@ abstract class ServerProxy {
             	}
             }
             else {
-                throw new ClientException(String.format("doPost failed: %s (http code %d)",
-                        urlPath, connection.getResponseCode()));
+                throw new ClientException(String.format("doPost failed: %s (http code %d : %s)",
+                        urlPath, connection.getResponseCode(), connection.getResponseMessage()));
             }
         }
         catch (IOException e) {

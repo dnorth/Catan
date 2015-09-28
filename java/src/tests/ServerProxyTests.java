@@ -13,8 +13,8 @@ public class ServerProxyTests {
 	@Test
 	public void loginText() {
 		JsonObject newUser = new JsonObject();
-		newUser.addProperty("username", "Tommy");
-		newUser.addProperty("password", "Williams");
+		newUser.addProperty("username", "tetetet");
+		newUser.addProperty("password", "tetetetet");
 		
 		
 		ClientCommunicator cc = new ClientCommunicator();

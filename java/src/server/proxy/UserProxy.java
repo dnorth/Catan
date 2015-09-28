@@ -23,7 +23,7 @@ public class UserProxy extends ServerProxy{
 	public JsonObject userRegister (JsonObject object){
       
         try {
-			System.out.println(doPost("/user/register", object));
+			doPost("/user/register", object);
 		} catch (ClientException e) {
 
 			e.printStackTrace();
