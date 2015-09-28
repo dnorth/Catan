@@ -2,8 +2,10 @@ package client.facade;
 
 import java.util.List;
 
+import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
 import client.models.ClientModel;
+import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
@@ -41,7 +43,18 @@ public class PlayerManager {
 	 * @return if the player can offer a trade.
 	 */
 	public boolean hasResources(int playerIndex){
-		return true;
+		
+		Player p =players[playerIndex];
+		Resources r=p.getResources();
+		
+		int resourceCount=0;
+		
+		resourceCount+=r.getBrickCount();
+		resourceCount+=r.getOreCount();
+		resourceCount+=r.getSheepCount();
+		resourceCount+=r.getWheatCount();
+		resourceCount+=r.getWoodCount();
+		return resourceCount>0;
 	}
 	
 	/**
@@ -50,6 +63,9 @@ public class PlayerManager {
 	 * @return if the player can accept the trade.
 	 */
 	public boolean hasSpecifiedResources(int playerIndex, TradeOffer tradeOffer){	
+		Resources receiver = players[playerIndex].getResources();
+
+		
 		return true;
 	}
 	
@@ -60,7 +76,8 @@ public class PlayerManager {
 	 * @return if the player can buy a settlement.
 	 */
 	public boolean canBuySettlement(int playerIndex){
-		return true;
+		Resources r = players[playerIndex].getResources();
+		return r.getBrickCount()>0 && r.getWheatCount()>0 && r.getSheepCount()>0 && r.getWoodCount()>0;
 	}
 	
 	/**
@@ -69,7 +86,9 @@ public class PlayerManager {
 	 * @return if the player can upgrade a settlement.
 	 */
 	public boolean canUpgradeSettlement(int playerIndex){
-		return true;
+		Resources r = players[playerIndex].getResources();
+		
+		return r.getWheatCount()>=2 && r.getOreCount()>=3;
 	}
 	
 	/**
@@ -78,7 +97,8 @@ public class PlayerManager {
 	 * @return if the player can buy a dev card.
 	 */
 	public boolean canBuyDevCard(int playerIndex){
-		return true;
+		Resources r = players[playerIndex].getResources();
+		return r.getSheepCount()>0 && r.getWheatCount()>0 && r.getOreCount()>0;
 	}
 	
 	/**
@@ -87,7 +107,16 @@ public class PlayerManager {
 	 * @return if the player can play any dev card.
 	 */
 	public boolean canPlayDevCard(int playerIndex){
-		return true;
+		DevCards d = players[playerIndex].getCurrentDevCards();
+		
+		int resourceCount=0;
+		
+		resourceCount+=d.getMonopolyCount();
+		resourceCount+=d.getMonumentCount();
+		resourceCount+=d.getRoadBuildingCount();
+		resourceCount+=d.getSoldierCount();
+		resourceCount+=d.getYearOfPlentyCount();
+		return resourceCount>0;
 	}
 	
 //	/**

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import shared.definitions.ResourceType;
 
-public class Resources extends ArrayList<ResourceType> {
+public class Resources{
 	
 	private int woodCount;
 	private int brickCount;
@@ -19,21 +19,6 @@ public class Resources extends ArrayList<ResourceType> {
 		this.sheepCount = sheepCount;
 		this.wheatCount = wheatCount;
 		this.oreCount = oreCount;
-		for(int i = 0; i < woodCount; i++) {
-			this.add(ResourceType.WOOD);
-		}
-		for(int i = 0; i < brickCount; i++) {
-			this.add(ResourceType.BRICK);
-		}
-		for(int i = 0; i < sheepCount; i++) {
-			this.add(ResourceType.SHEEP);
-		}
-		for(int i = 0; i < wheatCount; i++) {
-			this.add(ResourceType.WHEAT);
-		}
-		for(int i = 0; i < oreCount; i++) {
-			this.add(ResourceType.ORE);
-		}	
 	}
 
 	public int getWoodCount() {
