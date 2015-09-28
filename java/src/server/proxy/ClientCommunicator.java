@@ -51,22 +51,22 @@ public class ClientCommunicator implements IProxy{
 	
 	//GAME API
 	@Override
-	public ClientModel getGameModel() {
+	public JsonObject getGameModel() {
 		return gameProxy.getGameModel();
 	}
 
 	@Override
-	public String resetGame() {
+	public JsonObject resetGame() {
 		return gameProxy.resetGame();
 	}
 
 	@Override
-	public String executeCommandList(ArrayList<String> commands) {
+	public JsonObject executeCommandList(JsonObject commands) {
 		return gameProxy.executeCommandList(commands);
 	}
 
 	@Override
-	public ArrayList<String> getExecutedCommands() {
+	public JsonObject getExecutedCommands() {
 		return gameProxy.getExecutedCommands();
 	}
 
@@ -76,35 +76,35 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public ArrayList<String> listAI() {
+	public JsonObject listAI() {
 		return gameProxy.listAI();
 	}
 
 	
 	//GAMES API
 	@Override
-	public ArrayList<Game> getGamesList() {
+	public JsonObject getGamesList() {
 		return gamesProxy.getGamesList();
 	}
 
 	@Override
-	public Game createGame(boolean randomTiles, boolean randomNumbers,
+	public JsonObject createGame(boolean randomTiles, boolean randomNumbers,
 			boolean randomPorts, String name) {
 		return gamesProxy.createGame(randomTiles, randomNumbers, randomPorts, name);
 	}
 
 	@Override
-	public boolean joinGame(int gameId, String color) {
+	public JsonObject joinGame(int gameId, String color) {
 		return gamesProxy.joinGame(gameId, color);
 	}
 
 	@Override
-	public boolean saveGame(int gameId, String fileName) {
+	public JsonObject saveGame(int gameId, String fileName) {
 		return gamesProxy.saveGame(gameId, fileName);
 	}
 
 	@Override
-	public Game loadGame(String gameName) {
+	public JsonObject loadGame(JsonObject gameName) {
 		return gamesProxy.loadGame(gameName);
 	}
 
@@ -112,106 +112,106 @@ public class ClientCommunicator implements IProxy{
 	
 	//MOVES API
 	@Override
-	public String sendChat(int playerIndex, String content) {
+	public JsonObject sendChat(int playerIndex, String content) {
 		return movesProxy.sendChat(playerIndex, content);
 	}
 
 	@Override
-	public String rollNumber() {
+	public JsonObject rollNumber() {
 		return movesProxy.rollNumber();
 	}
 
 	@Override
-	public String robPlayer(int playerIndex, int victimIndex,
+	public JsonObject robPlayer(int playerIndex, int victimIndex,
 			HexLocation hexLocation) {
 		return movesProxy.robPlayer(playerIndex, victimIndex, hexLocation);
 	}
 
 	@Override
-	public String finishTurn(int playerIndex) {
+	public JsonObject finishTurn(int playerIndex) {
 		return movesProxy.finishTurn(playerIndex);
 	}
 
 	@Override
-	public String buyDevCard(int playerIndex) {
+	public JsonObject buyDevCard(int playerIndex) {
 		return movesProxy.buyDevCard(playerIndex);
 	}
 
 	@Override
-	public String playYearOfPlenty(int playerIndex, int resource1, int resource2) {
+	public JsonObject playYearOfPlenty(int playerIndex, int resource1, int resource2) {
 		return movesProxy.playYearOfPlenty(playerIndex, resource1, resource2);
 	}
 
 	@Override
-	public String playRoadBuilding(int playerIndex, EdgeLocation edgeLocation1,
+	public JsonObject playRoadBuilding(int playerIndex, EdgeLocation edgeLocation1,
 			EdgeLocation edgeLocation2) {
 		return movesProxy.playRoadBuilding(playerIndex, edgeLocation1, edgeLocation2);
 	}
 
 	@Override
-	public String playSoldier(int playerIndex, int victimIndex,
+	public JsonObject playSoldier(int playerIndex, int victimIndex,
 			HexLocation newRobberHexLocation) {
 		return movesProxy.playSoldier(playerIndex, victimIndex, newRobberHexLocation);
 	}
 
 	@Override
-	public String playMonopoly(int playerIndex, String resource) {
+	public JsonObject playMonopoly(int playerIndex, String resource) {
 		return movesProxy.playMonopoly(playerIndex, resource);
 	}
 
 	@Override
-	public String playMonument(int playerIndex) {
+	public JsonObject playMonument(int playerIndex) {
 		return movesProxy.playMonument(playerIndex);
 	}
 
 	@Override
-	public String buildRoad(int playerIndex, EdgeLocation roadLocation,
+	public JsonObject buildRoad(int playerIndex, EdgeLocation roadLocation,
 			boolean free) {
 		return movesProxy.buildRoad(playerIndex, roadLocation, free);
 	}
 
 	@Override
-	public String buildSettlement(int playerIndex,
+	public JsonObject buildSettlement(int playerIndex,
 			VertexLocation settlementLocation, boolean free) {
 		return movesProxy.buildSettlement(playerIndex, settlementLocation, free);
 	}
 
 	@Override
-	public String buildCity(int playerIndex, VertexLocation cityLocation) {
+	public JsonObject buildCity(int playerIndex, VertexLocation cityLocation) {
 		return movesProxy.buildCity(playerIndex, cityLocation);
 	}
 
 	@Override
-	public String offerTrade(int playerIndex, Resources resourceList,
+	public JsonObject offerTrade(int playerIndex, Resources resourceList,
 			int receivingPlayerIndex) {
 		return movesProxy.offerTrade(playerIndex, resourceList, receivingPlayerIndex);
 	}
 
 	@Override
-	public String acceptTrade(int playerIndex, boolean willAccept) {
+	public JsonObject acceptTrade(int playerIndex, boolean willAccept) {
 		return movesProxy.acceptTrade(playerIndex, willAccept);
 	}
 
 	@Override
-	public String maritimeTrade(int playerIndex, int ratio,
+	public JsonObject maritimeTrade(int playerIndex, int ratio,
 			String inputResource, String outputResource) {
 		return movesProxy.maritimeTrade(playerIndex, ratio, inputResource, outputResource);
 	}
 
 	@Override
-	public String discardCards(int playerIndex, Resources discardedCards) {
+	public JsonObject discardCards(int playerIndex, Resources discardedCards) {
 		return movesProxy.discardCards(playerIndex, discardedCards);
 	}
 
 	
 	//USER API
 	@Override
-	public boolean userLogin() {
+	public JsonObject userLogin() {
 		return userProxy.userLogin();
 	}
 
 	@Override
-	public boolean userRegister(JsonObject object) {
+	public JsonObject userRegister(JsonObject object) {
 		return userProxy.userRegister(object);
 	}
 

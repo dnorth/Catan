@@ -41,15 +41,17 @@ abstract class ServerProxy {
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
     }    
     
-    protected Object doGet(String urlPath) throws ClientException {
+    protected JsonObject doGet(String urlPath) throws ClientException {
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                Object result = xmlStream.fromXML(connection.getInputStream());
-                return result;
+            	Gson gson = new Gson();
+                String result = gson.toJson(connection.getInputStream());
+                JsonParser parser = new JsonParser();
+                return (JsonObject)parser.parse(result);
             }
             else {
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",

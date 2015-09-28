@@ -9,12 +9,13 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.models.Resources;
 
+import com.google.gson.JsonObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class MovesProxy extends ServerProxy{
     
-    /**
+   /**
      * @pre The player is logged in.
      * @pre Player index is positive
      * @pre content message is non-null
@@ -23,10 +24,10 @@ public class MovesProxy extends ServerProxy{
      * @param content
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String sendChat (int playerIndex, String content){
-    	String clientModelJSON = null;
+    public JsonObject sendChat (int playerIndex, String content){
+    	JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = (String)doPost("/moves/sendChat", null);
+            clientModelJSON = doPost("/moves/sendChat", null);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -39,10 +40,10 @@ public class MovesProxy extends ServerProxy{
      * @post NA
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String rollNumber(){
-    	String clientModelJSON = null;
+    public JsonObject rollNumber(){
+    	JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = (String)doPost("/moves/rollNumber", null);
+            clientModelJSON = doPost("/moves/rollNumber", null);
         } catch (ClientException e) {
             e.printStackTrace();
         }
@@ -58,10 +59,10 @@ public class MovesProxy extends ServerProxy{
      * @param new hexLocation of robber
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String robPlayer (int playerIndex, int victimIndex, HexLocation hexLocation){
-    	String clientModelJSON = null;
+    public JsonObject robPlayer (int playerIndex, int victimIndex, HexLocation hexLocation){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/robPlayer", null);
+    		clientModelJSON = doPost("/moves/robPlayer", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -74,10 +75,10 @@ public class MovesProxy extends ServerProxy{
      * @param playerIndex 
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String finishTurn (int playerIndex){
-    	String clientModelJSON = null;
+    public JsonObject finishTurn (int playerIndex){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/finishTurn", null);
+    		clientModelJSON = doPost("/moves/finishTurn", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -90,10 +91,10 @@ public class MovesProxy extends ServerProxy{
      * @param playerIndex index of player buying a dev card
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String buyDevCard (int playerIndex){
-    	String clientModelJSON = null;
+    public JsonObject buyDevCard (int playerIndex){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/buyDevCard", null);
+    		clientModelJSON = doPost("/moves/buyDevCard", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -108,10 +109,10 @@ public class MovesProxy extends ServerProxy{
      * @param playerIndex the index of the player playing the year of plenty card
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String playYearOfPlenty (int playerIndex, int resource1, int resource2){
-    	String clientModelJSON = null;
+    public JsonObject playYearOfPlenty (int playerIndex, int resource1, int resource2){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/Year_of_Plenty", null);
+    		clientModelJSON = doPost("/moves/Year_of_Plenty", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -127,10 +128,10 @@ public class MovesProxy extends ServerProxy{
      * @param edgeLocations location of edges where roads will be placed 
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String playRoadBuilding (int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2){
-    	String clientModelJSON = null;
+    public JsonObject playRoadBuilding (int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/Road_Building", null);
+    		clientModelJSON = doPost("/moves/Road_Building", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -150,10 +151,10 @@ public class MovesProxy extends ServerProxy{
      * @param newRobberHexLocation new position of the robber
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String playSoldier (int playerIndex, int victimIndex, HexLocation newRobberHexLocation){
-    	String clientModelJSON = null;
+    public JsonObject playSoldier (int playerIndex, int victimIndex, HexLocation newRobberHexLocation){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/Soldier", null);
+    		clientModelJSON = doPost("/moves/Soldier", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -166,10 +167,10 @@ public class MovesProxy extends ServerProxy{
      * @post player has one less monopoly card in his hand
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String playMonopoly (int playerIndex, String resource){
-    	String clientModelJSON = null;
+    public JsonObject playMonopoly (int playerIndex, String resource){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/Monopoly", null);
+    		clientModelJSON = doPost("/moves/Monopoly", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -182,10 +183,10 @@ public class MovesProxy extends ServerProxy{
      * @post player has one more victory point
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String playMonument (int playerIndex){
-    	String clientModelJSON = null;
+    public JsonObject playMonument (int playerIndex){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/Monument", null);
+    		clientModelJSON = doPost("/moves/Monument", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -197,10 +198,10 @@ public class MovesProxy extends ServerProxy{
      * @param free this is set to true during the initialize phase
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String buildRoad (int playerIndex, EdgeLocation roadLocation, boolean free){
-    	String clientModelJSON = null;
+    public JsonObject buildRoad (int playerIndex, EdgeLocation roadLocation, boolean free){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/buildRoad", null);
+    		clientModelJSON = doPost("/moves/buildRoad", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -212,10 +213,10 @@ public class MovesProxy extends ServerProxy{
      * @param free is set to true during initialize phase
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String buildSettlement (int playerIndex, VertexLocation settlementLocation, boolean free){
-    	String clientModelJSON = null;
+    public JsonObject buildSettlement (int playerIndex, VertexLocation settlementLocation, boolean free){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/buildSettlement", null);
+    		clientModelJSON = doPost("/moves/buildSettlement", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -226,10 +227,10 @@ public class MovesProxy extends ServerProxy{
      * @pre the indicated player already owns a settlement at that location
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String buildCity (int playerIndex, VertexLocation cityLocation){
-    	String clientModelJSON = null;
+    public JsonObject buildCity (int playerIndex, VertexLocation cityLocation){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/buildCity", null);
+    		clientModelJSON = doPost("/moves/buildCity", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -241,10 +242,10 @@ public class MovesProxy extends ServerProxy{
      * @pre both player indicies are valid
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex){
-    	String clientModelJSON = null;
+    public JsonObject offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/offerTrade", null);
+    		clientModelJSON = doPost("/moves/offerTrade", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -254,10 +255,10 @@ public class MovesProxy extends ServerProxy{
     /**
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String acceptTrade (int playerIndex, boolean willAccept){
-    	String clientModelJSON = null;
+    public JsonObject acceptTrade (int playerIndex, boolean willAccept){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/acceptTrade", null);
+    		clientModelJSON = doPost("/moves/acceptTrade", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -267,10 +268,10 @@ public class MovesProxy extends ServerProxy{
     /**
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String maritimeTrade (int playerIndex, int ratio, String inputResource, String outputResource){
-    	String clientModelJSON = null;
+    public JsonObject maritimeTrade (int playerIndex, int ratio, String inputResource, String outputResource){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/maritimeTrade", null);
+    		clientModelJSON = doPost("/moves/maritimeTrade", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}
@@ -280,10 +281,10 @@ public class MovesProxy extends ServerProxy{
     /**
      * @return clientModel JSON (Same as "/game/model")
      */
-    public String discardCards (int playerIndex, Resources discardedCards){
-    	String clientModelJSON = null;
+    public JsonObject discardCards (int playerIndex, Resources discardedCards){
+    	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = (String)doPost("/moves/discardCards", null);
+    		clientModelJSON = doPost("/moves/discardCards", null);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}

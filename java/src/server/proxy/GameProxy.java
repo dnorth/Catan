@@ -2,6 +2,8 @@ package server.proxy;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 
 public class GameProxy extends ServerProxy{
@@ -12,11 +14,11 @@ public class GameProxy extends ServerProxy{
 	 * @post null if there is no game
 	 * 
 	 */
-	public ClientModel getGameModel (){
+	public JsonObject getGameModel (){
         
-		ClientModel model = null; //The API says "GameModel" Is this the same thing??
+		JsonObject model = null; //The API says "GameModel" Is this the same thing??
 		try {
-			model = (ClientModel)doPost("game/model", null);
+			model = doPost("game/model", null);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -28,10 +30,10 @@ public class GameProxy extends ServerProxy{
 	 * @post if default game, reset to initial placement. If user-created, reset to very beginning.
 	 * @return clientModel JSON
 	 */
-	public String resetGame (){
-		String clientModelJSON = null;
+	public JsonObject resetGame (){
+		JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = (String)doPost("/game/reset", null);
+            clientModelJSON = doPost("/game/reset", null);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -44,10 +46,10 @@ public class GameProxy extends ServerProxy{
 	 * @param ArrayList of commands to be executed
 	 * @return clientModel JSON (identical to /game/model)
 	 */
-	public String executeCommandList (ArrayList<String> commands){
-		String clientModelJSON = null;
+	public JsonObject executeCommandList (JsonObject commands){
+		JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = (String)doPost("/game/commands", commands);
+            clientModelJSON = doPost("/game/commands", commands);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -59,10 +61,10 @@ public class GameProxy extends ServerProxy{
 	 * @post no change
 	 * @return ArrayList of executed commands
 	 */
-	public ArrayList<String> getExecutedCommands (){
-		ArrayList<String> executedCommands = null;
+	public JsonObject getExecutedCommands (){
+		JsonObject executedCommands = null;
         try {
-            executedCommands = (ArrayList<String>)doGet("/game/commands");
+            executedCommands = doGet("/game/commands");
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -87,10 +89,10 @@ public class GameProxy extends ServerProxy{
 	 * @post this will return a list with only 1 entry which will be "LARGEST_ARMY"
 	 * @return the supported types of AI
 	 */
-	public ArrayList<String> listAI (){
-		ArrayList<String> AItypes = null;
+	public JsonObject listAI (){
+		JsonObject AItypes = null;
         try {
-            AItypes = (ArrayList<String>)doGet("/game/listAI");
+            AItypes = doGet("/game/listAI");
         } catch (ClientException e) {
         	e.printStackTrace();
         }

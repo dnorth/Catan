@@ -16,43 +16,43 @@ public interface IProxy {
 
 
 	//GAME PROXY
-	public ClientModel getGameModel ();
-	public String resetGame ();
-	public String executeCommandList (ArrayList<String> commands);
-	public ArrayList<String> getExecutedCommands ();
+	public JsonObject getGameModel ();
+	public JsonObject resetGame ();
+	public JsonObject executeCommandList (JsonObject commands);
+	public JsonObject getExecutedCommands ();
 	public void addAI (String soldierType);
-	public ArrayList<String> listAI ();
+	public JsonObject listAI ();
 
 
 	//GAMES PROXY
-	public ArrayList<Game> getGamesList ();
-	public Game createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
-	public boolean joinGame (int gameId, String color);
-	public boolean saveGame (int gameId, String fileName);
-	public Game loadGame (String gameName);
+	public JsonObject getGamesList ();
+	public JsonObject createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
+	public JsonObject joinGame (int gameId, String color);
+	public JsonObject saveGame (int gameId, String fileName);
+	public JsonObject loadGame (JsonObject gameName);
 
 	//MOVES PROXY
-	public String sendChat (int playerIndex, String content);
-	public String rollNumber();
-	public String robPlayer (int playerIndex, int victimIndex, HexLocation hexLocation);
-	public String finishTurn (int playerIndex);
-	public String buyDevCard (int playerIndex);
-	public String playYearOfPlenty (int playerIndex, int resource1, int resource2);
-	public String playRoadBuilding (int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2);
-	public String playSoldier (int playerIndex, int victimIndex, HexLocation newRobberHexLocation);
-	public String playMonopoly (int playerIndex, String resource);
-	public String playMonument (int playerIndex);
-	public String buildRoad (int playerIndex, EdgeLocation roadLocation, boolean free);
-	public String buildSettlement (int playerIndex, VertexLocation settlementLocation, boolean free);
-	public String buildCity (int playerIndex, VertexLocation cityLocation);
-	public String offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex);
-	public String acceptTrade (int playerIndex, boolean willAccept);
-	public String maritimeTrade (int playerIndex, int ratio, String inputResource, String outputResource);
-	public String discardCards (int playerIndex, Resources discardedCards);
+	public JsonObject sendChat (int playerIndex, String content);
+	public JsonObject rollNumber();
+	public JsonObject robPlayer (int playerIndex, int victimIndex, HexLocation hexLocation);
+	public JsonObject finishTurn (int playerIndex);
+	public JsonObject buyDevCard (int playerIndex);
+	public JsonObject playYearOfPlenty (int playerIndex, int resource1, int resource2);
+	public JsonObject playRoadBuilding (int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2);
+	public JsonObject playSoldier (int playerIndex, int victimIndex, HexLocation newRobberHexLocation);
+	public JsonObject playMonopoly (int playerIndex, String resource);
+	public JsonObject playMonument (int playerIndex);
+	public JsonObject buildRoad (int playerIndex, EdgeLocation roadLocation, boolean free);
+	public JsonObject buildSettlement (int playerIndex, VertexLocation settlementLocation, boolean free);
+	public JsonObject buildCity (int playerIndex, VertexLocation cityLocation);
+	public JsonObject offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex);
+	public JsonObject acceptTrade (int playerIndex, boolean willAccept);
+	public JsonObject maritimeTrade (int playerIndex, int ratio, String inputResource, String outputResource);
+	public JsonObject discardCards (int playerIndex, Resources discardedCards);
 	
 	//USER PROXY
-	public boolean userLogin ();
-	public boolean userRegister (JsonObject object);
+	public JsonObject userLogin ();
+	public JsonObject userRegister (JsonObject object);
 	
 	//UTIL PROXY
 	public void utilChangeLogLevel ();

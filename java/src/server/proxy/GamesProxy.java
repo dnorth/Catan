@@ -3,6 +3,8 @@ package server.proxy;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import client.models.Game;
 
 public class GamesProxy extends ServerProxy{
@@ -13,10 +15,10 @@ public class GamesProxy extends ServerProxy{
 	 * @post NA
 	 * @return An ArrayList of all games in progress
 	 */
-	public ArrayList<Game> getGamesList (){
-		ArrayList<Game> games = null;
+	public JsonObject getGamesList (){
+		JsonObject games = null;
 		try {
-			games = (ArrayList<Game>)doGet("/games/list");
+			games = doGet("/games/list");
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -32,12 +34,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param name
 	 * @return newly created game
 	 */
-	public Game createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name){
+	public JsonObject createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name){
 	
 		
-		Game newGame = null;
+		JsonObject newGame = null;
 		try {
-			newGame = (Game)doPost("/games/create", null);
+			newGame = doPost("/games/create", null);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -53,11 +55,11 @@ public class GamesProxy extends ServerProxy{
 	 * @param color
 	 * @return
 	 */
-	public boolean joinGame (int gameId, String color){
+	public JsonObject joinGame (int gameId, String color){
 		
-		boolean success = false;
+		JsonObject success = null;
 		try {
-			success = (boolean)doPost("/games/join", null);
+			success = doPost("/games/join", null);
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,12 +75,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param fileName
 	 * @return boolean stating whether or not the save was successful
 	 */
-	public boolean saveGame (int gameId, String fileName){
+	public JsonObject saveGame (int gameId, String fileName){
 
-        boolean success = false;
+		JsonObject success = null;
         
         try {
-			success = (boolean)doPost("/games/save", null);
+			success = doPost("/games/save", null);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -91,12 +93,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param gameName
 	 * @return Game that was originally saved
 	 */
-	public Game loadGame (String gameName){
+	public JsonObject loadGame (JsonObject gameName){
 
-		Game game = null;
+		JsonObject game = null;
 		
 		try {
-			game = (Game) doPost("/games/load", gameName);
+			game = doPost("/games/load", gameName);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

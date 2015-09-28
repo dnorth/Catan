@@ -7,20 +7,20 @@ public class UserProxy extends ServerProxy{
 	/**
 	 * @return
 	 */
-	public boolean userLogin (){
+	public JsonObject userLogin (){
         
         String username;
         String password;
         // doPost("/user/login", null);
         
-        return false;
+        return null;
         
     }
 
 	/**
 	 * @return
 	 */
-	public boolean userRegister (JsonObject object){
+	public JsonObject userRegister (JsonObject object){
       
         try {
 			System.out.println(doPost("/user/register", object));
@@ -29,6 +29,6 @@ public class UserProxy extends ServerProxy{
 			e.printStackTrace();
 		}
        	
-       	return false;
+       	return null;
     }
 }
