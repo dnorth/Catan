@@ -3,12 +3,19 @@ package server.proxy;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
 
 
+
+
+
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -52,17 +59,20 @@ abstract class ServerProxy {
         }
     }
     
-    protected Object doPost(String urlPath, Object postData) throws ClientException {
+    protected String doPost(String urlPath, JsonObject postData) throws ClientException { //Return a JSON Object
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
             connection.connect();
-            xmlStream.toXML(postData, connection.getOutputStream());
-            connection.getOutputStream().close();
+          //  xmlStream.toXML(postData, connection.getOutputStream());
+            OutputStream os = connection.getOutputStream();
+            os.write(postData.toString().getBytes("UTF-8"));
+            os.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                Object result = xmlStream.fromXML(connection.getInputStream());
+            	Gson gson = new Gson();
+                String result = gson.toJson(connection.getInputStream());
                 return result;
             }
             else {
