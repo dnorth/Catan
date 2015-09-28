@@ -2,6 +2,8 @@ package server.proxy;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -50,7 +52,7 @@ public interface IProxy {
 	
 	//USER PROXY
 	public boolean userLogin ();
-	public boolean userRegister ();
+	public boolean userRegister (JsonObject object);
 	
 	//UTIL PROXY
 	public void utilChangeLogLevel ();

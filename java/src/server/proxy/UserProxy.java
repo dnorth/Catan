@@ -1,5 +1,7 @@
 package server.proxy;
 
+import com.google.gson.JsonObject;
+
 public class UserProxy extends ServerProxy{
 
 	/**
@@ -18,11 +20,14 @@ public class UserProxy extends ServerProxy{
 	/**
 	 * @return
 	 */
-	public boolean userRegister (){
+	public boolean userRegister (JsonObject object){
       
-       	String username;
-       	String password;
-        //doPost("/user/register", null);
+        try {
+			System.out.println(doPost("/user/register", object));
+		} catch (ClientException e) {
+
+			e.printStackTrace();
+		}
        	
        	return false;
     }

@@ -2,6 +2,8 @@ package server.proxy;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Game;
 import client.models.Resources;
@@ -186,7 +188,7 @@ public class Server implements IProxy{
 	}
 
 	@Override
-	public boolean userRegister() {
+	public boolean userRegister(JsonObject pbject) {
 		// TODO Auto-generated method stub
 		return false;
 	}

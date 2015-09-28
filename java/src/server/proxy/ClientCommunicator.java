@@ -2,6 +2,8 @@ package server.proxy;
 
 import java.util.ArrayList;
 
+import com.google.gson.JsonObject;
+
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -18,9 +20,19 @@ public class ClientCommunicator implements IProxy{
 	private UserProxy userProxy;
 	private ClientModel clientModel;
 	
+	private String host;
+	private int port;
+	
+	
 	/**
 	 * 
 	 */
+	public ClientCommunicator() {
+		host = "localhost";
+		port = 8081;
+		initialize();
+	}
+	
 	private void initialize() {
 		gameProxy = new GameProxy();
 		gamesProxy = new GamesProxy();
@@ -199,8 +211,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public boolean userRegister() {
-		return userProxy.userRegister();
+	public boolean userRegister(JsonObject object) {
+		return userProxy.userRegister(object);
 	}
 
 	

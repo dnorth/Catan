@@ -14,8 +14,10 @@ import java.util.ArrayList;
 
 
 
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -59,7 +61,7 @@ abstract class ServerProxy {
         }
     }
     
-    protected String doPost(String urlPath, JsonObject postData) throws ClientException { //Return a JSON Object
+    protected JsonObject doPost(String urlPath, JsonObject postData) throws ClientException { //Return a JSON Object
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -71,9 +73,16 @@ abstract class ServerProxy {
             os.write(postData.toString().getBytes("UTF-8"));
             os.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	Gson gson = new Gson();
-                String result = gson.toJson(connection.getInputStream());
-                return result;
+            	try {
+	            	Gson gson = new Gson();
+	                String result = gson.toJson(connection.getInputStream());
+	                JsonParser parser = new JsonParser();
+	                return (JsonObject)parser.parse(result);
+            	}
+            	catch (ClassCastException e) {
+            		System.out.println("ServerProxy JSON translator ClassCast Exception");
+            		return null;
+            	}
             }
             else {
                 throw new ClientException(String.format("doPost failed: %s (http code %d)",
