@@ -116,6 +116,22 @@ public class Player
 		this.victoryPoints = victoryPoints;
 	}
 	
-
+	public boolean hasBrick(){return resources.getBrickCount()>0;}
+	public boolean hasOre(){return resources.getOreCount()>0;}
+	public boolean hasSheep(){return resources.getSheepCount()>0;}
+	public boolean hasWheat(){return resources.getWheatCount()>0;}
+	public boolean hasWood(){return resources.getWoodCount()>0;}
+	
+	public boolean hasBrick(int count){return resources.getBrickCount()>=count;}
+	public boolean hasOre(int count){return resources.getOreCount()>=count;}
+	public boolean hasSheep(int count){return resources.getSheepCount()>=count;}
+	public boolean hasWheat(int count){return resources.getWheatCount()>=count;}
+	public boolean hasWood(int count){return resources.getWoodCount()>=count;}
+	
+	public boolean hasMonopolyCard(DevCards d){return d.getMonopolyCount()>0;}
+	public boolean hasMonumentCard(DevCards d){return d.getMonumentCount()>0;}
+	public boolean hasRoadBuildingCard(DevCards d){return d.getRoadBuildingCount()>0;}
+	public boolean hasSoldierCard(DevCards d){return d.getSoldierCount()>0;}
+	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 
 }

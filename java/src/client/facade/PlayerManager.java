@@ -1,16 +1,9 @@
 package client.facade;
 
-import java.util.List;
-
-import shared.definitions.ResourceType;
-import shared.locations.EdgeDirection;
-import client.models.ClientModel;
 import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
-import client.models.mapdata.EdgeValue;
-import client.models.mapdata.Hex;
 
 /**
  * Determines if certain actions can be taken
@@ -32,9 +25,8 @@ public class PlayerManager {
 	 * @return if a player can buy a road.
 	 */
 	public boolean canBuyRoad(int playerIndex){
-		Resources resources =  this.players[playerIndex].getResources();
-		if (resources.getBrickCount() > 1 && resources.getWoodCount() > 1) return true;
-		else return true;
+		Player p = players[playerIndex];
+		return p.hasBrick() && p.hasWood();
 	}
 	
 	/**
@@ -43,30 +35,25 @@ public class PlayerManager {
 	 * @return if the player can offer a trade.
 	 */
 	public boolean hasResources(int playerIndex){
-		
 		Player p =players[playerIndex];
-		Resources r=p.getResources();
-		
-		int resourceCount=0;
-		
-		resourceCount+=r.getBrickCount();
-		resourceCount+=r.getOreCount();
-		resourceCount+=r.getSheepCount();
-		resourceCount+=r.getWheatCount();
-		resourceCount+=r.getWoodCount();
-		return resourceCount>0;
+		return p.hasBrick() || p.hasOre() || p.hasSheep() || p.hasWheat() || p.hasWood();
 	}
 	
+
 	/**
 	 * Determines if a player has the resources requested from the player offering the trade.
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if the player can accept the trade.
 	 */
 	public boolean hasSpecifiedResources(int playerIndex, TradeOffer tradeOffer){	
-		Resources receiver = players[playerIndex].getResources();
-
+		Player p = players[playerIndex];
+		Resources senderNeeds=tradeOffer.getSenderNeeds();
 		
-		return true;
+		return p.hasBrick(senderNeeds.getBrickCount()) && 
+			   p.hasOre(senderNeeds.getOreCount())     && 
+			   p.hasSheep(senderNeeds.getSheepCount()) && 
+			   p.hasWheat(senderNeeds.getWheatCount()) &&
+			   p.hasWood(senderNeeds.getWoodCount());
 	}
 	
 	
@@ -76,8 +63,8 @@ public class PlayerManager {
 	 * @return if the player can buy a settlement.
 	 */
 	public boolean canBuySettlement(int playerIndex){
-		Resources r = players[playerIndex].getResources();
-		return r.getBrickCount()>0 && r.getWheatCount()>0 && r.getSheepCount()>0 && r.getWoodCount()>0;
+		Player p = players[playerIndex];
+		return p.hasBrick() && p.hasWheat() && p.hasSheep() && p.hasWood();
 	}
 	
 	/**
@@ -86,9 +73,8 @@ public class PlayerManager {
 	 * @return if the player can upgrade a settlement.
 	 */
 	public boolean canUpgradeSettlement(int playerIndex){
-		Resources r = players[playerIndex].getResources();
-		
-		return r.getWheatCount()>=2 && r.getOreCount()>=3;
+		Player p = players[playerIndex];
+		return p.hasWheat(2) && p.hasOre(3);
 	}
 	
 	/**
@@ -97,8 +83,8 @@ public class PlayerManager {
 	 * @return if the player can buy a dev card.
 	 */
 	public boolean canBuyDevCard(int playerIndex){
-		Resources r = players[playerIndex].getResources();
-		return r.getSheepCount()>0 && r.getWheatCount()>0 && r.getOreCount()>0;
+		Player p = players[playerIndex];
+		return p.hasSheep() && p.hasWheat() && p.hasOre();
 	}
 	
 	/**
@@ -107,17 +93,13 @@ public class PlayerManager {
 	 * @return if the player can play any dev card.
 	 */
 	public boolean canPlayDevCard(int playerIndex){
+		Player p = players[playerIndex];
 		DevCards d = players[playerIndex].getCurrentDevCards();
 		
-		int resourceCount=0;
-		
-		resourceCount+=d.getMonopolyCount();
-		resourceCount+=d.getMonumentCount();
-		resourceCount+=d.getRoadBuildingCount();
-		resourceCount+=d.getSoldierCount();
-		resourceCount+=d.getYearOfPlentyCount();
-		return resourceCount>0;
+		return p.hasMonopolyCard(d) || p.hasMonumentCard(d) || p.hasRoadBuildingCard(d) || 
+				p.hasSoldierCard(d) || p.hasYearOfPlentyCard(d);
 	}
+	
 	
 //	/**
 //	 * Determines if the player can play the Year of Plenty development card.
