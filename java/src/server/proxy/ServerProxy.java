@@ -9,7 +9,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+
 
 
 
@@ -88,6 +90,15 @@ abstract class ServerProxy {
             		
             		//Test to read in input
             		BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            		String cookieHeader = connection.getHeaderField("Set-cookie");
+            		String cookie = StripCookie(cookieHeader);
+            		System.out.println(cookie);
+            		String cookieJsonString = URLDecoder.decode(cookie);
+            		
+            		JsonParser jsonParser = new JsonParser();
+            		JsonObject jsonReturnObject = (JsonObject)jsonParser.parse(cookieJsonString);
+            		
+            		
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
@@ -96,7 +107,7 @@ abstract class ServerProxy {
                     br.close();
                     System.out.print("What is returned: ");
                     System.out.println(sb.toString());
-                    return null;
+                    return jsonReturnObject;
             	}
             	catch (ClassCastException e) {
             		System.out.println("ServerProxy JSON translator ClassCast Exception");
@@ -111,5 +122,17 @@ abstract class ServerProxy {
         catch (IOException e) {
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
+    }
+    
+    private String StripCookie(String cookieHeader) {
+    	
+    	int startingIndex = cookieHeader.indexOf('=') + 1;
+    	int endingIndex = cookieHeader.indexOf(";Path=/;");
+    	String cookie = cookieHeader.substring(startingIndex, endingIndex);
+    	return cookie;
+    	
+    	
+    	
+    	
     }
 }
