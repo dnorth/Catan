@@ -51,8 +51,8 @@ public class ClientCommunicator implements IProxy{
 	
 	//GAME API
 	@Override
-	public JsonObject getGameModel() {
-		return gameProxy.getGameModel();
+	public JsonObject getGameModel(String userCookie) {
+		return gameProxy.getGameModel(userCookie);
 	}
 
 	@Override
@@ -93,8 +93,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject joinGame(int gameId, String color) {
-		return gamesProxy.joinGame(gameId, color);
+	public JsonObject joinGame(JsonObject gameData) {
+		return gamesProxy.joinGame(gameData);
 	}
 
 	@Override

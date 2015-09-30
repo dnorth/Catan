@@ -55,11 +55,11 @@ public class GamesProxy extends ServerProxy{
 	 * @param color
 	 * @return
 	 */
-	public JsonObject joinGame (int gameId, String color){
+	public JsonObject joinGame (JsonObject gameData){
 		
 		JsonObject success = null;
 		try {
-			success = doPost("/games/join", null);
+			success = doPost("/games/join", gameData);
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -14,11 +14,13 @@ public class GameProxy extends ServerProxy{
 	 * @post null if there is no game
 	 * 
 	 */
-	public JsonObject getGameModel (){
+	public JsonObject getGameModel (String userCookie){
         
+		JsonObject inputObject = new JsonObject();
+		inputObject.addProperty("Cookie", userCookie);
 		JsonObject model = null; //The API says "GameModel" Is this the same thing??
 		try {
-			model = doPost("game/model", null);
+			model = doPost("game/model", inputObject);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
