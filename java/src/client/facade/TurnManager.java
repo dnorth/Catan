@@ -2,10 +2,24 @@ package client.facade;
 
 import java.util.Random;
 
+import client.models.TurnTracker;
 import client.models.mapdata.Hex;
 
 public class TurnManager 
 {
+	private TurnTracker turnTracker;
+
+	public TurnManager(TurnTracker turnTracker) {
+		this.turnTracker = turnTracker;
+	}
+
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
+	}
+
+	public void setTurnTracker(TurnTracker turnTracker) {
+		this.turnTracker = turnTracker;
+	}
 
 	/**
 	 * rolls the dice.
@@ -23,6 +37,11 @@ public class TurnManager
 	/**
 	 * ends player's turn.
 	 */
-	public void endTurn(){}
-
+	public void endTurn()
+	{
+		int currentTurn = this.turnTracker.getCurrentTurn();
+		currentTurn += 1;
+		if (currentTurn > 3) currentTurn = 0;
+		this.turnTracker.setCurrentTurn(currentTurn);
+	}
 }

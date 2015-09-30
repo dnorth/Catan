@@ -18,6 +18,7 @@ public class CanDoManager {
 		this.clientModel = clientModel;
 		this.playerManager = new PlayerManager(this.clientModel.getPlayers());
 		this.boardManager = new BoardManager(this.clientModel.getBoard());
+		this.turnManager = new TurnManager(this.clientModel.getTurnTracker());
 	}
 	
 	/**
@@ -42,6 +43,11 @@ public class CanDoManager {
 		return true;
 	}
 	
+	/**
+	 * Determines if player has any resources, in order to trade at all
+	 * @param playerIndex Number of player to determine ability to take action
+	 * @return if the player can offer trade
+	 */
 	public boolean canOfferTrade(int playerIndex){
 		return this.playerManager.hasResources(playerIndex);
 	}

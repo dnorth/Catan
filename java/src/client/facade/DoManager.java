@@ -193,4 +193,9 @@ public class DoManager {
 		buildRoad(playerIndex);
 		buildRoad(playerIndex);
 	}
+	
+	public void endTurn()
+	{
+		this.turnManager.endTurn();
+	}
 }
