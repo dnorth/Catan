@@ -7,11 +7,13 @@ public class UserProxy extends ServerProxy{
 	/**
 	 * @return
 	 */
-	public JsonObject userLogin (){
+	public JsonObject userLogin (JsonObject user){
         
-        String username;
-        String password;
-        // doPost("/user/login", null);
+        try {
+        	return doPost("/user/login", user);
+        } catch (ClientException e) {
+        	e.printStackTrace();
+        }
         
         return null;
         
@@ -20,10 +22,10 @@ public class UserProxy extends ServerProxy{
 	/**
 	 * @return
 	 */
-	public JsonObject userRegister (JsonObject object){
+	public JsonObject userRegister (JsonObject user){
       
         try {
-			return doPost("/user/register", object);
+			return doPost("/user/register", user);
 		} catch (ClientException e) {
 
 			e.printStackTrace();

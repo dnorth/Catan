@@ -26,7 +26,7 @@ public interface IProxy {
 
 	//GAMES PROXY
 	public JsonObject getGamesList ();
-	public JsonObject createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
+	public JsonObject createGame (JsonObject inputGame);
 	public JsonObject joinGame (int gameId, String color);
 	public JsonObject saveGame (int gameId, String fileName);
 	public JsonObject loadGame (JsonObject gameName);
@@ -51,8 +51,8 @@ public interface IProxy {
 	public JsonObject discardCards (int playerIndex, Resources discardedCards);
 	
 	//USER PROXY
-	public JsonObject userLogin ();
-	public JsonObject userRegister (JsonObject object);
+	public JsonObject userLogin (JsonObject user);
+	public JsonObject userRegister (JsonObject user);
 	
 	//UTIL PROXY
 	public void utilChangeLogLevel ();

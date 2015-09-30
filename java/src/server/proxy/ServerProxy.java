@@ -2,29 +2,16 @@ package server.proxy;
 
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-
-
-
-
-
-
-
-
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 abstract class ServerProxy {
 	
@@ -37,26 +24,39 @@ abstract class ServerProxy {
     private static final String HTTP_GET = "GET";
     private static final String HTTP_POST = "POST";
 
-    private XStream xmlStream;
 
     public ServerProxy() { 
-        xmlStream = new XStream(new DomDriver());
         SERVER_HOST = "localhost";
         SERVER_PORT = 8081;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
     }    
     
-    protected JsonObject doGet(String urlPath) throws ClientException {
+    protected JsonObject doGet(String urlPath) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(HTTP_GET);
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	Gson gson = new Gson();
-                String result = gson.toJson(connection.getInputStream());
-                JsonParser parser = new JsonParser();
-                return (JsonObject)parser.parse(result);
+            	
+            	BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        		StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line+"\n");
+                }
+                br.close();
+                System.out.print("What is returned: ");
+                System.out.println(sb.toString());
+                String jsonToParse = sb.toString();
+
+                JsonParser jsonParser = new JsonParser();
+                Gson gson = new Gson();
+               // JsonObject o = gson.fromJson(json, classOfT);
+        		//JsonObject jsonReturnObject = (JsonObject)jsonParser.parse(jsonToParse);
+            	
+            	
+                return null;
             }
             else {
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",
@@ -83,10 +83,6 @@ abstract class ServerProxy {
             os.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             	try {
-	            	/*Gson gson = new Gson();
-	                String result = gson.toJson(connection.getInputStream());
-	                JsonParser parser = new JsonParser();
-	                return (JsonObject)parser.parse(result);*/
             		
             		//Test to read in input
             		BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));

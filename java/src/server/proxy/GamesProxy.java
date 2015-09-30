@@ -34,12 +34,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param name
 	 * @return newly created game
 	 */
-	public JsonObject createGame (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name){
+	public JsonObject createGame (JsonObject inputGame){
 	
 		
 		JsonObject newGame = null;
 		try {
-			newGame = doPost("/games/create", null);
+			newGame = doPost("/games/create", inputGame);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

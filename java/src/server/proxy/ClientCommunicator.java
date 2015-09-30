@@ -88,9 +88,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject createGame(boolean randomTiles, boolean randomNumbers,
-			boolean randomPorts, String name) {
-		return gamesProxy.createGame(randomTiles, randomNumbers, randomPorts, name);
+	public JsonObject createGame(JsonObject inputGame) {
+		return gamesProxy.createGame(inputGame);
 	}
 
 	@Override
@@ -206,13 +205,13 @@ public class ClientCommunicator implements IProxy{
 	
 	//USER API
 	@Override
-	public JsonObject userLogin() {
-		return userProxy.userLogin();
+	public JsonObject userLogin(JsonObject user) {
+		return userProxy.userLogin(user);
 	}
 
 	@Override
-	public JsonObject userRegister(JsonObject object) {
-		return userProxy.userRegister(object);
+	public JsonObject userRegister(JsonObject user) {
+		return userProxy.userRegister(user);
 	}
 
 	

@@ -19,14 +19,7 @@ import client.models.Resources;
 
 public class MockServerProxy implements IProxy{
 
-	
-	//UTIL API
-	@Override
-	public void utilChangeLogLevel() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	//GAME API
 	@Override
 	public JsonObject getGameModel() {
 		// TODO Auto-generated method stub
@@ -63,6 +56,8 @@ public class MockServerProxy implements IProxy{
 		return null;
 	}
 
+	
+	//Games API
 	@Override
 	public JsonObject getGamesList() {
 		// TODO Auto-generated method stub
@@ -70,7 +65,7 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
+	public JsonObject createGame(JsonObject inputGame) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -95,6 +90,7 @@ public class MockServerProxy implements IProxy{
 
 
 
+	//MOVES API
 	@Override
 	public JsonObject sendChat(int playerIndex, String content) {
 		// TODO Auto-generated method stub
@@ -213,8 +209,10 @@ public class MockServerProxy implements IProxy{
 		return null;
 	}
 
+	
+	//USER API
 	@Override
-	public JsonObject userLogin() {
+	public JsonObject userLogin(JsonObject user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -225,6 +223,12 @@ public class MockServerProxy implements IProxy{
 		return null;
 	}
 
-	
+	//UTIL API
+		@Override
+		public void utilChangeLogLevel() {
+			// TODO Auto-generated method stub
+			
+		}
+
 
 }
