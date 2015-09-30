@@ -40,5 +40,23 @@ public class Resources{
 	public int getOreCount() {
 		return oreCount;
 	}
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		appendStringType(sb, "wood", woodCount);
+		appendStringType(sb, "brick", brickCount);
+		appendStringType(sb, "sheep", sheepCount);
+		appendStringType(sb, "wheat", wheatCount);
+		appendStringType(sb, "ore", oreCount);
+		if(sb.length()==0)
+		{sb.append("no resources");}
+		return sb.toString();
+	}
 	
+	private void appendStringType(StringBuilder sb,String type, int count)
+	{
+		if(count>0)
+		{sb.append(count + " "+ type +", ");}
+	}
 }

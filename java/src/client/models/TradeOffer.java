@@ -6,6 +6,7 @@ package client.models;
  */
 
 public class TradeOffer {
+
 	/**
 	 *  Attribute sender refers to player number making offer
 	 */
@@ -26,6 +27,16 @@ public class TradeOffer {
 	 */
 	private Resources senderOffers;
 
+	
+	public TradeOffer(int sender, int receiver, Resources senderNeeds,
+			Resources senderOffers) {
+		
+		this.sender = sender;
+		this.receiver = receiver;
+		this.senderNeeds = senderNeeds;
+		this.senderOffers = senderOffers;
+	}
+	
 	public int getSender() {
 		return sender;
 	}
