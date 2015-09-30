@@ -1,6 +1,5 @@
 package client.models.mapdata;
 
-import client.models.mapdata.HexLocation;
 import client.models.Resources;
 
 /**
@@ -39,5 +38,11 @@ public class Port {
 	}
 	public void setRatio(int ratio) {
 		this.ratio = ratio;
+	}
+	
+	public EdgeLocation getEdgeLocation() {
+		int x = location.getXcoord();
+		int y = location.getYcoord();
+		return new EdgeLocation(x, y, direction);
 	}
 }
