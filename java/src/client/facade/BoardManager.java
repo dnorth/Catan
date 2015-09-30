@@ -22,6 +22,62 @@ public class BoardManager {
 	 * @param playerIndex Number of player to determine ability to take action
 	 * @return if the player has a settlement in a port.
 	 */
+	
+	public int getEdgeOwner(EdgeLocation edge) {
+		return board.getEdgeOwner(edge);
+	}
+	
+	public Integer[] getAdjacentEdgeOwners(EdgeLocation edge) {
+		String dir = edge.getDirection();
+		EdgeLocation altEdge1 = board.getAltEdge(edge);
+		EdgeLocation altEdge2 = board.getAltEdge(edge);
+		String dir1 = "";
+		String dir2 = "";
+		switch(dir) {
+		case "N":
+			altEdge1.setDirection("SW");
+			altEdge2.setDirection("SE");
+			dir1 = "NW";
+			dir2 = "NE";
+			break;
+			
+		case "NE":
+			altEdge1.setDirection("NW");
+			altEdge2.setDirection("S");
+			dir1 = "N";
+			dir2 = "SE";
+			break;
+			
+		case "SE":
+			altEdge1.setDirection("N");
+			altEdge2.setDirection("SW");
+			dir1 = "NE";
+			dir2 = "S";
+			break;
+			
+		case "S":
+			altEdge1.setDirection("NW");
+			altEdge2.setDirection("NE");
+			dir1 = "SE";
+			dir2 = "SW";
+			break;
+			
+		case "SW":
+			altEdge1.setDirection("N");
+			altEdge2.setDirection("SE");
+			dir1 = "S";
+			dir2 = "NW";
+			break;
+			
+		case "NW":
+			altEdge1.setDirection("NE");
+			altEdge2.setDirection("S");
+			dir1 = "SW";
+			dir2 = "N";
+			break;
+		}
+		return null;
+	}
 
 	public boolean canMaritimeTrade(int playerIndex)
 	{
