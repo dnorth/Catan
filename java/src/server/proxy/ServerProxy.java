@@ -74,10 +74,11 @@ abstract class ServerProxy {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            if(postData.has("Cookie")) {
+            if(postData.has("Cookie")) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
             	String inputCookie = null;
             	inputCookie = postData.get("Cookie").toString();
-            	connection.setRequestProperty("Set-cookie", inputCookie);
+            	inputCookie = DressCookie(inputCookie);
+            	connection.setRequestProperty("Cookie", inputCookie);
             }
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
@@ -137,9 +138,10 @@ abstract class ServerProxy {
     	int endingIndex = cookieHeader.indexOf(";Path=/;");
     	String cookie = cookieHeader.substring(startingIndex, endingIndex);
     	return cookie;
-    	
-    	
-    	
-    	
     }
+    
+    private String DressCookie(String inputCookie) {
+    	return "catan.user=" + inputCookie;
+    }
+    
 }

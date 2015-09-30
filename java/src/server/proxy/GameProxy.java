@@ -20,7 +20,7 @@ public class GameProxy extends ServerProxy{
 		inputObject.addProperty("Cookie", userCookie);
 		JsonObject model = null; //The API says "GameModel" Is this the same thing??
 		try {
-			model = doPost("game/model", inputObject);
+			model = doPost("/game/model", inputObject);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
