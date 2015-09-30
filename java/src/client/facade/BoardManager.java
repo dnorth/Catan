@@ -1,6 +1,7 @@
 package client.facade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import client.models.Player;
@@ -31,6 +32,8 @@ public class BoardManager {
 		String dir = edge.getDirection();
 		EdgeLocation altEdge1 = board.getAltEdge(edge);
 		EdgeLocation altEdge2 = board.getAltEdge(edge);
+		int x = edge.getXcoord();
+		int y = edge.getYcoord();
 		String dir1 = "";
 		String dir2 = "";
 		switch(dir) {
@@ -75,6 +78,14 @@ public class BoardManager {
 			dir1 = "SW";
 			dir2 = "N";
 			break;
+		}
+		int[] owners = {-1, -1, -1, -1};
+		EdgeLocation adj1 = new EdgeLocation(x,y,dir1);
+		EdgeLocation adj2 = new EdgeLocation(x,y,dir2);
+		EdgeLocation[] edgeList = {adj1, adj2, altEdge1, altEdge2};
+		for(int i = 0; i < edgeList.length; i++) {
+			EdgeLocation e = edgeList[i];
+			owners[i] = board.getEdgeOwner(e);
 		}
 		return null;
 	}
