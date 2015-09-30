@@ -160,7 +160,7 @@ public class ServerProxyTests {
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
 		String shouldMatchPassword = "\"Williams\"";
 		
-		userCookie = responseObject.get("Cookie").getAsString();
+		userCookie = responseObject.get("User-cookie").getAsString();
 		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
 		String responseBody = responseObject.get("Response-body").toString();
 		
@@ -186,7 +186,7 @@ public class ServerProxyTests {
 		JsonObject gameData = new JsonObject();
 		gameData.addProperty("id", gameId);
 		gameData.addProperty("color", "puce");
-		gameData.addProperty("Cookie", userCookie);
+		gameData.addProperty("User-cookie", userCookie);
 			
 		JsonObject responseObject2 = proxy.joinGame(gameData);
 		
@@ -203,11 +203,6 @@ public class ServerProxyTests {
 		inputGame.addProperty("name", "New Game!");
 		
 		JsonObject newGame = proxy.createGame(inputGame); 
-	}
-	
-	//@Test
-	public void joinGame (int gameId, String color) {
-		
 	}
 	
 	//@Test

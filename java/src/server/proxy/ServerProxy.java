@@ -74,16 +74,20 @@ abstract class ServerProxy {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            if(postData.has("Cookie")) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
-            	String inputCookie = null;
-            	inputCookie = postData.get("Cookie").getAsString();
-            	inputCookie = DressCookie(inputCookie);
-            	connection.setRequestProperty("Cookie", inputCookie);
+            if(postData.has("User-cookie")) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
+            	String userCookie = null;
+            	String gameCookie = null;
+            	userCookie = postData.get("User-cookie").getAsString();
+            	
+            	if(postData.has("Game-cookie")) {
+            		gameCookie = postData.get("Game-cookie").getAsString();
+            	}
+            	userCookie = DressCookie(userCookie, gameCookie);
+            	connection.setRequestProperty("Cookie", userCookie);
             }
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
             connection.connect();
-          //  xmlStream.toXML(postData, connection.getOutputStream());
             OutputStreamWriter os = new OutputStreamWriter(connection.getOutputStream());
             os.write(postData.toString());
             os.close();
@@ -98,9 +102,15 @@ abstract class ServerProxy {
             			String cookie = StripCookie(cookieHeader);
             			//System.out.println(cookie);
             			String cookieJsonString = URLDecoder.decode(cookie);
-            			JsonObject jsonCookieElement = (JsonObject)jsonParser.parse(cookieJsonString);
-            			jsonReturnObject.addProperty("Cookie", cookie);
-            			jsonReturnObject.add("Set-cookie", jsonCookieElement);
+            			
+            			//If the ClassCastException gets caught, that means we are recieving a game cookie
+            			try {
+            			    JsonObject jsonCookieElement = (JsonObject)jsonParser.parse(cookieJsonString);
+                			jsonReturnObject.add("Set-cookie", jsonCookieElement);
+               			    jsonReturnObject.addProperty("User-cookie", cookie);
+            			} catch (ClassCastException e) {
+               			    jsonReturnObject.addProperty("Game-cookie", cookie);
+            			}
             		}	
             			
             		
@@ -146,8 +156,15 @@ abstract class ServerProxy {
     	return cookie;
     }
     
-    private String DressCookie(String inputCookie) {
-    	return "catan.user=" + inputCookie;
+    private String DressCookie(String inputCookie, String gameCookie) {
+    	StringBuilder finalString = new StringBuilder();
+    	
+		finalString.append("catan.user=" + inputCookie);
+		if (gameCookie != null) {
+			finalString.append("; catan.game=" + gameCookie);
+		}
+
+    	return finalString.toString();    			
     }
     
 }
