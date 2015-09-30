@@ -1,6 +1,6 @@
 package client.models.mapdata;
 
-import shared.locations.HexLocation;
+import client.models.mapdata.HexLocation;
 import client.models.Resources;
 
 /**
@@ -14,6 +14,7 @@ public class Port {
 	private HexLocation location;
 	private String direction;
 	private int ratio;
+	
 	
 	public Resources getResource() {
 		return resource;

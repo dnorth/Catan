@@ -1,6 +1,6 @@
 package client.models;
 
-import shared.locations.EdgeLocation;
+import client.models.mapdata.EdgeLocation;
 
 /**
  * Each vertex on map, stores who owns vertex (has a settlement, city, or roads on corresponding edges)
@@ -13,7 +13,7 @@ public class VertexObject{
 	private int owner;
 	
 	/**
-	 * Locations of three edges touching vertex
+	 * Locations of two or three edges touching vertex
 	 */
 	private EdgeLocation[] location;
 

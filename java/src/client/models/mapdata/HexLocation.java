@@ -22,4 +22,12 @@ public class HexLocation {
 	public void setYcoord(int ycoord) {
 		this.ycoord = ycoord;
 	}
+	
+    @Override
+    public boolean equals(Object obj) {
+       if (!(obj instanceof HexLocation))
+            {return false;}
+        HexLocation h =(HexLocation) obj;
+            return xcoord==h.getXcoord() && ycoord==h.getYcoord();
+    }
 }
