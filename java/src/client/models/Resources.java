@@ -13,7 +13,7 @@ public class Resources{
 	private int wheatCount;
 	private int oreCount;
 	
-	Resources(int woodCount, int brickCount, int sheepCount, int wheatCount, int oreCount) {
+	public Resources(int woodCount, int brickCount, int sheepCount, int wheatCount, int oreCount) {
 		this.woodCount = woodCount;
 		this.brickCount = brickCount;
 		this.sheepCount = sheepCount;

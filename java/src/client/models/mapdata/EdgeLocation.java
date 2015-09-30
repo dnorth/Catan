@@ -9,12 +9,12 @@ public class EdgeLocation {
 	int xcoord;
 	int ycoord;
 	String direction;
-<<<<<<< HEAD
 	
 	public boolean isInHexLocation(HexLocation hl, String hlDirection)
 	{
 		return xcoord==hl.getXcoord() && ycoord==hl.getYcoord() && hlDirection.equals(direction);
-=======
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -34,6 +34,5 @@ public class EdgeLocation {
 		if (ycoord != other.ycoord)
 			return false;
 		return true;
->>>>>>> 198a56021587e2a34edc252bc9e979f9344032f0
 	}
 }
