@@ -83,16 +83,19 @@ abstract class ServerProxy {
             os.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             	try {
-            		
+            		JsonObject jsonReturnObject = new JsonObject();
+            		JsonParser jsonParser = new JsonParser();
             		//Test to read in input
             		BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            		String cookieHeader = connection.getHeaderField("Set-cookie");
-            		String cookie = StripCookie(cookieHeader);
-            		System.out.println(cookie);
-            		String cookieJsonString = URLDecoder.decode(cookie);
-            		
-            		JsonParser jsonParser = new JsonParser();
-            		JsonObject jsonReturnObject = (JsonObject)jsonParser.parse(cookieJsonString);
+            		if(connection.getHeaderField("Set-cookie") != null) {
+            			String cookieHeader = connection.getHeaderField("Set-cookie");
+            			String cookie = StripCookie(cookieHeader);
+            			System.out.println(cookie);
+            			String cookieJsonString = URLDecoder.decode(cookie);
+            			JsonObject jsonCookieElement = (JsonObject)jsonParser.parse(cookieJsonString);
+            			jsonReturnObject.add("Set-cookie", jsonCookieElement);
+            		}	
+            			
             		
             		
                     StringBuilder sb = new StringBuilder();
@@ -101,8 +104,10 @@ abstract class ServerProxy {
                         sb.append(line+"\n");
                     }
                     br.close();
+                    JsonObject responseBodyElement = (JsonObject)jsonParser.parse(sb.toString());
+                    jsonReturnObject.add("response-body", responseBodyElement);
                     System.out.print("What is returned: ");
-                    System.out.println(sb.toString());
+                    System.out.println(jsonReturnObject.toString());
                     return jsonReturnObject;
             	}
             	catch (ClassCastException e) {
