@@ -1,6 +1,7 @@
 package client.models;
 
-import shared.locations.EdgeLocation;
+import client.models.mapdata.EdgeLocation;
+
 
 /**
  * Each vertex on map, stores who owns vertex (has a settlement, city, or roads on corresponding edges)
