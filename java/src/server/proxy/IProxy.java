@@ -16,7 +16,7 @@ public interface IProxy {
 
 
 	//GAME PROXY
-	public JsonObject getGameModel ();
+	public JsonObject getGameModel (String userCookie);
 	public JsonObject resetGame ();
 	public JsonObject executeCommandList (JsonObject commands);
 	public JsonObject getExecutedCommands ();
@@ -27,7 +27,7 @@ public interface IProxy {
 	//GAMES PROXY
 	public JsonObject getGamesList ();
 	public JsonObject createGame (JsonObject inputGame);
-	public JsonObject joinGame (int gameId, String color);
+	public JsonObject joinGame (JsonObject gameData);
 	public JsonObject saveGame (int gameId, String fileName);
 	public JsonObject loadGame (JsonObject gameName);
 

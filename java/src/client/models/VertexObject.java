@@ -1,7 +1,6 @@
 package client.models;
 
 import client.models.mapdata.EdgeLocation;
-
 /**
  * Each vertex on map, stores who owns vertex (has a settlement, city, or roads on corresponding edges)
  */
@@ -15,7 +14,7 @@ public class VertexObject{
 	/**
 	 * Locations of two or three edges touching vertex
 	 */
-	private EdgeLocation[] location;
+	private EdgeLocation location;
 
 	public int getOwner() {
 		return owner;
@@ -25,11 +24,11 @@ public class VertexObject{
 		this.owner = owner;
 	}
 
-	public EdgeLocation[] getLocation() {
+	public EdgeLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(EdgeLocation[] location) {
+	public void setLocation(EdgeLocation location) {
 		this.location = location;
 	}
 }

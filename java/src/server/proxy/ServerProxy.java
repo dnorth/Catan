@@ -74,6 +74,11 @@ abstract class ServerProxy {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
+            if(postData.has("Cookie")) {
+            	String inputCookie = null;
+            	inputCookie = postData.get("Cookie").toString();
+            	connection.setRequestProperty("Set-cookie", inputCookie);
+            }
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
             connection.connect();
@@ -90,9 +95,10 @@ abstract class ServerProxy {
             		if(connection.getHeaderField("Set-cookie") != null) {
             			String cookieHeader = connection.getHeaderField("Set-cookie");
             			String cookie = StripCookie(cookieHeader);
-            			System.out.println(cookie);
+            			//System.out.println(cookie);
             			String cookieJsonString = URLDecoder.decode(cookie);
             			JsonObject jsonCookieElement = (JsonObject)jsonParser.parse(cookieJsonString);
+            			jsonReturnObject.addProperty("Cookie", cookie);
             			jsonReturnObject.add("Set-cookie", jsonCookieElement);
             		}	
             			
@@ -101,13 +107,13 @@ abstract class ServerProxy {
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
-                        sb.append(line+"\n");
+                        sb.append(line);
                     }
                     br.close();
-                    JsonObject responseBodyElement = (JsonObject)jsonParser.parse(sb.toString());
-                    jsonReturnObject.add("response-body", responseBodyElement);
-                    System.out.print("What is returned: ");
-                    System.out.println(jsonReturnObject.toString());
+                    String responseBody = sb.toString();
+                    jsonReturnObject.addProperty("Response-body", responseBody);
+                    //System.out.print("What is returned: ");
+                    //System.out.println(jsonReturnObject.toString());
                     return jsonReturnObject;
             	}
             	catch (ClassCastException e) {
