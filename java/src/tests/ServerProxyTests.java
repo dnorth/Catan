@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,10 +28,45 @@ public class ServerProxyTests {
 		randGenerator = new Random();
 		rand = randGenerator.nextInt(); //We're using a random number generator because we can't register the same user without restarting the server
 		proxy = new ClientCommunicator();
+		
+		JsonObject newUser = new JsonObject();
+		newUser.addProperty("username", "Tommy" + rand);
+		newUser.addProperty("password", "Williams");
+
+		JsonObject responseObject = proxy.userRegister(newUser);
+		//System.out.println(responseObject.toString());
+		
+		userCookie = responseObject.get("User-cookie").getAsString();
+		System.out.println("Got Here");
 	}
 	
-	//@Test
+	@Test
 	public void registerUserSuccessTest() {
+				
+		JsonObject newUser = new JsonObject();
+		newUser.addProperty("username", "Tommy" + (rand + 1));
+		newUser.addProperty("password", "Williams");
+		
+		
+		JsonObject responseObject = proxy.userRegister(newUser);
+		System.out.println(responseObject.toString());
+		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand + 1) + '"';
+		String shouldMatchPassword = "\"Williams\"";
+		
+		String userCookie = responseObject.get("User-cookie").toString();
+		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
+		String responseBody = responseObject.get("Response-body").getAsString();
+		System.out.println(cookie.get("name").toString());
+		
+		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
+		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
+		assertTrue(cookie.get("authentication").toString() != null);
+		assertTrue(cookie.get("playerID").getAsInt() > 11);
+		assertEquals(responseBody, "Success");
+	}
+	
+	@Test //TODO
+	public void registerDuplicateUserFailTest() {
 				
 		JsonObject newUser = new JsonObject();
 		newUser.addProperty("username", "Tommy" + rand);
@@ -38,42 +75,13 @@ public class ServerProxyTests {
 		
 		JsonObject responseObject = proxy.userRegister(newUser);
 		System.out.println(responseObject.toString());
-		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
-		String shouldMatchPassword = "\"Williams\"";
-		
-		userCookie = responseObject.get("Cookie").toString();
-		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
-		String responseBody = responseObject.get("Response-body").toString();
-		
-		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
-		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
-		assertTrue(cookie.get("authentication").toString() != null);
-		assertTrue(cookie.get("playerID").getAsInt() > 11);
-		assertEquals(responseBody, "\"Success\"");
-	}
-	
-	@Test //TODO
-	public void registerDuplicateUserFailTest() {
-				
-		/*JsonObject newUser = new JsonObject();
-		newUser.addProperty("username", "Tommy" + rand);
-		newUser.addProperty("password", "Williams");
-		
-		
-		JsonObject responseObject = proxy.userRegister(newUser);
-		System.out.println(responseObject.toString());
-		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
-		String shouldMatchPassword = "\"Williams\"";
 		
 		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
-		String responseBody = responseObject.get("Response-body").toString();
+		String responseBody = responseObject.get("Error-message").getAsString();
+		System.out.println(responseBody);
 		
-		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
-		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
-		assertTrue(cookie.get("authentication").toString() != null);
-		assertTrue(cookie.get("playerID").getAsInt() > 11);
-		assertEquals(responseBody, "\"Success\"");*/
-		assertFalse(true);
+		assertTrue(responseBody.contains("http code 400"));
+		assertTrue(responseBody.contains("Bad Request"));
 	}
 	
 	@Test
@@ -105,7 +113,7 @@ public class ServerProxyTests {
 		assertTrue(true);	
 	}
 	
-	//@Test
+	@Test
 	public void getGameModelTest() {
 		
 		JsonObject responseBody = proxy.getGameModel(userCookie);
@@ -149,26 +157,6 @@ public class ServerProxyTests {
 	
 	@Test 
 	public void joinGameSuccessTest() {
-		
-		JsonObject newUser = new JsonObject();
-		newUser.addProperty("username", "Tommy" + rand);
-		newUser.addProperty("password", "Williams");
-		
-		
-		JsonObject responseObject = proxy.userRegister(newUser);
-		System.out.println(responseObject.toString());
-		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
-		String shouldMatchPassword = "\"Williams\"";
-		
-		userCookie = responseObject.get("User-cookie").getAsString();
-		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
-		String responseBody = responseObject.get("Response-body").toString();
-		
-		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
-		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
-		assertTrue(cookie.get("authentication").toString() != null);
-		assertTrue(cookie.get("playerID").getAsInt() > 11);
-		assertEquals(responseBody, "\"Success\"");
 		
 		JsonObject inputNewGameData = new JsonObject();
 		inputNewGameData.addProperty("randomTiles", true);

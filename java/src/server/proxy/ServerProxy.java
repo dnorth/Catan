@@ -82,8 +82,8 @@ abstract class ServerProxy {
             	if(postData.has("Game-cookie")) {
             		gameCookie = postData.get("Game-cookie").getAsString();
             	}
-            	userCookie = DressCookie(userCookie, gameCookie);
-            	connection.setRequestProperty("Cookie", userCookie);
+            	String cookies = DressCookie(userCookie, gameCookie);
+            	connection.setRequestProperty("Cookie", cookies);
             }
             connection.setRequestMethod(HTTP_POST);
             connection.setDoOutput(true);
@@ -140,7 +140,7 @@ abstract class ServerProxy {
             }
             else {
                 throw new ClientException(String.format("doPost failed: %s (http code %d : %s)",
-                        urlPath, connection.getResponseCode(), connection.getResponseMessage()));
+                        urlPath, connection.getResponseCode(), connection.getResponseMessage()), connection.getResponseMessage());
             }
         }
         catch (IOException e) {
