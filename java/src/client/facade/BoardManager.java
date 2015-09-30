@@ -93,33 +93,17 @@ public class BoardManager {
 	public boolean canMaritimeTrade(int playerIndex)
 	{
 		Port[] ports = board.getPorts();
-		List<VertexObject> settlementVertexes = new ArrayList<VertexObject>();
-
-		for(VertexObject v : board.getCities())
-		{
-			if(v.getOwner()==playerIndex)
-			{settlementVertexes.add(v);}
-		}
-
-		for(VertexObject v : board.getSettlements())
-		{
-			if(v.getOwner()==playerIndex)
-			{settlementVertexes.add(v);}
-		}
 	
 		for(Port port : ports)
 		{
-			for(VertexObject v : settlementVertexes)
-			{
-				EdgeLocation[] locations = v.getLocation();
-				for(EdgeLocation edgeLocation : locations)
-				{
-					if(edgeLocation.isInHexLocation(port.getLocation(), port.getDirection()))
-					{return true;}
-				}
-			}
+			EdgeLocation portLocation = port.getEdgeLocation();
+			String[] adjVertexDirs = this.board.getAdjVertices().get(portLocation.getDirection());
+			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
+			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
+			
+			if (this.board.getVertexOwner(adj1) == playerIndex) return true;
+			if (this.board.getVertexOwner(adj2) == playerIndex) return true;
 		}
-
 
 		return false;
 	}

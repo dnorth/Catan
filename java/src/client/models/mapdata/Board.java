@@ -1,5 +1,9 @@
 package client.models.mapdata;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import client.models.VertexObject;
 
 /**
@@ -18,7 +22,37 @@ public class Board {
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
+	private static Map<String, String> oppDir;
+	static {
+        Map<String, String> oppDir = new HashMap<String, String>();
+        oppDir.put("N","S");
+        oppDir.put("NE","SW");
+        oppDir.put("E","W");
+        oppDir.put("SE","NW");
+        oppDir.put("S","N");
+        oppDir.put("SW","NE");
+        oppDir.put("W","E");
+        oppDir.put("NW","SE");
+        oppDir = Collections.unmodifiableMap(oppDir);
+    }
+	private static Map<String, String[]> adjVertices;
+	static {
+        Map<String, String[]> adjVertices = new HashMap<String, String[]>();
+        adjVertices.put("N", new String[] {"NE", "NW"});
+        adjVertices.put("NE", new String[] {"NE", "E"});
+        adjVertices.put("SE", new String[] {"E", "SE"});
+        adjVertices.put("S", new String[] {"SE", "SW"});
+        adjVertices.put("SW", new String[] {"SW", "W"});
+        adjVertices.put("NW", new String[] {"W", "NW"});
+        adjVertices = Collections.unmodifiableMap(adjVertices);
+    }
 	
+	public static Map<String, String> getOppDir() {
+		return oppDir;
+	}
+	public static Map<String, String[]> getAdjVertices() {
+		return adjVertices;
+	}
 	public Hex[] getHexes() {
 		return hexes;
 	}

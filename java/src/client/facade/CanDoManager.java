@@ -30,6 +30,7 @@ public class CanDoManager {
 	public boolean canBuyRoad(int playerIndex){
 		return this.playerManager.canBuyRoad(playerIndex);
 	}
+	
 	/**
 	 * Determines if a player can place a road on a specific hex edge.
 	 * @param playerIndex Number of player to determine ability to take action
@@ -38,8 +39,10 @@ public class CanDoManager {
 	 * @return if the player can place a road at the HexLocation.
 	 */
 	public boolean canPlaceRoadAtLocation(int playerIndex, Hex hex, EdgeDirection edge){
-		if (!this.playerManager.canBuyRoad(playerIndex)) return false;
-		//EdgeValue[] roads = this.clientModel.getBoard().getRoads();
+		// if (!this.playerManager.canBuyRoad(playerIndex)) return false;
+		// BoardManager -> make sure ownership of edge is -1
+		// BoardManager -> get list of surrounding owners, check if playerIndex in list
+		// EdgeValue[] roads = this.clientModel.getBoard().getRoads();
 		return true;
 	}
 	
@@ -58,7 +61,7 @@ public class CanDoManager {
 	 * @return if the player can accept the trade.
 	 */
 	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer){	
-		return true;
+		return this.playerManager.hasSpecifiedResources(playerIndex, tradeOffer);
 	}
 	
 	/**
