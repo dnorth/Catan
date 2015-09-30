@@ -6,7 +6,6 @@ public class Road {
 	public Road() {
 	}
 	public Road(int owner, EdgeLocation location) {
-		super();
 		this.owner = owner;
 		this.location = location;
 	}
