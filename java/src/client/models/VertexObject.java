@@ -15,7 +15,7 @@ public class VertexObject{
 	/**
 	 * Locations of three edges touching vertex
 	 */
-	private EdgeLocation[] location;
+	private EdgeLocation location;
 
 	public int getOwner() {
 		return owner;
@@ -25,11 +25,11 @@ public class VertexObject{
 		this.owner = owner;
 	}
 
-	public EdgeLocation[] getLocation() {
+	public EdgeLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(EdgeLocation[] location) {
+	public void setLocation(EdgeLocation location) {
 		this.location = location;
 	}
 }
