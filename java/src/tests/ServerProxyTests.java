@@ -9,6 +9,7 @@ import org.junit.Test;
 import server.proxy.ClientCommunicator;
 import server.proxy.IProxy;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
@@ -104,7 +105,7 @@ public class ServerProxyTests {
 		assertTrue(true);	
 	}
 	
-	@Test
+	//@Test
 	public void getGameModelTest() {
 		
 		JsonObject responseBody = proxy.getGameModel(userCookie);
@@ -159,7 +160,7 @@ public class ServerProxyTests {
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
 		String shouldMatchPassword = "\"Williams\"";
 		
-		userCookie = responseObject.get("Cookie").toString();
+		userCookie = responseObject.get("Cookie").getAsString();
 		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
 		String responseBody = responseObject.get("Response-body").toString();
 		
@@ -176,10 +177,9 @@ public class ServerProxyTests {
 		inputNewGameData.addProperty("name", "Test Game2");
 		
 		JsonObject responseObject1 = proxy.createGame(inputNewGameData);
-		String responseBody1 = responseObject1.get("Response-body").toString();
+		JsonObject responseBody1 = (JsonObject) responseObject1.get("Response-body");
 
-		//int gameId = responseObject1.get("id").getAsInt();
-		int gameId = 31;
+		int gameId = responseBody1.get("id").getAsInt();
 		System.out.println(gameId);
 		assertTrue(gameId > 2);
 		

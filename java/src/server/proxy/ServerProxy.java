@@ -76,7 +76,7 @@ abstract class ServerProxy {
             connection.setRequestProperty("Accept", "application/json");
             if(postData.has("Cookie")) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
             	String inputCookie = null;
-            	inputCookie = postData.get("Cookie").toString();
+            	inputCookie = postData.get("Cookie").getAsString();
             	inputCookie = DressCookie(inputCookie);
             	connection.setRequestProperty("Cookie", inputCookie);
             }
@@ -112,7 +112,13 @@ abstract class ServerProxy {
                     }
                     br.close();
                     String responseBody = sb.toString();
-                    jsonReturnObject.addProperty("Response-body", responseBody);
+                    
+                    try {
+                    	 JsonObject j = (JsonObject)jsonParser.parse(responseBody);
+                    	 jsonReturnObject.add("Response-body", j);
+                    } catch (ClassCastException e) {
+                        jsonReturnObject.addProperty("Response-body", responseBody);
+                    }
                     //System.out.print("What is returned: ");
                     //System.out.println(jsonReturnObject.toString());
                     return jsonReturnObject;
