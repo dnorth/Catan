@@ -56,45 +56,59 @@ public class Board {
 	public Hex[] getHexes() {
 		return hexes;
 	}
+	
 	public void setHexes(Hex[] hexes) {
 		this.hexes = hexes;
 	}
+	
 	public Port[] getPorts() {
 		return ports;
 	}
+	
 	public void setPorts(Port[] ports) {
 		this.ports = ports;
 	}
+	
 	public VertexObject[] getSettlements() {
 		return settlements;
 	}
+	
 	public void setSettlements(VertexObject[] settlements) {
 		this.settlements = settlements;
 	}
+	
 	public VertexObject[] getCities() {
 		return cities;
 	}
+	
 	public void setCities(VertexObject[] cities) {
 		this.cities = cities;
 	}
+	
 	public Road[] getRoads() {
 		return roads;
 	}
+	
 	public void setRoads(Road[] roads) {
 		this.roads = roads;
 	}
+	
 	public int getRadius() {
 		return radius;
 	}
+	
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
+	
 	public HexLocation getRobber() {
 		return robber;
 	}
+	
 	public void setRobber(HexLocation robber) {
 		this.robber = robber;
 	}
+	
 	public EdgeLocation getAltEdge(EdgeLocation edgeLocation)
 	{
 		int x = edgeLocation.getXcoord();
@@ -131,6 +145,7 @@ public class Board {
 		}
 		return new EdgeLocation(x, y, direction);
 	}
+	
 	public int getEdgeOwner(EdgeLocation edgeLocation)
 	{
 		EdgeLocation altLocation = this.getAltEdge(edgeLocation);
@@ -141,6 +156,7 @@ public class Board {
 		}
 		return -1;
 	}
+	
 	public EdgeLocation[] getAlternateEdgeLocations(EdgeLocation edgeLocation)
 	{
 		int x1 = edgeLocation.getXcoord();
@@ -195,6 +211,7 @@ public class Board {
 		}
 		return new EdgeLocation[] { new EdgeLocation(x1, y1, direction1), new EdgeLocation(x2, y2, direction2) };
 	}
+	
 	public int getVertexOwner(EdgeLocation edgeLocation)
 	{
 		EdgeLocation[] alternateEdgeLocations = this.getAlternateEdgeLocations(edgeLocation);
