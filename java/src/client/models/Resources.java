@@ -7,48 +7,48 @@ import shared.definitions.ResourceType;
 
 public class Resources{
 	
-	private int woodCount;
-	private int brickCount;
-	private int sheepCount;
-	private int wheatCount;
-	private int oreCount;
+	private int wood;
+	private int brick;
+	private int sheep;
+	private int wheat;
+	private int ore;
 	
-	public Resources(int woodCount, int brickCount, int sheepCount, int wheatCount, int oreCount) {
-		this.woodCount = woodCount;
-		this.brickCount = brickCount;
-		this.sheepCount = sheepCount;
-		this.wheatCount = wheatCount;
-		this.oreCount = oreCount;
+	public Resources(int wood, int brick, int sheep, int wheat, int ore) {
+		this.wood = wood;
+		this.brick = brick;
+		this.sheep = sheep;
+		this.wheat = wheat;
+		this.ore = ore;
 	}
 
 	public int getWoodCount() {
-		return woodCount;
+		return wood;
 	}
 
 	public int getBrickCount() {
-		return brickCount;
+		return brick;
 	}
 
 	public int getSheepCount() {
-		return sheepCount;
+		return sheep;
 	}
 
 	public int getWheatCount() {
-		return wheatCount;
+		return wheat;
 	}
 
 	public int getOreCount() {
-		return oreCount;
+		return ore;
 	}
 	@Override
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		appendStringType(sb, "wood", woodCount);
-		appendStringType(sb, "brick", brickCount);
-		appendStringType(sb, "sheep", sheepCount);
-		appendStringType(sb, "wheat", wheatCount);
-		appendStringType(sb, "ore", oreCount);
+		appendStringType(sb, "wood", wood);
+		appendStringType(sb, "brick", brick);
+		appendStringType(sb, "sheep", sheep);
+		appendStringType(sb, "wheat", wheat);
+		appendStringType(sb, "ore", ore);
 		if(sb.length()==0)
 		{sb.append("no resources");}
 		return sb.toString();
