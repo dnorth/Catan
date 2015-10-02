@@ -9,16 +9,16 @@ import client.models.Resources;
  */
 
 public class Port {
-	private Resources resource;
+	private String resource;
 	private HexLocation location;
 	private String direction;
 	private int ratio;
 	
 	
-	public Resources getResource() {
+	public String getResource() {
 		return resource;
 	}
-	public void setResource(Resources resource) {
+	public void setResource(String resource) {
 		this.resource = resource;
 	}
 	public HexLocation getLocation() {

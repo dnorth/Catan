@@ -11,32 +11,25 @@ import client.models.Resources;
 
 public class Hex {
 	private HexLocation location;
-	private Resources resource;
-	private int numberToken;
-	private boolean hasRobber;
-	
-	public boolean isHasRobber() {
-		return hasRobber;
-	}
-	public void setHasRobber(boolean hasRobber) {
-		this.hasRobber = hasRobber;
-	}
+	private String resource;
+	private int number;
+
 	public HexLocation getLocation() {
 		return location;
 	}
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
-	public Resources getResource() {
+	public String getResource() {
 		return resource;
 	}
-	public void setResource(Resources resource) {
+	public void setResource(String resource) {
 		this.resource = resource;
 	}
 	public int getNumberToken() {
-		return numberToken;
+		return number;
 	}
 	public void setNumberToken(int numberToken) {
-		this.numberToken = numberToken;
+		this.number = numberToken;
 	}
 }

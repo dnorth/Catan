@@ -6,8 +6,8 @@ package client.models.mapdata;
  */
 
 public class EdgeLocation {
-	int xcoord;
-	int ycoord;
+	int x;
+	int y;
 	String direction;
 	@Override
 	public boolean equals(Object obj) {
@@ -23,28 +23,28 @@ public class EdgeLocation {
 				return false;
 		} else if (!direction.equals(other.direction))
 			return false;
-		if (xcoord != other.xcoord)
+		if (x != other.x)
 			return false;
-		if (ycoord != other.ycoord)
+		if (y != other.y)
 			return false;
 		return true;
 	}
 	public EdgeLocation(int xcoord, int ycoord, String direction) {
-		this.xcoord = xcoord;
-		this.ycoord = ycoord;
+		this.x = xcoord;
+		this.y = ycoord;
 		this.direction = direction;
 	}
 	public int getXcoord() {
-		return xcoord;
+		return x;
 	}
 	public void setXcoord(int xcoord) {
-		this.xcoord = xcoord;
+		this.x = xcoord;
 	}
 	public int getYcoord() {
-		return ycoord;
+		return y;
 	}
 	public void setYcoord(int ycoord) {
-		this.ycoord = ycoord;
+		this.y = ycoord;
 	}
 	public String getDirection() {
 		return direction;

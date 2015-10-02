@@ -14,9 +14,28 @@ public class ClientModel
 	private Player[] players;
 	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
-	private int versionIndex;
-	private int winnerIndex;
+	private int version;
+	private int winner;
+	private DevCards deck;
 	
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public int getWinner() {
+		return winner;
+	}
+	public void setWinner(int winner) {
+		this.winner = winner;
+	}
+	public DevCards getDeck() {
+		return deck;
+	}
+	public void setDeck(DevCards deck) {
+		this.deck = deck;
+	}
 	public Resources getBank() {
 		return bank;
 	}
@@ -60,15 +79,15 @@ public class ClientModel
 		this.turnTracker = turnTracker;
 	}
 	public int getVersionIndex() {
-		return versionIndex;
+		return version;
 	}
 	public void setVersionIndex(int versionIndex) {
-		this.versionIndex = versionIndex;
+		this.version = versionIndex;
 	}
 	public int getWinnerIndex() {
-		return winnerIndex;
+		return winner;
 	}
 	public void setWinnerIndex(int winnerIndex) {
-		this.winnerIndex = winnerIndex;
+		this.winner = winnerIndex;
 	}
 }
