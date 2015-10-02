@@ -9,13 +9,13 @@ import client.models.mapdata.Hex;
 
 public class Player
 {
-	private int citiesNum;
+	private int cities;
 	private String color;
 	private boolean discarded;
 	private int monuments;
 	private String name;
 	private DevCards newDevCards;
-	private DevCards currentDevCards;
+	private DevCards oldDevCards;
 	private int playerIndex;
 	private boolean playedDevCard;
 	private int playerID;
@@ -26,10 +26,10 @@ public class Player
 	private int victoryPoints;
 	
 	public int getCitiesNum() {
-		return citiesNum;
+		return cities;
 	}
 	public void setCitiesNum(int citiesNum) {
-		this.citiesNum = citiesNum;
+		this.cities = citiesNum;
 	}
 	public String getColor() {
 		return color;
@@ -62,10 +62,10 @@ public class Player
 		this.newDevCards = newDevCards;
 	}
 	public DevCards getCurrentDevCards() {
-		return currentDevCards;
+		return oldDevCards;
 	}
 	public void setCurrentDevCards(DevCards oldDevCards) {
-		this.currentDevCards = oldDevCards;
+		this.oldDevCards = oldDevCards;
 	}
 	public int getPlayerIndex() {
 		return playerIndex;
