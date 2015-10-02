@@ -10,6 +10,13 @@ public class HexLocation {
 	private int xcoord;
 	private int ycoord;
 	
+	
+	public HexLocation(int xcoord, int ycoord) {
+		super();
+		this.xcoord = xcoord;
+		this.ycoord = ycoord;
+	}
+	
 	public int getXcoord() {
 		return xcoord;
 	}

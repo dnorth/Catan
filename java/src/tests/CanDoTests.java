@@ -4,13 +4,20 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import client.facade.BoardManager;
 import client.facade.PlayerManager;
 import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.mapdata.Board;
+import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.Hex;
+import client.models.mapdata.HexLocation;
 
 public class CanDoTests {
+	
+	BoardManager bm = new BoardManager(new Board());
 
 	public void printPlayerResources(int playerNumber, Player p)
 	{
@@ -20,6 +27,40 @@ public class CanDoTests {
 	public void printPlayerDevCards(int playerNumber, DevCards d)
 	{
 		System.out.println("Testing player "+ Integer.toString(playerNumber) + "with "+ d.toString());
+	}
+	
+	public Board createDefaultBoard()
+	{
+		Board board = new Board();
+		board.setHexes(new Hex[]
+				{
+				new Hex(new HexLocation(0,0),"none",-1 ),
+				new Hex(new HexLocation(0,0),"none",3 ),
+				new Hex(new HexLocation(0,0),"none",11 ),
+				new Hex(new HexLocation(0,0),"none",4 ),
+				new Hex(new HexLocation(0,0),"none",8 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),"none",1 ),
+				
+				
+				
+				
+				});
+		
+		
+		return board;
 	}
 
 	@Test
@@ -56,7 +97,14 @@ public class CanDoTests {
 
 	@Test
 	public void testCanPlaceRoadAtLocation() {
-		fail("Not yet implemented");
+		Player p1 = new Player();
+		Player p2 = new Player();
+		PlayerManager pm = new PlayerManager(new Player[]{p1,p2});
+		Board board = createDefaultBoard();
+		BoardManager bm = new BoardManager(board);
+		
+		fghy
+
 	}
 
 	@Test
@@ -302,6 +350,8 @@ public class CanDoTests {
 		printPlayerDevCards(1,p1.getCurrentDevCards());
 		p1.setCurrentDevCards(new DevCards(0,0,0,0,1));
 		assertTrue(pm.canPlayDevCard(0));
+		
+		
 		
 		printPlayerDevCards(2,p2.getCurrentDevCards());
 		p2.setCurrentDevCards(new DevCards(0,0,0,0,0));

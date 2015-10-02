@@ -1,8 +1,7 @@
 package client.models.mapdata;
 
 
-import shared.locations.HexLocation;
-import client.models.Resources;
+import client.models.mapdata.HexLocation;
 
 /**
  * Hex holds location on map, resource, and number token
@@ -12,6 +11,7 @@ import client.models.Resources;
 public class Hex {
 	private HexLocation location;
 	private String resource = "none";
+	
 	public Hex(HexLocation location, String resource, int number) {
 		this.location = location;
 		this.resource = resource;
