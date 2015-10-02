@@ -103,7 +103,7 @@ public class CanDoTests {
 		Board board = createDefaultBoard();
 		BoardManager bm = new BoardManager(board);
 		
-		fghy
+		
 
 	}
 
