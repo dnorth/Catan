@@ -1,9 +1,12 @@
 package client.facade;
 
+import java.util.Arrays;
+
 import shared.locations.EdgeDirection;
 import client.models.ClientModel;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.EdgeValue;
 import client.models.mapdata.Hex;
 
@@ -38,12 +41,11 @@ public class CanDoManager {
 	 * @param edge Edge on hex where road will be built
 	 * @return if the player can place a road at the HexLocation.
 	 */
-	public boolean canPlaceRoadAtLocation(int playerIndex, Hex hex, EdgeDirection edge){
-		// if (!this.playerManager.canBuyRoad(playerIndex)) return false;
-		// BoardManager -> make sure ownership of edge is -1
-		// BoardManager -> get list of surrounding owners, check if playerIndex in list
-		// EdgeValue[] roads = this.clientModel.getBoard().getRoads();
-		return true;
+	public boolean canPlaceRoadAtLocation(int playerIndex, Hex hex, EdgeLocation edge){
+		if (this.boardManager.getEdgeOwner(edge) != -1) return false;
+		Integer[] surrOwners = this.boardManager.getAdjacentEdgeOwners(edge);
+		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
+		else return false;
 	}
 	
 	/**
