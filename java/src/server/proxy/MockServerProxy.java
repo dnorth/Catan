@@ -1,14 +1,17 @@
 package server.proxy;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -22,8 +25,20 @@ public class MockServerProxy implements IProxy{
 	//GAME API
 	@Override
 	public JsonObject getGameModel(JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		JsonParser jsonParser = new JsonParser();
+		JsonObject mockServerModel = new JsonObject();
+		
+		String s = null;
+		try {
+			s = readFile("sample_model2.json");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mockServerModel = (JsonObject)jsonParser.parse(s);
+		
+		return mockServerModel;
 	}
 
 	@Override
@@ -231,4 +246,20 @@ public class MockServerProxy implements IProxy{
 		}
 
 
+	private String readFile(String pathname) throws IOException {
+
+	    File file = new File(pathname);
+	    StringBuilder fileContents = new StringBuilder((int)file.length());
+	    Scanner scanner = new Scanner(file);
+	    String lineSeparator = System.getProperty("line.separator");
+
+	    try {
+	        while(scanner.hasNextLine()) {        
+	            fileContents.append(scanner.nextLine() + lineSeparator);
+	        }
+	        return fileContents.toString();
+	    } finally {
+	        scanner.close();
+	    }
+	}
 }
