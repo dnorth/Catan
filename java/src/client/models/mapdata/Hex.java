@@ -11,7 +11,13 @@ import client.models.Resources;
 
 public class Hex {
 	private HexLocation location;
-	private String resource;
+	private String resource = "none";
+	public Hex(HexLocation location, String resource, int number) {
+		super();
+		this.location = location;
+		this.resource = resource;
+		this.number = number;
+	}
 	private int number;
 
 	public HexLocation getLocation() {
