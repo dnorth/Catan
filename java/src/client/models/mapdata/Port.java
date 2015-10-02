@@ -45,4 +45,12 @@ public class Port {
 		int y = location.getY();
 		return new EdgeLocation(x, y, direction);
 	}
+	
+	@Override
+	public String toString() {
+		return "Port [resource=" + resource + ", location=" + location.toString() + ", direction=" + direction + ", ratio=" + ratio
+				+ "]";
+	}
+	
+	
 }

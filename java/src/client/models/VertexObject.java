@@ -31,4 +31,11 @@ public class VertexObject{
 	public void setLocation(EdgeLocation location) {
 		this.location = location;
 	}
+
+	@Override
+	public String toString() {
+		return "VertexObject [owner=" + owner + ", location=" + location.toString() + "]";
+	}
+	
+	
 }

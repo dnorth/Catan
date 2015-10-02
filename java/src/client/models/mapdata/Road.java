@@ -21,4 +21,9 @@ public class Road {
 	public void setLocation(EdgeLocation location) {
 		this.location = location;
 	}
+	@Override
+	public String toString() {
+		return "Road [owner=" + owner + ", location=" + location.toString() + "]";
+	}
+	
 }

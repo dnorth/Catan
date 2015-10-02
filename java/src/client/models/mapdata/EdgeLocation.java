@@ -52,4 +52,9 @@ public class EdgeLocation {
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
+	@Override
+	public String toString() {
+		return "EdgeLocation [x=" + x + ", y=" + y + ", direction=" + direction + "]";
+	}
+	
 }

@@ -51,6 +51,7 @@ public class JSONToModel {
 		System.out.println(board.toString());
 		clientModel.setLog(log);
 		
+		System.out.println("\nTesting Players: ");
 		
 		
 		

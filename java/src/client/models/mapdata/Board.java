@@ -243,11 +243,38 @@ public class Board {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("BOARD TO STRING: \n");
+		
+		sb.append("Hexes: \n");
 		for(Hex hex : hexes) {
-			sb.append(hex.toString() + "\n");
+			sb.append("\t" + hex.toString() + "\n");
 		}
 		
+		sb.append("Ports: \n");
+		for(Port port : ports) {
+			sb.append("\t" + port.toString() + "\n");
+		}
+		
+		sb.append("Settlements: \n");
+		for(VertexObject settlement : settlements) {
+			sb.append("\t" + settlement.toString() + "\n");
+		}
+		
+		sb.append("Cities: \n");
+		for(VertexObject city : cities) {
+			sb.append("\t" + city.toString() + "\n");
+		}
+		
+		sb.append("Roads: \n");
+		for(Road road : roads) {
+			sb.append("\t" + road.toString() + "\n");
+		}
+		
+		sb.append("Radius: \n");
+		sb.append("\t" + radius + "\n");
+		
+		sb.append("Robber: \n");
+		sb.append("\t" + robber + "\n");
+
 		return sb.toString();
 	}
 }
