@@ -1,14 +1,10 @@
 package server.proxy;
 
-import java.util.ArrayList;
-
 import com.google.gson.JsonObject;
 
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.models.ClientModel;
-import client.models.Game;
 import client.models.Resources;
 
 
@@ -16,12 +12,12 @@ public interface IProxy {
 
 
 	//GAME PROXY
-	public JsonObject getGameModel (String userCookie);
-	public JsonObject resetGame ();
-	public JsonObject executeCommandList (JsonObject commands);
-	public JsonObject getExecutedCommands ();
-	public void addAI (String soldierType);
-	public JsonObject listAI ();
+	public JsonObject getGameModel (JsonObject optionalCookies);
+	public JsonObject resetGame (JsonObject optionalCookies);
+	public JsonObject executeCommandList (JsonObject commands, JsonObject optionalCookies);
+	public JsonObject getExecutedCommands (JsonObject optionalCookies);
+	public void addAI (String soldierType, JsonObject optionalCookies);
+	public JsonObject listAI (JsonObject optionalCookies);
 
 
 	//GAMES PROXY

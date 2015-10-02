@@ -14,13 +14,11 @@ public class GameProxy extends ServerProxy{
 	 * @post null if there is no game
 	 * 
 	 */
-	public JsonObject getGameModel (String userCookie){
+	public JsonObject getGameModel (JsonObject optionalCookies){
         
-		JsonObject inputObject = new JsonObject();
-		inputObject.addProperty("Cookie", userCookie);
 		JsonObject model = null; //The API says "GameModel" Is this the same thing??
 		try {
-			model = doPost("/game/model", inputObject);
+			model = doGet("/game/model", optionalCookies);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -32,7 +30,7 @@ public class GameProxy extends ServerProxy{
 	 * @post if default game, reset to initial placement. If user-created, reset to very beginning.
 	 * @return clientModel JSON
 	 */
-	public JsonObject resetGame (){
+	public JsonObject resetGame (JsonObject optionalCookies){
 		JsonObject clientModelJSON = null;
         try {
             clientModelJSON = doPost("/game/reset", null);
@@ -48,7 +46,7 @@ public class GameProxy extends ServerProxy{
 	 * @param ArrayList of commands to be executed
 	 * @return clientModel JSON (identical to /game/model)
 	 */
-	public JsonObject executeCommandList (JsonObject commands){
+	public JsonObject executeCommandList (JsonObject commands, JsonObject optionalCookies){
 		JsonObject clientModelJSON = null;
         try {
             clientModelJSON = doPost("/game/commands", commands);
@@ -63,10 +61,10 @@ public class GameProxy extends ServerProxy{
 	 * @post no change
 	 * @return ArrayList of executed commands
 	 */
-	public JsonObject getExecutedCommands (){
+	public JsonObject getExecutedCommands (JsonObject optionalCookies){
 		JsonObject executedCommands = null;
         try {
-            executedCommands = doGet("/game/commands");
+            executedCommands = doGet("/game/commands", optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -78,9 +76,9 @@ public class GameProxy extends ServerProxy{
 	 * @post a new AI has been added to the game
 	 * @param soldierType
 	 */
-	public void addAI (String soldierType){
+	public void addAI (String soldierType, JsonObject optionalCookies){
         try {
-            doPost("/game/addAI", null);
+            doPost("/game/addAI", optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -91,10 +89,10 @@ public class GameProxy extends ServerProxy{
 	 * @post this will return a list with only 1 entry which will be "LARGEST_ARMY"
 	 * @return the supported types of AI
 	 */
-	public JsonObject listAI (){
+	public JsonObject listAI (JsonObject optionalCookies){
 		JsonObject AItypes = null;
         try {
-            AItypes = doGet("/game/listAI");
+            AItypes = doGet("/game/listAI", optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }

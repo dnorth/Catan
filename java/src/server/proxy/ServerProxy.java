@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -31,10 +32,15 @@ abstract class ServerProxy {
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
     }    
     
-    protected JsonObject doGet(String urlPath) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
+    protected JsonObject doGet(String urlPath, JsonObject optionalCookies) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
         try {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestProperty("Accept", "application/json");
+            if(optionalCookies != null) {
+            	String cookie = DressCookie(optionalCookies.get("User-cookie").getAsString(), optionalCookies.get("Game-cookie").getAsString());
+            	connection.setRequestProperty("Cookie", cookie);
+            }
             connection.setRequestMethod(HTTP_GET);
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -49,14 +55,9 @@ abstract class ServerProxy {
                 System.out.print("What is returned: ");
                 System.out.println(sb.toString());
                 String jsonToParse = sb.toString();
-
-                JsonParser jsonParser = new JsonParser();
-                Gson gson = new Gson();
-               // JsonObject o = gson.fromJson(json, classOfT);
-        		//JsonObject jsonReturnObject = (JsonObject)jsonParser.parse(jsonToParse);
-            	
-            	
-                return null;
+			    JsonObject returnObject = new JsonObject();
+			    returnObject.addProperty("Response-body", jsonToParse);
+                return returnObject;
             }
             else {
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",

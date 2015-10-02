@@ -21,37 +21,37 @@ public class MockServerProxy implements IProxy{
 
 	//GAME API
 	@Override
-	public JsonObject getGameModel(String userCookie) {
+	public JsonObject getGameModel(JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public JsonObject resetGame() {
+	public JsonObject resetGame(JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public JsonObject executeCommandList(JsonObject commands) {
+	public JsonObject executeCommandList(JsonObject commands, JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public JsonObject getExecutedCommands() {
+	public JsonObject getExecutedCommands(JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addAI(String soldierType) {
+	public void addAI(String soldierType, JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public JsonObject listAI() {
+	public JsonObject listAI(JsonObject optionalCookies) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -18,7 +18,7 @@ public class GamesProxy extends ServerProxy{
 	public JsonObject getGamesList (){
 		JsonObject games = null;
 		try {
-			games = doGet("/games/list");
+			games = doGet("/games/list", null);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

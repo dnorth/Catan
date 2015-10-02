@@ -51,33 +51,33 @@ public class ClientCommunicator implements IProxy{
 	
 	//GAME API
 	@Override
-	public JsonObject getGameModel(String userCookie) {
-		return gameProxy.getGameModel(userCookie);
+	public JsonObject getGameModel(JsonObject optionalCookies) {
+		return gameProxy.getGameModel(optionalCookies);
 	}
 
 	@Override
-	public JsonObject resetGame() {
-		return gameProxy.resetGame();
+	public JsonObject resetGame(JsonObject optionalCookies) {
+		return gameProxy.resetGame(optionalCookies);
 	}
 
 	@Override
-	public JsonObject executeCommandList(JsonObject commands) {
-		return gameProxy.executeCommandList(commands);
+	public JsonObject executeCommandList(JsonObject commands, JsonObject optionalCookies) {
+		return gameProxy.executeCommandList(commands, optionalCookies);
 	}
 
 	@Override
-	public JsonObject getExecutedCommands() {
-		return gameProxy.getExecutedCommands();
+	public JsonObject getExecutedCommands(JsonObject optionalCookies) {
+		return gameProxy.getExecutedCommands(optionalCookies);
 	}
 
 	@Override
-	public void addAI(String soldierType) {
-		gameProxy.addAI(soldierType);
+	public void addAI(String soldierType, JsonObject optionalCookies) {
+		gameProxy.addAI(soldierType, optionalCookies);
 	}
 
 	@Override
-	public JsonObject listAI() {
-		return gameProxy.listAI();
+	public JsonObject listAI(JsonObject optionalCookies) {
+		return gameProxy.listAI(optionalCookies);
 	}
 
 	

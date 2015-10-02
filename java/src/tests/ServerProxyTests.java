@@ -110,13 +110,15 @@ public class ServerProxyTests {
 		
 		JsonObject responseBody = proxy.getGamesList();
 		System.out.println(responseBody.toString());
-		assertTrue(true);	
+		assertNotNull(responseBody);	
 	}
 	
 	@Test
 	public void getGameModelTest() {
 		
-		JsonObject responseBody = proxy.getGameModel(userCookie);
+		JsonObject responseBody = proxy.getGameModel(userCookie, null);
+		System.out.println(responseBody.toString());
+		assertNotNull(responseBody);
 	}
 	
 	//@Test 
@@ -190,7 +192,8 @@ public class ServerProxyTests {
 		inputGame.addProperty("randomPorts", true);
 		inputGame.addProperty("name", "New Game!");
 		
-		JsonObject newGame = proxy.createGame(inputGame); 
+		JsonObject newGame = proxy.createGame(inputGame);
+		assertTrue(newGame != null);
 	}
 	
 	//@Test
