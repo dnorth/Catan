@@ -1,7 +1,11 @@
 package server.ServerPoller;
 
 import server.proxy.IProxy;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
+import jsonTranslator.JSONToModel;
 
 /**
  * Polls server periodically to check for changes in model, then receives update <br>
@@ -11,6 +15,7 @@ public class ServerPoller {
 	int currVersion;
 	IProxy server; //IServer can be real server or mock proxy
 	ClientModel client;
+	JSONToModel jsonToModelTranslator;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -19,6 +24,7 @@ public class ServerPoller {
 	public ServerPoller(IProxy serv, ClientModel cli){
 		server = serv;
 		client = cli;
+		jsonToModelTranslator = new JSONToModel();
 		initialize();
 	}
 	
@@ -52,6 +58,12 @@ public class ServerPoller {
 		
 	} //Stops polling server or proxy
 	
+	
+	public void getCurrentModel(String userCookie) {
+		JsonObject serverModel = server.getGameModel(userCookie);
+		
+		ClientModel m = jsonToModelTranslator.translateClientModel(serverModel);
+	}
 	/**
 	 * Compares newest version with currVersion - if different, return true
 	 * @param newestVersion new version number

@@ -21,7 +21,7 @@ public class JSONToModel {
 	 * Parent method to translate entire model
 	 * @return updated ClientModel
 	 */
-	public static ClientModel translateClientModel() {
+	public static ClientModel translateClientModel(JsonObject serverModel) {
 		return null;
 	}
 	
