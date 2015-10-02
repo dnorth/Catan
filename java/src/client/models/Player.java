@@ -64,7 +64,7 @@ public class Player
 	public DevCards getCurrentDevCards() {
 		return currentDevCards;
 	}
-	public void setOldDevCards(DevCards oldDevCards) {
+	public void setCurrentDevCards(DevCards oldDevCards) {
 		this.currentDevCards = oldDevCards;
 	}
 	public int getPlayerIndex() {

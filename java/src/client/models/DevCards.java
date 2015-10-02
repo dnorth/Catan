@@ -11,7 +11,7 @@ private int roadBuildingCount;
 private int soldierCount;
 private int yearOfPlentyCount;
 
-DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int soldierCount, int yearOfPlentyCount) {
+public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int soldierCount, int yearOfPlentyCount) {
 	this.monopolyCount = monopolyCount;
 	this.monumentCount = monumentCount;
 	this.roadBuildingCount = roadBuildingCount;
@@ -59,5 +59,24 @@ public void setYearOfPlentyCount(int yearOfPlentyCount) {
 	this.yearOfPlentyCount = yearOfPlentyCount;
 }
 
+@Override
+public String toString()
+{
+	StringBuilder sb = new StringBuilder();
+	appendStringType(sb, "monopoly", monopolyCount);
+	appendStringType(sb, "monument", monumentCount);
+	appendStringType(sb, "roadBuilding", roadBuildingCount);
+	appendStringType(sb, "soldier", soldierCount);
+	appendStringType(sb, "yearOfPlenty", yearOfPlentyCount);
+	if(sb.length()==0)
+	{sb.append("no DevCards");}
+	return sb.toString();
+}
+
+private void appendStringType(StringBuilder sb,String type, int count)
+{
+	if(count>0)
+	{sb.append(count + " "+ type +", ");}
+}
 
 }
