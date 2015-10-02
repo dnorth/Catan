@@ -47,4 +47,11 @@ public class TurnTracker{
 	public void setLargestArmy(int largestArmy) {
 		this.largestArmy = largestArmy;
 	}
+	@Override
+	public String toString() {
+		return "\tTurnTracker [currentTurn=" + currentTurn + ", status=" + status + ", longestRoad=" + longestRoad
+				+ ", largestArmy=" + largestArmy + "]";
+	}
+	
+	
 }

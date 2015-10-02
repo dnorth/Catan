@@ -1,6 +1,7 @@
 package jsonTranslator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import client.models.ClientModel;
@@ -39,23 +40,43 @@ public class JSONToModel {
 		MessageList chat = translateChat(serverModel);
 		MessageList log = translateLog(serverModel);
 		Board board = translateBoard(serverModel);
+		TurnTracker turnTracker = translateTurnTracker(serverModel);
+		int version = translateVersion(serverModel);
+		int winner = translateWinner(serverModel);
+		
+		System.out.println("Testing bank: ");
+		System.out.println(bank.toString() + "\n");
 		clientModel.setBank(bank);
 		
 		System.out.println("Testing chat: ");
 		System.out.println(chat.toString());
-		
+		clientModel.setChat(chat);
+
 		System.out.println("\nTesting log: ");
 		System.out.println(log.toString());
-		
+		clientModel.setLog(log);
+
 		System.out.println("\nTesting Board: ");
 		System.out.println(board.toString());
-		clientModel.setLog(log);
+		clientModel.setBoard(board);
+		
+		System.out.println("\nTesting Turn Tracker: ");
+		System.out.println(turnTracker.toString());
+		clientModel.setTurnTracker(turnTracker);
 		
 		System.out.println("\nTesting Players: ");
 		
+		System.out.println("\nTesting Version: ");
+		System.out.println(version);
+		clientModel.setVersion(version);
+
 		
+		System.out.println("\nTesting Winner: ");
+		System.out.println(winner);
+		clientModel.setWinner(winner);
+
 		
-		return null;
+		return clientModel;
 	}
 	
 	
@@ -99,15 +120,25 @@ public class JSONToModel {
 	 * Translates player list and info to put in updated client model
 	 * @return updated player list
 	 */
-	public static Player[] translatePlayers() {
-		return null;
+	
+	//TODO GET PLAYERS TO WORK - THIS IS HARDER BECAUSE ITS A LIST OF PLAYERS
+	public static Player[] translatePlayers(JsonObject serverModel) {
+		Player[] players = null;
+		JsonElement playerIterator = serverModel.get("players");
+		//for(Player p : playerIterator)
+		//{
+		//	
+		//}
+
+		return players;
 	}
 	
+	//TODO Is this REALLY part of the client model? How will we integrate it?
 	/**
 	 * Translates trade offer to put in updated client model
 	 * @return updated trade offer
 	 */
-	public static TradeOffer translateTradeOffer() {
+	public static TradeOffer translateTradeOffer(JsonObject serverModel) {
 		return null;
 	}
 	
@@ -115,23 +146,26 @@ public class JSONToModel {
 	 * Translates turn tracker to put in updated client model
 	 * @return updated turn tracker
 	 */
-	public static TurnTracker translateTurnTracker() {
-		return null;
+	public static TurnTracker translateTurnTracker(JsonObject serverModel) {
+		TurnTracker turnTracker = (TurnTracker)g.fromJson(serverModel.get("turnTracker"), TurnTracker.class);
+		return turnTracker;
 	}
 	
 	/**
 	 * Obtains version number from JSON
 	 * @return updated version number
 	 */
-	public static int translateVersion() {
-		return 0;
+	public static int translateVersion(JsonObject serverModel) {
+		int version = serverModel.get("version").getAsInt();
+		return version;
 	}
 	
 	/**
 	 * Obtains winner index from JSON
 	 * @return updated winner index
 	 */
-	public static int translateWinner() {
-		return 0;
+	public static int translateWinner(JsonObject serverModel) {
+		int winner = serverModel.get("winner").getAsInt();
+		return winner;
 	}
 }
