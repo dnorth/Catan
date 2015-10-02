@@ -41,8 +41,8 @@ public class Port {
 	}
 	
 	public EdgeLocation getEdgeLocation() {
-		int x = location.getXcoord();
-		int y = location.getYcoord();
+		int x = location.getX();
+		int y = location.getY();
 		return new EdgeLocation(x, y, direction);
 	}
 }

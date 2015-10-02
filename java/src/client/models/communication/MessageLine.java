@@ -22,4 +22,12 @@ public class MessageLine
 		this.source = source;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "MessageLine [message=" + message + ", source=" + source + "]";
+	}
+	
+	
+	
 }

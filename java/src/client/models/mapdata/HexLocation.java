@@ -7,27 +7,27 @@ package client.models.mapdata;
  */
 
 public class HexLocation {
-	private int xcoord;
-	private int ycoord;
+	private int x;
+	private int y;
 	
 	
-	public HexLocation(int xcoord, int ycoord) {
+	public HexLocation(int x, int y) {
 		super();
-		this.xcoord = xcoord;
-		this.ycoord = ycoord;
+		this.x = x;
+		this.y = y;
 	}
 	
-	public int getXcoord() {
-		return xcoord;
+	public int getX() {
+		return x;
 	}
-	public void setXcoord(int xcoord) {
-		this.xcoord = xcoord;
+	public void setX(int x) {
+		this.x = x;
 	}
-	public int getYcoord() {
-		return ycoord;
+	public int getY() {
+		return y;
 	}
-	public void setYcoord(int ycoord) {
-		this.ycoord = ycoord;
+	public void setY(int y) {
+		this.y = y;
 	}
 	
     @Override
@@ -35,6 +35,12 @@ public class HexLocation {
        if (!(obj instanceof HexLocation))
             {return false;}
         HexLocation h =(HexLocation) obj;
-            return xcoord==h.getXcoord() && ycoord==h.getYcoord();
+            return x==h.getX() && y==h.getY();
     }
+
+	@Override
+	public String toString() {
+		return "HexLocation [x=" + x + ", y=" + y + "]";
+	}
+    
 }

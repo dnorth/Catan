@@ -17,4 +17,14 @@ public class MessageList
 	public void setLines(MessageLine[] lines) {
 		this.lines = lines;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(MessageLine line : lines) {
+			sb.append(line.toString() + "\n");
+		}
+		
+		return sb.toString();
+	}
 }

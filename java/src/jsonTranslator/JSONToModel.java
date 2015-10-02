@@ -32,9 +32,24 @@ public class JSONToModel {
 	
 	public static ClientModel translateClientModel(JsonObject serverModel) {
 		
-		Resources r = (Resources)g.fromJson(serverModel.get("bank"), Resources.class);
+		ClientModel clientModel = new ClientModel();
 		
-		System.out.println(r);
+		//TODO Do this for every part of the client model
+		Resources bank = translateBank(serverModel);
+		MessageList chat = translateChat(serverModel);
+		MessageList log = translateLog(serverModel);
+		Board board = translateBoard(serverModel);
+		clientModel.setBank(bank);
+		
+		System.out.println("Testing chat: ");
+		System.out.println(chat.toString());
+		
+		System.out.println("\nTesting log: ");
+		System.out.println(log.toString());
+		
+		System.out.println("\nTesting Board: ");
+		System.out.println(board.toString());
+		clientModel.setLog(log);
 		
 		
 		
@@ -47,32 +62,36 @@ public class JSONToModel {
 	 * Translates bank to put in updated client model
 	 * @return updated bank
 	 */
-	public static Resources translateBank() {
-		return null;
+	public static Resources translateBank(JsonObject serverModel) {
+		Resources bank = (Resources)g.fromJson(serverModel.get("bank"), Resources.class);
+		return bank;
 	}
 	
 	/**
 	 * Translates chat to put in updated client model
 	 * @return updated chat
 	 */
-	public static MessageList translateChat() {
-		return null;
+	public static MessageList translateChat(JsonObject serverModel) {
+		MessageList chat = (MessageList)g.fromJson(serverModel.get("chat"), MessageList.class);
+		return chat;
 	}
 	
 	/**
 	 * Translates log to put in updated client model
 	 * @return updated log
 	 */
-	public static MessageList translateLog() {
-		return null;
+	public static MessageList translateLog(JsonObject serverModel) {
+		MessageList log = (MessageList)g.fromJson(serverModel.get("log"), MessageList.class);
+		return log;
 	}
 	
 	/**
 	 * Translates board to put in updated client model
 	 * @return updated board
 	 */
-	public static Board translateBoard() {
-		return null;
+	public static Board translateBoard(JsonObject serverModel) {
+		Board board = (Board)g.fromJson(serverModel.get("map"), Board.class);
+		return board;
 	}
 	
 	/**

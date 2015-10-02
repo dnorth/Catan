@@ -239,4 +239,15 @@ public class Board {
 		}
 		return -1;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("BOARD TO STRING: \n");
+		for(Hex hex : hexes) {
+			sb.append(hex.toString() + "\n");
+		}
+		
+		return sb.toString();
+	}
 }

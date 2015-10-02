@@ -41,4 +41,10 @@ public class Hex {
 	public void setNumberToken(int numberToken) {
 		this.number = numberToken;
 	}
+	@Override
+	public String toString() {
+		return "Hex [location=" + location.toString() + ", resource=" + resource + ", number=" + number + "]";
+	}
+	
+	
 }
