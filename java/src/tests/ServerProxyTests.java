@@ -116,7 +116,13 @@ public class ServerProxyTests {
 	@Test
 	public void getGameModelTest() {
 		
-		JsonObject responseBody = proxy.getGameModel(userCookie, null);
+		String gameCookie = null;
+		
+		JsonObject cookies = new JsonObject();
+		cookies.addProperty("User-cookie", userCookie);
+		cookies.addProperty("Game-cookie", gameCookie);
+
+		JsonObject responseBody = proxy.getGameModel(cookies);
 		System.out.println(responseBody.toString());
 		assertNotNull(responseBody);
 	}
