@@ -59,8 +59,8 @@ public class ServerPoller {
 	} //Stops polling server or proxy
 	
 	
-	public void getCurrentModel(String userCookie) {
-		JsonObject serverModel = server.getGameModel(userCookie);
+	public void getCurrentModel(JsonObject cookies) {
+		JsonObject serverModel = server.getGameModel(cookies);
 		
 		ClientModel m = jsonToModelTranslator.translateClientModel(serverModel);
 	}

@@ -21,7 +21,24 @@ public class JSONToModel {
 	 * Parent method to translate entire model
 	 * @return updated ClientModel
 	 */
+	
+	private static Gson g;
+	
+	public JSONToModel() {
+		
+		this.g = new Gson();
+		
+	}
+	
 	public static ClientModel translateClientModel(JsonObject serverModel) {
+		
+		Resources r = (Resources)g.fromJson(serverModel.get("bank"), Resources.class);
+		
+		System.out.println(r);
+		
+		
+		
+		
 		return null;
 	}
 	
