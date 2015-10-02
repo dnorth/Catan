@@ -31,6 +31,11 @@ public class ServerPollerTests {
 
 		ServerPoller poller = new ServerPoller(proxy, clientModel);
 		
+		//Fake Cookies?
+		JsonObject j = null;
+		
+		poller.updateCurrentModel(j);
+		
 		//assertEquals(cookie.get(\"name\").toString(), shouldMatchUsername);
 		//assertEquals(cookie.get(\"password\").toString(), shouldMatchPassword);
 		//assertTrue(cookie.get(\"authentication\").toString() != null);

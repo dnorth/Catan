@@ -59,10 +59,12 @@ public class ServerPoller {
 	} //Stops polling server or proxy
 	
 	
-	public void getCurrentModel(JsonObject cookies) {
+	public void updateCurrentModel(JsonObject cookies) {
 		JsonObject serverModel = server.getGameModel(cookies);
 		
-		ClientModel m = jsonToModelTranslator.translateClientModel(serverModel);
+		//TODO VERIFY VERSION NUMBER CHANGE
+		
+		client = jsonToModelTranslator.translateClientModel(serverModel);
 	}
 	/**
 	 * Compares newest version with currVersion - if different, return true
