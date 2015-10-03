@@ -1,11 +1,13 @@
 package server.ServerPoller;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
+import client.models.ClientModel;
 
 import com.google.gson.JsonObject;
-
-import client.models.ClientModel;
-import jsonTranslator.JSONToModel;
 
 /**
  * Polls server periodically to check for changes in model, then receives update <br>
@@ -16,6 +18,7 @@ public class ServerPoller {
 	private IProxy server; //IServer can be real server or mock proxy
 	private ClientModel client;
 	private JSONToModel jsonToModelTranslator;
+	private Timer timer;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -26,6 +29,12 @@ public class ServerPoller {
 		client = cli;
 		jsonToModelTranslator = new JSONToModel();
 		initialize();
+	}
+	
+	private class PollEvent extends TimerTask {
+		public void run() {
+			updateCurrentModel(server.getGameModel(null)); //cookies?
+		}
 	}
 	
 	/**
@@ -48,23 +57,31 @@ public class ServerPoller {
 	 * Begins timer to poll server or proxy
 	 */
 	void initialize() {
-		
+		timer = new Timer();
+		//set timer to poll server every second
+		timer.schedule(new PollEvent(), 0, 1000);
 	} // Begin timer to poll server or proxy
 
 	/**
 	 * Stops polling server or proxy
 	 */
 	void stopPolling() {
-		
+		timer.cancel();
+		timer.purge();
 	} //Stops polling server or proxy
 	
 	
+	/**
+	 * Updates currVersion, gets new model, and replaces old model
+	 * @param cookies
+	 */
 	public void updateCurrentModel(JsonObject cookies) {
 		JsonObject serverModel = server.getGameModel(cookies);
 		
-		//TODO VERIFY VERSION NUMBER CHANGE
-		
-		client = jsonToModelTranslator.translateClientModel(serverModel);
+		if(newVersion(JSONToModel.translateVersion(cookies))) {
+			client = jsonToModelTranslator.translateClientModel(serverModel);
+			//TODO reconnect managers/facade to model
+		}
 	}
 	/**
 	 * Compares newest version with currVersion - if different, return true
@@ -72,15 +89,13 @@ public class ServerPoller {
 	 * @return true if new version different than currVersion
 	 */
 	private boolean newVersion(int newestVersion){ // compare newest version with currVersion - if different, return new
-		return false;
+		if (newestVersion != currVersion) {
+			currVersion = newestVersion;
+			return true;
+		}
+		else
+			return false;
 	}
-
-	/**
-	 * Updates currVersion, receives server's model, and sends to client
-	 */
-	void getNewVersion() {
-		
-	} // update currVersion, receive server model, and send it to client model
 
 	public int getCurrVersion() {
 		return currVersion;
