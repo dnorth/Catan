@@ -1,6 +1,5 @@
 package client.models.mapdata;
 
-import client.models.Resources;
 
 /**
  * Port object contains data of hex location, direction, trade resource, and
@@ -14,7 +13,13 @@ public class Port {
 	private String direction;
 	private int ratio;
 	
-	
+	public Port(String resource, HexLocation location, String direction, int ratio) {
+		super();
+		this.resource = resource;
+		this.location = location;
+		this.direction = direction;
+		this.ratio = ratio;
+	}
 	public String getResource() {
 		return resource;
 	}

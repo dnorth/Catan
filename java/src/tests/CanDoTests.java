@@ -14,6 +14,7 @@ import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
+import client.models.mapdata.Port;
 
 public class CanDoTests {
 	
@@ -34,32 +35,45 @@ public class CanDoTests {
 		Board board = new Board();
 		board.setHexes(new Hex[]
 				{
-				new Hex(new HexLocation(0,0),"none",-1 ),
-				new Hex(new HexLocation(0,0),"none",3 ),
-				new Hex(new HexLocation(0,0),"none",11 ),
-				new Hex(new HexLocation(0,0),"none",4 ),
-				new Hex(new HexLocation(0,0),"none",8 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
-				new Hex(new HexLocation(0,0),"none",1 ),
+				new Hex(new HexLocation(0,0),-1 ),
+				new Hex(new HexLocation(0,-1),"Brick",4 ),
+				new Hex(new HexLocation(0,-2),"wood",11 ),
 				
+				new Hex(new HexLocation(1,0),"Wood",3 ),
+				new Hex(new HexLocation(1,-1),"Ore",6 ),
+				new Hex(new HexLocation(1,-2),"Sheep",12 ),
+				new Hex(new HexLocation(1,1),"Brick",8 ),
 				
+				new Hex(new HexLocation(2,0),"Wheat",11 ),
+				new Hex(new HexLocation(2,-1),"Brick",5 ),
+				new Hex(new HexLocation(2,-2),"Wheat",9 ),
+				new Hex(new HexLocation(2,1),"Sheep",10 ),
+				new Hex(new HexLocation(2,2),"Ore",5 ),
 				
+				new Hex(new HexLocation(3,0),"Wood",4 ),
+				new Hex(new HexLocation(3,-1),"Sheep",10 ),
+				new Hex(new HexLocation(3,1),"Sheep",9 ),
+				new Hex(new HexLocation(3,2),"Wheat",2 ),
 				
+				new Hex(new HexLocation(4,0),"Wheat",8 ),
+				new Hex(new HexLocation(4,1),"Ore",3 ),
+				new Hex(new HexLocation(4,2),"Wood",6 )
 				});
+
 		
-		
+		board.setPorts(new Port[]
+				{
+						new Port("",new HexLocation(0,-1), "Ore",2),
+						new Port("",new HexLocation(0,-2), "All",3),
+						new Port("",new HexLocation(1,1), "Wheat",2),
+						new Port("",new HexLocation(1,-2), "Sheep",2),
+						new Port("",new HexLocation(2,2), "All",3),
+						new Port("",new HexLocation(3,-1), "All",3),
+						new Port("",new HexLocation(3,2), "Wood",2),
+						new Port("",new HexLocation(4,0), "All",3),
+						new Port("",new HexLocation(4,1), "Brick",2)
+				});
+		board.setRobber(board.getHexes()[0].getLocation());
 		return board;
 	}
 
