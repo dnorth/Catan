@@ -71,8 +71,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public void addAI(String soldierType, JsonObject optionalCookies) {
-		gameProxy.addAI(soldierType, optionalCookies);
+	public JsonObject addAI(String soldierType, JsonObject optionalCookies) {
+		return gameProxy.addAI(soldierType, optionalCookies);
 	}
 
 	@Override

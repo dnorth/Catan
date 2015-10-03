@@ -25,81 +25,63 @@ public class MockServerProxy implements IProxy{
 	//GAME API
 	@Override
 	public JsonObject getGameModel(JsonObject optionalCookies) {
-		
-		JsonParser jsonParser = new JsonParser();
-		JsonObject mockServerModel = new JsonObject();
-		
-		String s = null;
-		try {
-			s = readFile("sample_model2.json");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mockServerModel = (JsonObject)jsonParser.parse(s);
-		
-		return mockServerModel;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 	@Override
 	public JsonObject resetGame(JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
+		// **DON'T** implement for Phase 1
 		return null;
 	}
 
 	@Override
 	public JsonObject executeCommandList(JsonObject commands, JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
+		// **DON'T** implement for Phase 1
 		return null;
 	}
 
 	@Override
 	public JsonObject getExecutedCommands(JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
+		// **DON'T** implement for Phase 1
 		return null;
 	}
 
 	@Override
-	public void addAI(String soldierType, JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
-		
+	public JsonObject addAI(String soldierType, JsonObject optionalCookies) {
+		return this.returnSuccess();
 	}
 
 	@Override
 	public JsonObject listAI(JsonObject optionalCookies) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("listAI.json");
 	}
 
 	
 	//Games API
 	@Override
 	public JsonObject getGamesList() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("getGamesList.json");
 	}
 
 	@Override
 	public JsonObject createGame(JsonObject inputGame) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("createGame.json");
 	}
 
 	@Override
 	public JsonObject joinGame(JsonObject gameData) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.returnSuccess();
 	}
 
 	@Override
 	public JsonObject saveGame(int gameId, String fileName) {
-		// TODO Auto-generated method stub
+		// **DON'T** implement for Phase 1
 		return null;
 	}
 
 	@Override
 	public JsonObject loadGame(JsonObject gameName) {
-		// TODO Auto-generated method stub
+		// **DON'T** implement for Phase 1
 		return null;
 	}
 
@@ -228,23 +210,41 @@ public class MockServerProxy implements IProxy{
 	//USER API
 	@Override
 	public JsonObject userLogin(JsonObject user) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.returnSuccess();
 	}
 
 	@Override
 	public JsonObject userRegister(JsonObject object) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.returnSuccess();
 	}
 
 	//UTIL API
 		@Override
 		public void utilChangeLogLevel() {
-			// TODO Auto-generated method stub
-			
+			// **DON'T** implement for Phase 1
 		}
+		
+	private JsonObject returnSuccess() {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("Success", true);
+		return jsonObject;
+	}
 
+	private JsonObject getMockServerFileContents(String pathname) {
+		JsonParser jsonParser = new JsonParser();
+		JsonObject mockServerModel = new JsonObject();
+		
+		String s = null;
+		try {
+			s = readFile("mock_server/" + pathname);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mockServerModel = (JsonObject)jsonParser.parse(s);
+		
+		return mockServerModel;
+	}
 
 	private String readFile(String pathname) throws IOException {
 

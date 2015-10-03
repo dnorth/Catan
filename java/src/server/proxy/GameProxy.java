@@ -76,12 +76,14 @@ public class GameProxy extends ServerProxy{
 	 * @post a new AI has been added to the game
 	 * @param soldierType
 	 */
-	public void addAI (String soldierType, JsonObject optionalCookies){
-        try {
-            doPost("/game/addAI", optionalCookies);
+	public JsonObject addAI (String soldierType, JsonObject optionalCookies){
+        JsonObject addAI = null;
+		try {
+            addAI = doGet("/game/addAI", optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
+		return addAI;
     }
 
 	/**
