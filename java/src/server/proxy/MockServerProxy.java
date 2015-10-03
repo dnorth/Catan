@@ -90,120 +90,103 @@ public class MockServerProxy implements IProxy{
 	//MOVES API
 	@Override
 	public JsonObject sendChat(int playerIndex, String content) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject rollNumber() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject robPlayer(int playerIndex, int victimIndex, HexLocation hexLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject finishTurn(int playerIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject buyDevCard(int playerIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject playYearOfPlenty(int playerIndex, int resource1, int resource2) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject playRoadBuilding(int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject playSoldier(int playerIndex, int victimIndex, HexLocation newRobberHexLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject playMonopoly(int playerIndex, String resource) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject playMonument(int playerIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject buildSettlement(int playerIndex, VertexLocation settlementLocation, boolean free) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject buildCity(int playerIndex, VertexLocation cityLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject offerTrade(int playerIndex, Resources resourceList, int receivingPlayerIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject acceptTrade(int playerIndex, boolean willAccept) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
 	public JsonObject discardCards(int playerIndex, Resources discardedCards) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getMockServerFileContents("sample_model.json");
 	}
 
 	
@@ -238,7 +221,6 @@ public class MockServerProxy implements IProxy{
 		try {
 			s = readFile("mock_server/" + pathname);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mockServerModel = (JsonObject)jsonParser.parse(s);
