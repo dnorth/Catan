@@ -1,6 +1,7 @@
 package jsonTranslator;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -108,12 +109,12 @@ public class JSONToModel {
 	
 	//TODO GET PLAYERS TO WORK - THIS IS HARDER BECAUSE ITS A LIST OF PLAYERS
 	public static Player[] translatePlayers(JsonObject serverModel) {
-		Player[] players = null;
-		JsonElement playerIterator = serverModel.get("players");
-		//for(Player p : playerIterator)
-		//{
-		//	
-		//}
+		final JsonArray playersArray = serverModel.get("players").getAsJsonArray();
+		Player[] players = new Player[playersArray.size()];
+		
+		for (int i = 0; i < players.length; i++) {
+		      players[i] = (Player)g.fromJson(playersArray.get(i), Player.class);
+		}
 
 		return players;
 	}

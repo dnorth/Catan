@@ -54,7 +54,7 @@ public class ServerPollerTests {
 		System.out.println(cm.getTurnTracker().toString());
 		
 		System.out.println("\nTesting Players: ");
-		System.out.println(cm.getChat().toString());
+		System.out.println(cm.playersToString());
 		
 		System.out.println("\nTesting Version: ");
 		System.out.println(cm.getVersion());

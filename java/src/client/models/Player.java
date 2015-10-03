@@ -133,5 +133,17 @@ public class Player
 	public boolean hasRoadBuildingCard(DevCards d){return d.getRoadBuildingCount()>0;}
 	public boolean hasSoldierCard(DevCards d){return d.getSoldierCount()>0;}
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
+	
+	
+	@Override
+	public String toString() {
+		return "Player [cities=" + cities + ", color=" + color + ", discarded=" + discarded + ", monuments=" + monuments
+				+ ", name=" + name + ", newDevCards=" + newDevCards + ", oldDevCards=" + oldDevCards + ", playerIndex="
+				+ playerIndex + ", playedDevCard=" + playedDevCard + ", playerID=" + playerID + ", resources="
+				+ resources + ", roads=" + roads + ", settlements=" + settlements + ", soldiers=" + soldiers
+				+ ", victoryPoints=" + victoryPoints + "]";
+	}
+	
+	
 
 }

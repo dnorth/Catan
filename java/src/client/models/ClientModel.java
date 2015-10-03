@@ -90,4 +90,14 @@ public class ClientModel
 	public void setWinnerIndex(int winnerIndex) {
 		this.winner = winnerIndex;
 	}
+	
+	public String playersToString() {
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i=0; i < players.length; i++) {
+			sb.append(players[i].toString() + "\n");
+		}
+		
+		return sb.toString();
+	}
 }
