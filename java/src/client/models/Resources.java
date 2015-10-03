@@ -40,20 +40,15 @@ public class Resources{
 	public int getOreCount() {
 		return ore;
 	}
-	@Override
-	public String toString()
-	{
-		StringBuilder sb = new StringBuilder();
-		appendStringType(sb, "wood", wood);
-		appendStringType(sb, "brick", brick);
-		appendStringType(sb, "sheep", sheep);
-		appendStringType(sb, "wheat", wheat);
-		appendStringType(sb, "ore", ore);
-		if(sb.length()==0)
-		{sb.append("no resources");}
-		return sb.toString();
-	}
+
 	
+	
+	@Override
+	public String toString() {
+		return "Resources [wood=" + wood + ", brick=" + brick + ", sheep=" + sheep + ", wheat=" + wheat + ", ore=" + ore
+				+ "]";
+	}
+
 	private void appendStringType(StringBuilder sb,String type, int count)
 	{
 		if(count>0)

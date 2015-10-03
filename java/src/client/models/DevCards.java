@@ -59,18 +59,12 @@ public void setYearOfPlentyCount(int yearOfPlentyCount) {
 	this.yearOfPlenty = yearOfPlentyCount;
 }
 
+
+
 @Override
-public String toString()
-{
-	StringBuilder sb = new StringBuilder();
-	appendStringType(sb, "monopoly", monopoly);
-	appendStringType(sb, "monument", monument);
-	appendStringType(sb, "roadBuilding", roadBuilding);
-	appendStringType(sb, "soldier", soldier);
-	appendStringType(sb, "yearOfPlenty", yearOfPlenty);
-	if(sb.length()==0)
-	{sb.append("no DevCards");}
-	return sb.toString();
+public String toString() {
+	return "DevCards [monopoly=" + monopoly + ", monument=" + monument + ", roadBuilding=" + roadBuilding + ", soldier="
+			+ soldier + ", yearOfPlenty=" + yearOfPlenty + "]";
 }
 
 private void appendStringType(StringBuilder sb,String type, int count)
