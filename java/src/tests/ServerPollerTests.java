@@ -36,11 +36,32 @@ public class ServerPollerTests {
 		
 		poller.updateCurrentModel(j);
 		
-		//assertEquals(cookie.get(\"name\").toString(), shouldMatchUsername);
-		//assertEquals(cookie.get(\"password\").toString(), shouldMatchPassword);
-		//assertTrue(cookie.get(\"authentication\").toString() != null);
-		//assertTrue(cookie.get(\"playerID\").getAsInt() > 11);
-		//assertEquals(responseBody, \"Success\");
+		ClientModel cm = poller.getClient();
+		
+		System.out.println("Testing bank: ");
+		System.out.println(cm.getBank().toString() + "\n");
+		
+		System.out.println("Testing chat: ");
+		System.out.println(cm.getChat().toString());
+		
+		System.out.println("\nTesting log: ");
+		System.out.println(cm.getLog().toString());
+		
+		System.out.println("\nTesting Board: ");
+		System.out.println(cm.getBoard().toString());
+		
+		System.out.println("\nTesting Turn Tracker: ");
+		System.out.println(cm.getTurnTracker().toString());
+		
+		System.out.println("\nTesting Players: ");
+		System.out.println(cm.getChat().toString());
+		
+		System.out.println("\nTesting Version: ");
+		System.out.println(cm.getVersion());
+		
+		System.out.println("\nTesting Winner: ");
+		System.out.println(cm.getWinner());
+		
 		assertTrue(true);
 	}
 

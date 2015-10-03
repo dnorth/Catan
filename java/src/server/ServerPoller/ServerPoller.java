@@ -12,10 +12,10 @@ import jsonTranslator.JSONToModel;
  */
 public class ServerPoller {
 	
-	int currVersion;
-	IProxy server; //IServer can be real server or mock proxy
-	ClientModel client;
-	JSONToModel jsonToModelTranslator;
+	private int currVersion;
+	private IProxy server; //IServer can be real server or mock proxy
+	private ClientModel client;
+	private JSONToModel jsonToModelTranslator;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -81,4 +81,28 @@ public class ServerPoller {
 	void getNewVersion() {
 		
 	} // update currVersion, receive server model, and send it to client model
+
+	public int getCurrVersion() {
+		return currVersion;
+	}
+
+	public void setCurrVersion(int currVersion) {
+		this.currVersion = currVersion;
+	}
+
+	public JSONToModel getJsonToModelTranslator() {
+		return jsonToModelTranslator;
+	}
+
+	public void setJsonToModelTranslator(JSONToModel jsonToModelTranslator) {
+		this.jsonToModelTranslator = jsonToModelTranslator;
+	}
+
+	public IProxy getServer() {
+		return server;
+	}
+
+	public ClientModel getClient() {
+		return client;
+	}
 }

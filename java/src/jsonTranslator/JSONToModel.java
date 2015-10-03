@@ -41,41 +41,26 @@ public class JSONToModel {
 		MessageList log = translateLog(serverModel);
 		Board board = translateBoard(serverModel);
 		TurnTracker turnTracker = translateTurnTracker(serverModel);
+		Player[] players = translatePlayers(serverModel);
 		int version = translateVersion(serverModel);
 		int winner = translateWinner(serverModel);
 		
-		System.out.println("Testing bank: ");
-		System.out.println(bank.toString() + "\n");
 		clientModel.setBank(bank);
-		
-		System.out.println("Testing chat: ");
-		System.out.println(chat.toString());
+				
 		clientModel.setChat(chat);
-
-		System.out.println("\nTesting log: ");
-		System.out.println(log.toString());
+		
 		clientModel.setLog(log);
 
-		System.out.println("\nTesting Board: ");
-		System.out.println(board.toString());
 		clientModel.setBoard(board);
 		
-		System.out.println("\nTesting Turn Tracker: ");
-		System.out.println(turnTracker.toString());
 		clientModel.setTurnTracker(turnTracker);
 		
-		System.out.println("\nTesting Players: ");
+		clientModel.setPlayers(players);
 		
-		System.out.println("\nTesting Version: ");
-		System.out.println(version);
 		clientModel.setVersion(version);
 
-		
-		System.out.println("\nTesting Winner: ");
-		System.out.println(winner);
 		clientModel.setWinner(winner);
 
-		
 		return clientModel;
 	}
 	
