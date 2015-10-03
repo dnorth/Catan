@@ -78,7 +78,7 @@ public class ServerPoller {
 	public void updateCurrentModel(JsonObject cookies) {
 		JsonObject serverModel = server.getGameModel(cookies);
 		
-		if(newVersion(JSONToModel.translateVersion(cookies))) {
+		if(newVersion(JSONToModel.translateVersion(serverModel))) {
 			client = jsonToModelTranslator.translateClientModel(serverModel);
 			//TODO reconnect managers/facade to model
 		}
