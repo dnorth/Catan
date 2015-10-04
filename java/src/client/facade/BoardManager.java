@@ -32,6 +32,8 @@ public class BoardManager {
 		String dir = edge.getDirection();
 		EdgeLocation altEdge1 = board.getAltEdge(edge);
 		EdgeLocation altEdge2 = board.getAltEdge(edge);
+		EdgeLocation vert1 = null;
+		EdgeLocation vert2 = null;
 		int x = edge.getXcoord();
 		int y = edge.getYcoord();
 		String dir1 = "";
@@ -42,6 +44,8 @@ public class BoardManager {
 			altEdge2.setDirection("SE");
 			dir1 = "NW";
 			dir2 = "NE";
+			vert1 = new EdgeLocation(x, y, "NE");
+			vert2 = new EdgeLocation(x, y, "NW");
 			break;
 			
 		case "NE":
@@ -49,6 +53,8 @@ public class BoardManager {
 			altEdge2.setDirection("S");
 			dir1 = "N";
 			dir2 = "SE";
+			vert1 = new EdgeLocation(x, y, "NE");
+			vert2 = new EdgeLocation(x, y, "E");
 			break;
 			
 		case "SE":
@@ -56,6 +62,8 @@ public class BoardManager {
 			altEdge2.setDirection("SW");
 			dir1 = "NE";
 			dir2 = "S";
+			vert1 = new EdgeLocation(x, y, "E");
+			vert2 = new EdgeLocation(x, y, "SE");
 			break;
 			
 		case "S":
@@ -63,6 +71,8 @@ public class BoardManager {
 			altEdge2.setDirection("NE");
 			dir1 = "SE";
 			dir2 = "SW";
+			vert1 = new EdgeLocation(x, y, "SE");
+			vert2 = new EdgeLocation(x, y, "SW");
 			break;
 			
 		case "SW":
@@ -70,6 +80,8 @@ public class BoardManager {
 			altEdge2.setDirection("SE");
 			dir1 = "S";
 			dir2 = "NW";
+			vert1 = new EdgeLocation(x, y, "SW");
+			vert2 = new EdgeLocation(x, y, "W");
 			break;
 			
 		case "NW":
@@ -77,9 +89,11 @@ public class BoardManager {
 			altEdge2.setDirection("S");
 			dir1 = "SW";
 			dir2 = "N";
+			vert1 = new EdgeLocation(x, y, "W");
+			vert2 = new EdgeLocation(x, y, "NW");
 			break;
 		}
-		int[] owners = {-1, -1, -1, -1};
+		Integer[] owners = {-1, -1, -1, -1, -1, -1};
 		EdgeLocation adj1 = new EdgeLocation(x,y,dir1);
 		EdgeLocation adj2 = new EdgeLocation(x,y,dir2);
 		EdgeLocation[] edgeList = {adj1, adj2, altEdge1, altEdge2};
@@ -87,7 +101,9 @@ public class BoardManager {
 			EdgeLocation e = edgeList[i];
 			owners[i] = board.getEdgeOwner(e);
 		}
-		return null;
+		if (vert1 != null) owners[4] = this.board.getVertexOwner(vert1);
+		if (vert2 != null) owners[5] = this.board.getVertexOwner(vert2);
+		return owners;
 	}
 
 	/**
@@ -100,7 +116,10 @@ public class BoardManager {
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge){
 		if (this.getEdgeOwner(edge) != -1) return false;
 		Integer[] surrOwners = this.getAdjacentEdgeOwners(edge);
-		if (surrOwners == null) return false;
+		if (surrOwners == null) {
+			System.out.println("NULL NULL NULL NULL NULL");
+			return false;
+		}
 		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
 		else return false;
 	}

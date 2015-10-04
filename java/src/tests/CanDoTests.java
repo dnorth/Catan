@@ -131,16 +131,16 @@ public class CanDoTests {
 		assertFalse(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"SW")));
 
 		System.out.println("Testing Player 1 with a settlement N trying to build a road NE on hex 0,0)");
-		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"NW")));
+		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"N")));
 
 
 		System.out.println("Testing Player 2 with a settlement N trying to build a road SW on hex 1,0");
 		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(1,0,"NW"))});
 		board.setRoads(new Road[]{});
-		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"SW")));
+		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"S")));
 
 		System.out.println("Testing Player 2 with a settlement N trying to build a road NE on hex 1,0)");
-		assertTrue(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"NE")));
+		assertTrue(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"NW")));
 		System.out.println();
 	}
 

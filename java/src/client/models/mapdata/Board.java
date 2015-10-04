@@ -217,9 +217,11 @@ public class Board {
 		EdgeLocation[] alternateEdgeLocations = this.getAlternateEdgeLocations(edgeLocation);
 		EdgeLocation altLoc1 = alternateEdgeLocations[0];
 		EdgeLocation altLoc2 = alternateEdgeLocations[1];
-		for (VertexObject s : this.settlements)
+		if (this.settlements != null) for (VertexObject s : this.settlements)
 		{
 			EdgeLocation checkLoc = s.getLocation();
+			System.out.println(s.toString());
+			if (checkLoc == null) System.out.println("OH MY EFFING GOSH");
 			if (checkLoc.equals(edgeLocation) ||
 					checkLoc.equals(altLoc1) ||
 					checkLoc.equals(altLoc2))
@@ -227,7 +229,7 @@ public class Board {
 				return s.getOwner();
 			}
 		}
-		for (VertexObject c : this.cities)
+		if (this.cities != null) for (VertexObject c : this.cities)
 		{
 			EdgeLocation checkLoc = c.getLocation();
 			if (checkLoc.equals(edgeLocation) ||
