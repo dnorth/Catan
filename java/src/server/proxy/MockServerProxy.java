@@ -230,7 +230,7 @@ public class MockServerProxy implements IProxy{
 		
 		String s = null;
 		try {
-			s = readFile("Catan/mock_server/" + pathname);
+			s = readFile("mock_server/" + pathname);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
