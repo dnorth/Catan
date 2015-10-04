@@ -62,6 +62,8 @@ public class ServerPollerTests {
 		System.out.println("\nTesting Winner: ");
 		System.out.println(cm.getWinner());
 		
+		//Initializes model from sample_model2.json. These tests print out data to prove it's true, rather than by assertion.
+		
 		assertTrue(true);
 	}
 
