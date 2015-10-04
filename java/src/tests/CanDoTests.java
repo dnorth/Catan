@@ -65,15 +65,15 @@ public class CanDoTests {
 
 		board.setPorts(new Port[]
 				{
-						new Port("",new HexLocation(0,-1), "Ore",2),
-						new Port("",new HexLocation(0,-2), "All",3),
-						new Port("",new HexLocation(1,1), "Wheat",2),
-						new Port("",new HexLocation(1,-2), "Sheep",2),
-						new Port("",new HexLocation(2,2), "All",3),
-						new Port("",new HexLocation(3,-1), "All",3),
-						new Port("",new HexLocation(3,2), "Wood",2),
-						new Port("",new HexLocation(4,0), "All",3),
-						new Port("",new HexLocation(4,1), "Brick",2)
+						new Port("Ore",new HexLocation(2,-2), "NE",2),
+						new Port("All",new HexLocation(1,-2), "N",3),
+						new Port("Wheat",new HexLocation(-1,-1), "N",2),
+						new Port("Sheep",new HexLocation(-2,0), "NW",2),
+						new Port("All",new HexLocation(-2,2), "NW",3),
+						new Port("All",new HexLocation(-1,2), "SW",3),
+						new Port("Wood",new HexLocation(0,2), "S",2),
+						new Port("All",new HexLocation(1,1), "SE",3),
+						new Port("Brick",new HexLocation(2,-1), "SE",2)
 				});
 		board.setRobber(board.getHexes()[0].getLocation());
 		return board;
@@ -126,16 +126,16 @@ public class CanDoTests {
 
 
 		System.out.println("Testing Player 1 with a settlement N trying to build a road SW on hex 0,0");
-		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,0,"N"))});
+		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,0,"NW"))});
 		board.setRoads(new Road[]{});
 		assertFalse(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"SW")));
 
 		System.out.println("Testing Player 1 with a settlement N trying to build a road NE on hex 0,0)");
-		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"NE")));
+		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"NW")));
 
 
 		System.out.println("Testing Player 2 with a settlement N trying to build a road SW on hex 1,0");
-		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(1,0,"N"))});
+		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(1,0,"NW"))});
 		board.setRoads(new Road[]{});
 		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"SW")));
 
@@ -219,12 +219,36 @@ public class CanDoTests {
 		System.out.println();
 	}
 
-	@Test
-	public void testCanMaritimeTrade() {
-
-		System.out.println("Testing canMaritimeTrade()");
-		//	fail("Not yet implemented");
-	}
+//	@Test
+//	public void testCanMaritimeTrade() {
+//
+//		System.out.println("Testing canMaritimeTrade()");
+//		
+////		Player p1 = new Player();
+////		Player p2 = new Player();
+////		PlayerManager pm = new PlayerManager(new Player[]{p1,p2});
+//		Board board = createDefaultBoard();
+//		BoardManager bm = new BoardManager(board);
+//
+//
+//		System.out.println("Testing Player index 0 with settlement N on a port trying to maritime trade");
+//		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(4,0,"N"))});
+////		board.setRoads(new Road[]{});
+//		assertFalse(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"SW")));
+//
+//		System.out.println("Testing Player index 1 with no settlements on ports trying to maritime trade");
+//		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"NE")));
+//
+//
+//		System.out.println("Testing Player 2 with a settlement N trying to build a road SW on hex 1,0");
+//		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(1,0,"N"))});
+//		board.setRoads(new Road[]{});
+//		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"SW")));
+//
+//		System.out.println("Testing Player 2 with a settlement N trying to build a road NE on hex 1,0)");
+//		assertTrue(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"NE")));
+//		System.out.println();
+//	}
 
 	@Test
 	public void testCanBuySettlement(){

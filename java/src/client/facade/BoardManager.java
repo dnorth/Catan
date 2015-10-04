@@ -100,6 +100,7 @@ public class BoardManager {
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge){
 		if (this.getEdgeOwner(edge) != -1) return false;
 		Integer[] surrOwners = this.getAdjacentEdgeOwners(edge);
+		if (surrOwners == null) return false;
 		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
 		else return false;
 	}

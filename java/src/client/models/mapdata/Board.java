@@ -149,7 +149,7 @@ public class Board {
 	public int getEdgeOwner(EdgeLocation edgeLocation)
 	{
 		EdgeLocation altLocation = this.getAltEdge(edgeLocation);
-		for (Road r : this.roads)
+		if (this.roads != null) for (Road r : this.roads)
 		{
 			if (r.getLocation().equals(edgeLocation) ||
 					r.getLocation().equals(altLocation)) return r.getOwner();
