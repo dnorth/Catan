@@ -187,7 +187,8 @@ public class ServerProxyTests {
 	//@Test
 	public void listApiTest() {
 		JsonObject resultObject = proxy2.listAI(null);
-		assertEquals(resultObject.get("Response-body").getAsString(), "LARGEST_ARMY");
+		String returned = resultObject.get("Response-body").getAsString();
+		assertTrue(returned.contains("LARGEST_ARMY"));
 	}
 	
 	@Test 
