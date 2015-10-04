@@ -16,6 +16,10 @@ public class VertexObject{
 	 */
 	private EdgeLocation location;
 
+	public VertexObject(int i, EdgeLocation edgeLocation) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getOwner() {
 		return owner;
 	}

@@ -42,10 +42,7 @@ public class CanDoManager {
 	 * @return if the player can place a road at the HexLocation.
 	 */
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge){
-		if (this.boardManager.getEdgeOwner(edge) != -1) return false;
-		Integer[] surrOwners = this.boardManager.getAdjacentEdgeOwners(edge);
-		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
-		else return false;
+		return this.boardManager.canPlaceRoadAtLocation(playerIndex, edge);
 	}
 	
 	/**
