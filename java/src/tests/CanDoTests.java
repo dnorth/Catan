@@ -341,9 +341,9 @@ public class CanDoTests {
 		Player p2 = new Player();
 		PlayerManager pm = new PlayerManager(new Player[]{p1,p2});
 
-		printPlayerDevCards(1,p1.getCurrentDevCards());
 		p1.setCurrentDevCards(new DevCards(0,0,0,0,0));
-		assertFalse(pm.canPlayDevCard(0));
+		printPlayerDevCards(1,p1.getCurrentDevCards());
+		assertFalse(pm.canPlayDevCard(0)); 
 
 		printPlayerDevCards(1,p1.getCurrentDevCards());
 		p1.setCurrentDevCards(new DevCards(1,0,0,0,0));
@@ -366,9 +366,8 @@ public class CanDoTests {
 		assertTrue(pm.canPlayDevCard(0));
 		
 		
-		
+		p2.setCurrentDevCards(new DevCards(0,0,0,0,0));		
 		printPlayerDevCards(2,p2.getCurrentDevCards());
-		p2.setCurrentDevCards(new DevCards(0,0,0,0,0));
 		assertFalse(pm.canPlayDevCard(1));
 
 		printPlayerDevCards(2,p2.getCurrentDevCards());

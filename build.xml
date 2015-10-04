@@ -15,6 +15,14 @@
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
+	
+	<!-- Directory containing Java libraries -->
+	<property name="lib" location="java/lib"/>
+		
+	<!-- Directory where the Java compiler puts .class files -->
+	<property name="build" location="java/build"/>
+	
+	
     <!-- Base output folder -->
     <property name="dest.dir" value="docs"/>
     <!-- Javadoc output folder -->
@@ -29,11 +37,16 @@
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
     
-	<path id="java.lib.classpath">
-		<fileset dir="${java.lib.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
+	<path id="lib-classpath">
+			<fileset dir="${lib}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		
+		<path id="all-classpath">
+			<path refid="lib-classpath"/>
+			<pathelement location="${build}"/>
+		</path>
 
 	<!-- TARGETS -->
 	<!-- ******* -->
@@ -155,7 +168,7 @@
   <target name="test" description="run automated client tests" depends="compile">
     <java fork="yes" classname="tests.RunAllTests">
       <classpath>
-        <path refid="java.lib.classpath"/>
+        <path refid="all-classpath"/>
       </classpath>
       <assertions>
         <enable/>

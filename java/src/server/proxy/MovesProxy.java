@@ -10,8 +10,6 @@ import shared.locations.VertexLocation;
 import client.models.Resources;
 
 import com.google.gson.JsonObject;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class MovesProxy extends ServerProxy{
     
