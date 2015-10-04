@@ -79,7 +79,7 @@ abstract class ServerProxy {
             	String userCookie = null;
             	String gameCookie = null;
             	userCookie = postData.get("User-cookie").getAsString();
-            	
+//            	System.out.println(postData.toString());
             	if(postData.has("Game-cookie")) {
             		gameCookie = postData.get("Game-cookie").getAsString();
             	}
@@ -101,7 +101,7 @@ abstract class ServerProxy {
             		if(connection.getHeaderField("Set-cookie") != null) {
             			String cookieHeader = connection.getHeaderField("Set-cookie");
             			String cookie = StripCookie(cookieHeader);
-            			//System.out.println(cookie);
+            			System.out.println(cookie);
             			String cookieJsonString = URLDecoder.decode(cookie);
             			
             			//If the ClassCastException gets caught, that means we are recieving a game cookie

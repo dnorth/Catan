@@ -151,7 +151,18 @@
 			</assertions>
 		</java>
 	</target>
-    
+  
+  <target name="test" description="run automated client tests" depends="compile">
+    <java fork="yes" classname="tests.RunAllTests">
+      <classpath>
+        <path refid="all-classpath"/>
+      </classpath>
+      <assertions>
+        <enable/>
+      </assertions>
+    </java>
+  </target>
+  
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>

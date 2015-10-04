@@ -187,6 +187,7 @@ public class ServerProxyTests {
 		JsonObject responseObject2 = proxy.joinGame(gameData);
 		
 		String responseBody2 = responseObject2.get("Response-body").toString();
+		System.out.println(responseObject2.toString());
 		assertEquals(responseBody2, "\"Success\"");
 	}
 
