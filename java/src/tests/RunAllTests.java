@@ -10,7 +10,6 @@ public class RunAllTests {
 
 		String[] testClasses = new String[] {
 				"tests.CanDoTests",
-				"tests.ModelTests",
 				"tests.ServerPollerTests",
 				"tests.ServerProxyTests"
 		};
