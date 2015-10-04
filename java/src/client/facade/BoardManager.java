@@ -90,6 +90,20 @@ public class BoardManager {
 		return null;
 	}
 
+	/**
+	 * Determines if a player can place a road on a specific hex edge.
+	 * @param playerIndex Number of player to determine ability to take action
+	 * @param hex Hex where road will be built
+	 * @param edge Edge on hex where road will be built
+	 * @return if the player can place a road at the HexLocation.
+	 */
+	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge){
+		if (this.getEdgeOwner(edge) != -1) return false;
+		Integer[] surrOwners = this.getAdjacentEdgeOwners(edge);
+		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
+		else return false;
+	}
+	
 	public boolean canMaritimeTrade(int playerIndex)
 	{
 		Port[] ports = board.getPorts();
