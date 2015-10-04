@@ -228,19 +228,19 @@ public class CanDoTests {
 		BoardManager bm = new BoardManager(board);
 
 
-		System.out.println("Testing Player index 0 with settlement N on a port trying to maritime trade");
+		System.out.println("Testing Player index 0 with no settlements on ports trying to maritime trade");
 		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,2,"E"))});
 		assertFalse(bm.canMaritimeTrade(0));
 
-		System.out.println("Testing Player index 0 with no settlements on ports trying to maritime trade");
+		System.out.println("Testing Player index 0 with settlement N on a port trying to maritime trade");
 		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,2,"SE"))});
 		assertTrue(bm.canMaritimeTrade(0));
 
-		System.out.println("Testing Player index 1 with settlement N on a port trying to maritime trade");
+		System.out.println("Testing Player index 1 with no settlements on ports trying to maritime trade");
 		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(2,-2,"SE"))});
 		assertFalse(bm.canMaritimeTrade(1));
 
-		System.out.println("Testing Player index 1 with no settlements on ports trying to maritime trade");
+		System.out.println("Testing Player index 1 with settlement N on a port trying to maritime trade");
 		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(2,-2,"E"))});
 		assertTrue(bm.canMaritimeTrade(1));
 	}
