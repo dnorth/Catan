@@ -127,42 +127,6 @@ public class ServerProxyTests {
 		assertNotNull(responseBody);
 	}
 	
-	//@Test 
-	public void createGameSuccessTest() {
-		
-		JsonObject inputNewGameData = new JsonObject();
-		inputNewGameData.addProperty("randomTiles", true);
-		inputNewGameData.addProperty("randomNumbers", true);
-		inputNewGameData.addProperty("randomPorts", true);
-		inputNewGameData.addProperty("name", "Test Game1");
-		
-		JsonObject responseObject = proxy.createGame(inputNewGameData);
-		String responseBody = responseObject.get("Response-body").toString();
-		//TODO USER JSONPARSER HERE?????
-		int gameId = TemporaryGameIdParser(responseBody);
-		System.out.println(gameId);
-		assertTrue(gameId > 2);
-	}
-	
-	private int TemporaryGameIdParser(String responseBody) {
-		int index = responseBody.indexOf("id");
-		int intIndex1 = index + 5;
-		int intIndex2 = index + 6;
-		StringBuilder a = new StringBuilder(responseBody.charAt(intIndex1));
-		StringBuilder b = new StringBuilder(responseBody.charAt(intIndex2));
-		int toReturn;
-		try {
-			int second = Integer.parseInt(b.toString());
-			int first = Integer.parseInt(a.toString());
-			toReturn = (first * 10) + second;
-			
-		} catch (NumberFormatException e) {
-			int first = Integer.parseInt(a.toString());
-			toReturn = first;
-		}
-		return toReturn;
-	}
-	
 	@Test 
 	public void joinGameSuccessTest() {
 		

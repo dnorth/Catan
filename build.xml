@@ -155,7 +155,7 @@
   <target name="test" description="run automated client tests" depends="compile">
     <java fork="yes" classname="tests.RunAllTests">
       <classpath>
-        <path refid="all-classpath"/>
+        <path refid="java.lib.classpath"/>
       </classpath>
       <assertions>
         <enable/>
