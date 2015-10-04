@@ -22,6 +22,9 @@ import client.models.Resources;
 
 public class MockServerProxy implements IProxy{
 
+	private String userCookie = "catan.user=%7B%22authentication%22%3A%22-484719082%22%2C%22name%22%3A%22Tommy420112513%22%2C%22password%22%3A%22Williams%22%2C%22playerID%22%3A20%7D";
+	private String gameCookie = "; catan.game= 1";
+	
 	//GAME API
 	@Override
 	public JsonObject getGameModel(JsonObject optionalCookies) {
@@ -48,7 +51,7 @@ public class MockServerProxy implements IProxy{
 
 	@Override
 	public JsonObject addAI(String soldierType, JsonObject optionalCookies) {
-		return this.returnSuccess();
+		return this.returnSuccess(false, false);
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class MockServerProxy implements IProxy{
 
 	@Override
 	public JsonObject joinGame(JsonObject gameData) {
-		return this.returnSuccess();
+		return this.returnSuccess(true, true);
 	}
 
 	@Override
@@ -193,12 +196,12 @@ public class MockServerProxy implements IProxy{
 	//USER API
 	@Override
 	public JsonObject userLogin(JsonObject user) {
-		return this.returnSuccess();
+		return this.returnSuccess(true, false);
 	}
 
 	@Override
 	public JsonObject userRegister(JsonObject object) {
-		return this.returnSuccess();
+		return this.returnSuccess(true, false);
 	}
 
 	//UTIL API
@@ -207,9 +210,17 @@ public class MockServerProxy implements IProxy{
 			// **DON'T** implement for Phase 1
 		}
 		
-	private JsonObject returnSuccess() {
+	private JsonObject returnSuccess(boolean returnUserCookie, boolean returnGameCookie) {
 		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("Success", true);
+		jsonObject.addProperty("Response-body", "Success");
+		if(returnUserCookie) {
+			if(returnGameCookie) {
+				jsonObject.addProperty("Cookies", userCookie+gameCookie);
+			}
+			else {
+				jsonObject.addProperty("Cookies", userCookie);
+			}
+		}
 		return jsonObject;
 	}
 

@@ -3,15 +3,14 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import server.proxy.ClientCommunicator;
 import server.proxy.IProxy;
+import server.proxy.MockServerProxy;
+import shared.locations.HexLocation;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
@@ -19,21 +18,24 @@ public class ServerProxyTests {
 	
 	static Random randGenerator;
 	static int rand;
-	static IProxy proxy;
+	static IProxy proxy1;
+	static IProxy proxy2;
 	static String userCookie;
+	static int gameId = 2;
 
 	
 	@BeforeClass
 	public static void initRandom() {
 		randGenerator = new Random();
 		rand = randGenerator.nextInt(); //We're using a random number generator because we can't register the same user without restarting the server
-		proxy = new ClientCommunicator();
+		proxy1 = new ClientCommunicator();
+		proxy2 = new MockServerProxy();
 		
 		JsonObject newUser = new JsonObject();
 		newUser.addProperty("username", "Tommy" + rand);
 		newUser.addProperty("password", "Williams");
 
-		JsonObject responseObject = proxy.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser);
 		//System.out.println(responseObject.toString());
 		
 		userCookie = responseObject.get("User-cookie").getAsString();
@@ -48,7 +50,7 @@ public class ServerProxyTests {
 		newUser.addProperty("password", "Williams");
 		
 		
-		JsonObject responseObject = proxy.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser);
 		System.out.println(responseObject.toString());
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand + 1) + '"';
 		String shouldMatchPassword = "\"Williams\"";
@@ -65,7 +67,7 @@ public class ServerProxyTests {
 		assertEquals(responseBody, "Success");
 	}
 	
-	@Test //TODO
+	@Test
 	public void registerDuplicateUserFailTest() {
 				
 		JsonObject newUser = new JsonObject();
@@ -73,7 +75,7 @@ public class ServerProxyTests {
 		newUser.addProperty("password", "Williams");
 		
 		
-		JsonObject responseObject = proxy.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser);
 		System.out.println(responseObject.toString());
 		
 		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
@@ -90,7 +92,7 @@ public class ServerProxyTests {
 		user.addProperty("username", "Tommy" + rand);
 		user.addProperty("password", "Williams");		
 		
-		JsonObject responseObject = proxy.userLogin(user);
+		JsonObject responseObject = proxy1.userLogin(user);
 		System.out.println(responseObject.toString());
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
 		String shouldMatchPassword = "\"Williams\"";
@@ -108,7 +110,7 @@ public class ServerProxyTests {
 	@Test
 	public void getGamesListTest() {
 		
-		JsonObject responseBody = proxy.getGamesList();
+		JsonObject responseBody = proxy1.getGamesList();
 		System.out.println(responseBody.toString());
 		assertNotNull(responseBody);	
 	}
@@ -116,13 +118,13 @@ public class ServerProxyTests {
 	@Test
 	public void getGameModelTest() {
 		
-		String gameCookie = null;
+		String gameCookie = "1";
 		
 		JsonObject cookies = new JsonObject();
 		cookies.addProperty("User-cookie", userCookie);
 		cookies.addProperty("Game-cookie", gameCookie);
 
-		JsonObject responseBody = proxy.getGameModel(cookies);
+		JsonObject responseBody = proxy1.getGameModel(cookies);
 		System.out.println(responseBody.toString());
 		assertNotNull(responseBody);
 	}
@@ -136,7 +138,7 @@ public class ServerProxyTests {
 		inputNewGameData.addProperty("randomPorts", true);
 		inputNewGameData.addProperty("name", "Test Game2");
 		
-		JsonObject responseObject1 = proxy.createGame(inputNewGameData);
+		JsonObject responseObject1 = proxy1.createGame(inputNewGameData);
 		JsonObject responseBody1 = (JsonObject) responseObject1.get("Response-body");
 
 		int gameId = responseBody1.get("id").getAsInt();
@@ -148,33 +150,145 @@ public class ServerProxyTests {
 		gameData.addProperty("color", "puce");
 		gameData.addProperty("User-cookie", userCookie);
 			
-		JsonObject responseObject2 = proxy.joinGame(gameData);
+		JsonObject responseObject2 = proxy1.joinGame(gameData);
 		
 		String responseBody2 = responseObject2.get("Response-body").toString();
 		System.out.println(responseObject2.toString());
 		assertEquals(responseBody2, "\"Success\"");
 	}
 
-	//@Test
-	public void createGameAllRandomTest (boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
+	@Test
+	public void createGameAllRandomTest () {
 		JsonObject inputGame = new JsonObject();
 		inputGame.addProperty("randomTiles", true);
 		inputGame.addProperty("randomNumbers", true);
 		inputGame.addProperty("randomPorts", true);
 		inputGame.addProperty("name", "New Game!");
 		
-		JsonObject newGame = proxy.createGame(inputGame);
-		assertTrue(newGame != null);
+		JsonObject newGame = proxy2.createGame(inputGame);
+		assertTrue(newGame.get("title").getAsString().equals("game"));
 	}
 	
-	//@Test
-	public void saveGame (int gameId, String fileName) {
-		
+	@Test
+	public void addApiTest() {
+		JsonObject inputCookies = new JsonObject();
+		inputCookies.addProperty("User-cookie", userCookie);
+		inputCookies.addProperty("Game-cookie", gameId);
+		JsonObject resultObject = proxy2.addAI("LARGEST_ARMY", inputCookies);
+		assertNotNull(resultObject);
+		assertEquals(resultObject.get("Response-body").getAsString(), "Success");
 	}
 	
-	//@Test
-	public void loadGame (JsonObject gameName) {
-		
+	@Test
+	public void listApiTest() {
+		JsonObject resultObject = proxy2.listAI(null);
+		assertEquals(resultObject.get("Response-body").getAsString(), "LARGEST_ARMY");
 	}
-
+	
+	@Test 
+	public void sendChatTest() {
+		JsonObject resultObject = proxy2.sendChat(0, "This is my message");
+		assertNotNull(resultObject);
+	}
+	
+	@Test
+	public void rollNumberTest() {
+		JsonObject resultObject = proxy2.rollNumber();
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void robPlayerTest() {
+		JsonObject resultObject = proxy2.robPlayer(0, 1, new HexLocation(2, 2));
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void finishTurnTest() {
+		JsonObject resultObject = proxy2.finishTurn(0);
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void buyDevCardTest() {
+		JsonObject resultObject = proxy2.buyDevCard(0);
+		assertNotNull(resultObject);
+	}
+	
+	@Test
+	public void playYearOfPlentyCardTest() {
+		JsonObject resultObject = proxy2.playYearOfPlenty(0, 2, 2);
+		assertNotNull(resultObject);	
+	}
+	
+	@Test
+	public void playRoadBuildingCardTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void playSoldierCardTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void playMonopolyCardTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void playMonumentCardTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void buildRoadTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void buildSettlementTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void buildCityTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void offerTradeTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void acceptTradeTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void maritimeTradeTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	@Test
+	public void discardCardsTest() {
+		JsonObject resultObject = proxy2;
+		assertNotNull(resultObject);		
+	}
+	
+	
+	
+	
+	
 }
