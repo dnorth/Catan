@@ -131,6 +131,7 @@ public class BoardManager {
 		for(Port port : ports)
 		{
 			EdgeLocation portLocation = port.getEdgeLocation();
+			if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
 			String[] adjVertexDirs = this.board.getAdjVertices().get(portLocation.getDirection());
 			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
 			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);

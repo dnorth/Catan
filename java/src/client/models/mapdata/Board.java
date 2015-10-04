@@ -22,9 +22,9 @@ public class Board {
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
-	private static Map<String, String> oppDir;
-	static {
-        Map<String, String> oppDir = new HashMap<String, String>();
+	
+	public static Map<String, String> getOppDir() {
+		Map<String, String> oppDir = new HashMap<String, String>();
         oppDir.put("N","S");
         oppDir.put("NE","SW");
         oppDir.put("E","W");
@@ -34,10 +34,10 @@ public class Board {
         oppDir.put("W","E");
         oppDir.put("NW","SE");
         oppDir = Collections.unmodifiableMap(oppDir);
-    }
-	private static Map<String, String[]> adjVertices;
-	static {
-        Map<String, String[]> adjVertices = new HashMap<String, String[]>();
+        return oppDir;
+	}
+	public static Map<String, String[]> getAdjVertices() {
+		Map<String, String[]> adjVertices = new HashMap<String, String[]>();
         adjVertices.put("N", new String[] {"NE", "NW"});
         adjVertices.put("NE", new String[] {"NE", "E"});
         adjVertices.put("SE", new String[] {"E", "SE"});
@@ -45,13 +45,7 @@ public class Board {
         adjVertices.put("SW", new String[] {"SW", "W"});
         adjVertices.put("NW", new String[] {"W", "NW"});
         adjVertices = Collections.unmodifiableMap(adjVertices);
-    }
-	
-	public static Map<String, String> getOppDir() {
-		return oppDir;
-	}
-	public static Map<String, String[]> getAdjVertices() {
-		return adjVertices;
+        return adjVertices;
 	}
 	public Hex[] getHexes() {
 		return hexes;
