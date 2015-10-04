@@ -230,7 +230,7 @@ public class MockServerProxy implements IProxy{
 		
 		String s = null;
 		try {
-			s = readFile("mock_server/" + pathname);
+			s = readFile("Catan/mock_server/" + pathname);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -242,6 +242,8 @@ public class MockServerProxy implements IProxy{
 	private String readFile(String pathname) throws IOException {
 
 	    File file = new File(pathname);
+	    System.out.println(file.getAbsolutePath());
+	    System.out.println(file.exists());
 	    StringBuilder fileContents = new StringBuilder((int)file.length());
 	    Scanner scanner = new Scanner(file);
 	    String lineSeparator = System.getProperty("line.separator");
