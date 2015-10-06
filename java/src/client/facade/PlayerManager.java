@@ -98,57 +98,5 @@ public class PlayerManager {
 		
 		return p.hasMonopolyCard(d) || p.hasMonumentCard(d) || p.hasRoadBuildingCard(d) || 
 				p.hasSoldierCard(d) || p.hasYearOfPlentyCard(d);
-	}
-	
-	
-	
-//	/**
-//	 * Determines if the player can play the Year of Plenty development card.
-//	 * @param playerIndex Number of player to determine ability to take action
-//	 * @return if the player can play the Year of Plenty development card.
-//	 */
-//	public boolean canPlayYearOfPlenty(int playerIndex){
-//		return true;
-//	}
-//	
-//	/**
-//	 * Determines if the player can play the Soldier development card.
-//	 * @param playerIndex Number of player to determine ability to take action
-//	 * @return if the player can play the Soldier development card.
-//	 */
-//	
-//	public boolean canPlaySoldier(int playerIndex){
-//		return true;
-//	}
-//	
-//	/**
-//	 * Determines if the player can play the Monopoly development card.
-//	 * @param playerIndex Number of player to determine ability to take action
-//	 * @return if the player can play the Monopoly development card.
-//	 */
-//	
-//	public boolean canPlayMonopoly(int playerIndex){
-//		return true;
-//	}
-//	
-//	/**
-//	 * Determines if the player can play the Monument development card.
-//	 * @param playerIndex Number of player to determine ability to take action
-//	 * @return if the player can play the Monument development card.
-//	 */
-//	
-//	public boolean canPlayMonument(int playerIndex){
-//		return true;
-//	}
-//
-//	/**
-//	 * Determines if the player can play the RoadBuilding development card.
-//	 * @param playerIndex Number of player to determine ability to take action
-//	 * @return if the player can play the RoadBuilding development card.
-//	 */
-//	
-//	public boolean canPlayRoadBuilding(int playerIndex){
-//		return true;
-//	}
-
+	}	
 }
