@@ -30,7 +30,77 @@ public class BoardManager {
 	
 	public Integer[] getAdjacentVertexOwners(EdgeLocation edge) {
 		//get three adjacent vertices
-		return null;
+		EdgeLocation adj1 = null;
+		EdgeLocation adj2 = null;
+		EdgeLocation adj3 = null;
+		int x = edge.getXcoord();
+		int y = edge.getYcoord();
+		String dir = edge.getDirection();
+		switch(dir) {
+		case "NW":
+			adj1 = new EdgeLocation(x, y, "W");
+			adj2 = new EdgeLocation(x, y, "NE");
+			adj3 = new EdgeLocation(x-1, y, "NE");
+		case "NE":
+			adj1 = new EdgeLocation(x, y, "NW");
+			adj2 = new EdgeLocation(x, y, "E");
+			adj3 = new EdgeLocation(x, y-1, "E");
+		case "E":
+			adj1 = new EdgeLocation(x, y, "NE");
+			adj2 = new EdgeLocation(x, y, "SE");
+			adj3 = new EdgeLocation(x+1, y-1, "SE");
+		case "SE":
+			adj1 = new EdgeLocation(x, y, "E");
+			adj2 = new EdgeLocation(x, y, "SW");
+			adj3 = new EdgeLocation(x+1, y, "SW");
+		case "SW":
+			adj1 = new EdgeLocation(x, y, "SE");
+			adj2 = new EdgeLocation(x, y, "W");
+			adj3 = new EdgeLocation(x, y+1, "W");
+		case "W":
+			adj1 = new EdgeLocation(x, y, "SW");
+			adj2 = new EdgeLocation(x, y, "NW");
+			adj3 = new EdgeLocation(x-1, y+1, "NW");
+		}
+		Integer[] owners = {board.getVertexOwner(adj1), board.getVertexOwner(adj2), board.getVertexOwner(adj3)};
+		return owners;
+	}
+	
+	public Integer[] getSurroundingEdgeOwners(EdgeLocation edge) {
+		EdgeLocation adj1 = null;
+		EdgeLocation adj2 = null;
+		EdgeLocation adj3 = null;
+		int x = edge.getXcoord();
+		int y = edge.getYcoord();
+		String dir = edge.getDirection();
+		switch(dir) {
+		case "NW":
+			adj1 = new EdgeLocation(x, y, "NW");
+			adj2 = new EdgeLocation(x, y, "N");
+			adj3 = new EdgeLocation(x-1, y, "NE");
+		case "NE":
+			adj1 = new EdgeLocation(x, y, "N");
+			adj2 = new EdgeLocation(x, y, "NE");
+			adj3 = new EdgeLocation(x, y-1, "SE");
+		case "E":
+			adj1 = new EdgeLocation(x, y, "NE");
+			adj2 = new EdgeLocation(x, y, "SE");
+			adj3 = new EdgeLocation(x+1, y-1, "S");
+		case "SE":
+			adj1 = new EdgeLocation(x, y, "SE");
+			adj2 = new EdgeLocation(x, y, "S");
+			adj3 = new EdgeLocation(x+1, y, "SW");
+		case "SW":
+			adj1 = new EdgeLocation(x, y, "S");
+			adj2 = new EdgeLocation(x, y, "SW");
+			adj3 = new EdgeLocation(x, y+1, "NW");
+		case "W":
+			adj1 = new EdgeLocation(x, y, "SW");
+			adj2 = new EdgeLocation(x, y, "NW");
+			adj3 = new EdgeLocation(x-1, y+1, "N");
+		}
+		Integer[] owners = {board.getEdgeOwner(adj1), board.getEdgeOwner(adj2), board.getEdgeOwner(adj3)};
+		return owners;
 	}
 	
 	public Integer[] getAdjacentEdgeOwners(EdgeLocation edge) {
@@ -110,6 +180,21 @@ public class BoardManager {
 		if (vert2 != null) owners[5] = this.board.getVertexOwner(vert2);
 		return owners;
 	}
+	
+	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+		if(board.getVertexOwner(edge) != -1) {
+			return false;
+		}
+		Integer[] adjVertexOwners = this.getAdjacentVertexOwners(edge);
+		for (Integer i : adjVertexOwners) {
+			if (i != -1) return false;
+		}
+		Integer[] adjEdgeOwners = this.getAdjacentEdgeOwners(edge);
+		for (Integer i : adjEdgeOwners) {
+			if (i == playerIndex) return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Determines if a player can place a road on a specific hex edge.
@@ -122,7 +207,6 @@ public class BoardManager {
 		if (this.getEdgeOwner(edge) != -1) return false;
 		Integer[] surrOwners = this.getAdjacentEdgeOwners(edge);
 		if (surrOwners == null) {
-			System.out.println("NULL NULL NULL NULL NULL");
 			return false;
 		}
 		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
@@ -148,7 +232,7 @@ public class BoardManager {
 		for(Port port : ports)
 		{
 			EdgeLocation portLocation = port.getEdgeLocation();
-			if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
+			//if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
 			String[] adjVertexDirs = this.board.getAdjVertices().get(portLocation.getDirection());
 			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
 			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);

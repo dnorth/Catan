@@ -82,6 +82,10 @@ public class CanDoManager {
 		return this.playerManager.canBuySettlement(playerIndex);
 	}
 	
+	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+		return boardManager.canPlaceSettlementAtLocation(playerIndex, edge);
+	}
+	
 	/**
 	 * Determines if a player has the resources necessary to upgrade a settlement to a city.
 	 * @param playerIndex Number of player to determine ability to take action

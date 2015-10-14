@@ -214,8 +214,8 @@ public class Board {
 			for (VertexObject s : this.settlements) {
 				EdgeLocation checkLoc = s.getLocation();
 				System.out.println(s.toString());
-				if (checkLoc == null)
-					System.out.println("OH MY EFFING GOSH");
+				//if (checkLoc == null)
+					///System.out.println("OH MY EFFING GOSH");
 				if (checkLoc.equals(edgeLocation) || checkLoc.equals(altLoc1)
 						|| checkLoc.equals(altLoc2)) {
 					return s.getOwner();
