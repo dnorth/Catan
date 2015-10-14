@@ -1,5 +1,7 @@
 package client.devcards;
 
+import java.util.Observable;
+
 import shared.definitions.ResourceType;
 import client.base.*;
 
@@ -93,6 +95,12 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 

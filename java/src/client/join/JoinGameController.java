@@ -1,5 +1,7 @@
 package client.join;
 
+import java.util.Observable;
+
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -130,6 +132,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
