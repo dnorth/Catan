@@ -76,8 +76,7 @@ public class LoginState implements IStateBase {
 
 	@Override
 	public boolean register(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		return facade.register(username, password);
 	}
 
 }

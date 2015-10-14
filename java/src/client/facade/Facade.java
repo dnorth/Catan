@@ -76,7 +76,7 @@ public class Facade {
 	 * @param resource The resource to take from other players
 	 */
 	public void playMonopolyCard(int playerIndex, ResourceType resource) {
-		clientCommunicator.playMonopoly(playerIndex, resource);
+		//clientCommunicator.playMonopoly(playerIndex, resource);
 	}
 	
 	/**
@@ -296,8 +296,12 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Register" button in the login view
 	 */
-	public void register(String username, String password) {
+	public boolean register(String username, String password) {
+		//TODO Regex to validate registration input
 		this.clientCommunicator.userRegister(this.modelToJSON.createUserObject(username, password));
+		
+		//TODO Return correct boolean if user is registered or not
+		return false;
 	}
 	
 	
