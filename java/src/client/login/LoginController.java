@@ -75,9 +75,9 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
-		// TODO: log in user
+		String username = this.getLoginView().getLoginUsername();
+		String password = this.getLoginView().getLoginPassword();
 		
-
 		// If log in succeeded
 		getLoginView().closeModal();
 		loginAction.execute();

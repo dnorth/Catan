@@ -15,4 +15,11 @@ public class ModelToJSON {
 	public JsonObject translateModel() {
 		return null;
 	}
+	
+	public JsonObject createUserObject(String username, String password) {
+		JsonObject user = new JsonObject();
+		user.addProperty("username", username);
+		user.addProperty("password", password);
+		return user;
+	}
 }

@@ -1,5 +1,10 @@
 package client.facade;
 
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import server.proxy.ClientCommunicator;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
@@ -18,6 +23,8 @@ import client.models.TradeOffer;
 public class Facade {
 	private CanDoManager canDo;
 	private ClientModel client;
+	private ModelToJSON modelToJSON;
+	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
 	
 	public Facade (ClientModel cli) {
@@ -289,7 +296,8 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Register" button in the login view
 	 */
-	public void register() {
+	public void register(String username, String password) {
+		this.clientCommunicator.userRegister(this.modelToJSON.createUserObject(username, password));
 	}
 	
 	
