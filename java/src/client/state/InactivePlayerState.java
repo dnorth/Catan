@@ -55,7 +55,7 @@ public class InactivePlayerState extends IStateBase {
 
 	@Override
 	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer) {
-		return false;
+		return facade.canAcceptTrade(playerIndex, tradeOffer);
 	}
 
 

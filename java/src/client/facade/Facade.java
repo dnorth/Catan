@@ -10,6 +10,7 @@ import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
+import client.models.TradeOffer;
 
 /**
  * Facade class interfaces from GUI to Client Communicator
@@ -519,6 +520,7 @@ public class Facade {
 	public void playCard() {
 	}
 	
+	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer){ return canDo.canAcceptTrade(playerIndex, tradeOffer) ;}
 	
 	
 	// ROLL CONTROLLER
