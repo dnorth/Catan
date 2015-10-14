@@ -92,6 +92,10 @@ public class CanDoManager {
 		return true;
 	}
 	
+	public boolean canUpgradeSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+		return this.boardManager.canUpgradeSettlementAtLocation(playerIndex, edge);
+	}
+	
 	/**
 	 * Determines if a player has enough resources to buy a development card.
 	 * @param playerIndex Number of player to determine ability to take action

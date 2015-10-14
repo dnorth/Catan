@@ -28,6 +28,11 @@ public class BoardManager {
 		return board.getEdgeOwner(edge);
 	}
 	
+	public Integer[] getAdjacentVertexOwners(EdgeLocation edge) {
+		//get three adjacent vertices
+		return null;
+	}
+	
 	public Integer[] getAdjacentEdgeOwners(EdgeLocation edge) {
 		String dir = edge.getDirection();
 		EdgeLocation altEdge1 = board.getAltEdge(edge);
@@ -122,6 +127,18 @@ public class BoardManager {
 		}
 		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
 		else return false;
+	}
+	
+	public boolean canUpgradeSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+		VertexObject[] e = board.getSettlements();
+		for (VertexObject v : e) {
+			if(edge.equals(v.getLocation())) {
+				if (v.getOwner() == playerIndex) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean canMaritimeTrade(int playerIndex)

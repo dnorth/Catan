@@ -47,6 +47,7 @@ public class Board {
         adjVertices = Collections.unmodifiableMap(adjVertices);
         return adjVertices;
 	}
+	
 	public Hex[] getHexes() {
 		return hexes;
 	}
