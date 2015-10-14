@@ -24,27 +24,27 @@ public interface IProxy {
 	public JsonObject getGamesList ();
 	public JsonObject createGame (JsonObject inputGame);
 	public JsonObject joinGame (JsonObject gameData);
-	public JsonObject saveGame (int gameId, String fileName);
+	public JsonObject saveGame (JsonObject data);
 	public JsonObject loadGame (JsonObject gameName);
 
 	//MOVES PROXY
-	public JsonObject sendChat (int playerIndex, String content);
+	public JsonObject sendChat (JsonObject data);
 	public JsonObject rollNumber();
-	public JsonObject robPlayer (int playerIndex, int victimIndex, HexLocation hexLocation);
-	public JsonObject finishTurn (int playerIndex);
-	public JsonObject buyDevCard (int playerIndex);
-	public JsonObject playYearOfPlenty (int playerIndex, int resource1, int resource2);
-	public JsonObject playRoadBuilding (int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2);
-	public JsonObject playSoldier (int playerIndex, int victimIndex, HexLocation newRobberHexLocation);
-	public JsonObject playMonopoly (int playerIndex, String resource);
-	public JsonObject playMonument (int playerIndex);
-	public JsonObject buildRoad (int playerIndex, EdgeLocation roadLocation, boolean free);
-	public JsonObject buildSettlement (int playerIndex, VertexLocation settlementLocation, boolean free);
-	public JsonObject buildCity (int playerIndex, VertexLocation cityLocation);
-	public JsonObject offerTrade (int playerIndex, Resources resourceList, int receivingPlayerIndex);
-	public JsonObject acceptTrade (int playerIndex, boolean willAccept);
-	public JsonObject maritimeTrade (int playerIndex, int ratio, String inputResource, String outputResource);
-	public JsonObject discardCards (int playerIndex, Resources discardedCards);
+	public JsonObject robPlayer (JsonObject data);
+	public JsonObject finishTurn (JsonObject data);
+	public JsonObject buyDevCard (JsonObject data);
+	public JsonObject playYearOfPlenty (JsonObject data);
+	public JsonObject playRoadBuilding (JsonObject data);
+	public JsonObject playSoldier (JsonObject data);
+	public JsonObject playMonopoly (JsonObject data);
+	public JsonObject playMonument (JsonObject data);
+	public JsonObject buildRoad (JsonObject data);
+	public JsonObject buildSettlement (JsonObject data);
+	public JsonObject buildCity (JsonObject data);
+	public JsonObject offerTrade (JsonObject data);
+	public JsonObject acceptTrade (JsonObject data);
+	public JsonObject maritimeTrade (JsonObject data);
+	public JsonObject discardCards (JsonObject data);
 	
 	//USER PROXY
 	public JsonObject userLogin (JsonObject user);

@@ -9,9 +9,10 @@ public class State implements Observer {
 
 	private IStateBase currentState;
 	ClientModel model;
+	int myPlayerIndex;
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object arg) { // send myPlayerIndex to State
 		
 	}
 	

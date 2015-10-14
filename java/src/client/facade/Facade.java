@@ -59,24 +59,24 @@ public class Facade {
 	 * Called by client to see if player can currently buy dev card
 	 * @return true if player can buy dev card, false if not
 	 */
-	public boolean canBuyCard() {
-		return false;
+	public boolean canBuyCard(int playerIndex) {
+		return canDo.canBuyDevCard(playerIndex);
 	}
 	
 	/**
 	 * Called by client to see if player can currently play dev card
 	 * @return true if player can play card, false if not
 	 */
-	public boolean canPlayCard() {
-		return false;
+	public boolean canPlayCard(int playerIndex) {
+		return canDo.canPlayDevCard(playerIndex);
 	}
 	
 	/**
 	 * Called by client when player wants to play Monopoly card
 	 * @param resource The resource to take from other players
 	 */
-	public void playMonopolyCard(ResourceType resource) {
-		
+	public void playMonopolyCard(int playerIndex, ResourceType resource) {
+		clientCommunicator.playMonopoly(playerIndex, resource);
 	}
 	
 	/**
