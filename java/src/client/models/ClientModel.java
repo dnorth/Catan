@@ -24,6 +24,11 @@ public class ClientModel extends Observable
 	private DevCards deck;
 	boolean hasChanged = false;
 	
+	//TODO update the rest of the model
+	public void update(ClientModel model) {
+		this.setBank(model.bank);
+	}
+	
 	public int getVersion() {
 		return version;
 	}
