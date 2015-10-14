@@ -32,27 +32,19 @@ public class SetupTwoActivePlayerState extends IStateBase {
 	}
 
 	@Override
-	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge) {
+	public boolean canPlaceRoadAtLocation(EdgeLocation edge) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceSettlementAtLocation(int playerIndex,
-			VertexLocation vertLoc) {
+	public boolean canPlaceSettlementAtLocation(VertexLocation vertLoc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean canUpgradeSettlement(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canUpgradeSettlementAtLocation(int playerIndex,
-			VertexLocation vertLoc) {
+	public boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
