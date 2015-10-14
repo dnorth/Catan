@@ -9,6 +9,7 @@ import client.models.TradeOffer;
 abstract class IStateBase {
 	
 	static protected Facade facade = new Facade(null);
+	static int myPlayerIndex;
 	
 	public abstract boolean canJoinGame();
 	public abstract boolean canStartCreateNewGame();
