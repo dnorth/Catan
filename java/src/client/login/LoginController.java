@@ -3,6 +3,8 @@ package client.login;
 import client.base.*;
 import client.facade.Facade;
 import client.misc.*;
+import client.state.IStateBase;
+import client.state.StateManager;
 
 import java.net.*;
 import java.io.*;
@@ -20,7 +22,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
-	private Facade facade;
+	private StateManager stateManager;
 	
 	/**
 	 * LoginController constructor
@@ -28,12 +30,10 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
-	public LoginController(ILoginView view, IMessageView messageView, Facade facade) {
-
+	public LoginController(ILoginView view, IMessageView messageView, StateManager stateManager) {
 		super(view);
-		
 		this.messageView = messageView;
-		this.facade = facade;
+		this.stateManager = stateManager;
 	}
 	
 	public ILoginView getLoginView() {
@@ -85,12 +85,23 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void register() {
-		
+		// TODO: Check what state we're in
 		// TODO: register new user (which, if successful, also logs them in)
-		facade.register();
+		IStateBase state = stateManager.getCurrentState();
+		
+		//TODO Pass in the username and password
+		
+		String username = this.getLoginView().getLoginUsername();
+		String password = this.getLoginView().getLoginPassword();
+	
+		boolean registered = state.register(username, password);
 		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if( registered ) {
+			getLoginView().closeModal();
+			loginAction.execute();
+		} else {
+			//TODO
+		}
 	}
 
 	@Override

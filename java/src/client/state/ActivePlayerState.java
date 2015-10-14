@@ -3,9 +3,16 @@ package client.state;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.facade.Facade;
 import client.models.TradeOffer;
 
-public class ActivePlayerState extends IStateBase {
+public class ActivePlayerState implements IStateBase {
+	
+	Facade facade;
+	
+	public ActivePlayerState(Facade facade) {
+		this.facade = facade;
+	}
 
 	@Override
 	public boolean canJoinGame() {
@@ -59,12 +66,19 @@ public class ActivePlayerState extends IStateBase {
 
 	@Override
 	public boolean canBuyDevCard(int playerIndex) {
-		return facade.canBuyCard();
+		return facade.canBuyCard(playerIndex);
 	}
 
 	@Override
 	public boolean canPlayDevCard(int playerIndex) {
-		return facade.canPlayCard();
+		return facade.canPlayCard(playerIndex);
+	}
+
+
+	@Override
+	public boolean register(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -3,9 +3,16 @@ package client.state;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.facade.Facade;
 import client.models.TradeOffer;
 
-public class LoginState extends IStateBase {
+public class LoginState implements IStateBase {
+
+	Facade facade;
+	
+	public LoginState(Facade facade) {
+		this.facade = facade;
+	}
 
 	@Override
 	public boolean canJoinGame() {
@@ -64,6 +71,12 @@ public class LoginState extends IStateBase {
 
 	@Override
 	public boolean canPlayDevCard(int playerIndex) {
+		return false;
+	}
+
+	@Override
+	public boolean register(String username, String password) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

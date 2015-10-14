@@ -5,7 +5,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.models.TradeOffer;
 
-public class GameOverState extends IStateBase {
+public class GameOverState implements IStateBase {
 
 	@Override
 	public boolean canJoinGame() {
@@ -66,6 +66,12 @@ public class GameOverState extends IStateBase {
 
 	@Override
 	public boolean canPlayDevCard(int playerIndex) {
+		return false;
+	}
+
+	@Override
+	public boolean register(String username, String password) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
