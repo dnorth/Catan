@@ -28,39 +28,22 @@ public class ActivePlayerState extends IStateBase {
 	}
 
 	@Override
-	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge) {
-		return false;
+	public boolean canPlaceRoadAtLocation(EdgeLocation edge) {
+		return facade.canPlaceRoad(edge);
 	}
 
 	@Override
-	public boolean canBuySettlement(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canPlaceSettlementAtLocation(VertexLocation vertLoc) {
+		return facade.canPlaceSettlement(vertLoc);
 	}
 
 	@Override
-	public boolean canPlaceSettlementAtLocation(int playerIndex,
-			VertexLocation vertLoc) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canUpgradeSettlement(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canUpgradeSettlementAtLocation(int playerIndex,
-			VertexLocation vertLoc) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc) {
+		return facade.canPlaceCity(vertLoc);
 	}
 
 	@Override
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -14,11 +14,9 @@ abstract class IStateBase {
 	public abstract boolean canStartCreateNewGame();
 	public abstract boolean canStartPlayerWaitingView();
 	public abstract boolean canLogin();
-	public abstract boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge);
-	public abstract boolean canBuySettlement(int playerIndex);
-	public abstract boolean canPlaceSettlementAtLocation(int playerIndex, VertexLocation vertLoc);
-	public abstract boolean canUpgradeSettlement(int playerIndex);
-	public abstract boolean canUpgradeSettlementAtLocation(int playerIndex, VertexLocation vertLoc);
+	public abstract boolean canPlaceRoadAtLocation(EdgeLocation edge);
+	public abstract boolean canPlaceSettlementAtLocation(VertexLocation vertLoc);
+	public abstract boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc);
 	public abstract boolean canPlaceRobber(HexLocation hexLoc);
 	
 	public abstract boolean canOfferTrade(int playerIndex);
