@@ -44,37 +44,27 @@ public class ActivePlayerState extends IStateBase {
 
 	@Override
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		return false;
+		return facade.canPlaceRobber(hexLoc);
 	}
 
 	@Override
 	public boolean canOfferTrade(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		return facade.canDomesticTrade();
 	}
 
 	@Override
 	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canMaritimeTrade(int playerIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canBuyDevCard(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		return facade.canBuyCard();
 	}
 
 	@Override
 	public boolean canPlayDevCard(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		return facade.canPlayCard();
 	}
 
 }

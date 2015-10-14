@@ -18,10 +18,8 @@ abstract class IStateBase {
 	public abstract boolean canPlaceSettlementAtLocation(VertexLocation vertLoc);
 	public abstract boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc);
 	public abstract boolean canPlaceRobber(HexLocation hexLoc);
-	
 	public abstract boolean canOfferTrade(int playerIndex);
 	public abstract boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer);
-	public abstract boolean canMaritimeTrade(int playerIndex);
 	public abstract boolean canBuyDevCard(int playerIndex);
 	public abstract boolean canPlayDevCard(int playerIndex);
 }
