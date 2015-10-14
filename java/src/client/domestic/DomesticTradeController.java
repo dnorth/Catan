@@ -1,5 +1,7 @@
 package client.domestic;
 
+import java.util.Observable;
+
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -114,6 +116,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 
 		getAcceptOverlay().closeModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package client.discard;
 
+import java.util.Observable;
+
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -47,6 +49,12 @@ public class DiscardController extends Controller implements IDiscardController 
 	public void discard() {
 		
 		getDiscardView().closeModal();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

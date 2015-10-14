@@ -1,11 +1,16 @@
 package client.models;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 
 /**
  * Client model interacts with Client Communicator (Server Proxy), holds pointers to all necessary data
  */
-public class ClientModel
+public class ClientModel extends Observable
 {
 	private Resources bank;
 	private MessageList chat;
@@ -17,6 +22,7 @@ public class ClientModel
 	private int version;
 	private int winner;
 	private DevCards deck;
+	boolean hasChanged = false;
 	
 	public void update(ClientModel model) {
 		this.setBank(model.getBank());
@@ -35,6 +41,12 @@ public class ClientModel
 		return version;
 	}
 	public void setVersion(int version) {
+		if(this.version == version) {
+			hasChanged = false;
+		}
+		else {
+			hasChanged = true;
+		}
 		this.version = version;
 	}
 	public int getWinner() {
@@ -113,4 +125,10 @@ public class ClientModel
 		
 		return sb.toString();
 	}
+	
+	@Override
+	public boolean hasChanged() {
+		return hasChanged;
+	}
+	
 }
