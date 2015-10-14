@@ -5,41 +5,30 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.models.TradeOffer;
 
-public class ActivePlayerState implements IStateBase {
+public class ActivePlayerState extends IStateBase {
 
 	@Override
 	public boolean canJoinGame() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canStartCreateNewGame() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canStartPlayerWaitingView() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canLogin() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canBuyRoad(int playerIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

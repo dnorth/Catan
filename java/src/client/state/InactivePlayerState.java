@@ -5,7 +5,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.models.TradeOffer;
 
-public class InactivePlayerState implements IStateBase {
+public class InactivePlayerState extends IStateBase {
 
 	@Override
 	public boolean canJoinGame() {
