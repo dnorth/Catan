@@ -68,11 +68,6 @@ public class InactivePlayerState extends IStateBase {
 		return false;
 	}
 
-	@Override
-	public boolean canMaritimeTrade(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean canBuyDevCard(int playerIndex) {

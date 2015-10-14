@@ -69,12 +69,6 @@ public class SetupOneActivePlayerState extends IStateBase {
 	}
 
 	@Override
-	public boolean canMaritimeTrade(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean canBuyDevCard(int playerIndex) {
 		// TODO Auto-generated method stub
 		return false;
