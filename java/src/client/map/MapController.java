@@ -125,6 +125,8 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
+		//if (facade.canPlaceRoad()):
+		//	facade.placeRoad()
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 

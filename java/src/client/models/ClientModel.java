@@ -18,6 +18,11 @@ public class ClientModel
 	private int winner;
 	private DevCards deck;
 	
+	//TODO update the rest of the model
+	public void update(ClientModel model) {
+		this.setBank(model.bank);
+	}
+	
 	public int getVersion() {
 		return version;
 	}

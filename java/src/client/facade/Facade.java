@@ -15,8 +15,7 @@ import client.models.ClientModel;
  * Facade class interfaces from GUI to Client Communicator
  */
 public class Facade {
-	private PlayerManager playerManager;
-	private TurnManager turnManager;
+	private CanDoManager canDo;
 	private ClientModel client;
 	private ClientCommunicator clientCommunicator;
 	
@@ -489,7 +488,11 @@ public class Facade {
 	/**
 	 * Called by the view then the user requests to build a road
 	 */
-	public void buildRoad() {
+	public void buildRoad(/*data*/) {
+		/*jsonData = modelToJSON.placeroad(modelData)
+		serverjsonData = clientCommunicator.buildRoad(jsonData)
+		client.update(JSONToModel.updateModel(serverjsonData))
+		*/
 	}
 	
 	/**
