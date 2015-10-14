@@ -33,6 +33,12 @@ public class ClientCommunicator implements IProxy{
 		initialize();
 	}
 	
+	public ClientCommunicator(String hostname, int port) {
+		this.host = hostname;
+		this.port = port;
+		initialize();
+	}
+	
 	private void initialize() {
 		gameProxy = new GameProxy();
 		gamesProxy = new GamesProxy();

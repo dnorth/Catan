@@ -1,6 +1,7 @@
 package client.login;
 
 import client.base.*;
+import client.facade.Facade;
 import client.misc.*;
 
 import java.net.*;
@@ -19,6 +20,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
+	private Facade facade;
 	
 	/**
 	 * LoginController constructor
@@ -26,11 +28,12 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
-	public LoginController(ILoginView view, IMessageView messageView) {
+	public LoginController(ILoginView view, IMessageView messageView, Facade facade) {
 
 		super(view);
 		
 		this.messageView = messageView;
+		this.facade = facade;
 	}
 	
 	public ILoginView getLoginView() {
@@ -84,7 +87,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
-		
+		facade.register();
 		// If register succeeded
 		getLoginView().closeModal();
 		loginAction.execute();

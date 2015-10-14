@@ -3,9 +3,11 @@ package client.main;
 import javax.swing.*;
 
 import client.catan.*;
+import client.facade.Facade;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
+import client.models.ClientModel;
 import client.base.*;
 
 /**
@@ -16,6 +18,7 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
+	private static Facade mainFacade; 
 	
 	public Catan()
 	{
@@ -56,7 +59,8 @@ public class Catan extends JFrame
 			public void run()
 			{
 				new Catan();
-				
+				//TODO Instantiate model from JSON - Instead of new ClientModel() replace it with the instantiated model
+				mainFacade = new Facade(new ClientModel());
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView);
@@ -87,7 +91,8 @@ public class Catan extends JFrame
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(
 																	  loginView,
-																	  loginMessageView);
+																	  loginMessageView,
+																	  mainFacade);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()

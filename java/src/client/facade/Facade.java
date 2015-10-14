@@ -21,7 +21,9 @@ public class Facade {
 	private ClientCommunicator clientCommunicator;
 	
 	public Facade (ClientModel cli) {
-		
+		this.client = cli;
+		this.canDo = new CanDoManager(client);
+		this.clientCommunicator = new ClientCommunicator();
 	}
 	
 	//CHAT CONTROLLER
