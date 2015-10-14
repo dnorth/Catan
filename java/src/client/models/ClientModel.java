@@ -18,9 +18,17 @@ public class ClientModel
 	private int winner;
 	private DevCards deck;
 	
-	//TODO update the rest of the model
 	public void update(ClientModel model) {
-		this.setBank(model.bank);
+		this.setBank(model.getBank());
+		this.setChat(model.getChat());
+		this.setLog(model.getLog());
+		this.setBoard(model.getBoard());
+		this.setPlayers(model.getPlayers());
+		this.setTradeOffer(model.getTradeOffer());
+		this.setTurnTracker(model.getTurnTracker());
+		this.setVersion(model.getVersion());
+		this.setWinner(model.getWinner());
+		this.setDeck(model.getDeck());
 	}
 	
 	public int getVersion() {
