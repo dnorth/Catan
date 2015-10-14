@@ -32,19 +32,7 @@ public class SetupOneActivePlayerState extends IStateBase {
 	}
 
 	@Override
-	public boolean canBuyRoad(int playerIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean canBuySettlement(int playerIndex) {
 		// TODO Auto-generated method stub
 		return false;
 	}
