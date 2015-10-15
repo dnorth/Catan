@@ -75,7 +75,7 @@ public class GamesProxy extends ServerProxy{
 	 * @param fileName
 	 * @return boolean stating whether or not the save was successful
 	 */
-	public JsonObject saveGame (int gameId, String fileName){
+	public JsonObject saveGame (JsonObject data){ //int gameId, String fileName
 
 		JsonObject success = null;
         

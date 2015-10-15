@@ -137,8 +137,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject buyDevCard(int playerIndex) {
-		return movesProxy.buyDevCard(playerIndex);
+	public JsonObject buyDevCard(JsonObject data) { //int playerIndex
+		return movesProxy.buyDevCard(data);
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class ClientCommunicator implements IProxy{
 
 	@Override
 	public JsonObject playRoadBuilding(JsonObject data) { //int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2
-		return movesProxy.playRoadBuilding(playerIndex, edgeLocation1, edgeLocation2);
+		return movesProxy.playRoadBuilding(data);
 	}
 
 	@Override

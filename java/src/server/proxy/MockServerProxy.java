@@ -77,7 +77,7 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject saveGame(int gameId, String fileName) {
+	public JsonObject saveGame(JsonObject data) { //int gameId, String fileName
 		// **DON'T** implement for Phase 1
 		return null;
 	}
@@ -92,7 +92,7 @@ public class MockServerProxy implements IProxy{
 
 	//MOVES API
 	@Override
-	public JsonObject sendChat(int playerIndex, String content) {
+	public JsonObject sendChat(JsonObject data) { //int playerIndex, String content
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
@@ -104,91 +104,91 @@ public class MockServerProxy implements IProxy{
 
 
 	@Override
-	public JsonObject robPlayer(int playerIndex, int victimIndex, HexLocation hexLocation) {
+	public JsonObject robPlayer(JsonObject data) { //int playerIndex, int victimIndex, HexLocation hexLocation
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject finishTurn(int playerIndex) {
+	public JsonObject finishTurn(JsonObject data) { //int playerIndex
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject buyDevCard(int playerIndex) {
+	public JsonObject buyDevCard(JsonObject data) { //int playerIndex
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject playYearOfPlenty(int playerIndex, int resource1, int resource2) {
+	public JsonObject playYearOfPlenty(JsonObject data) { //int playerIndex, int resource1, int resource2
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject playRoadBuilding(int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2) {
+	public JsonObject playRoadBuilding(JsonObject data) { //int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject playSoldier(int playerIndex, int victimIndex, HexLocation newRobberHexLocation) {
+	public JsonObject playSoldier(JsonObject data) { //int playerIndex, int victimIndex, HexLocation newRobberHexLocation
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject playMonopoly(int playerIndex, String resource) {
+	public JsonObject playMonopoly(JsonObject data) { //int playerIndex, String resource
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject playMonument(int playerIndex) {
+	public JsonObject playMonument(JsonObject data) { //int playerIndex
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
+	public JsonObject buildRoad(JsonObject data) { //int playerIndex, EdgeLocation roadLocation, boolean free
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject buildSettlement(int playerIndex, VertexLocation settlementLocation, boolean free) {
+	public JsonObject buildSettlement(JsonObject data) { //int playerIndex, VertexLocation settlementLocation, boolean free
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject buildCity(int playerIndex, VertexLocation cityLocation) {
+	public JsonObject buildCity(JsonObject data) { //int playerIndex, VertexLocation cityLocation
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject offerTrade(int playerIndex, Resources resourceList, int receivingPlayerIndex) {
+	public JsonObject offerTrade(JsonObject data) { //int playerIndex, Resources resourceList, int receivingPlayerIndex
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject acceptTrade(int playerIndex, boolean willAccept) {
+	public JsonObject acceptTrade(JsonObject data) { //int playerIndex, boolean willAccept
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
+	public JsonObject maritimeTrade(JsonObject data) { //int playerIndex, int ratio, String inputResource, String outputResource
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
 
 	@Override
-	public JsonObject discardCards(int playerIndex, Resources discardedCards) {
+	public JsonObject discardCards(JsonObject data) { //int playerIndex, Resources discardedCards
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
