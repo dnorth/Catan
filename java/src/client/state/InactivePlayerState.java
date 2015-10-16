@@ -56,23 +56,23 @@ public class InactivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public boolean canOfferTrade(int playerIndex) {
+	public boolean canOfferTrade() {
 		return false;
 	}
 
 	@Override
-	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer) {
-		return facade.canAcceptTrade(playerIndex, tradeOffer);
+	public boolean canAcceptTrade(TradeOffer tradeOffer) {
+		return facade.canAcceptTrade(tradeOffer);
 	}
 
 
 	@Override
-	public boolean canBuyDevCard(int playerIndex) {
+	public boolean canBuyDevCard() {
 		return false;
 	}
 
 	@Override
-	public boolean canPlayDevCard(int playerIndex) {
+	public boolean canPlayDevCard() {
 		return false;
 	}
 
