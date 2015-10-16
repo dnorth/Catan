@@ -103,9 +103,12 @@ public class LoginController extends Controller implements ILoginController {
 		
 		String username = this.getLoginView().getRegisterUsername();
 		String password = this.getLoginView().getRegisterPassword();
+		String validatedPassword = this.getLoginView().getRegisterPasswordRepeat();
 	
 		System.out.println("Trying to register with username: " + username + " and password: " + password);
-		boolean registered = state.register(username, password);
+		boolean registered;
+		if (!password.equals(validatedPassword)) registered = false;
+		else registered = state.register(username, password);
 		// If register succeeded
 		if( registered ) {
 			getLoginView().closeModal();
