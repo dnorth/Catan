@@ -5,6 +5,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.facade.Facade;
 import client.models.TradeOffer;
+import client.models.User;
 
 public class LoginState implements IStateBase {
 
@@ -76,7 +77,6 @@ public class LoginState implements IStateBase {
 
 	@Override
 	public boolean register(String username, String password) {
-		System.out.println("In login state");
 		return facade.register(username, password);
 	}
 

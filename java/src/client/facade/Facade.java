@@ -28,6 +28,7 @@ import client.models.User;
 public class Facade {
 	private CanDoManager canDo;
 	private ClientModel client;
+	private User user;
 	private ModelToJSON modelToJSON;
 	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
@@ -38,6 +39,7 @@ public class Facade {
 		this.clientCommunicator = new ClientCommunicator();
 		this.jsonToModel = new JSONToModel();
 		this.modelToJSON = new ModelToJSON();
+		this.user = null;
 	}
 	
 	//CHAT CONTROLLER
@@ -311,18 +313,14 @@ public class Facade {
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
 		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject);
 		
-		System.out.println("Here's what we're returning: " + returnedJson.get("Response-body").getAsString());
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
 			String userCookie = returnedJson.get("User-cookie").getAsString();
 			int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
 			User newUser = new User(username, password, userCookie, playerID);
-			
-			System.out.println("NEW USER: " + newUser.toString());
-			
+			this.user = newUser;
 			return true;
 		}
 		
-		//TODO Return correct boolean if user is registered or not
 		return false;
 	}
 	
