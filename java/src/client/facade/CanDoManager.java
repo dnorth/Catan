@@ -1,14 +1,9 @@
 package client.facade;
 
-import java.util.Arrays;
-
-import shared.locations.EdgeDirection;
 import client.models.ClientModel;
-import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.mapdata.EdgeLocation;
-import client.models.mapdata.EdgeValue;
-import client.models.mapdata.Hex;
+import client.models.mapdata.HexLocation;
 
 public class CanDoManager {
 
@@ -116,5 +111,9 @@ public class CanDoManager {
 	 */
 	public boolean canPlayDevCard(int playerIndex){
 		return this.playerManager.canPlayDevCard(playerIndex);
+	}
+	
+	public boolean canPlaceRobber(HexLocation hexLoc) {
+		return boardManager.canPlaceRobber(hexLoc);
 	}
 }
