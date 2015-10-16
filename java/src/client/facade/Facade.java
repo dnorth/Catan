@@ -89,14 +89,14 @@ public class Facade {
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
-	public void playMonumentCard() {
+	public void playMonumentCard(int playerIndex) {
 		
 	}
 	
 	/**
 	 * Called by client when player wants to play Road Building card
 	 */
-	public void playRoadBuildCard() {
+	public void playRoadBuildCard(int playerIndex) {
 		
 	}
 	
@@ -223,7 +223,7 @@ public class Facade {
 	 * @param willAccept
 	 *            Whether or not the user accepted the trade
 	 */
-	public void acceptTrade(boolean willAccept) {
+	public void acceptTrade(int playerIndex, boolean willAccept) {
 	}
 	
 	
@@ -339,8 +339,9 @@ public class Facade {
 	 *            The proposed road location
 	 * @return true if the road can be placed at edgeLoc, false otherwise
 	 */
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		return false;
+	public boolean canPlaceRoad(int playerIndex, EdgeLocation edgeLoc) {
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
+		return canDo.canPlaceRoadAtLocation(playerIndex, edge);
 	}
 	
 	/**
@@ -353,7 +354,7 @@ public class Facade {
 	 *            The proposed settlement location
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
-	public boolean canPlaceSettlement(VertexLocation vertLoc) {
+	public boolean canPlaceSettlement(int playerIndex, VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -367,7 +368,7 @@ public class Facade {
 	 *            The proposed city location
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
-	public boolean canPlaceCity(VertexLocation vertLoc) {
+	public boolean canPlaceCity(int playerIndex, VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -392,7 +393,7 @@ public class Facade {
 	 * @param edgeLoc
 	 *            The road location
 	 */
-	public void placeRoad(EdgeLocation edgeLoc) {
+	public void placeRoad(int playerIndex, EdgeLocation edgeLoc) {
 	}
 	
 	/**
@@ -402,7 +403,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The settlement location
 	 */
-	public void placeSettlement(VertexLocation vertLoc) {
+	public void placeSettlement(int playerIndex, VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -411,7 +412,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The city location
 	 */
-	public void placeCity(VertexLocation vertLoc) {
+	public void placeCity(int playerIndex, VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -420,7 +421,7 @@ public class Facade {
 	 * @param hexLoc
 	 *            The robber location
 	 */
-	public void placeRobber(HexLocation hexLoc) {
+	public void placeRobber(int playerIndex, HexLocation hexLoc) {
 	}
 	
 	/**
@@ -445,7 +446,7 @@ public class Facade {
 	 * This method is called when the user plays a "soldier" development card.
 	 * It should initiate robber placement.
 	 */
-	public void playSoldierCard() {
+	public void playSoldierCard(int playerIndex) {
 	}
 	
 	/**
@@ -453,7 +454,7 @@ public class Facade {
 	 * development card. It should initiate the process of allowing the player
 	 * to place two roads.
 	 */
-	public void playRoadBuildingCard() {
+	public void playRoadBuildingCard(int playerIndex) {
 	}
 	
 	/**
@@ -463,7 +464,7 @@ public class Facade {
 	 * @param victim
 	 *            The player to be robbed
 	 */
-	public void robPlayer(RobPlayerInfo victim) {
+	public void robPlayer(int playerIndex, RobPlayerInfo victim) {
 	}
 	
 	
@@ -475,13 +476,13 @@ public class Facade {
 	 * Called by the maritime trade view when the user clicks the maritime trade
 	 * button.
 	 */
-	public void startMaritimeTrade() {
+	public void startMaritimeTrade(int playerIndex) {
 	}
 	
 	/**
 	 * Make the specified trade with the bank.
 	 */
-	public void makeMaritimeTrade() {
+	public void makeMaritimeTrade(int playerIndex) {
 	}
 	
 	/**
@@ -490,7 +491,7 @@ public class Facade {
 	 * @param resource
 	 *            The selected "get" resource
 	 */
-	public void setGetResource(ResourceType resource) {
+	public void setGetResource(int playerIndex, ResourceType resource) {
 	}
 	
 	/**

@@ -34,6 +34,11 @@ public class EdgeLocation {
 		this.y = ycoord;
 		this.direction = direction;
 	}
+	public EdgeLocation(shared.locations.EdgeLocation edge) {
+		this.x = edge.getHexLoc().getX();
+		this.y = edge.getHexLoc().getY();
+		this.direction = edge.getDir().toString();
+	}
 	public int getXcoord() {
 		return x;
 	}
