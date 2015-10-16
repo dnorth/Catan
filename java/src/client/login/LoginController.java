@@ -72,6 +72,15 @@ public class LoginController extends Controller implements ILoginController {
 		getLoginView().showModal();
 	}
 
+	/**
+	 * get username and password from the view
+	 * Send verification request to server
+	 * if it works:
+	 * Create any data objects you need for a player in the pre-game state
+	 * close theModal, loginAction.execute
+	 * else
+	 * show a dialogue to reprompt user for info
+	 */
 	@Override
 	public void signIn() {
 		
@@ -83,6 +92,7 @@ public class LoginController extends Controller implements ILoginController {
 		loginAction.execute();
 	}
 
+	
 	@Override
 	public void register() {
 		// TODO: Check what state we're in
@@ -91,15 +101,17 @@ public class LoginController extends Controller implements ILoginController {
 		
 		//TODO Pass in the username and password
 		
-		String username = this.getLoginView().getLoginUsername();
-		String password = this.getLoginView().getLoginPassword();
+		String username = this.getLoginView().getRegisterUsername();
+		String password = this.getLoginView().getRegisterPassword();
 	
+		System.out.println("Trying to register with username: " + username + " and password: " + password);
 		boolean registered = state.register(username, password);
 		// If register succeeded
 		if( registered ) {
 			getLoginView().closeModal();
 			loginAction.execute();
 		} else {
+			System.out.println("FAILED TO REGISTER");
 			//TODO
 		}
 	}

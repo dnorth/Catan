@@ -76,6 +76,7 @@ public class LoginState implements IStateBase {
 
 	@Override
 	public boolean register(String username, String password) {
+		System.out.println("In login state");
 		return facade.register(username, password);
 	}
 
