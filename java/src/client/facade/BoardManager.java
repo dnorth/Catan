@@ -28,6 +28,11 @@ public class BoardManager {
 		return board.getEdgeOwner(edge);
 	}
 	
+	public boolean canPlaceRobber(HexLocation hexLoc) {
+		if (hexLoc.equals(this.board.getRobber())) return false;
+		return true;
+	}
+	
 	public Integer[] getAdjacentVertexOwners(EdgeLocation edge) {
 		//get three adjacent vertices
 		EdgeLocation adj1 = null;
@@ -182,13 +187,16 @@ public class BoardManager {
 	}
 	
 	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+		//check if someone owns vertex
 		if(board.getVertexOwner(edge) != -1) {
 			return false;
 		}
+		//make sure neighboring vertices are empty
 		Integer[] adjVertexOwners = this.getAdjacentVertexOwners(edge);
 		for (Integer i : adjVertexOwners) {
 			if (i != -1) return false;
 		}
+		//make sure player owns road next to vertex
 		Integer[] adjEdgeOwners = this.getAdjacentEdgeOwners(edge);
 		for (Integer i : adjEdgeOwners) {
 			if (i == playerIndex) return true;

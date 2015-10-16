@@ -371,7 +371,8 @@ public class Facade {
 	 * @return true if the robber can be placed at hexLoc, false otherwise
 	 */
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		return false;
+		client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(hexLoc.getX(), hexLoc.getY());
+		return canDo.canPlaceRobber(hex);
 	}
 	
 	/**
