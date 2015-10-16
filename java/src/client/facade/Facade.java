@@ -1,5 +1,6 @@
 package client.facade;
 
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import jsonTranslator.JSONToModel;
@@ -296,7 +297,7 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Sign in" button in the login view
 	 */
-	public void signIn() {
+	public boolean signIn(String username, String password) {
 	}
 	
 	/**
@@ -563,7 +564,12 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Roll!" button in the roll view
 	 */
-	public void rollDice() {
+	public int rollDice() {
+		Random rand = new Random();
+
+		int  die1 = rand.nextInt(6) + 1;
+		int  die2 = rand.nextInt(6) + 1;
+		return die1+die2;
 	}
 	
 	

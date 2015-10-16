@@ -80,4 +80,10 @@ public class LoginState implements IStateBase {
 		return facade.register(username, password);
 	}
 
+	@Override
+	public boolean login(String username, String password) {
+		System.out.println("In login state");
+		return facade.signIn(username, password);
+	}
+
 }

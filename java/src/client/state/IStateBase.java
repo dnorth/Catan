@@ -13,6 +13,7 @@ public interface IStateBase {
 	public abstract boolean canStartPlayerWaitingView();
 	public abstract boolean canLogin();
 	public abstract boolean register(String username, String password);
+	public abstract boolean login(String username, String password);
 	public abstract boolean canPlaceRoadAtLocation(EdgeLocation edge);
 	public abstract boolean canPlaceSettlementAtLocation(VertexLocation vertLoc);
 	public abstract boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc);

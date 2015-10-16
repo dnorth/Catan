@@ -83,4 +83,10 @@ public class InactivePlayerState implements IStateBase {
 		return false;
 	}
 
+	@Override
+	public boolean login(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
