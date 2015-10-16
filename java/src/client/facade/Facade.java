@@ -298,6 +298,7 @@ public class Facade {
 	 * Called when the user clicks the "Sign in" button in the login view
 	 */
 	public boolean signIn(String username, String password) {
+		return false;
 	}
 	
 	/**
