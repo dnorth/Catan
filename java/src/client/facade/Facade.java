@@ -1,9 +1,12 @@
 package client.facade;
 
+import java.util.regex.Pattern;
+
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
 
 import com.google.gson.JsonObject;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import server.proxy.ClientCommunicator;
 import shared.definitions.CatanColor;
@@ -299,9 +302,13 @@ public class Facade {
 	 * Called when the user clicks the "Register" button in the login view
 	 */
 	public boolean register(String username, String password) {
-		//TODO Regex to validate registration input
+		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		if (p.matcher(username).find() || p.matcher(password).find()) return false;
+		
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
-		this.clientCommunicator.userRegister(userObject);
+		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject);
+		
+		if (returnedJson.has("Success")) return true;
 		
 		//TODO Return correct boolean if user is registered or not
 		return false;
