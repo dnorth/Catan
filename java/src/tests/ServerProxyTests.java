@@ -191,7 +191,7 @@ public class ServerProxyTests {
 		assertTrue(returned.contains("LARGEST_ARMY"));
 	}
 	
-	@Test 
+	/*@Test 
 	public void sendChatTest() {
 		JsonObject resultObject = proxy2.sendChat(0, "This is my message");
 		assertNotNull(resultObject);
@@ -290,5 +290,5 @@ public class ServerProxyTests {
 	
 	
 	
-	
+	*/
 }

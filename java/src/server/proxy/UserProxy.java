@@ -24,14 +24,16 @@ public class UserProxy extends ServerProxy{
 	 */
 	public JsonObject userRegister (JsonObject user){
       
-		JsonObject returnObject = new JsonObject();;
+		JsonObject returnObject = new JsonObject();
         try {
 			returnObject = doPost("/user/register", user);
 		} catch (ClientException e) { //TODO have this return the failed response body
 
-			returnObject.addProperty("Error-message", e.getMessage());;
+			returnObject.addProperty("Error-message", e.getMessage());
 			//e.printStackTrace();
 		}
+        
+        System.out.println(returnObject);
        	
        	return returnObject;
     }

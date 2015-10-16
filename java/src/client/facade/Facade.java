@@ -298,7 +298,8 @@ public class Facade {
 	 */
 	public boolean register(String username, String password) {
 		//TODO Regex to validate registration input
-		this.clientCommunicator.userRegister(this.modelToJSON.createUserObject(username, password));
+		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
+		this.clientCommunicator.userRegister(userObject);
 		
 		//TODO Return correct boolean if user is registered or not
 		return false;
