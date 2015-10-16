@@ -288,18 +288,32 @@ public class Facade {
 	public void addAI() {
 	}
 	
-	// LOGIN CONTROLLER
-	/**
-	 * Displays the login view
-	 */
-	public boolean canLogin() { //changed from start()
-		return false;
-	}
+//	// LOGIN CONTROLLER
+//	/**
+//	 * Displays the login view
+//	 */
+//	public boolean canLogin() { //changed from start()
+//		return false;
+//	}
 	
 	/**
 	 * Called when the user clicks the "Sign in" button in the login view
 	 */
 	public boolean signIn(String username, String password) {
+		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		if (p.matcher(username).find() || p.matcher(password).find()) return false;
+		
+		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
+		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject);
+		
+		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
+			String userCookie = returnedJson.get("User-cookie").getAsString();
+			int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
+			User newUser = new User(username, password, userCookie, playerID);
+			this.user = newUser;
+			return true;
+		}
+		
 		return false;
 	}
 	

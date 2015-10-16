@@ -32,7 +32,7 @@ public class LoginState implements IStateBase {
 
 	@Override
 	public boolean canLogin() {
-		return facade.canLogin();
+		return true;
 	}
 
 	@Override

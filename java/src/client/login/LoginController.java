@@ -84,12 +84,21 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
+		IStateBase state = stateManager.getState();
+		
 		String username = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
+		System.out.println("Trying to login with username: " + username + " and password: " + password);
+		boolean loggedIn = state.login(username, password);
 		
 		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if( loggedIn ) {
+			getLoginView().closeModal();
+			loginAction.execute();
+		} else {
+			System.out.println("FAILED TO LOGIN");
+			//TODO
+		}
 	}
 
 	
