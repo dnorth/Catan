@@ -35,26 +35,58 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		elementActions.put(element, action);
 	}
 
+	
+	/**
+	 * For each resourceType, buildingType, and cardType for your client's player
+	 * call getView().setElementAmount
+	 */
+	public void setResources()
+		{
+		
+		
+		}
+	
+	
+	/**
+	 * Verify they can build a road (resources and remaining settlement amount)
+	 * if so: call the 	executeElementAction(ResourceBarElement.ROAD);
+	 * else
+	 * display message why they can't
+	 * 
+	 */
 	@Override
 	public void buildRoad() {
 		executeElementAction(ResourceBarElement.ROAD);
 	}
 
+	
+	/** 
+	 * same as for build road
+	 */
 	@Override
 	public void buildSettlement() {
 		executeElementAction(ResourceBarElement.SETTLEMENT);
 	}
 
+	/** 
+	 * same as for build road
+	 */
 	@Override
 	public void buildCity() {
 		executeElementAction(ResourceBarElement.CITY);
 	}
+	
+	
 
 	@Override
 	public void buyCard() {
 		executeElementAction(ResourceBarElement.BUY_CARD);
 	}
 
+	
+	/** 
+	 * same as for build road
+	 */
 	@Override
 	public void playCard() {
 		executeElementAction(ResourceBarElement.PLAY_CARD);
