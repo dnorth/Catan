@@ -83,14 +83,14 @@ public class Facade {
 	 * @param resource The resource to take from other players
 	 */
 	public void playMonopolyCard(int playerIndex, ResourceType resource) {
-		//clientCommunicator.playMonopoly(playerIndex, resource);
+		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(playerIndex, resource));
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
 	public void playMonumentCard(int playerIndex) {
-		
+		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(playerIndex));
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class Facade {
 	 * @param resource2 Second resource to gain
 	 */
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2));
 	}
 	
 	// DISCARD CONTROLLER
