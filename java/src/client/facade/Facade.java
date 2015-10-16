@@ -42,6 +42,10 @@ public class Facade {
 		this.user = null;
 	}
 	
+	public int getPlayerIndex() {
+		return user.getPlayerIndex();
+	}
+	
 	//CHAT CONTROLLER
 	
 	/**
@@ -68,37 +72,37 @@ public class Facade {
 	 * Called by client to see if player can currently buy dev card
 	 * @return true if player can buy dev card, false if not
 	 */
-	public boolean canBuyCard(int playerIndex) {
-		return canDo.canBuyDevCard(playerIndex);
+	public boolean canBuyCard() {
+		return canDo.canBuyDevCard(this.getPlayerIndex());
 	}
 	
 	/**
 	 * Called by client to see if player can currently play dev card
 	 * @return true if player can play card, false if not
 	 */
-	public boolean canPlayCard(int playerIndex) {
-		return canDo.canPlayDevCard(playerIndex);
+	public boolean canPlayCard() {
+		return canDo.canPlayDevCard(this.getPlayerIndex());
 	}
 	
 	/**
 	 * Called by client when player wants to play Monopoly card
 	 * @param resource The resource to take from other players
 	 */
-	public void playMonopolyCard(int playerIndex, ResourceType resource) {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(playerIndex, resource));
+	public void playMonopolyCard(ResourceType resource) {
+		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource));
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
-	public void playMonumentCard(int playerIndex) {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(playerIndex));
+	public void playMonumentCard() {
+		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()));
 	}
 	
 	/**
 	 * Called by client when player wants to play Road Building card
 	 */
-	public void playRoadBuildCard(int playerIndex) {
+	public void playRoadBuildCard() {
 		
 	}
 	
@@ -225,7 +229,7 @@ public class Facade {
 	 * @param willAccept
 	 *            Whether or not the user accepted the trade
 	 */
-	public void acceptTrade(int playerIndex, boolean willAccept) {
+	public void acceptTrade(boolean willAccept) {
 	}
 	
 	
@@ -352,9 +356,9 @@ public class Facade {
 	 *            The proposed road location
 	 * @return true if the road can be placed at edgeLoc, false otherwise
 	 */
-	public boolean canPlaceRoad(int playerIndex, EdgeLocation edgeLoc) {
+	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		return canDo.canPlaceRoadAtLocation(playerIndex, edge);
+		return canDo.canPlaceRoadAtLocation(this.getPlayerIndex(), edge);
 	}
 	
 	/**
@@ -367,7 +371,7 @@ public class Facade {
 	 *            The proposed settlement location
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
-	public boolean canPlaceSettlement(int playerIndex, VertexLocation vertLoc) {
+	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -381,7 +385,7 @@ public class Facade {
 	 *            The proposed city location
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
-	public boolean canPlaceCity(int playerIndex, VertexLocation vertLoc) {
+	public boolean canPlaceCity(VertexLocation vertLoc) {
 		return false;
 	}
 	
@@ -406,7 +410,7 @@ public class Facade {
 	 * @param edgeLoc
 	 *            The road location
 	 */
-	public void placeRoad(int playerIndex, EdgeLocation edgeLoc) {
+	public void placeRoad(EdgeLocation edgeLoc) {
 	}
 	
 	/**
@@ -416,7 +420,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The settlement location
 	 */
-	public void placeSettlement(int playerIndex, VertexLocation vertLoc) {
+	public void placeSettlement(VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -425,7 +429,7 @@ public class Facade {
 	 * @param vertLoc
 	 *            The city location
 	 */
-	public void placeCity(int playerIndex, VertexLocation vertLoc) {
+	public void placeCity(VertexLocation vertLoc) {
 	}
 	
 	/**
@@ -434,7 +438,7 @@ public class Facade {
 	 * @param hexLoc
 	 *            The robber location
 	 */
-	public void placeRobber(int playerIndex, HexLocation hexLoc) {
+	public void placeRobber(HexLocation hexLoc) {
 	}
 	
 	/**
@@ -459,7 +463,7 @@ public class Facade {
 	 * This method is called when the user plays a "soldier" development card.
 	 * It should initiate robber placement.
 	 */
-	public void playSoldierCard(int playerIndex) {
+	public void playSoldierCard() {
 	}
 	
 	/**
@@ -467,7 +471,7 @@ public class Facade {
 	 * development card. It should initiate the process of allowing the player
 	 * to place two roads.
 	 */
-	public void playRoadBuildingCard(int playerIndex) {
+	public void playRoadBuildingCard() {
 	}
 	
 	/**
@@ -477,7 +481,7 @@ public class Facade {
 	 * @param victim
 	 *            The player to be robbed
 	 */
-	public void robPlayer(int playerIndex, RobPlayerInfo victim) {
+	public void robPlayer(RobPlayerInfo victim) {
 	}
 	
 	
@@ -489,13 +493,13 @@ public class Facade {
 	 * Called by the maritime trade view when the user clicks the maritime trade
 	 * button.
 	 */
-	public void startMaritimeTrade(int playerIndex) {
+	public void startMaritimeTrade() {
 	}
 	
 	/**
 	 * Make the specified trade with the bank.
 	 */
-	public void makeMaritimeTrade(int playerIndex) {
+	public void makeMaritimeTrade() {
 	}
 	
 	/**
@@ -504,7 +508,7 @@ public class Facade {
 	 * @param resource
 	 *            The selected "get" resource
 	 */
-	public void setGetResource(int playerIndex, ResourceType resource) {
+	public void setGetResource(ResourceType resource) {
 	}
 	
 	/**
@@ -570,7 +574,7 @@ public class Facade {
 	public void playCard() {
 	}
 	
-	public boolean canAcceptTrade(int playerIndex, TradeOffer tradeOffer){ return canDo.canAcceptTrade(playerIndex, tradeOffer) ;}
+	public boolean canAcceptTrade(TradeOffer tradeOffer){ return canDo.canAcceptTrade(this.getPlayerIndex(), tradeOffer) ;}
 	
 	
 	// ROLL CONTROLLER
