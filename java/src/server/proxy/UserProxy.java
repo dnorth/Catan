@@ -22,12 +22,15 @@ public class UserProxy extends ServerProxy{
 	/**
 	 * If the server call is successful, the JSON return object will
 	 * look like: 
-	 * {"Set-cookie":
-	 * 		{"authentication":"2126518911",
+	 * {
+	 * 	 "Set-cookie": {   
+	 * 			"authentication":"2126518911",
 	 * 			"name":"dnorth2",
-	 * 			"password":"dnorth2","playerID":12},
-	 * 			"User-cookie":"%7B%22authentication%22%3A%222126518911%22%2C%22name%22%3A%22dnorth2%22%2C%22password%22%3A%22dnorth2%22%2C%22playerID%22%3A12%7D",
-	 * "Response-body":"Success"}
+	 * 			"password":"dnorth2",
+	 * 			"playerID":12
+	 * 		},
+	 * 	  "User-cookie":"%7B%22authentication%22%3A%222126518911%22%2C%22name%22%3A%22dnorth2%22%2C%22password%22%3A%22dnorth2%22%2C%22playerID%22%3A12%7D",
+	 * 	  "Response-body":"Success"}
 	 * 
 	 * @return
 	 */

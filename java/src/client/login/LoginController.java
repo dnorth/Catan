@@ -97,7 +97,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		// TODO: Check what state we're in
 		// TODO: register new user (which, if successful, also logs them in)
-		IStateBase state = stateManager.getCurrentState();
+		IStateBase state = stateManager.getState();
 		
 		//TODO Pass in the username and password
 		

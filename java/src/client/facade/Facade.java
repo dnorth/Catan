@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.xml.internal.ws.util.StringUtils;
 
 import server.proxy.ClientCommunicator;
 import shared.definitions.CatanColor;
@@ -19,6 +19,7 @@ import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.TradeOffer;
+import client.models.User;
 
 /**
  * Facade class interfaces from GUI to Client Communicator
@@ -308,7 +309,16 @@ public class Facade {
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
 		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject);
 		
-		if (returnedJson.has("Success")) return true;
+		System.out.println("Here's what we're returning: " + returnedJson.get("Response-body").getAsString());
+		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
+			String userCookie = returnedJson.get("User-cookie").getAsString();
+			int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
+			User newUser = new User(username, password, userCookie, playerID);
+			
+			System.out.println("NEW USER: " + newUser.toString());
+			
+			return true;
+		}
 		
 		//TODO Return correct boolean if user is registered or not
 		return false;

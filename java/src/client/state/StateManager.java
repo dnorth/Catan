@@ -5,18 +5,18 @@ import java.util.Observer;
 
 import client.facade.Facade;
 import client.models.ClientModel;
+import client.models.User;
 
 public class StateManager implements Observer {
 
-	private IStateBase currentState;
-	public int myPlayerIndex;
+	private IStateBase state;
+	public User user;
 	Facade facade;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
-		this.currentState = new LoginState(facade);
-		//TODO???
-		this.myPlayerIndex = -1;
+		this.state = new LoginState(facade);
+		this.user = null;
 	}
 
 	
@@ -26,23 +26,13 @@ public class StateManager implements Observer {
 	}
 
 
-	public IStateBase getCurrentState() {
-		return currentState;
-	}
-
-
-	public void setCurrentState(IStateBase currentState) {
-		this.currentState = currentState;
-	}
-
-
 	public int getMyPlayerIndex() {
-		return myPlayerIndex;
+		return user.getPlayerIndex();
 	}
 
 
 	public void setMyPlayerIndex(int myPlayerIndex) {
-		this.myPlayerIndex = myPlayerIndex;
+		this.user.setPlayerIndex(myPlayerIndex);
 	}
 
 
@@ -54,5 +44,27 @@ public class StateManager implements Observer {
 	public void setFacade(Facade facade) {
 		this.facade = facade;
 	}
+
+
+	public IStateBase getState() {
+		return state;
+	}
+
+
+	public void setState(IStateBase state) {
+		this.state = state;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 	
 }
