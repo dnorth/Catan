@@ -373,7 +373,10 @@ public class Facade {
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		return false;
+		if (canDo.canBuySettlement(this.getPlayerIndex())) {
+			return canDo.canPlaceSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));
+		}
+		else return false;
 	}
 	
 	/**
@@ -387,7 +390,10 @@ public class Facade {
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		return false;
+		if (canDo.canUpgradeSettlement(this.getPlayerIndex())) {
+			return canDo.canUpgradeSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));			
+		}
+		else return false;
 	}
 	
 	/**
