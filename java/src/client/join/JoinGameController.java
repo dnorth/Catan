@@ -6,6 +6,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.state.IStateBase;
 import client.state.StateManager;
 
 
@@ -125,7 +126,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void createNewGame() {
 		
 		getNewGameView().closeModal();
-		//getNewGameView().
 	}
 
 	/**
@@ -151,7 +151,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void joinGame(CatanColor color) {
-		
+		IStateBase state = stateManager.getState();
+
+		//state.canJoinGame()
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();

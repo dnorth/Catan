@@ -238,7 +238,7 @@ public class Facade {
 	 * Displays the join game view
 	 */
 	public boolean canJoinGame() { //we changed this from start()
-		return false;
+		return true;
 	}
 	
 	/**
