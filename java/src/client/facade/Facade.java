@@ -54,6 +54,7 @@ public class Facade {
 	 */
 	public void sendMessage (String message) {
 		
+		
 	}
 	
 	//GAMEHISTORY CONTROLLER

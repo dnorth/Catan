@@ -76,7 +76,7 @@ public class SetupTwoActivePlayerState implements IStateBase {
 
 	@Override
 	public boolean register(String username, String password) {
-		// TODO Auto-generated method stub
+	
 		return false;
 	}
 
