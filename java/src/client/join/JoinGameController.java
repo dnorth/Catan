@@ -125,6 +125,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void createNewGame() {
 		
+		String  title          = getNewGameView().getTitle();
+		boolean useRandomHexes   = getNewGameView().getRandomlyPlaceHexes();
+		boolean useRandomNumbers = getNewGameView().getRandomlyPlaceNumbers();
+		boolean useRandomPorts   = getNewGameView().getUseRandomPorts();
+		//stateManager.getState().		create new game using data.
 		getNewGameView().closeModal();
 	}
 
