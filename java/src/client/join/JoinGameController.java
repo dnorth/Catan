@@ -89,6 +89,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		this.messageView = messageView;
 	}
 
+	/**
+	 * get list of games from server, save them into your pre-game model
+	 * JoinGameView().setGames(list of games, your player info)
+	 * showModal
+	 */
 	@Override
 	public void start() {
 		
@@ -107,12 +112,24 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getNewGameView().closeModal();
 	}
 
+	/**
+	 * Create a new Game board based on the options in the View(Random or not)
+	 * Send create game request to server
+	 * update Game List
+	 * closeModal
+	 */
 	@Override
 	public void createNewGame() {
 		
 		getNewGameView().closeModal();
 	}
 
+	/**
+	 * Iterate through player in GameInfo and 
+	 * disable each color that has already been used in ColorSelectView
+	 * check if you are already in
+	 * if so,call JoinGame with the color you had already picked
+	 */
 	@Override
 	public void startJoinGame(GameInfo game) {
 
@@ -125,6 +142,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getJoinGameView().closeModal();
 	}
 
+	/**
+	 * call join game on server
+	 */
 	@Override
 	public void joinGame(CatanColor color) {
 		
