@@ -6,6 +6,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.state.StateManager;
 
 
 /**
@@ -17,6 +18,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private StateManager stateManager;
 	
 	/**
 	 * JoinGameController constructor
@@ -27,13 +29,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * @param messageView Message view (used to display error messages that occur while the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
-								ISelectColorView selectColorView, IMessageView messageView) {
+								ISelectColorView selectColorView, IMessageView messageView, StateManager stateManager) {
 
 		super(view);
 
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		this.stateManager = stateManager;
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -122,6 +125,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void createNewGame() {
 		
 		getNewGameView().closeModal();
+		//getNewGameView().
 	}
 
 	/**
