@@ -143,18 +143,12 @@ abstract class ServerProxy {
             	}
             }
             else {
-            	System.out.println("OOPS");
-//            	System.out.println(String.format("doPost failed: %s (http code %d : %s)",
-//                        urlPath, connection.getResponseCode(), connection.getResponseMessage()));
             	InputStream es = connection.getErrorStream();
             	int ret = 0;
             	String errorMessage = "";
             	while((ret=es.read())!=-1)
                 {
-                   // converts integer to character
                    char c=(char)ret;
-                   
-                   // prints character
                    errorMessage += c;
                 }
             	es.close();
@@ -163,7 +157,6 @@ abstract class ServerProxy {
             }
         }
         catch (IOException e) {
-        	System.out.println("NOPE, I'M HERE!!!");
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
     }
