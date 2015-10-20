@@ -1,11 +1,14 @@
 package client.join;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.models.User;
 import client.state.IStateBase;
 import client.state.StateManager;
 
@@ -100,7 +103,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		
+		IStateBase state = stateManager.getState();
+		User user = state.getFacade().getUser();
+		int playerID = user.getPlayerID();
+		String username = user.getUsername();
+		System.out.println("Player ID: " + playerID);
+		GameInfo[] games = state.getFacade().getGamesList();
+		PlayerInfo localPlayer = new PlayerInfo(playerID, -1, username, null);
+		getJoinGameView().setGames(games, localPlayer);
 		getJoinGameView().showModal();
 	}
 
@@ -125,12 +135,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void createNewGame() {
 		
+		IStateBase state = stateManager.getState();
+		
 		String  title          = getNewGameView().getTitle();
 		boolean useRandomHexes   = getNewGameView().getRandomlyPlaceHexes();
 		boolean useRandomNumbers = getNewGameView().getRandomlyPlaceNumbers();
 		boolean useRandomPorts   = getNewGameView().getUseRandomPorts();
+		System.out.println("Trying to create new game with:   Name: " + title + ";   Random Tiles: " + useRandomHexes +
+				 ";   Random Numbers: " + useRandomNumbers + ";   Random Ports: " + useRandomPorts);
+		boolean gameCreated = state.createNewGame(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		//stateManager.getState().		create new game using data.
-		getNewGameView().closeModal();
+		if(gameCreated) {
+			getNewGameView().closeModal();
+		}
 	}
 
 	/**
@@ -142,12 +159,31 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 
+		System.out.println("\nIN STARTJOINGAME FUNCTION!");
+		System.out.print("\n" + game.toString());
+		IStateBase state = stateManager.getState();
+		int myPlayerId = state.getFacade().getUser().getPlayerID();
+		List<PlayerInfo> players = game.getPlayers();
+		for(int playerCounter = 0; playerCounter < players.size(); playerCounter++) {
+			CatanColor cc = players.get(playerCounter).getColor();
+			if(players.get(playerCounter).getId() == myPlayerId) {
+				state.startJoinGame(game);
+				joinGame(cc);
+			}
+			else {
+				getSelectColorView().setColorEnabled(cc, false);
+			}
+		}
+		state.startJoinGame(game);
 		getSelectColorView().showModal();
 	}
 
 	@Override
 	public void cancelJoinGame() {
 	
+		for(CatanColor cc : CatanColor.values()) {
+			getSelectColorView().setColorEnabled(cc, true);
+		}
 		getJoinGameView().closeModal();
 	}
 
@@ -156,13 +192,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void joinGame(CatanColor color) {
+		System.out.println("\nINSIDE JOINGAME FUNCTION");
 		IStateBase state = stateManager.getState();
-
-		//state.canJoinGame()
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		boolean canJoinGame = state.canJoinGame();
+		if(canJoinGame) {
+			//CatanColor cc = getSelectColorView().getSelectedColor(); //is this unnecessary because of the parameter to this function??
+			state.joinGame(color);
+			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 1");
+			if(getSelectColorView().isModalShowing()) {
+				getSelectColorView().closeModal();
+				System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 2");
+			}
+			getJoinGameView().closeModal();
+			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 3");
+			joinAction.execute();
+			if(getSelectColorView().isModalShowing()) {
+				getSelectColorView().closeModal();
+				System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 4");
+			}
+			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 5");
+		}
 	}
 
 	@Override

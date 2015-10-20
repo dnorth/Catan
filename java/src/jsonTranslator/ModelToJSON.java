@@ -1,6 +1,8 @@
 package jsonTranslator;
 
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import client.data.GameInfo;
 import client.models.mapdata.EdgeLocation;
 
 import com.google.gson.JsonObject;
@@ -17,6 +19,23 @@ public class ModelToJSON {
 	 */
 	public JsonObject translateModel() {
 		return null;
+	}
+	
+	public JsonObject createJoinGameObject(GameInfo game, CatanColor color, String userCookie) {
+		JsonObject object = new JsonObject();
+		object.addProperty("id", game.getId());
+		object.addProperty("color", color.toString().toLowerCase());
+		object.addProperty("User-cookie", userCookie);
+		return object;
+	}
+	
+	public JsonObject createGameObject(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
+		JsonObject object = new JsonObject();
+		object.addProperty("randomTiles", useRandomHexes);
+		object.addProperty("randomNumbers", useRandomNumbers);
+		object.addProperty("randomPorts", useRandomPorts);
+		object.addProperty("name", title);
+		return object;
 	}
 	
 	public JsonObject createUserObject(String username, String password) {

@@ -17,7 +17,7 @@ public interface IProxy {
 	public JsonObject executeCommandList (JsonObject commands, JsonObject optionalCookies);
 	public JsonObject getExecutedCommands (JsonObject optionalCookies);
 	public JsonObject addAI (String soldierType, JsonObject optionalCookies);
-	public JsonObject listAI (JsonObject optionalCookies);
+	public JsonObject listAI ();
 
 
 	//GAMES PROXY

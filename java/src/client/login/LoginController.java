@@ -4,6 +4,7 @@ import client.base.*;
 import client.facade.Facade;
 import client.misc.*;
 import client.state.IStateBase;
+import client.state.JoinGameState;
 import client.state.StateManager;
 
 import java.net.*;
@@ -94,6 +95,7 @@ public class LoginController extends Controller implements ILoginController {
 		if( loggedIn ) {
 			getLoginView().closeModal();
 			loginAction.execute();
+			stateManager.setState(new JoinGameState(state.getFacade()));
 		} else {
 			System.out.println("FAILED TO LOGIN");
 			//TODO

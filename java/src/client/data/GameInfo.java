@@ -17,7 +17,7 @@ public class GameInfo
 {
 	private int id;
 	private String title;
-	private List<PlayerInfo> players;
+	private ArrayList<PlayerInfo> players;
 	
 	public GameInfo()
 	{
@@ -54,6 +54,20 @@ public class GameInfo
 	public List<PlayerInfo> getPlayers()
 	{
 		return Collections.unmodifiableList(players);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder toReturn = new StringBuilder("\n\nGame Info:" + 
+				"\n\tID = " + id +
+				"\n\tTitle = " + title);
+		StringBuilder playersSB = new StringBuilder();
+		for(int i = 0; i < players.size(); i++) {
+			playersSB.append("\n" + players.get(i).toString());
+		}
+		toReturn.append(playersSB.toString());
+		return toReturn.toString();
+				
 	}
 }
 

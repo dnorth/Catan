@@ -55,7 +55,7 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject listAI(JsonObject optionalCookies) {
+	public JsonObject listAI() {
 		return this.getMockServerFileContents("listAI.json");
 	}
 

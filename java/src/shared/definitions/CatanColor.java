@@ -21,6 +21,21 @@ public enum CatanColor
 		BROWN.color = new Color(161, 143, 112);
 	}
 	
+	public static CatanColor getCatanColor(String findMe) throws Exception {
+		switch(findMe) {
+			case "red": return RED;
+			case "orange": return ORANGE;
+			case "yellow": return YELLOW;
+			case "blue": return BLUE;
+			case "green": return GREEN;
+			case "purple": return PURPLE;
+			case "puce": return PUCE;
+			case "white": return WHITE;
+			case "brown": return BROWN;
+			default: throw new Exception("BAD COLOR TYPE");
+		}
+	}
+	
 	public Color getJavaColor()
 	{
 		return color;

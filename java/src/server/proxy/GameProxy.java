@@ -91,10 +91,10 @@ public class GameProxy extends ServerProxy{
 	 * @post this will return a list with only 1 entry which will be "LARGEST_ARMY"
 	 * @return the supported types of AI
 	 */
-	public JsonObject listAI (JsonObject optionalCookies){
+	public JsonObject listAI (){
 		JsonObject AItypes = null;
         try {
-            AItypes = doGet("/game/listAI", optionalCookies);
+            AItypes = doGet("/game/listAI", null);
         } catch (ClientException e) {
         	e.printStackTrace();
         }

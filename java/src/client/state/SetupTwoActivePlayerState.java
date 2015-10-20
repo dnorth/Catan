@@ -188,9 +188,8 @@ public class SetupTwoActivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void createNewGame() {
-		// TODO Auto-generated method stub
-		
+	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
+		return false;
 	}
 
 	@Override
@@ -206,7 +205,7 @@ public class SetupTwoActivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void addAI() {
+	public void addAI(String AIType) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -335,6 +334,11 @@ public class SetupTwoActivePlayerState implements IStateBase {
 	public void endTurn() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Facade getFacade() {
+		return facade;
 	}
 
 }

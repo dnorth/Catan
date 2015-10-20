@@ -21,6 +21,8 @@ import client.models.User;
 
 public interface IStateBase {
 	
+	public abstract Facade getFacade();
+	
 	public abstract boolean canJoinGame();
 	public abstract boolean canStartCreateNewGame();
 	public abstract boolean canStartPlayerWaitingView();
@@ -49,10 +51,10 @@ public interface IStateBase {
 	public abstract void setResourceToSend(ResourceType resource);
 	public abstract void unsetResource(ResourceType resource);
 	public abstract void acceptTrade(boolean willAccept);
-	public abstract void createNewGame();
+	public abstract boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts);
 	public abstract void startJoinGame(GameInfo game);
 	public abstract void joinGame(CatanColor color);
-	public abstract void addAI();
+	public abstract void addAI(String AIType);
 	public abstract boolean register(String username, String password);
 	public abstract boolean login(String username, String password);
 	public abstract void placeRoad(EdgeLocation edgeLoc);

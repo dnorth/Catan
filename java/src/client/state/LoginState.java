@@ -188,9 +188,8 @@ public class LoginState implements IStateBase {
 	}
 
 	@Override
-	public void createNewGame() {
-		// TODO Auto-generated method stub
-		
+	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
+		return false;
 	}
 
 	@Override
@@ -206,7 +205,7 @@ public class LoginState implements IStateBase {
 	}
 
 	@Override
-	public void addAI() {
+	public void addAI(String AIType) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -337,4 +336,8 @@ public class LoginState implements IStateBase {
 		
 	}
 
+	@Override
+	public Facade getFacade() {
+		return facade;
+	}
 }

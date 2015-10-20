@@ -30,6 +30,13 @@ public class PlayerInfo
 		setColor(CatanColor.WHITE);
 	}
 	
+	public PlayerInfo(int id, int playerIndex, String name, CatanColor color) {
+		this.id = id;
+		this.playerIndex = playerIndex;
+		this.name = name;
+		this.color = color;
+	}
+	
 	public int getId()
 	{
 		return id;
@@ -90,6 +97,22 @@ public class PlayerInfo
 		final PlayerInfo other = (PlayerInfo) obj;
 		
 		return this.id == other.id;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder toReturn = new StringBuilder("PlayerInfo:" + 
+				"\n\tID = " + id + 
+				"\n\tPlayer Index = " + playerIndex + 
+				"\n\tUsername = " + name + 
+				"\n\tColor = ");
+		if(color != null) {
+			toReturn.append(color.toString());
+		}
+		else {
+			toReturn.append("NULL");
+		}
+		return toReturn.toString();
 	}
 }
 

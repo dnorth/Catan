@@ -13,7 +13,7 @@ import client.models.TradeOffer;
 
 public class JoinGameState implements IStateBase {
 
-	Facade facade;
+	private Facade facade;
 	
 	public JoinGameState(Facade facade) {
 		this.facade = facade;
@@ -187,26 +187,24 @@ public class JoinGameState implements IStateBase {
 	}
 
 	@Override
-	public void createNewGame() {
-		// TODO Auto-generated method stub
-		
+	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
+		System.out.println("IN JOIN GAME STATE, CREATE NEW GAME FUNCTION");
+		return facade.createNewGame(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 	}
 
 	@Override
 	public void startJoinGame(GameInfo game) {
-		// TODO Auto-generated method stub
-		
+		facade.startJoinGame(game);
 	}
 
 	@Override
 	public void joinGame(CatanColor color) {
-		// TODO Auto-generated method stub
-		
+		facade.joinGame(color);
 	}
 
 	@Override
-	public void addAI() {
-		// TODO Auto-generated method stub
+	public void addAI(String AIType) {
+		facade.addAI(AIType);
 		
 	}
 
@@ -334,6 +332,11 @@ public class JoinGameState implements IStateBase {
 	public void endTurn() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Facade getFacade() {
+		return facade;
 	}
 
 }

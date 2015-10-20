@@ -82,8 +82,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject listAI(JsonObject optionalCookies) {
-		return gameProxy.listAI(optionalCookies);
+	public JsonObject listAI() {
+		return gameProxy.listAI();
 	}
 
 	

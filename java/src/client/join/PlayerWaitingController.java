@@ -3,6 +3,8 @@ package client.join;
 import java.util.Observable;
 
 import client.base.*;
+import client.state.IStateBase;
+import client.state.StateManager;
 
 
 /**
@@ -10,9 +12,12 @@ import client.base.*;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 
-	public PlayerWaitingController(IPlayerWaitingView view) {
+	private StateManager stateManager;
+	
+	public PlayerWaitingController(IPlayerWaitingView view, StateManager stateManager) {
 
 		super(view);
+		this.stateManager = stateManager;
 	}
 
 	@Override
@@ -23,14 +28,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-
+		IStateBase state = stateManager.getState();
+		String[] AIChoices = state.getFacade().listAI();
+		getView().setAIChoices(AIChoices);
 		getView().showModal();
 	}
 
 	@Override
 	public void addAI() {
 
-		// TEMPORARY
+		IStateBase state = stateManager.getState();
+		String AIType = getView().getSelectedAI();
+		state.addAI(AIType);
+		
 		getView().closeModal();
 	}
 

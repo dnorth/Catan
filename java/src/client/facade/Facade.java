@@ -1,5 +1,6 @@
 package client.facade;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ public class Facade {
 	private ModelToJSON modelToJSON;
 	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
+	private GameInfo game; //This is set by the "startJoinGame()" and used by the "joinGame()"
 	
 	public Facade (ClientModel cli) {
 		this.client = cli;
@@ -43,7 +45,12 @@ public class Facade {
 	}
 	
 	public int getPlayerIndex() {
-		return user.getPlayerIndex();
+		//TODO! Don't just attach this to the user's ID. This needs to be connected to the playerIndex for the game they joined.
+		return -1;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	//CHAT CONTROLLER
@@ -236,6 +243,18 @@ public class Facade {
 	
 	// JOIN GAME CONTROLLER
 	/**
+	 * Gets a list of all the games
+	 */
+	public GameInfo[] getGamesList() {
+		JsonObject object = clientCommunicator.getGamesList();
+		GameInfo[] gameInfos = JSONToModel.translateGamesList(object);
+		for(int i = 0; i < gameInfos.length; i++) {
+			System.out.print(gameInfos[i].toString());
+		}
+		return gameInfos;
+	}
+	
+	/**
 	 * Displays the join game view
 	 */
 	public boolean canJoinGame() { //we changed this from start()
@@ -253,7 +272,18 @@ public class Facade {
 	/**
 	 * Called by the new game view when the user clicks the "Create Game" button
 	 */
-	public void createNewGame() {
+	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
+		
+		System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION");
+		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		if (!p.matcher(title).find() || title.length() < 1) return false;
+		
+		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
+		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame);
+		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
+			return true;
+		}		
+		return false;
 	}
 	
 	/**
@@ -264,6 +294,7 @@ public class Facade {
 	 *            The game that the user is joining
 	 */
 	public void startJoinGame(GameInfo game) {
+		this.game = game;
 	}
 	
 	/**
@@ -274,6 +305,13 @@ public class Facade {
 	 *            The color selected by the user
 	 */
 	public void joinGame(CatanColor color) {
+		
+		JsonObject joinGameObject = this.modelToJSON.createJoinGameObject(this.game, color, this.user.getUserCookie());
+		JsonObject returned = clientCommunicator.joinGame(joinGameObject);
+		String responseBody = returned.get("Response-body").getAsString();
+		if(!responseBody.equals("Success")) {
+			System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
+		}
 	}
 	
 	
@@ -290,7 +328,18 @@ public class Facade {
 	/**
 	 * Called when the "Add AI" button is clicked in the player waiting view
 	 */
-	public void addAI() {
+	public void addAI(String AIType) {
+		clientCommunicator.addAI(AIType, null);
+	}
+	
+	/**
+	 * Called for the combobox with different AI options
+	 */
+	public String[] listAI() {
+		JsonObject object = clientCommunicator.listAI();
+		String[] AI = new String[1];
+		AI[0] = "LARGEST_ARMY";
+		return AI;
 	}
 	
 //	// LOGIN CONTROLLER
