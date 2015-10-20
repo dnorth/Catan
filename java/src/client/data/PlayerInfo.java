@@ -21,6 +21,7 @@ public class PlayerInfo
 	private int playerIndex;
 	private String name;
 	private CatanColor color;
+	private String userCookie;
 	
 	public PlayerInfo()
 	{
@@ -28,13 +29,15 @@ public class PlayerInfo
 		setPlayerIndex(-1);
 		setName("");
 		setColor(CatanColor.WHITE);
+		this.userCookie = null;
 	}
 	
-	public PlayerInfo(int id, int playerIndex, String name, CatanColor color) {
+	public PlayerInfo(int id, int playerIndex, String name, CatanColor color, String userCookie) {
 		this.id = id;
 		this.playerIndex = playerIndex;
 		this.name = name;
 		this.color = color;
+		this.userCookie = userCookie;
 	}
 	
 	public int getId()
@@ -114,5 +117,15 @@ public class PlayerInfo
 		}
 		return toReturn.toString();
 	}
+
+	public String getUserCookie() {
+		return userCookie;
+	}
+
+	public void setUserCookie(String userCookie) {
+		this.userCookie = userCookie;
+	}
+	
+	
 }
 

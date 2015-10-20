@@ -104,12 +104,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		IStateBase state = stateManager.getState();
-		User user = state.getFacade().getUser();
-		int playerID = user.getPlayerID();
-		String username = user.getUsername();
-		System.out.println("Player ID: " + playerID);
 		GameInfo[] games = state.getFacade().getGamesList();
-		PlayerInfo localPlayer = new PlayerInfo(playerID, -1, username, null);
+		PlayerInfo localPlayer = state.getFacade().getUser();
 		getJoinGameView().setGames(games, localPlayer);
 		getJoinGameView().showModal();
 	}
@@ -163,7 +159,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.println("\nIN STARTJOINGAME FUNCTION!");
 		System.out.print("\n" + game.toString());
 		IStateBase state = stateManager.getState();
-		int myPlayerId = state.getFacade().getUser().getPlayerID();
+		int myPlayerId = state.getFacade().getUser().getId();
 		List<PlayerInfo> players = game.getPlayers();
 		for(int playerCounter = 0; playerCounter < players.size(); playerCounter++) {
 			CatanColor cc = players.get(playerCounter).getColor();

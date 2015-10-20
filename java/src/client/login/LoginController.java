@@ -102,9 +102,7 @@ public class LoginController extends Controller implements ILoginController {
 		
 		// If log in succeeded
 		if( loggedIn ) {
-			getLoginView().closeModal();
-			loginAction.execute();
-			stateManager.setState(new JoinGameState(state.getFacade()));
+			login(state, stateManager);
 		} else {
 			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
@@ -140,8 +138,7 @@ public class LoginController extends Controller implements ILoginController {
 			}
 		// If register succeeded
 		if( registered ) {
-			getLoginView().closeModal();
-			loginAction.execute();
+			login(state, stateManager);
 		} else {
 			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
@@ -149,6 +146,13 @@ public class LoginController extends Controller implements ILoginController {
 //			this.getLoginView().closeModal();
 			this.messageView.showModal();
 		}
+	}
+	
+	public void login(IStateBase state, StateManager stateManager) {
+		getLoginView().closeModal();
+		loginAction.execute();
+		stateManager.setState(new JoinGameState(state.getFacade()));
+		stateManager.setServerPoller(stateManager.getNewServerPoller());
 	}
 
 	@Override

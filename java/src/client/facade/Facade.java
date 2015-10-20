@@ -10,6 +10,7 @@ import jsonTranslator.ModelToJSON;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
 import shared.definitions.CatanColor;
@@ -19,6 +20,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.TradeOffer;
@@ -30,11 +32,12 @@ import client.models.User;
 public class Facade {
 	private CanDoManager canDo;
 	private ClientModel client;
-	private User user;
+	private PlayerInfo user;
 	private ModelToJSON modelToJSON;
 	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
 	private GameInfo game; //This is set by the "startJoinGame()" and used by the "joinGame()"
+	private ServerPoller poller;
 	
 	public Facade (ClientModel cli) {
 		this.client = cli;
@@ -50,7 +53,7 @@ public class Facade {
 		return -1;
 	}
 	
-	public User getUser() {
+	public PlayerInfo getUser() {
 		return user;
 	}
 	
@@ -362,11 +365,7 @@ public class Facade {
 		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject);
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
-			String userCookie = returnedJson.get("User-cookie").getAsString();
-			int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
-			User newUser = new User(username, password, userCookie, playerID);
-			this.user = newUser;
-			return true;
+			return loginUser(returnedJson, username);
 		}
 		
 		return false;
@@ -384,16 +383,19 @@ public class Facade {
 		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject);
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
-			String userCookie = returnedJson.get("User-cookie").getAsString();
-			int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
-			User newUser = new User(username, password, userCookie, playerID);
-			this.user = newUser;
-			return true;
+			return loginUser(returnedJson, username);
 		}
 		
 		return false;
 	}
 	
+	public boolean loginUser(JsonObject returnedJson, String username) {
+		String userCookie = returnedJson.get("User-cookie").getAsString();
+		int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
+		PlayerInfo newUser = new PlayerInfo(playerID, -1, username, null, userCookie);
+		this.user = newUser;
+		return true;
+	}
 	
 	
 	
@@ -648,13 +650,19 @@ public class Facade {
 		return die1+die2;
 	}
 	
-	
-	
 	// TURN TRACKER CONTROLLER
 	
 	/**
 	 * This is called when the local player ends their turn
 	 */
 	public void endTurn() {
+	}
+	
+	public void setServerPoller(ServerPoller serv) {
+		this.poller = serv;
+	}
+	
+	public ServerPoller getNewServerPoller() {
+		return new ServerPoller(this.clientCommunicator, this.client);
 	}
 }

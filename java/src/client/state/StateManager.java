@@ -6,6 +6,7 @@ import java.util.Observer;
 import client.facade.Facade;
 import client.models.ClientModel;
 import client.models.User;
+import server.ServerPoller.ServerPoller;
 
 public class StateManager implements Observer {
 
@@ -42,4 +43,11 @@ public class StateManager implements Observer {
 		this.state = state;
 	}
 	
+	public void setServerPoller(ServerPoller serv) {
+		facade.setServerPoller(serv);
+	}
+	
+	public ServerPoller getNewServerPoller() {
+		return facade.getNewServerPoller();
+	}
 }
