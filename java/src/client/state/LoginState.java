@@ -3,6 +3,7 @@ package client.state;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
+import server.proxy.ClientException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -81,12 +82,12 @@ public class LoginState implements IStateBase {
 	}
 
 	@Override
-	public boolean register(String username, String password) {
+	public boolean register(String username, String password) throws ClientException {
 		return facade.register(username, password);
 	}
 
 	@Override
-	public boolean login(String username, String password) {
+	public boolean login(String username, String password) throws ClientException {
 		System.out.println("In login state");
 		return facade.signIn(username, password);
 	}

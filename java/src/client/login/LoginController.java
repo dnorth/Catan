@@ -12,6 +12,8 @@ import java.io.*;
 import java.util.*;
 import java.lang.reflect.*;
 
+import server.proxy.ClientException;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -89,7 +91,14 @@ public class LoginController extends Controller implements ILoginController {
 		String username = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
 		System.out.println("Trying to login with username: " + username + " and password: " + password);
-		boolean loggedIn = state.login(username, password);
+		boolean loggedIn;
+		String errorMessage = "";
+		try {
+			loggedIn = state.login(username, password);
+		} catch (ClientException e) {
+			errorMessage = e.getResponse();
+			loggedIn = false;
+		}
 		
 		// If log in succeeded
 		if( loggedIn ) {
@@ -98,7 +107,10 @@ public class LoginController extends Controller implements ILoginController {
 			stateManager.setState(new JoinGameState(state.getFacade()));
 		} else {
 			System.out.println("FAILED TO LOGIN");
-			//TODO
+			this.messageView.setMessage(errorMessage);
+			this.messageView.setTitle("Login Failed.");
+//			this.getLoginView().closeModal();
+			this.messageView.showModal();
 		}
 	}
 
@@ -117,15 +129,25 @@ public class LoginController extends Controller implements ILoginController {
 	
 		System.out.println("Trying to register with username: " + username + " and password: " + password);
 		boolean registered;
+		String errorMessage = "";
 		if (!password.equals(validatedPassword)) registered = false;
-		else registered = state.register(username, password);
+		else
+			try {
+				registered = state.register(username, password);
+			} catch (ClientException e) {
+				errorMessage = e.getResponse();
+				registered = false;
+			}
 		// If register succeeded
 		if( registered ) {
 			getLoginView().closeModal();
 			loginAction.execute();
 		} else {
-			System.out.println("FAILED TO REGISTER");
-			//TODO
+			System.out.println("FAILED TO LOGIN");
+			this.messageView.setMessage(errorMessage);
+			this.messageView.setTitle("Register Failed.");
+//			this.getLoginView().closeModal();
+			this.messageView.showModal();
 		}
 	}
 

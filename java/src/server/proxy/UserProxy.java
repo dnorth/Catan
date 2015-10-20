@@ -6,16 +6,16 @@ public class UserProxy extends ServerProxy{
 
 	/**
 	 * @return
+	 * @throws ClientException 
 	 */
-	public JsonObject userLogin (JsonObject user){
+	public JsonObject userLogin (JsonObject user) throws ClientException {
         
+		JsonObject returned = doPost("/user/login", user);
         try {
-        	return doPost("/user/login", user);
-        } catch (ClientException e) {
-        	e.printStackTrace();
-        }
-        
-        return null;
+			return doPost("/user/login", user);
+		} catch (ClientException e) {
+			throw e;
+		}
         
     }
 
@@ -33,15 +33,16 @@ public class UserProxy extends ServerProxy{
 	 * 	  "Response-body":"Success"}
 	 * 
 	 * @return
+	 * @throws ClientException 
 	 */
-	public JsonObject userRegister (JsonObject user){
+	public JsonObject userRegister (JsonObject user) throws ClientException{
       
 		JsonObject returnObject = new JsonObject();
         try {
 			returnObject = doPost("/user/register", user);
 		} catch (ClientException e) { //TODO have this return the failed response body
-
-			returnObject.addProperty("Error-message", e.getMessage());
+			throw e;
+			//returnObject.addProperty("Error-message", e.getMessage());
 			//e.printStackTrace();
 		}
         

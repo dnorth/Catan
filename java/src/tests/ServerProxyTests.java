@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import server.proxy.ClientCommunicator;
+import server.proxy.ClientException;
 import server.proxy.IProxy;
 import server.proxy.MockServerProxy;
 import shared.locations.EdgeDirection;
@@ -30,7 +31,7 @@ public class ServerProxyTests {
 
 	
 	@BeforeClass
-	public static void initRandom() {
+	public static void initRandom() throws ClientException {
 		randGenerator = new Random();
 		rand = randGenerator.nextInt(); //We're using a random number generator because we can't register the same user without restarting the server
 		proxy1 = new ClientCommunicator();
@@ -48,7 +49,7 @@ public class ServerProxyTests {
 	}
 	
 	@Test
-	public void registerUserSuccessTest() {
+	public void registerUserSuccessTest() throws ClientException {
 				
 		JsonObject newUser = new JsonObject();
 		newUser.addProperty("username", "Tommy" + (rand + 1));
@@ -73,7 +74,7 @@ public class ServerProxyTests {
 	}
 	
 	@Test
-	public void registerDuplicateUserFailTest() {
+	public void registerDuplicateUserFailTest() throws ClientException {
 				
 		JsonObject newUser = new JsonObject();
 		newUser.addProperty("username", "Tommy" + rand);
@@ -92,7 +93,7 @@ public class ServerProxyTests {
 	}
 	
 	@Test
-	public void loginUserSuccessTest() {
+	public void loginUserSuccessTest() throws ClientException {
 		JsonObject user = new JsonObject();
 		user.addProperty("username", "Tommy" + rand);
 		user.addProperty("password", "Williams");		

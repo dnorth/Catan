@@ -208,12 +208,12 @@ public class ClientCommunicator implements IProxy{
 	
 	//USER API
 	@Override
-	public JsonObject userLogin(JsonObject user) {
+	public JsonObject userLogin(JsonObject user) throws ClientException {
 		return userProxy.userLogin(user);
 	}
 
 	@Override
-	public JsonObject userRegister(JsonObject user) {
+	public JsonObject userRegister(JsonObject user) throws ClientException {
 		return userProxy.userRegister(user);
 	}
 

@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import server.proxy.ClientCommunicator;
+import server.proxy.ClientException;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
@@ -353,7 +354,7 @@ public class Facade {
 	/**
 	 * Called when the user clicks the "Sign in" button in the login view
 	 */
-	public boolean signIn(String username, String password) {
+	public boolean signIn(String username, String password) throws ClientException {
 		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		
@@ -373,8 +374,9 @@ public class Facade {
 	
 	/**
 	 * Called when the user clicks the "Register" button in the login view
+	 * @throws ClientException 
 	 */
-	public boolean register(String username, String password) {
+	public boolean register(String username, String password) throws ClientException {
 		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		

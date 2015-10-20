@@ -3,6 +3,7 @@ package client.state;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
+import server.proxy.ClientException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -27,6 +28,8 @@ public interface IStateBase {
 	public abstract boolean canStartCreateNewGame();
 	public abstract boolean canStartPlayerWaitingView();
 	public abstract boolean canLogin();
+	public abstract boolean register(String username, String password) throws ClientException;
+	public abstract boolean login(String username, String password) throws ClientException;
 	public abstract boolean canPlaceRoadAtLocation(EdgeLocation edge);
 	public abstract boolean canPlaceSettlementAtLocation(VertexLocation vertLoc);
 	public abstract boolean canUpgradeSettlementAtLocation(VertexLocation vertLoc);
@@ -55,8 +58,6 @@ public interface IStateBase {
 	public abstract void startJoinGame(GameInfo game);
 	public abstract void joinGame(CatanColor color);
 	public abstract void addAI(String AIType);
-	public abstract boolean register(String username, String password);
-	public abstract boolean login(String username, String password);
 	public abstract void placeRoad(EdgeLocation edgeLoc);
 	public abstract void placeSettlement(VertexLocation vertLoc);
 	public abstract void placeCity(VertexLocation vertLoc);

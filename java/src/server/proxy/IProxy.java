@@ -47,8 +47,8 @@ public interface IProxy {
 	public JsonObject discardCards (JsonObject data);
 	
 	//USER PROXY
-	public JsonObject userLogin (JsonObject user);
-	public JsonObject userRegister (JsonObject user);
+	public JsonObject userLogin (JsonObject user) throws ClientException;
+	public JsonObject userRegister (JsonObject user) throws ClientException;
 	
 	//UTIL PROXY
 	public void utilChangeLogLevel ();

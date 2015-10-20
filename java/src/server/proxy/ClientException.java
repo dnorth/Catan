@@ -3,6 +3,8 @@ package server.proxy;
 @SuppressWarnings("serial")
 public class ClientException extends Exception {
 
+	String response = "";
+	
     public ClientException() {
         return;
     }
@@ -13,9 +15,18 @@ public class ClientException extends Exception {
     
     public ClientException(String message, String response) {
     	super(message);
+    	this.response = response;
     }
 
-    public ClientException(Throwable throwable) {
+    public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
+	public ClientException(Throwable throwable) {
         super(throwable);
     }
 

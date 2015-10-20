@@ -73,6 +73,7 @@ abstract class ServerProxy {
         try {
         	System.out.println(postData.toString());
             URL url = new URL(URL_PREFIX + urlPath);
+            System.out.println("Test1");
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
@@ -141,11 +142,13 @@ abstract class ServerProxy {
             	}
             }
             else {
+            	System.out.println("OOPS");
                 throw new ClientException(String.format("doPost failed: %s (http code %d : %s)",
                         urlPath, connection.getResponseCode(), connection.getResponseMessage()), connection.getResponseMessage());
             }
         }
         catch (IOException e) {
+        	System.out.println("NOPE, I'M HERE!!!");
             throw new ClientException(String.format("doPost failed: %s", e.getMessage()), e);
         }
     }
