@@ -145,6 +145,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				 ";   Random Numbers: " + useRandomNumbers + ";   Random Ports: " + useRandomPorts);
 		boolean gameCreated = state.createNewGame(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		//stateManager.getState().		create new game using data.
+		System.out.println("Game Created: " + gameCreated);
 		if(gameCreated) {
 			getNewGameView().closeModal();
 		}
