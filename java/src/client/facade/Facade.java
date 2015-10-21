@@ -681,6 +681,7 @@ public class Facade {
 	 * This is called when the local player ends their turn
 	 */
 	public void endTurn() {
+		
 	}
 	
 	public void setServerPoller(ServerPoller serv) {

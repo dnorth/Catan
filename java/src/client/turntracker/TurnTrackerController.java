@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.state.StateManager;
 
 
 /**
@@ -11,10 +12,11 @@ import client.base.*;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController {
 
-	public TurnTrackerController(ITurnTrackerView view) {
+	private StateManager stateManager;
+	public TurnTrackerController(ITurnTrackerView view, StateManager stateManager) {
 		
 		super(view);
-		
+		this.stateManager=stateManager;
 		initFromModel();
 	}
 	
@@ -25,8 +27,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 
 	@Override
-	public void endTurn() {
-
+	public void endTurn() 
+	{
+		stateManager.getState().endTurn();
 	}
 	
 	private void initFromModel() {

@@ -1,9 +1,11 @@
 package client.catan;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import client.communication.*;
+import client.state.StateManager;
 import client.turntracker.*;
 
 
@@ -18,7 +20,7 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
-	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel) {
+	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, StateManager stateManager) {
 		
 		this.setLayout(new BorderLayout());
 		
@@ -36,7 +38,7 @@ public class LeftPanel extends JPanel {
         chatView.setController(chatController);
 		
 		turnView = new TurnTrackerView(titlePanel, gameStatePanel);
-		turnController = new TurnTrackerController(turnView);
+		turnController = new TurnTrackerController(turnView, stateManager);
 		turnView.setController(turnController);
 		
 //		gameStatePanel.setController(turnController);
