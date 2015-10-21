@@ -663,7 +663,7 @@ public class Facade {
 	}
 	
 	public ServerPoller getNewServerPoller() {
-		return new ServerPoller(this.clientCommunicator, this.client);
+		return new ServerPoller(this.clientCommunicator, this.client, modelToJSON.createUserAndGameCookie(user.getUserCookie(),-1));
 	}
 	
 	public ClientModel getClient() {

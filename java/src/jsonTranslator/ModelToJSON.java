@@ -81,4 +81,24 @@ public class ModelToJSON {
 		object.addProperty("ResourceType", resource2.name());
 		return  object;
 	}
+	
+	public JsonObject createUserAndGameCookie(String userCookie, int gameCookie)
+	{
+		JsonObject object = new JsonObject();
+		object.addProperty("User-cookie", userCookie);
+		object.addProperty("Game-cookie", gameCookie);
+		return object;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
