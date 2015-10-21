@@ -55,7 +55,7 @@ public class CatanPanel extends JPanel
 		
 		rollView = new RollView();
 		rollResultView = new RollResultView();
-		rollController = new RollController(rollView, rollResultView);
+		rollController = new RollController(rollView, rollResultView, stateManager);
 		rollView.setController(rollController);
 		rollResultView.setController(rollController);
 		

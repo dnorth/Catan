@@ -3,6 +3,7 @@ package client.roll;
 import java.util.Observable;
 
 import client.base.*;
+import client.state.StateManager;
 
 
 /**
@@ -11,6 +12,7 @@ import client.base.*;
 public class RollController extends Controller implements IRollController {
 
 	private IRollResultView resultView;
+	private StateManager stateManager;
 
 	/**
 	 * RollController constructor
@@ -18,10 +20,9 @@ public class RollController extends Controller implements IRollController {
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView) {
-
+	public RollController(IRollView view, IRollResultView resultView, StateManager stateManager) {
 		super(view);
-		
+		this.stateManager=stateManager;
 		setResultView(resultView);
 	}
 	
@@ -38,7 +39,7 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-
+		getResultView().setRollValue(stateManager.getFacade().rollDice());
 		getResultView().showModal();
 	}
 
