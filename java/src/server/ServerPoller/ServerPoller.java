@@ -33,7 +33,7 @@ public class ServerPoller {
 	
 	private class PollEvent extends TimerTask {
 		public void run() {
-			updateCurrentModel(server.getGameModel(null)); //cookies?
+			//updateCurrentModel(server.getGameModel(null)); //cookies?
 		}
 	}
 	

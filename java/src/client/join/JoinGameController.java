@@ -23,6 +23,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 	private StateManager stateManager;
+	private GameInfo[] games;
+	private PlayerInfo localPlayer;
 	
 	/**
 	 * JoinGameController constructor
@@ -104,8 +106,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		IStateBase state = stateManager.getState();
-		GameInfo[] games = state.getFacade().getGamesList();
-		PlayerInfo localPlayer = state.getFacade().getUser();
+		games = state.getFacade().getGamesList();
+		localPlayer = state.getFacade().getUser();
 		getJoinGameView().setGames(games, localPlayer);
 		getJoinGameView().showModal();
 	}
@@ -144,6 +146,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.println("Game Created: " + gameCreated);
 		if(gameCreated) {
 			getNewGameView().closeModal();
+			games = state.getFacade().getGamesList();
+			getJoinGameView().setGames(games, localPlayer);
 		}
 	}
 
