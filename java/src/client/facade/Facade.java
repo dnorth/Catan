@@ -415,6 +415,11 @@ public class Facade {
 		return canDo.canPlaceRoadAtLocation(this.getPlayerIndex(), edge);
 	}
 	
+	public boolean canPlaceInitialRoad(EdgeLocation edgeLoc) {
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
+		return canDo.canPlaceInitialRoad(this.getPlayerIndex(), edge);
+	}
+	
 	/**
 	 * This method is called whenever the user is trying to place a settlement
 	 * on the map. It is called by the view for each "mouse move" event. The

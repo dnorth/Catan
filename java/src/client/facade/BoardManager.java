@@ -221,6 +221,48 @@ public class BoardManager {
 		else return false;
 	}
 	
+	public boolean canPlaceInitialRoad(int playerIndex, EdgeLocation edge) {
+		if (this.getEdgeOwner(edge) != -1) return false;
+		EdgeLocation[] vertices = this.getEdgeVertices(edge);
+		for (EdgeLocation vertex : vertices) {
+			if (board.getVertexOwner(vertex) != -1) return false;
+			Integer[] adjVertexOwners = this.getAdjacentVertexOwners(edge);
+			for (Integer i : adjVertexOwners) {
+				if (i != -1) return false;
+			}
+		}
+		return true;
+	}
+	
+	EdgeLocation[] getEdgeVertices(EdgeLocation edge) {
+		String vert1 = "";
+		String vert2 = "";
+		switch(edge.getDirection()) {
+		case "N":
+			vert1 = "NW";
+			vert2 = "NE";
+		case "NE":
+			vert1 = "NE";
+			vert2 = "E";
+		case "SE":
+			vert1 = "E";
+			vert2 = "SE";
+		case "S":
+			vert1 = "SE";
+			vert2 = "SW";
+		case "SW":
+			vert1 = "SW";
+			vert2 = "W";
+		case "NW":
+			vert1 = "W";
+			vert2 = "NW";
+		}
+		EdgeLocation vertex1 = new EdgeLocation(edge.getXcoord(), edge.getYcoord(), vert1);
+		EdgeLocation vertex2 = new EdgeLocation(edge.getXcoord(), edge.getYcoord(), vert2);
+		EdgeLocation[] adjVertices = {vertex1, vertex2};
+		return adjVertices;
+	}
+	
 	public boolean canUpgradeSettlementAtLocation(int playerIndex, EdgeLocation edge) {
 		VertexObject[] e = board.getSettlements();
 		for (VertexObject v : e) {

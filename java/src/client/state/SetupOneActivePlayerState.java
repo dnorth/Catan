@@ -41,7 +41,7 @@ public class SetupOneActivePlayerState implements IStateBase {
 	
 	@Override
 	public boolean canPlaceRoadAtLocation(EdgeLocation edge) {
-		return facade.canPlaceRoad(edge);
+		return facade.canPlaceInitialRoad(edge);
 	}
 
 	@Override
