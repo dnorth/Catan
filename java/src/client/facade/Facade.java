@@ -252,9 +252,9 @@ public class Facade {
 	public GameInfo[] getGamesList() {
 		JsonObject object = clientCommunicator.getGamesList();
 		GameInfo[] gameInfos = JSONToModel.translateGamesList(object);
-		for(int i = 0; i < gameInfos.length; i++) {
-			System.out.print(gameInfos[i].toString());
-		}
+		//for(int i = 0; i < gameInfos.length; i++) {
+		//	System.out.print(gameInfos[i].toString());
+		//}
 		return gameInfos;
 	}
 	
@@ -270,7 +270,7 @@ public class Facade {
 	 * button. Displays the new game view.
 	 */
 	public boolean canStartCreateNewGame() {
-		return false;
+		return true;
 	}
 	
 	/**
@@ -285,6 +285,8 @@ public class Facade {
 		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame);
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
+			game = jsonToModel.translateGameInfo(returnedJson);
+			System.out.println("GAME: " + game);
 			return true;
 		}		
 		return false;

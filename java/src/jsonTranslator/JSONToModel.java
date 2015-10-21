@@ -191,6 +191,11 @@ public class JSONToModel {
 
 	}
 	
+	public GameInfo translateGameInfo(JsonObject data) {
+		GameInfo gameInfo = (GameInfo)g.fromJson(data.get("Response-body"), GameInfo.class);
+		return gameInfo;
+	}
+	
 	// I FREAKING HATE JSON TONIGHT! I HOPE SOMEONE CAN FIND AN EASIER WAY TO DO THIS. IT'S KILLING ME. Love Tommy.
 	private static GameInfo parseSingleGameInfo(String input) {
 		//System.out.println("I maed it into parseSingleGameInfo");
