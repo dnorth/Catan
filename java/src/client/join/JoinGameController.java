@@ -161,7 +161,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 
 		System.out.println("\nIN STARTJOINGAME FUNCTION!");
-		System.out.print("\n" + game.toString());
 		IStateBase state = stateManager.getState();
 		int myPlayerId = state.getFacade().getUser().getId();
 		List<PlayerInfo> players = game.getPlayers();
@@ -199,19 +198,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(canJoinGame) {
 			//CatanColor cc = getSelectColorView().getSelectedColor(); //is this unnecessary because of the parameter to this function??
 			state.joinGame(color);
-			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 1");
 			if(getSelectColorView().isModalShowing()) {
 				getSelectColorView().closeModal();
-				System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 2");
 			}
 			getJoinGameView().closeModal();
-			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 3");
 			joinAction.execute();
-			if(getSelectColorView().isModalShowing()) {
-				getSelectColorView().closeModal();
-				System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 4");
-			}
-			System.out.println("WHY IS THE FREAKING COLOR VIEW SHOWING FOR RE-JOIN?! 5");
+			//if(getSelectColorView().isModalShowing()) {
+			//	getSelectColorView().closeModal();
+			//}
+			System.out.println("JOINING GAME THING");
 		}
 	}
 

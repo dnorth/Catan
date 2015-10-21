@@ -696,4 +696,56 @@ public class Facade {
 	public void setClient(ClientModel client) {
 		this.client = client;
 	}
+
+	public CanDoManager getCanDo() {
+		return canDo;
+	}
+
+	public void setCanDo(CanDoManager canDo) {
+		this.canDo = canDo;
+	}
+
+	public ModelToJSON getModelToJSON() {
+		return modelToJSON;
+	}
+
+	public void setModelToJSON(ModelToJSON modelToJSON) {
+		this.modelToJSON = modelToJSON;
+	}
+
+	public JSONToModel getJsonToModel() {
+		return jsonToModel;
+	}
+
+	public void setJsonToModel(JSONToModel jsonToModel) {
+		this.jsonToModel = jsonToModel;
+	}
+
+	public ClientCommunicator getClientCommunicator() {
+		return clientCommunicator;
+	}
+
+	public void setClientCommunicator(ClientCommunicator clientCommunicator) {
+		this.clientCommunicator = clientCommunicator;
+	}
+
+	public GameInfo getGame() {
+		return game;
+	}
+
+	public void setGame(GameInfo game) {
+		this.game = game;
+	}
+
+	public ServerPoller getPoller() {
+		return poller;
+	}
+
+	public void setPoller(ServerPoller poller) {
+		this.poller = poller;
+	}
+
+	public void setUser(PlayerInfo user) {
+		this.user = user;
+	}
 }
