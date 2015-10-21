@@ -50,4 +50,8 @@ public class StateManager implements Observer {
 	public ServerPoller getNewServerPoller() {
 		return facade.getNewServerPoller();
 	}
+	
+	public ClientModel getClientModel() {
+		return facade.getClient();
+	}
 }

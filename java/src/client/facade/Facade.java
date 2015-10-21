@@ -665,4 +665,12 @@ public class Facade {
 	public ServerPoller getNewServerPoller() {
 		return new ServerPoller(this.clientCommunicator, this.client);
 	}
+	
+	public ClientModel getClient() {
+		return client;
+	}
+
+	public void setClient(ClientModel client) {
+		this.client = client;
+	}
 }

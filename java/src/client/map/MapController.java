@@ -6,6 +6,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.state.StateManager;
 
 
 /**
@@ -14,18 +15,19 @@ import client.data.*;
 public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
+	private StateManager stateManager;
 	
-	public MapController(IMapView view, IRobView robView) {
+	public MapController(IMapView view, IRobView robView, StateManager stateManager) {
 		
 		super(view);
 		
 		setRobView(robView);
+		this.stateManager = stateManager;
 		
 		initFromModel();
 	}
 	
 	public IMapView getView() {
-		
 		return (IMapView)super.getView();
 	}
 	
@@ -37,6 +39,8 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	protected void initFromModel() {
+		
+		
 		
 		//<temp>
 		
