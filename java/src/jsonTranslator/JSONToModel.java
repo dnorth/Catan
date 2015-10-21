@@ -168,6 +168,12 @@ public class JSONToModel {
 		return winner;
 	}
 	
+	
+	//If this has any point of failure there are 2 ways we could change this:
+	//Make it pull out players seperately and deal with those in a smaller function
+	//Change the PlayerInfo color to a String instead of a CatanColor object. Make a new CatanColor object called "catanColor"
+	//In getCatanColor() we would return the CatanColor instead of the string. In setCatanColor() we would make 2 functions with 
+	//arguments either being setCatanColor(CatanColor color) or setCatanColor(String color) 
 	public static GameInfo[] translateGamesList(JsonObject object) {
 		
 		final JsonArray gameArray = object.get("Response-body").getAsJsonArray();
