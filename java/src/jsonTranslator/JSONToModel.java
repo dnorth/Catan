@@ -2,6 +2,7 @@ package jsonTranslator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -175,29 +176,23 @@ public class JSONToModel {
 		for (int x = 0; x < gameInfos.length; x++) {
 		      gameInfos[x] = (GameInfo)g.fromJson(gameArray.get(x), GameInfo.class);
 		      ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>(gameInfos[x].getPlayers());
-		      ArrayList<Integer>removeList = new ArrayList<Integer>();
-				for(int i=0; i < players.size(); i++) {
-					if (players.get(i).getId() == -1) {
-						removeList.add(i);
+		      Iterator<PlayerInfo> iter = players.iterator();
+		      int i=0;
+		      while(iter.hasNext()) {
+		    	  PlayerInfo play = iter.next();
+					if (play.getId() == -1) {
+						iter.remove();
 					} else {
 						String color = gameArray.get(x).getAsJsonObject().get("players").getAsJsonArray().get(i).getAsJsonObject().get("color").getAsString();
 						try {
-							players.get(i).setColor(CatanColor.getCatanColor(color));
+							play.setColor(CatanColor.getCatanColor(color));
 						} catch (Exception e) {
-							players.get(i).setColor(null);
+							play.setColor(null);
 						}
 					}
-				for(Integer removeIndex : removeList) {
-					System.out.println("TRYING TO REMOVE");
-					players.remove(removeIndex);
-				}
+				i++;
 				}
 				gameInfos[x].setPlayers(players);
-			    ArrayList<PlayerInfo> players2 = new ArrayList<PlayerInfo>(gameInfos[x].getPlayers());
-				for(int i=0; i < players2.size(); i++) {
-					System.out.println("PLAYER: " + players2.get(i));
-				}
-
 		}
 		
 		return gameInfos;
