@@ -19,21 +19,24 @@ public class ServerPoller {
 	private ClientModel client;
 	private JSONToModel jsonToModelTranslator;
 	private Timer timer;
+	private JsonObject userAndGameCookie;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
 	 * @param cli pointer to client model
 	 */
-	public ServerPoller(IProxy serv, ClientModel cli){
+	public ServerPoller(IProxy serv, ClientModel cli, JsonObject userAndGameCookie){
 		server = serv;
 		client = cli;
 		jsonToModelTranslator = new JSONToModel();
+		this.userAndGameCookie = userAndGameCookie;
 		initialize();
 	}
 	
 	private class PollEvent extends TimerTask {
 		public void run() {
-			//updateCurrentModel(server.getGameModel(null)); //cookies?
+
+			updateCurrentModel(server.getGameModel(userAndGameCookie)); //cookies?
 		}
 	}
 	
