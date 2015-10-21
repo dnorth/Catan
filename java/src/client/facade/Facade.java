@@ -478,6 +478,8 @@ public class Facade {
 	 *            The road location
 	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
+		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true));
 	}
 	
 	
@@ -486,7 +488,8 @@ public class Facade {
 	 * @param edgeLoc
 	 */
 	public void placeFreeRoad(EdgeLocation edgeLoc) {
-		
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
+		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true));
 	}
 	
 	/**
@@ -497,6 +500,8 @@ public class Facade {
 	 *            The settlement location
 	 */
 	public void placeSettlement(VertexLocation vertLoc) {
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
+		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false));
 	}
 	
 	
@@ -505,7 +510,8 @@ public class Facade {
 	 * @param vertLoc
 	 */
 	public void placeFreeSettlement(VertexLocation vertLoc) {
-		
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
+		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true));
 	}
 	
 	/**

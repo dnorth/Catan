@@ -82,14 +82,44 @@ public class ModelToJSON {
 		return  object;
 	}
 	
+	public JsonObject getBuildRoadCommand(int playerIndex, EdgeLocation edge, boolean free) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "buildRoad");
+		object.addProperty("playerIndex", playerIndex);
+		
+		JsonObject edgeLoc = new JsonObject();
+		edgeLoc.addProperty("x", edge.getXcoord());
+		edgeLoc.addProperty("y", edge.getYcoord());
+		edgeLoc.addProperty("direction", edge.getDirection());
+		object.add("roadLocation", edgeLoc);
+		
+		if (free) object.addProperty("free", false);
+		else object.addProperty("free", false);
+		return object;
+	}
+	
+	public JsonObject getBuildSettlementCommand(int playerIndex, EdgeLocation edge, boolean free) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "buildSettlement");
+		object.addProperty("playerIndex", playerIndex);
+
+		JsonObject vertex = new JsonObject();
+		vertex.addProperty("x", edge.getXcoord());
+		vertex.addProperty("y", edge.getYcoord());
+		vertex.addProperty("direction", edge.getDirection());
+		object.add("vertexLocation", vertex);
+		
+		if (free) object.addProperty("free", true);
+		else object.addProperty("free", false);
+		return object;
+	}
+	
 	public JsonObject createUserAndGameCookie(String userCookie, int gameCookie)
 	{
 		JsonObject object = new JsonObject();
 		object.addProperty("User-cookie", userCookie);
 		object.addProperty("Game-cookie", gameCookie);
 		return object;
-		
-		
 	}
 	
 	
