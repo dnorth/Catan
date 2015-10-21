@@ -46,8 +46,12 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	protected void initFromModel() {
-		
-		ClientModel clientModel = this.stateManager.getClientModel();
+		ClientModel clientModel;
+		try {
+			clientModel = this.stateManager.getClientModel();
+		} catch (NullPointerException e) {
+			return;
+		}
 		Board board = clientModel.getBoard();
 		
 		// Place Hexes, Add Numbers
@@ -109,35 +113,52 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return true;
+		return this.stateManager.getFacade().canPlaceSettlement(vertLoc);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		return true;
+		return this.stateManager.getFacade().canPlaceCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
-		return true;
+		return this.stateManager.getFacade().canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		//if (facade.canPlaceRoad()):
-		//	facade.placeRoad()
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		CatanColor color = null;
+		try {
+			color = CatanColor.getCatanColor(
+					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		getView().placeRoad(edgeLoc, color);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		CatanColor color = null;
+		try {
+			color = CatanColor.getCatanColor(
+					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		getView().placeSettlement(vertLoc, color);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		CatanColor color = null;
+		try {
+			color = CatanColor.getCatanColor(
+					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		getView().placeCity(vertLoc, color);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {

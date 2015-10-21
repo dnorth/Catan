@@ -25,7 +25,7 @@ public class StateManager implements Observer {
 	}
 
 	public Facade getFacade() {
-		return facade;
+		return this.facade;
 	}
 
 
@@ -44,14 +44,14 @@ public class StateManager implements Observer {
 	}
 	
 	public void setServerPoller(ServerPoller serv) {
-		facade.setServerPoller(serv);
+		this.facade.setServerPoller(serv);
 	}
 	
 	public ServerPoller getNewServerPoller() {
-		return facade.getNewServerPoller();
+		return this.facade.getNewServerPoller();
 	}
 	
 	public ClientModel getClientModel() {
-		return facade.getClient();
+		return this.facade.getClient();
 	}
 }
