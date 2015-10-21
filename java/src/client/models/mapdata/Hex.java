@@ -1,6 +1,7 @@
 package client.models.mapdata;
 
 
+import shared.definitions.HexType;
 import client.models.mapdata.HexLocation;
 
 /**
@@ -45,6 +46,23 @@ public class Hex {
 	public String toString() {
 		return "Hex [location=" + location.toString() + ", resource=" + resource + ", number=" + number + "]";
 	}
-	
+	public HexType getHexType() {
+		switch(this.resource) {
+		case "wheat":
+			return HexType.WHEAT;
+		case "wood":
+			return HexType.WOOD;
+		case "sheep":
+			return HexType.SHEEP;
+		case "brick":
+			return HexType.BRICK;
+		case "desert":
+			return HexType.DESERT;
+		case "ore":
+			return HexType.ORE;
+		default:
+			return null;
+		}
+	}
 	
 }

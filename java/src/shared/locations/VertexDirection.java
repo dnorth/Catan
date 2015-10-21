@@ -21,6 +21,25 @@ public enum VertexDirection
 		return opposite;
 	}
 	
+	public static VertexDirection getVertexDirectionFromString(String dir) {
+		switch(dir){
+		case "NW":
+			return NorthWest;
+		case "NE":
+			return NorthEast;
+		case "E":
+			return East;
+		case "SE":
+			return SouthEast;
+		case "SW":
+			return SouthWest;
+		case "W":
+			return West;
+		default:
+			return null;
+		}
+	}
+	
 	@Override
 	public String toString(){
 		switch(this){

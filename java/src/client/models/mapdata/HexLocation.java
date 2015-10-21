@@ -43,4 +43,8 @@ public class HexLocation {
 		return "HexLocation [x=" + x + ", y=" + y + "]";
 	}
     
+	public shared.locations.HexLocation getSharedHexLocation() {
+		return new shared.locations.HexLocation(this.x, this.y);
+	}
+	
 }

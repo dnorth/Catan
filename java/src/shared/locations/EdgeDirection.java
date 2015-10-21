@@ -21,6 +21,25 @@ public enum EdgeDirection
 	{
 		return opposite;
 	}
+	public static EdgeDirection getEdgeDirectionFromString(String dir) {
+		switch(dir) {
+		case "NW":
+			return NorthWest;
+		case "N":
+			return North;
+		case "NE":
+			return NorthEast;
+		case "SE":
+			return SouthEast;
+		case "S":
+			return South;
+		case "SW":
+			return SouthWest;
+		default:
+			return null;
+		}
+	}
+	
 	@Override
 	public String toString(){
 		switch(this){

@@ -1,5 +1,8 @@
 package client.models;
 
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import client.models.mapdata.EdgeLocation;
 /**
  * Each vertex on map, stores who owns vertex (has a settlement, city, or roads on corresponding edges)
@@ -42,5 +45,10 @@ public class VertexObject{
 		return "VertexObject [owner=" + owner + ", location=" + location.toString() + "]";
 	}
 	
+	public VertexLocation getVertexLocation() {
+		return new VertexLocation(
+				new HexLocation(this.location.getXcoord(), this.location.getYcoord()),
+				VertexDirection.getVertexDirectionFromString(this.location.getDirection()));
+	}
 	
 }

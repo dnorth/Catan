@@ -1,5 +1,8 @@
 package client.models.mapdata;
 
+import shared.definitions.HexType;
+import shared.definitions.PortType;
+
 
 /**
  * Port object contains data of hex location, direction, trade resource, and
@@ -15,7 +18,8 @@ public class Port {
 	
 	public Port(String resource, HexLocation location, String direction, int ratio) {
 		super();
-		this.resource = resource;
+		if (ratio == 3) this.resource = "three";
+		else this.resource = resource;
 		this.location = location;
 		this.direction = direction;
 		this.ratio = ratio;
@@ -51,11 +55,34 @@ public class Port {
 		return new EdgeLocation(x, y, direction);
 	}
 	
+	public shared.locations.EdgeLocation getSharedEdgeLocation() {
+		return new shared.locations.EdgeLocation(
+				this.location.getSharedHexLocation(),
+				shared.locations.EdgeDirection.getEdgeDirectionFromString(this.direction));
+	}
+	
 	@Override
 	public String toString() {
 		return "Port [resource=" + resource + ", location=" + location.toString() + ", direction=" + direction + ", ratio=" + ratio
 				+ "]";
 	}
-	
+	public PortType getPortType() {
+		switch(this.resource) {
+		case "wheat":
+			return PortType.WHEAT;
+		case "wood":
+			return PortType.WOOD;
+		case "sheep":
+			return PortType.SHEEP;
+		case "brick":
+			return PortType.BRICK;
+		case "three":
+			return PortType.THREE;
+		case "ore":
+			return PortType.ORE;
+		default:
+			return null;
+		}
+	}
 	
 }
