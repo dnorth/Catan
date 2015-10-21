@@ -117,42 +117,42 @@ public class ClientCommunicator implements IProxy{
 	
 	//MOVES API
 	@Override
-	public JsonObject sendChat(JsonObject data) { // int playerIndex, String content
+	public JsonObject sendChat(JsonObject data, JsonObject optionalCookies) { // int playerIndex, String content
 		return movesProxy.sendChat(data);
 	}
 
 	@Override
-	public JsonObject rollNumber() {
+	public JsonObject rollNumber(JsonObject optionalCookies) {
 		return movesProxy.rollNumber();
 	}
 
 	@Override
-	public JsonObject robPlayer(JsonObject data) { // int playerIndex, int victimIndex, HexLocation hexLocation
+	public JsonObject robPlayer(JsonObject data, JsonObject optionalCookies) { // int playerIndex, int victimIndex, HexLocation hexLocation
 		return movesProxy.robPlayer(data);
 	}
 
 	@Override
-	public JsonObject finishTurn(JsonObject data) { //int playerIndex
+	public JsonObject finishTurn(JsonObject data, JsonObject optionalCookies) { //int playerIndex
 		return movesProxy.finishTurn(data);
 	}
 
 	@Override
-	public JsonObject buyDevCard(JsonObject data) { //int playerIndex
+	public JsonObject buyDevCard(JsonObject data, JsonObject optionalCookies) { //int playerIndex
 		return movesProxy.buyDevCard(data);
 	}
 
 	@Override
-	public JsonObject playYearOfPlenty(JsonObject data) { //int playerIndex, int resource1, int resource2
+	public JsonObject playYearOfPlenty(JsonObject data, JsonObject optionalCookies) { //int playerIndex, int resource1, int resource2
 		return movesProxy.playYearOfPlenty(data);
 	}
 
 	@Override
-	public JsonObject playRoadBuilding(JsonObject data) { //int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2
+	public JsonObject playRoadBuilding(JsonObject data, JsonObject optionalCookies) { //int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2
 		return movesProxy.playRoadBuilding(data);
 	}
 
 	@Override
-	public JsonObject playSoldier(JsonObject data) { // int playerIndex, int victimIndex, HexLocation newRobberHexLocation
+	public JsonObject playSoldier(JsonObject data, JsonObject optionalCookies) { // int playerIndex, int victimIndex, HexLocation newRobberHexLocation
 		return movesProxy.playSoldier(data);
 	}
 
@@ -161,47 +161,47 @@ public class ClientCommunicator implements IProxy{
 	 * String resource
 	 */
 	@Override
-	public JsonObject playMonopoly(JsonObject data) {
+	public JsonObject playMonopoly(JsonObject data, JsonObject optionalCookies) {
 		return movesProxy.playMonopoly(data);
 	}
 
 	@Override
-	public JsonObject playMonument(JsonObject data) { //int playerIndex
+	public JsonObject playMonument(JsonObject data, JsonObject optionalCookies) { //int playerIndex
 		return movesProxy.playMonument(data);
 	}
 
 	@Override
-	public JsonObject buildRoad(JsonObject data) { //int playerIndex, EdgeLocation roadLocation, boolean free
+	public JsonObject buildRoad(JsonObject data, JsonObject optionalCookies) { //int playerIndex, EdgeLocation roadLocation, boolean free
 		return movesProxy.buildRoad(data);
 	}
 
 	@Override
-	public JsonObject buildSettlement(JsonObject data) { //int playerIndex, VertexLocation settlementLocation, boolean free
+	public JsonObject buildSettlement(JsonObject data, JsonObject optionalCookies) { //int playerIndex, VertexLocation settlementLocation, boolean free
 		return movesProxy.buildSettlement(data);
 	}
 
 	@Override
-	public JsonObject buildCity(JsonObject data) { //int playerIndex, VertexLocation cityLocation
+	public JsonObject buildCity(JsonObject data, JsonObject optionalCookies) { //int playerIndex, VertexLocation cityLocation
 		return movesProxy.buildCity(data);
 	}
 
 	@Override
-	public JsonObject offerTrade(JsonObject data) { //int playerIndex, Resources resourceList, int receivingPlayerIndex
+	public JsonObject offerTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, Resources resourceList, int receivingPlayerIndex
 		return movesProxy.offerTrade(data);
 	}
 
 	@Override
-	public JsonObject acceptTrade(JsonObject data) { //int playerIndex, boolean willAccept
+	public JsonObject acceptTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, boolean willAccept
 		return movesProxy.acceptTrade(data);
 	}
 
 	@Override
-	public JsonObject maritimeTrade(JsonObject data) { //int playerIndex, int ratio, String inputResource, String outputResource
+	public JsonObject maritimeTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, int ratio, String inputResource, String outputResource
 		return movesProxy.maritimeTrade(data);
 	}
 
 	@Override
-	public JsonObject discardCards(JsonObject data) { //int playerIndex, Resources discardedCards
+	public JsonObject discardCards(JsonObject data, JsonObject optionalCookies) { //int playerIndex, Resources discardedCards
 		return movesProxy.discardCards(data);
 	}
 

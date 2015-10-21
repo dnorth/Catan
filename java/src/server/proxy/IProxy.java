@@ -28,23 +28,23 @@ public interface IProxy {
 	public JsonObject loadGame (JsonObject gameName);
 
 	//MOVES PROXY
-	public JsonObject sendChat (JsonObject data);
-	public JsonObject rollNumber();
-	public JsonObject robPlayer (JsonObject data);
-	public JsonObject finishTurn (JsonObject data);
-	public JsonObject buyDevCard (JsonObject data);
-	public JsonObject playYearOfPlenty (JsonObject data);
-	public JsonObject playRoadBuilding (JsonObject data);
-	public JsonObject playSoldier (JsonObject data);
-	public JsonObject playMonopoly (JsonObject data);
-	public JsonObject playMonument (JsonObject data);
-	public JsonObject buildRoad (JsonObject data);
-	public JsonObject buildSettlement (JsonObject data);
-	public JsonObject buildCity (JsonObject data);
-	public JsonObject offerTrade (JsonObject data);
-	public JsonObject acceptTrade (JsonObject data);
-	public JsonObject maritimeTrade (JsonObject data);
-	public JsonObject discardCards (JsonObject data);
+	public JsonObject sendChat (JsonObject data, JsonObject optionalCookies);
+	public JsonObject rollNumber(JsonObject optionalCookies);
+	public JsonObject robPlayer (JsonObject data, JsonObject optionalCookies);
+	public JsonObject finishTurn (JsonObject data, JsonObject optionalCookies);
+	public JsonObject buyDevCard (JsonObject data, JsonObject optionalCookies);
+	public JsonObject playYearOfPlenty (JsonObject data, JsonObject optionalCookies);
+	public JsonObject playRoadBuilding (JsonObject data, JsonObject optionalCookies);
+	public JsonObject playSoldier (JsonObject data, JsonObject optionalCookies);
+	public JsonObject playMonopoly (JsonObject data, JsonObject optionalCookies);
+	public JsonObject playMonument (JsonObject data, JsonObject optionalCookies);
+	public JsonObject buildRoad (JsonObject data, JsonObject optionalCookies);
+	public JsonObject buildSettlement (JsonObject data, JsonObject optionalCookies);
+	public JsonObject buildCity (JsonObject data, JsonObject optionalCookies);
+	public JsonObject offerTrade (JsonObject data, JsonObject optionalCookies);
+	public JsonObject acceptTrade (JsonObject data, JsonObject optionalCookies);
+	public JsonObject maritimeTrade (JsonObject data, JsonObject optionalCookies);
+	public JsonObject discardCards (JsonObject data, JsonObject optionalCookies);
 	
 	//USER PROXY
 	public JsonObject userLogin (JsonObject user) throws ClientException;

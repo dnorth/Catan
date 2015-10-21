@@ -101,14 +101,14 @@ public class Facade {
 	 * @param resource The resource to take from other players
 	 */
 	public void playMonopolyCard(ResourceType resource) {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource));
+		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
 	public void playMonumentCard() {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()));
+		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class Facade {
 	 * @param resource2 Second resource to gain
 	 */
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2));
+		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	// DISCARD CONTROLLER
@@ -479,7 +479,7 @@ public class Facade {
 	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true));
+		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	
@@ -489,7 +489,7 @@ public class Facade {
 	 */
 	public void placeFreeRoad(EdgeLocation edgeLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true));
+		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	/**
@@ -501,7 +501,7 @@ public class Facade {
 	 */
 	public void placeSettlement(VertexLocation vertLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false));
+		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
 	}
 	
 	
@@ -511,7 +511,7 @@ public class Facade {
 	 */
 	public void placeFreeSettlement(VertexLocation vertLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true));
+		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId())); //get cookies from playerinfo and gameinfo?
 	}
 	
 	/**

@@ -114,6 +114,20 @@ public class ModelToJSON {
 		return object;
 	}
 	
+	public JsonObject getBuildCityCommand(int playerIndex, EdgeLocation edge) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "buildCity");
+		object.addProperty("playerIndex", playerIndex);
+		
+		JsonObject vertex = new JsonObject();
+		vertex.addProperty("x", edge.getXcoord());
+		vertex.addProperty("y", edge.getYcoord());
+		vertex.addProperty("direction", edge.getDirection());
+		
+		object.add("vertexLocation", vertex);
+		return object;
+	}
+	
 	public JsonObject createUserAndGameCookie(String userCookie, int gameCookie)
 	{
 		JsonObject object = new JsonObject();
