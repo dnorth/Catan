@@ -212,12 +212,14 @@ public class SetupOneActivePlayerState implements IStateBase {
 
 	@Override
 	public void placeRoad(EdgeLocation edgeLoc) {
+		facade.placeFreeRoad(edgeLoc);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void placeSettlement(VertexLocation vertLoc) {
+		facade.placeFreeSettlement(vertLoc);
 		// TODO Auto-generated method stub
 		
 	}

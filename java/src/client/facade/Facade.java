@@ -478,6 +478,15 @@ public class Facade {
 	public void placeRoad(EdgeLocation edgeLoc) {
 	}
 	
+	
+	/**
+	 * This method is called to place road in initial turns.
+	 * @param edgeLoc
+	 */
+	public void placeFreeRoad(EdgeLocation edgeLoc) {
+		
+	}
+	
 	/**
 	 * This method is called when the user clicks the mouse to place a
 	 * settlement.
@@ -486,6 +495,15 @@ public class Facade {
 	 *            The settlement location
 	 */
 	public void placeSettlement(VertexLocation vertLoc) {
+	}
+	
+	
+	/**
+	 * This method is called to place settlement in initial turns.
+	 * @param vertLoc
+	 */
+	public void placeFreeSettlement(VertexLocation vertLoc) {
+		
 	}
 	
 	/**
