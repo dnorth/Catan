@@ -317,7 +317,9 @@ public class Facade {
 		String responseBody = returned.get("Response-body").getAsString();
 		if(!responseBody.equals("Success")) {
 			System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
+			
 		}
+		System.out.println("JOIN GAME OBJECT: " + returned);
 	}
 	
 	

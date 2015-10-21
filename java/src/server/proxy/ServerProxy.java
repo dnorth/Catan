@@ -12,6 +12,7 @@ import java.net.URLDecoder;
 import java.util.Optional;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -35,6 +36,8 @@ abstract class ServerProxy {
     
     protected JsonObject doGet(String urlPath, JsonObject optionalCookies) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
         try {
+    		JsonObject jsonReturnObject = new JsonObject();
+    		JsonParser jsonParser = new JsonParser();
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Accept", "application/json");
@@ -55,10 +58,24 @@ abstract class ServerProxy {
                 br.close();
                // System.out.print("What is returned: ");
                // System.out.println(sb.toString());
-                String jsonToParse = sb.toString();
-			    JsonObject returnObject = new JsonObject();
-			    returnObject.addProperty("Response-body", jsonToParse);
-                return returnObject;
+                sb.setLength(sb.length() - 1);
+                String responseBody = sb.toString();
+                
+                System.out.println("\n\n\n HERE \n\n " + responseBody + "\n\n\n");
+                
+                try {
+                	try {
+                   	 JsonArray j = (JsonArray)jsonParser.parse(responseBody);
+                   	 jsonReturnObject.add("Response-body", j);
+                	} catch (ClassCastException e) {
+                   	 JsonObject j = (JsonObject)jsonParser.parse(responseBody);
+                   	 jsonReturnObject.add("Response-body", j);
+                	}
+                } catch (ClassCastException e) {
+                    jsonReturnObject.addProperty("Response-body", responseBody);
+                }
+                                
+                return jsonReturnObject;
             }
             else {
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",
@@ -128,8 +145,13 @@ abstract class ServerProxy {
                     String responseBody = sb.toString();
                     
                     try {
-                    	 JsonObject j = (JsonObject)jsonParser.parse(responseBody);
-                    	 jsonReturnObject.add("Response-body", j);
+                    	try {
+                          	 JsonArray j = (JsonArray)jsonParser.parse(responseBody);
+                          	 jsonReturnObject.add("Response-body", j);
+                       	} catch (ClassCastException e) {
+                          	 JsonObject j = (JsonObject)jsonParser.parse(responseBody);
+                          	 jsonReturnObject.add("Response-body", j);
+                       	}
                     } catch (ClassCastException e) {
                         jsonReturnObject.addProperty("Response-body", responseBody);
                     }

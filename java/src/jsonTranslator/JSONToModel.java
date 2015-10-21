@@ -1,6 +1,9 @@
 package jsonTranslator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import shared.definitions.CatanColor;
 
@@ -8,7 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.stream.JsonReader;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -162,9 +167,52 @@ public class JSONToModel {
 		return winner;
 	}
 	
+	public static GameInfo[] translateGamesList(JsonObject object) {
+		
+		final JsonArray gameArray = object.get("Response-body").getAsJsonArray();
+		GameInfo[] gameInfos = new GameInfo[gameArray.size()];
+		
+		for (int x = 0; x < gameInfos.length; x++) {
+		      gameInfos[x] = (GameInfo)g.fromJson(gameArray.get(x), GameInfo.class);
+		      ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>(gameInfos[x].getPlayers());
+		      ArrayList<Integer>removeList = new ArrayList<Integer>();
+				for(int i=0; i < players.size(); i++) {
+					if (players.get(i).getId() == -1) {
+						removeList.add(i);
+					} else {
+						String color = gameArray.get(x).getAsJsonObject().get("players").getAsJsonArray().get(i).getAsJsonObject().get("color").getAsString();
+						try {
+							players.get(i).setColor(CatanColor.getCatanColor(color));
+						} catch (Exception e) {
+							players.get(i).setColor(null);
+						}
+					}
+				for(Integer removeIndex : removeList) {
+					System.out.println("TRYING TO REMOVE");
+					players.remove(removeIndex);
+				}
+				}
+				gameInfos[x].setPlayers(players);
+			    ArrayList<PlayerInfo> players2 = new ArrayList<PlayerInfo>(gameInfos[x].getPlayers());
+				for(int i=0; i < players2.size(); i++) {
+					System.out.println("PLAYER: " + players2.get(i));
+				}
+
+		}
+		
+		return gameInfos;
+	}
+	
+	
+	public GameInfo translateGameInfo(JsonObject data) {
+		GameInfo gameInfo = (GameInfo)g.fromJson(data.get("Response-body"), GameInfo.class);
+		return gameInfo;
+	}
+	
 	/**
 	 * Translates Json into a list of games. Used for getGamesList()
 	 */
+	/*
 	public static GameInfo[] translateGamesList(JsonObject object) {
 		//System.out.println("In JSONtoModel translateGamesList function");
 		//System.out.println("JSON Model games object" + object.toString());
@@ -189,11 +237,6 @@ public class JSONToModel {
 		
 		return gameInfos;
 
-	}
-	
-	public GameInfo translateGameInfo(JsonObject data) {
-		GameInfo gameInfo = (GameInfo)g.fromJson(data.get("Response-body"), GameInfo.class);
-		return gameInfo;
 	}
 	
 	// I FREAKING HATE JSON TONIGHT! I HOPE SOMEONE CAN FIND AN EASIER WAY TO DO THIS. IT'S KILLING ME. Love Tommy.
@@ -276,4 +319,5 @@ public class JSONToModel {
 		}
 		return gameInfo;
 	}
+	*/
 }

@@ -56,6 +56,10 @@ public class GameInfo
 		return Collections.unmodifiableList(players);
 	}
 	
+	public void setPlayers(ArrayList<PlayerInfo> players) {
+		this.players = players;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder toReturn = new StringBuilder("\n\nGame Info:" + 
