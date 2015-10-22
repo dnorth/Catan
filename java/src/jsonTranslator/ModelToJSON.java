@@ -4,6 +4,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.data.GameInfo;
 import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.HexLocation;
 
 import com.google.gson.JsonObject;
 
@@ -82,6 +83,32 @@ public class ModelToJSON {
 		return  object;
 	}
 	
+	//MOVES COMMANDS
+	
+	public JsonObject getSendChatCommand(){return null;}
+	public JsonObject getRollNumberCommand(){return null;}
+	
+	public JsonObject getRobPlayerCommand(int playerIndex, int victimIndex, HexLocation hex) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "robPlayer");
+		object.addProperty("playerIndex", playerIndex);
+		object.addProperty("victimIndex", victimIndex);
+		
+		JsonObject hexLoc = new JsonObject();
+		hexLoc.addProperty("x", hex.getX());
+		hexLoc.addProperty("y", hex.getY());
+		
+		object.add("location", hexLoc);
+		return object;
+	}
+	
+	public JsonObject getFinishTurnCommand() {return null;}
+	public JsonObject getBuyDevCardCommand() {return null;}
+	public JsonObject getPlayYearOfPlentyCommand() {return null;}
+	public JsonObject getPlayRoadBuildingCommand() {return null;}
+	public JsonObject getPlaySoldierCommand() {return null;}
+	public JsonObject getPlayMonopolyCommand() {return null;}
+	
 	public JsonObject getBuildRoadCommand(int playerIndex, EdgeLocation edge, boolean free) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "buildRoad");
@@ -127,6 +154,11 @@ public class ModelToJSON {
 		object.add("vertexLocation", vertex);
 		return object;
 	}
+	
+	public JsonObject getOfferTradeCommand() {return null;}
+	public JsonObject getAcceptTradeCommand() {return null;}
+	public JsonObject getMaritimeTradeCommand() {return null;}
+	public JsonObject getDiscardCardsCommand() {return null;}
 	
 	public JsonObject createUserAndGameCookie(String userCookie, int gameCookie)
 	{

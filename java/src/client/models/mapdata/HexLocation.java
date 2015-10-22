@@ -17,6 +17,11 @@ public class HexLocation {
 		this.y = y;
 	}
 	
+	public HexLocation(shared.locations.HexLocation hex) {
+		this.x = hex.getX();
+		this.y = hex.getY();
+	}
+	
 	public int getX() {
 		return x;
 	}

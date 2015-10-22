@@ -478,7 +478,9 @@ public class Facade {
 	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, false);
+		JsonObject cookie = this.getUserAndGameCookie();
+		clientCommunicator.buildRoad(roadCommand, cookie);
 	}
 	
 	
@@ -488,7 +490,9 @@ public class Facade {
 	 */
 	public void placeFreeRoad(EdgeLocation edgeLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		clientCommunicator.buildRoad(modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true);
+		JsonObject cookie = this.getUserAndGameCookie();
+		clientCommunicator.buildRoad(roadCommand, cookie);
 	}
 	
 	/**
@@ -500,7 +504,9 @@ public class Facade {
 	 */
 	public void placeSettlement(VertexLocation vertLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false);
+		JsonObject cookie = this.getUserAndGameCookie();
+		clientCommunicator.buildSettlement(settlementCommand, cookie);
 	}
 	
 	
@@ -510,7 +516,9 @@ public class Facade {
 	 */
 	public void placeFreeSettlement(VertexLocation vertLoc) {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		clientCommunicator.buildSettlement(modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId())); //get cookies from playerinfo and gameinfo?
+		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true);
+		JsonObject cookie = this.getUserAndGameCookie();
+		clientCommunicator.buildSettlement(settlementCommand, cookie);
 	}
 	
 	/**
@@ -520,6 +528,10 @@ public class Facade {
 	 *            The city location
 	 */
 	public void placeCity(VertexLocation vertLoc) {
+		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
+		JsonObject cityCommand = modelToJSON.getBuildCityCommand(this.getPlayerIndex(), edge);
+		JsonObject cookie = this.getUserAndGameCookie();
+		clientCommunicator.buildCity(cityCommand, cookie);
 	}
 	
 	/**
@@ -529,6 +541,11 @@ public class Facade {
 	 *            The robber location
 	 */
 	public void placeRobber(HexLocation hexLoc) {
+		client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(hexLoc);
+		//Need to get victim index
+		//JsonObject robCommand = modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victimIndex, hex);
+		JsonObject cookie = this.getUserAndGameCookie();
+		//clientCommunicator.robPlayer(robCommand, cookie);
 	}
 	
 	/**
