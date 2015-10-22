@@ -155,8 +155,7 @@ public class JSONToModel {
 	 * @return updated version number
 	 */
 	public static int translateVersion(JsonObject serverModel) {
-		int version = serverModel.get("version").getAsInt();
-		return version;
+		return serverModel.get("version").getAsInt();
 	}
 	
 	/**

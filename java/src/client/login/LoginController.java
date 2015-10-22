@@ -107,7 +107,6 @@ public class LoginController extends Controller implements ILoginController {
 			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
 			this.messageView.setTitle("Login Failed.");
-//			this.getLoginView().closeModal();
 			this.messageView.showModal();
 		}
 	}
@@ -143,7 +142,6 @@ public class LoginController extends Controller implements ILoginController {
 			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
 			this.messageView.setTitle("Register Failed.");
-//			this.getLoginView().closeModal();
 			this.messageView.showModal();
 		}
 	}
@@ -152,7 +150,6 @@ public class LoginController extends Controller implements ILoginController {
 		getLoginView().closeModal();
 		loginAction.execute();
 		stateManager.setState(new JoinGameState(state.getFacade()));
-		stateManager.setServerPoller(stateManager.getNewServerPoller());
 	}
 
 	@Override

@@ -12,10 +12,12 @@ public class StateManager implements Observer {
 
 	private IStateBase state;
 	Facade facade;
+	ServerPoller serverPoller;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
 		this.state = new LoginState(facade);
+		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
 	}
 
 	
@@ -47,11 +49,23 @@ public class StateManager implements Observer {
 		this.facade.setServerPoller(serv);
 	}
 	
-	public ServerPoller getNewServerPoller() {
-		return this.facade.getNewServerPoller();
-	}
-	
 	public ClientModel getClientModel() {
 		return this.facade.getClient();
+	}
+	
+	public void activatePoller() {
+		this.serverPoller.setActive(true);
+	}
+	
+	public void deactivatePoller() {
+		this.serverPoller.setActive(false);
+	}
+	
+	public int getCurrentVersion() {
+		return this.getClientModel().getVersion();
+	}
+	
+	public void addObserver(Observer o) {
+		this.facade.addObserver(o);
 	}
 }

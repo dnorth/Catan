@@ -30,6 +30,8 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		mainFacade = new Facade(new ClientModel());
+		stateManager = new StateManager(mainFacade);
 		catanPanel = new CatanPanel(this.stateManager);
 		this.setContentPane(catanPanel);
 		
@@ -62,8 +64,6 @@ public class Catan extends JFrame
 			{
 				new Catan();
 				//TODO Instantiate model from JSON - Instead of new ClientModel() replace it with the instantiated model
-				mainFacade = new Facade(new ClientModel());
-				stateManager = new StateManager(mainFacade);
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView,

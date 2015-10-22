@@ -47,6 +47,7 @@ public class Hex {
 		return "Hex [location=" + location.toString() + ", resource=" + resource + ", number=" + number + "]";
 	}
 	public HexType getHexType() {
+		if (this.resource == null) return HexType.DESERT;
 		switch(this.resource) {
 		case "wheat":
 			return HexType.WHEAT;
@@ -56,8 +57,6 @@ public class Hex {
 			return HexType.SHEEP;
 		case "brick":
 			return HexType.BRICK;
-		case "desert":
-			return HexType.DESERT;
 		case "ore":
 			return HexType.ORE;
 		default:

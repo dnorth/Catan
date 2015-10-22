@@ -7,7 +7,6 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.models.ClientModel;
-import client.models.Player;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
@@ -30,8 +29,9 @@ public class MapController extends Controller implements IMapController {
 		
 		setRobView(robView);
 		this.stateManager = stateManager;
+		this.stateManager.addObserver(this);
 		
-		initFromModel();
+//		initFromModel();
 	}
 	
 	public IMapView getView() {
@@ -57,7 +57,7 @@ public class MapController extends Controller implements IMapController {
 		// Place Hexes, Add Numbers
 		for (Hex h : board.getHexes()) {
 			getView().addHex(h.getLocation().getSharedHexLocation(), h.getHexType());
-			getView().addNumber(h.getLocation().getSharedHexLocation(), h.getNumberToken());
+			if (h.getNumberToken() != 0) getView().addNumber(h.getLocation().getSharedHexLocation(), h.getNumberToken());
 		}
 		
 		// Place Ports
@@ -105,6 +105,7 @@ public class MapController extends Controller implements IMapController {
 		
 		// Place Robber
 		getView().placeRobber(board.getRobber().getSharedHexLocation());
+		
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -191,8 +192,10 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("UPDATING MAP!!!");
+		System.out.println("ClientModel:\n");
+		System.out.println(this.stateManager.getClientModel().toString());
+		this.initFromModel();
 	}
 	
 }

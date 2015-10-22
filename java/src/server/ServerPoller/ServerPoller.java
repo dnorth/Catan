@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
 import client.models.ClientModel;
+import client.state.StateManager;
 
 import com.google.gson.JsonObject;
 
@@ -14,38 +15,34 @@ import com.google.gson.JsonObject;
  */
 public class ServerPoller {
 	
-	private int currVersion;
 	private IProxy server; //IServer can be real server or mock proxy
-	private ClientModel client;
+	private StateManager stateManager;
 	private JSONToModel jsonToModelTranslator;
 	private Timer timer;
-	private JsonObject userAndGameCookie;
+	private boolean active = false;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
 	 * @param cli pointer to client model
 	 */
-	public ServerPoller(IProxy serv, ClientModel cli, JsonObject userAndGameCookie){
-		server = serv;
-		client = cli;
+	public ServerPoller(IProxy server, StateManager stateManager){
+		this.server = server;
+		this.stateManager = stateManager;
 		jsonToModelTranslator = new JSONToModel();
-		this.userAndGameCookie = userAndGameCookie;
 		initialize();
 	}
 	
-	private class PollEvent extends TimerTask {
+	private class PollEvent extends TimerTask {		
 		public void run() {
-
-			updateCurrentModel(server.getGameModel(userAndGameCookie)); //cookies?
+			if (active) try {
+				System.out.println("POLLING");
+				updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+			} catch (NullPointerException e) {
+				System.out.println("SERVER POLLER NULL EXCEPTION:");
+				e.printStackTrace();
+			}
+			else System.out.println("NOT YET RUNNING POLLER");
 		}
-	}
-	
-	/**
-	 * Set client
-	 * @param cli pointer to client model
-	 */
-	public void setClient(ClientModel cli) {
-		client = cli;
 	}
 	
 	/**
@@ -79,10 +76,11 @@ public class ServerPoller {
 	 * @param cookies
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
-		JsonObject serverModel = server.getGameModel(cookies);
 		
-		if(newVersion(JSONToModel.translateVersion(serverModel))) {
-			client = jsonToModelTranslator.translateClientModel(serverModel);
+		if(newVersion(JSONToModel.translateVersion(cookies))) {
+			System.out.println("UPDATING CURRENT MODEL");
+//			System.out.println("NEW MODEL: " + cookies.toString());
+			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			//TODO reconnect managers/facade to model
 		}
 	}
@@ -92,20 +90,11 @@ public class ServerPoller {
 	 * @return true if new version different than currVersion
 	 */
 	private boolean newVersion(int newestVersion){ // compare newest version with currVersion - if different, return new
-		if (newestVersion != currVersion) {
-			currVersion = newestVersion;
+		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			return true;
 		}
 		else
 			return false;
-	}
-
-	public int getCurrVersion() {
-		return currVersion;
-	}
-
-	public void setCurrVersion(int currVersion) {
-		this.currVersion = currVersion;
 	}
 
 	public JSONToModel getJsonToModelTranslator() {
@@ -120,7 +109,12 @@ public class ServerPoller {
 		return server;
 	}
 
-	public ClientModel getClient() {
-		return client;
+	public boolean isActive() {
+		return active;
 	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 }

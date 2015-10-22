@@ -41,7 +41,7 @@ abstract class ServerProxy {
             URL url = new URL(URL_PREFIX + urlPath);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Accept", "application/json");
-            if(optionalCookies != null) {
+            if(optionalCookies != null && optionalCookies.has("User-cookie") && optionalCookies.has("Game-cookie")) {
             	String cookie = DressCookie(optionalCookies.get("User-cookie").getAsString(), optionalCookies.get("Game-cookie").getAsString());
             	connection.setRequestProperty("Cookie", cookie);
             }
@@ -61,7 +61,6 @@ abstract class ServerProxy {
                 sb.setLength(sb.length() - 1);
                 String responseBody = sb.toString();
                 
-                System.out.println("\n\n\n HERE \n\n " + responseBody + "\n\n\n");
                 
                 try {
                 	try {
@@ -78,6 +77,17 @@ abstract class ServerProxy {
                 return jsonReturnObject;
             }
             else {
+            	InputStream es = connection.getErrorStream();
+            	int ret = 0;
+            	String errorMessage = "";
+            	while((ret=es.read())!=-1)
+                {
+                   char c=(char)ret;
+                   errorMessage += c;
+                }
+            	es.close();
+            	System.out.println("ClientException error message: " + errorMessage);
+            	System.out.println("Here's the cookie: " + optionalCookies.toString());
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",
                                             urlPath, connection.getResponseCode()));
             }

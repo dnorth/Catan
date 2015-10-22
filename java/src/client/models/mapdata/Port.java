@@ -67,21 +67,22 @@ public class Port {
 				+ "]";
 	}
 	public PortType getPortType() {
-		switch(this.resource) {
-		case "wheat":
-			return PortType.WHEAT;
-		case "wood":
-			return PortType.WOOD;
-		case "sheep":
-			return PortType.SHEEP;
-		case "brick":
-			return PortType.BRICK;
-		case "three":
-			return PortType.THREE;
-		case "ore":
-			return PortType.ORE;
-		default:
-			return null;
+		if (this.ratio == 3) return PortType.THREE;
+		else {
+			switch(this.resource) {
+			case "wheat":
+				return PortType.WHEAT;
+			case "wood":
+				return PortType.WOOD;
+			case "sheep":
+				return PortType.SHEEP;
+			case "brick":
+				return PortType.BRICK;
+			case "ore":
+				return PortType.ORE;
+			default:
+				return null;
+			}
 		}
 	}
 	

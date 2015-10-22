@@ -1,6 +1,7 @@
 package client.facade;
 
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -696,10 +697,6 @@ public class Facade {
 		this.poller = serv;
 	}
 	
-	public ServerPoller getNewServerPoller() {
-		return new ServerPoller(this.clientCommunicator, this.client, modelToJSON.createUserAndGameCookie(user.getUserCookie(),game.getId()));
-	}
-	
 	public ClientModel getClient() {
 		return client;
 	}
@@ -722,6 +719,15 @@ public class Facade {
 
 	public void setModelToJSON(ModelToJSON modelToJSON) {
 		this.modelToJSON = modelToJSON;
+	}
+	
+	public JsonObject getUserAndGameCookie() {
+		try {
+			return this.modelToJSON.createUserAndGameCookie(this.user.getUserCookie(), this.game.getId());
+		} catch (NullPointerException e) {
+			System.out.println("NULL IN FACADE");
+			return null;
+		}
 	}
 
 	public JSONToModel getJsonToModel() {
@@ -758,5 +764,9 @@ public class Facade {
 
 	public void setUser(PlayerInfo user) {
 		this.user = user;
+	}
+
+	public void addObserver(Observer o) {
+		this.client.addObserver(o);
 	}
 }

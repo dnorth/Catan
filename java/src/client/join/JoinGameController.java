@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -207,7 +209,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			//if(getSelectColorView().isModalShowing()) {
 			//	getSelectColorView().closeModal();
 			//}
-			System.out.println("JOINING GAME THING");
+//			System.out.println("JOINING GAME THING");
+//			System.out.println("UPDATING ClientModel");
+//			JSONToModel.translateClientModel(this.stateManager.getFacade().getClientCommunicator().getGameModel(null));
+//			this.stateManager.getClientModel().update(model);
 		}
 	}
 

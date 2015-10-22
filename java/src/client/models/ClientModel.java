@@ -12,6 +12,7 @@ import client.models.mapdata.Board;
  */
 public class ClientModel extends Observable
 {
+
 	private Resources bank;
 	private MessageList chat;
 	private MessageList log;
@@ -19,10 +20,14 @@ public class ClientModel extends Observable
 	private Player[] players;
 	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
-	private int version;
+	private int version = -1;
 	private int winner;
 	private DevCards deck;
 	boolean hasChanged = false;
+	
+	public ClientModel() {
+		super();
+	}
 	
 	public void update(ClientModel model) {
 		this.setBank(model.getBank());
@@ -35,6 +40,9 @@ public class ClientModel extends Observable
 		this.setVersion(model.getVersion());
 		this.setWinner(model.getWinner());
 		this.setDeck(model.getDeck());
+		System.out.println("ClientModel.update()");
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public int getVersion() {

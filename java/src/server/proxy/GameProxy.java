@@ -18,7 +18,7 @@ public class GameProxy extends ServerProxy{
         
 		JsonObject model = null; //The API says "GameModel" Is this the same thing??
 		try {
-			model = doGet("/game/model", optionalCookies);
+			model = doGet("/game/model", optionalCookies).get("Response-body").getAsJsonObject();
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

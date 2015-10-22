@@ -9,7 +9,7 @@ package client.models.mapdata;
 public class HexLocation {
 	private int x;
 	private int y;
-	
+	private shared.locations.HexLocation sharedHexLocation;
 	
 	public HexLocation(int x, int y) {
 		super();
@@ -44,7 +44,8 @@ public class HexLocation {
 	}
     
 	public shared.locations.HexLocation getSharedHexLocation() {
-		return new shared.locations.HexLocation(this.x, this.y);
+		if (this.sharedHexLocation == null) this.sharedHexLocation = new shared.locations.HexLocation(this.x, this.y);
+		return this.sharedHexLocation;
 	}
 	
 }
