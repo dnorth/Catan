@@ -3,6 +3,7 @@ package jsonTranslator;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.data.GameInfo;
+import client.models.Resources;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.HexLocation;
 
@@ -85,8 +86,21 @@ public class ModelToJSON {
 	
 	//MOVES COMMANDS
 	
-	public JsonObject getSendChatCommand(){return null;}
-	public JsonObject getRollNumberCommand(){return null;}
+	public JsonObject getSendChatCommand(int playerIndex, String content) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "sendChat");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("content", content);
+		return command;
+	}
+	
+	public JsonObject getRollNumberCommand(int playerIndex, int numRolled) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "rollNumber");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("number", numRolled);
+		return command;
+	}
 	
 	public JsonObject getRobPlayerCommand(int playerIndex, int victimIndex, HexLocation hex) {
 		JsonObject object = new JsonObject();
@@ -102,13 +116,77 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	public JsonObject getFinishTurnCommand() {return null;}
-	public JsonObject getBuyDevCardCommand() {return null;}
-	public JsonObject getPlayYearOfPlentyCommand() {return null;}
-	public JsonObject getPlayRoadBuildingCommand() {return null;}
-	public JsonObject getPlaySoldierCommand() {return null;}
-	public JsonObject getPlayMonopolyCommand() {return null;}
+	public JsonObject getFinishTurnCommand(int playerIndex) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "finishTurn");
+		command.addProperty("playerIndex", playerIndex);
+		return command;
+	}
+
+	public JsonObject getBuyDevCardCommand(int playerIndex) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "buyDevCard");
+		command.addProperty("playerIndex", playerIndex);
+		return command;
+	}
 	
+	//in Swagger UI it says the data types are "resource" - but I'm assuming they're actually strings
+	public JsonObject getPlayYearOfPlentyCommand(int playerIndex, ResourceType resource1, ResourceType resource2) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "Year_of_Plenty");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("resource1", resource1.name());
+		command.addProperty("resource2", resource2.name());
+		return command;
+	}
+	
+	public JsonObject getPlayRoadBuildingCommand(int playerIndex, EdgeLocation edge1, EdgeLocation edge2) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "Road_Building");
+		command.addProperty("playerIndex", playerIndex);
+		
+		JsonObject edgeLoc1 = new JsonObject();
+		edgeLoc1.addProperty("x", edge1.getXcoord());
+		edgeLoc1.addProperty("y", edge1.getYcoord());
+		
+		JsonObject edgeLoc2 = new JsonObject();
+		edgeLoc2.addProperty("x", edge2.getXcoord());
+		edgeLoc2.addProperty("y", edge2.getYcoord());
+		
+		command.add("spot1", edgeLoc1);
+		command.add("spot2", edgeLoc2);
+		return command;
+	}
+	
+	public JsonObject getPlaySoldierCommand(int playerIndex, int victimIndex, HexLocation hex) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "Soldier");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("victimIndex", victimIndex);
+		
+		JsonObject hexLoc = new JsonObject();
+		hexLoc.addProperty("x", hex.getX());
+		hexLoc.addProperty("y", hex.getY());
+		
+		command.add("location", hexLoc);
+		return command;
+	}
+	
+	public JsonObject getPlayMonopolyCommand(int playerIndex, ResourceType resource) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "Monopoly");
+		command.addProperty("resource", resource.name());
+		command.addProperty("playerIndex", playerIndex);
+		return command;
+	}
+	
+	public JsonObject getPlayMonumentCommand(int playerIndex) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "Monument");
+		command.addProperty("playerIndex", playerIndex);
+		return command;
+	}
+
 	public JsonObject getBuildRoadCommand(int playerIndex, EdgeLocation edge, boolean free) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "buildRoad");
@@ -155,10 +233,57 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	public JsonObject getOfferTradeCommand() {return null;}
-	public JsonObject getAcceptTradeCommand() {return null;}
-	public JsonObject getMaritimeTradeCommand() {return null;}
-	public JsonObject getDiscardCardsCommand() {return null;}
+	public JsonObject getOfferTradeCommand(int playerIndex, int receiver, Resources resourceList) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "offerTrade");
+		command.addProperty("playerIndex", playerIndex);
+		
+		JsonObject resList = new JsonObject();
+		resList.addProperty("brick", resourceList.getBrickCount());
+		resList.addProperty("ore", resourceList.getOreCount());
+		resList.addProperty("sheep", resourceList.getSheepCount());
+		resList.addProperty("wheat", resourceList.getWheatCount());
+		resList.addProperty("wood", resourceList.getWoodCount());
+		
+		command.add("offer", resList);
+		command.addProperty("receiver", receiver);		
+		return command;
+	}
+	
+	public JsonObject getAcceptTradeCommand(int playerIndex, boolean willAccept) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "acceptTrade");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("willAccept", willAccept);
+		return command;
+	}
+
+	//swagger says everything but playerindex is optional, how is that possible?
+	public JsonObject getMaritimeTradeCommand(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "maritimeTrade");
+		command.addProperty("playerIndex", playerIndex);
+		command.addProperty("ratio", ratio);
+		command.addProperty("inputResource", inputResource.name());
+		command.addProperty("outputResource", outputResource.name());
+		return command;
+	}
+	
+	public JsonObject getDiscardCardsCommand(int playerIndex, Resources discardList) {
+		JsonObject command = new JsonObject();
+		command.addProperty("type", "discardCards");
+		command.addProperty("playerIndex", playerIndex);
+		
+		JsonObject resList = new JsonObject();
+		resList.addProperty("brick", discardList.getBrickCount());
+		resList.addProperty("ore", discardList.getOreCount());
+		resList.addProperty("sheep", discardList.getSheepCount());
+		resList.addProperty("wheat", discardList.getWheatCount());
+		resList.addProperty("wood", discardList.getWoodCount());
+		
+		command.add("discardedCards", resList);
+		return command;
+	}
 	
 	public JsonObject createUserAndGameCookie(String userCookie, int gameCookie)
 	{
