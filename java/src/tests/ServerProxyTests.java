@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import jsonTranslator.ModelToJSON;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,6 +17,9 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.facade.Facade;
 import client.models.Resources;
 
 import com.google.gson.JsonObject;
@@ -177,10 +182,12 @@ public class ServerProxyTests {
 	
 	@Test
 	public void addApiTest() {
-		JsonObject inputCookies = new JsonObject();
-		inputCookies.addProperty("User-cookie", userCookie);
-		inputCookies.addProperty("Game-cookie", gameId);
-		JsonObject resultObject = proxy2.addAI("LARGEST_ARMY", inputCookies);
+		
+		JsonObject AIInput = new JsonObject();
+		AIInput.addProperty("User-cookie", userCookie);
+		AIInput.addProperty("Game-cookie", 3);
+		AIInput.addProperty("AIType", "LARGEST_ARMY");
+		JsonObject resultObject = proxy1.addAI(AIInput);
 		assertNotNull(resultObject);
 		assertEquals(resultObject.get("Response-body").getAsString(), "Success");
 	}

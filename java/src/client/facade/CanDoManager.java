@@ -1,5 +1,7 @@
 package client.facade;
 
+import java.util.Observer;
+
 import client.models.ClientModel;
 import client.models.TradeOffer;
 import client.models.mapdata.EdgeLocation;
@@ -119,5 +121,12 @@ public class CanDoManager {
 	
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return boardManager.canPlaceRobber(hexLoc);
+	}
+	
+	public void updatePointersToNewModel(ClientModel newModel) {
+		this.clientModel = newModel;
+		this.boardManager.updatePointersToNewModel(newModel);
+		this.playerManager.updatePointersToNewModel(newModel);
+		this.turnManager.updatePointersToNewModel(newModel);
 	}
 }

@@ -3,7 +3,10 @@ package client.facade;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
+import client.models.ClientModel;
 import client.models.Player;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
@@ -292,5 +295,9 @@ public class BoardManager {
 		}
 
 		return false;
+	}
+
+	public void updatePointersToNewModel(ClientModel newModel) {
+		this.board = newModel.getBoard();
 	}
 }

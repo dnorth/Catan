@@ -55,7 +55,7 @@ public class GamesProxy extends ServerProxy{
 	 * @param color
 	 * @return
 	 */
-	public JsonObject joinGame (JsonObject gameData){
+	public JsonObject joinGame(JsonObject gameData){
 		
 		JsonObject success = null;
 		try {

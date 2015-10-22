@@ -20,6 +20,7 @@ public class ServerPoller {
 	private JSONToModel jsonToModelTranslator;
 	private Timer timer;
 	private boolean active = false;
+	private int currNumPlayers;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -29,6 +30,7 @@ public class ServerPoller {
 		this.server = server;
 		this.stateManager = stateManager;
 		jsonToModelTranslator = new JSONToModel();
+		currNumPlayers = 0;
 		initialize();
 	}
 	
@@ -77,10 +79,20 @@ public class ServerPoller {
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
 		
-		if(newVersion(JSONToModel.translateVersion(cookies))) {
+		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies));
+		System.out.println("NEW VERSION = " + isNewVersion);
+		if(isNewVersion) {
 			System.out.println("UPDATING CURRENT MODEL");
 //			System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
+			/* THIS WAS MY VALLIANT ATTEMPT TO GET THE ADDAI METHOD TO WORK
+			 * The pointers are all messed up in the facade and that makes this next to impossible
+			 * I wish I had seen this "TODO" a couple hours ago
+			 * ClientModel toEditFacade = this.stateManager.getClientModel();
+			 * this.stateManager.getFacade().getGame().setPlayers(toEditFacade.getPlayers());
+			 */
+			
+			
 			//TODO reconnect managers/facade to model
 		}
 	}
@@ -89,8 +101,13 @@ public class ServerPoller {
 	 * @param newestVersion new version number
 	 * @return true if new version different than currVersion
 	 */
-	private boolean newVersion(int newestVersion){ // compare newest version with currVersion - if different, return new
+	private boolean newVersion(int newestVersion, int numPlayers){ // compare newest version with currVersion - if different, return new
+		System.out.println("NEW NUMBER OF PLAYERS = " + numPlayers);
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
+			return true;
+		}
+		else if(numPlayers > currNumPlayers) {
+			currNumPlayers = numPlayers;
 			return true;
 		}
 		else

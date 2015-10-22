@@ -50,7 +50,7 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject addAI(String soldierType, JsonObject optionalCookies) {
+	public JsonObject addAI(JsonObject AIType) {
 		return this.returnSuccess(false, false);
 	}
 

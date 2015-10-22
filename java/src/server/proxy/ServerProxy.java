@@ -99,9 +99,9 @@ abstract class ServerProxy {
     
     protected JsonObject doPost(String urlPath, JsonObject postData) throws ClientException { //Return a JSON Object
         try {
-        	System.out.println(postData.toString());
+        	//System.out.println(postData.toString());
             URL url = new URL(URL_PREFIX + urlPath);
-            System.out.println("Test1");
+            //System.out.println("Test1");
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");

@@ -2,6 +2,9 @@ package client.data;
 
 import java.util.*;
 
+import shared.definitions.CatanColor;
+import client.models.Player;
+
 /**
  * Used to pass game information into views<br>
  * <br>
@@ -24,6 +27,30 @@ public class GameInfo
 		setId(-1);
 		setTitle("");
 		players = new ArrayList<PlayerInfo>();
+	}
+	
+	public void setPlayers(Player[] p) {
+		ArrayList<PlayerInfo> pis = new ArrayList<PlayerInfo>();
+		for(int i = 0; i < p.length; i++) {
+			if(p[i] == null) System.out.println("PLAYER AT INDEX " + i + " IS NULL");
+			else {
+				System.out.println("PLAYER AT INDEX " + i + " = " + p[i].toString());
+				String name = p[i].getName();
+				int id = p[i].getPlayerID();
+				int playerIndex = p[i].getPlayerIndex();
+				CatanColor cc = null;
+				try {
+					cc = CatanColor.getCatanColor(p[i].getColor());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				String cookie = "FAKE";
+				PlayerInfo newPlayerInfo = new PlayerInfo(id, playerIndex, name, cc, cookie);
+				System.out.println("PLAYERINFO = " + newPlayerInfo.toString());
+				pis.add(newPlayerInfo);
+			}
+		}
+		this.players = pis;
 	}
 	
 	public int getId()
@@ -56,8 +83,12 @@ public class GameInfo
 		return Collections.unmodifiableList(players);
 	}
 	
-	public void setPlayers(ArrayList<PlayerInfo> players) {
-		this.players = players;
+	public ArrayList<PlayerInfo> getFreakingNotUnmodifiablePlayerList() {
+		return players;
+	}
+	
+	public void setPlayers(ArrayList<PlayerInfo> list) {
+		this.players = list;
 	}
 	
 	@Override

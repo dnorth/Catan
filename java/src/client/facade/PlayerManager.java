@@ -1,5 +1,6 @@
 package client.facade;
 
+import client.models.ClientModel;
 import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
@@ -99,4 +100,8 @@ public class PlayerManager {
 		return p.hasMonopolyCard(d) || p.hasMonumentCard(d) || p.hasRoadBuildingCard(d) || 
 				p.hasSoldierCard(d) || p.hasYearOfPlentyCard(d);
 	}	
+	
+	public void updatePointersToNewModel(ClientModel newModel) {
+		this.players = newModel.getPlayers();
+	}
 }

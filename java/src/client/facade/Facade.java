@@ -1,16 +1,11 @@
 package client.facade;
 
-import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Random;
 import java.util.regex.Pattern;
-
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
-
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
@@ -25,7 +20,6 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.TradeOffer;
-import client.models.User;
 
 /**
  * Facade class interfaces from GUI to Client Communicator
@@ -51,7 +45,7 @@ public class Facade {
 	
 	public int getPlayerIndex() {
 		//TODO! Don't just attach this to the user's ID. This needs to be connected to the playerIndex for the game they joined.
-		return -1;
+		return user.getPlayerIndex();
 	}
 	
 	public PlayerInfo getUser() {
@@ -253,9 +247,6 @@ public class Facade {
 	public GameInfo[] getGamesList() {
 		JsonObject object = clientCommunicator.getGamesList();
 		GameInfo[] gameInfos = JSONToModel.translateGamesList(object);
-		//for(int i = 0; i < gameInfos.length; i++) {
-		//	System.out.print(gameInfos[i].toString());
-		//}
 		return gameInfos;
 	}
 	
@@ -338,7 +329,12 @@ public class Facade {
 	 * Called when the "Add AI" button is clicked in the player waiting view
 	 */
 	public void addAI(String AIType) {
-		clientCommunicator.addAI(AIType, null);
+		JsonObject object = new JsonObject();
+		object.addProperty("User-cookie", user.getUserCookie());
+		object.addProperty("Game-cookie", game.getId());
+		object.addProperty("AIType", AIType);
+		System.out.println(object.toString());
+		clientCommunicator.addAI(object);
 	}
 	
 	/**
@@ -768,5 +764,11 @@ public class Facade {
 
 	public void addObserver(Observer o) {
 		this.client.addObserver(o);
+	}
+	
+	public void updatePointersToNewModel(ClientModel newModel) {
+		this.client = newModel;
+		this.game.setPlayers(newModel.getPlayers());
+		this.canDo.updatePointersToNewModel(newModel);
 	}
 }

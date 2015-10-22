@@ -1,11 +1,16 @@
 package client.join;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.models.ClientModel;
 import client.state.IStateBase;
+import client.state.JoinGameState;
+import client.state.SetupOneActivePlayerState;
 import client.state.StateManager;
 
 
@@ -20,6 +25,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		super(view);
 		this.stateManager = stateManager;
+		this.stateManager.addObserver(this);
 	}
 
 	@Override
@@ -62,14 +68,31 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		IStateBase state = stateManager.getState();
 		String AIType = getView().getSelectedAI();
 		state.addAI(AIType);
-		
-		getView().closeModal();
-	}
+		}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		
+		if(getView().isModalShowing()) {
+			System.out.println("CAN I START NOW AGAIN?");
+			
+			
+			ClientModel newModel = (ClientModel)o;
+			GameInfo gi = new GameInfo();
+			gi.setPlayers(newModel.getPlayers());
+			PlayerInfo[] playerList= gi.getPlayers().toArray(new PlayerInfo[gi.getPlayers().size()]);
+
+			getView().setPlayers(playerList);
+			
+			/*
+			if(playerList.size() == 4) {
+				System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
+				getView().closeModal();
+				if(stateManager.getState() instanceof JoinGameState) {
+					stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
+				}
+			}*/
+		}
 	}
 
 }

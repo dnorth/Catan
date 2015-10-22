@@ -205,7 +205,6 @@ public class JoinGameState implements IStateBase {
 	@Override
 	public void addAI(String AIType) {
 		facade.addAI(AIType);
-		
 	}
 
 	@Override

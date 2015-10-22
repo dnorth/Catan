@@ -2,6 +2,7 @@ package client.facade;
 
 import java.util.Random;
 
+import client.models.ClientModel;
 import client.models.TurnTracker;
 import client.models.mapdata.Hex;
 
@@ -43,5 +44,9 @@ public class TurnManager
 		currentTurn += 1;
 		if (currentTurn > 3) currentTurn = 0;
 		this.turnTracker.setCurrentTurn(currentTurn);
+	}
+	
+	public void updatePointersToNewModel(ClientModel newModel) {
+		this.turnTracker = newModel.getTurnTracker();
 	}
 }

@@ -18,12 +18,14 @@ public class StateManager implements Observer {
 		this.facade = facade;
 		this.state = new LoginState(facade);
 		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
+		facade.addObserver(this);
 	}
 
 	
 	@Override
 	public void update(Observable o, Object arg) { // send myPlayerIndex to State
-		
+		facade.updatePointersToNewModel((ClientModel)o);
+		System.out.println("STATEMANAGER UPDATED WITH NEW CLIENTMODEL!");
 	}
 
 	public Facade getFacade() {
@@ -63,6 +65,10 @@ public class StateManager implements Observer {
 	
 	public int getCurrentVersion() {
 		return this.getClientModel().getVersion();
+	}
+	
+	public int getCurrentNumberOfPlayers() {
+		return this.getClientModel().getPlayers().length;
 	}
 	
 	public void addObserver(Observer o) {
