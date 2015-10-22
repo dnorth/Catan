@@ -28,16 +28,19 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	
 	private void initFromModel() {
-		List<MessageLine> messages = Arrays.asList(stateManager.getClientModel().getLog().getLines());
 		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
-		for(MessageLine m : messages)
-		{
-			entries.add(new LogEntry(stateManager.getFacade().getUser().getColor(),m.getMessage()));
+		if(stateManager.getClientModel().getLog() != null) {
+			List<MessageLine> messages = Arrays.asList(stateManager.getClientModel().getLog().getLines());
+			
+			for(MessageLine m : messages)
+			{
+				entries.add(new LogEntry(stateManager.getFacade().getUser().getColor(),m.getMessage()));
+			}
 		}
-		
-		if(entries.isEmpty())
-		{entries.add(new LogEntry(CatanColor.BLACK, "No Messages"));}
+		else {
+			entries.add(new LogEntry(CatanColor.WHITE, "No Messages"));
+		}
 		getView().setEntries(entries);
 	}
 

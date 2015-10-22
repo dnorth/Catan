@@ -37,6 +37,35 @@ public enum CatanColor
 		}
 	}
 	
+	public static CatanColor getColorByNumber(int val) {
+		
+		switch (val) {
+		case 0:
+			return null;
+		case 1:
+			return CatanColor.ORANGE;
+		case 2:
+			return CatanColor.RED;
+		case 3:
+			return CatanColor.YELLOW;
+		case 4:
+			return CatanColor.GREEN;
+		case 5:
+			return CatanColor.PURPLE;
+		case 6:
+			return CatanColor.BLUE;
+		case 7:
+			return CatanColor.WHITE;
+		case 8:
+			return CatanColor.BROWN;
+		case 9:
+			return CatanColor.PUCE;
+		default:
+			assert false;
+			return null;
+		}
+	}
+	
 	public Color getJavaColor()
 	{
 		return color;

@@ -102,7 +102,7 @@ public class ServerPoller {
 	 * @return true if new version different than currVersion
 	 */
 	private boolean newVersion(int newestVersion, int numPlayers){ // compare newest version with currVersion - if different, return new
-		System.out.println("NEW NUMBER OF PLAYERS = " + numPlayers);
+		System.out.println("NEW NUMBER OF PLAYERS = " + numPlayers + " -- CURRENT NUMBER OF PLAYERS = " + currNumPlayers);
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			return true;
 		}

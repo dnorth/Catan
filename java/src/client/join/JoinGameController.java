@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
+import server.ServerPoller.ServerPoller;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -27,6 +28,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private StateManager stateManager;
 	private GameInfo[] games;
 	private PlayerInfo localPlayer;
+	
 	
 	/**
 	 * JoinGameController constructor
@@ -184,10 +186,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelJoinGame() {
 	
-		for(CatanColor cc : CatanColor.values()) {
-			getSelectColorView().setColorEnabled(cc, true);
+		for(int i = 1; i <= 9; i++) {
+			getSelectColorView().setColorEnabled(CatanColor.getColorByNumber(i), true);
 		}
-		getJoinGameView().closeModal();
+		getSelectColorView().closeModal();
+		getJoinGameView().showModal();
 	}
 
 	/**
@@ -199,16 +202,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		IStateBase state = stateManager.getState();
 		boolean canJoinGame = state.canJoinGame();
 		if(canJoinGame) {
-			//CatanColor cc = getSelectColorView().getSelectedColor(); //is this unnecessary because of the parameter to this function??
 			state.joinGame(color);
 			if(getSelectColorView().isModalShowing()) {
 				getSelectColorView().closeModal();
 			}
 			getJoinGameView().closeModal();
 			joinAction.execute();
-			//if(getSelectColorView().isModalShowing()) {
-			//	getSelectColorView().closeModal();
-			//}
+			
 //			System.out.println("JOINING GAME THING");
 //			System.out.println("UPDATING ClientModel");
 //			JSONToModel.translateClientModel(this.stateManager.getFacade().getClientCommunicator().getGameModel(null));
@@ -218,8 +218,28 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		
+		IStateBase state = stateManager.getState();
+		if(getJoinGameView().isModalShowing()) {
+			games = state.getFacade().getGamesList();
+			getJoinGameView().setGames(games, localPlayer);
+		}
+		if(getSelectColorView().isModalShowing()) {
+			GameInfo game = null;
+			for (GameInfo g : games)
+			{
+				if (g.getId() == stateManager.getFacade().getGame().getId())
+				{
+					game = g;
+					break;
+				}
+			}
+			if(game != null) {
+				for(PlayerInfo p : game.getPlayers()) {
+					getSelectColorView().setColorEnabled(p.getColor(), false);
+				}
+			}
+		}
 	}
 
 }
