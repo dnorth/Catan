@@ -114,6 +114,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 	@Override
 	public void setPlayers(PlayerInfo[] value) {
 		//set header label indicating how many players are still needed
+		System.out.println("WERE IN THE SETPLAYERS FUNCTION IN PLAYERWAITINGVIEW");
 		String labelText = "";
 		if(value.length == NUMBER_OF_PLAYERS){
 			labelText = "This game is ready to go!";
@@ -132,7 +133,6 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		//build an individual player panel and add it to the center panel
 		for(int i = 0; i < value.length; i++){
 			String builtString = (i+1) + " " + value[i].getName();
-			System.out.println("BUILT STRING = " + builtString);
 			JPanel playerPanel = new JPanel();
 			playerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); //left justify the text in the panel
 			playerPanel.setPreferredSize(new Dimension(200,50));
@@ -148,7 +148,6 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			Dimension prefSize = new Dimension(5, 10);
 			Dimension maxSize = new Dimension(Short.MAX_VALUE, 10);
 			center.add(new Box.Filler(minSize, prefSize, maxSize));	
-			System.out.println("SUCCESFULLY ADDED A PLAYER TO THE PANEL");
 		}
 	}
 

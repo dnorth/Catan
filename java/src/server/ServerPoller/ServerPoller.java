@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
+import client.facade.Facade;
 import client.models.ClientModel;
 import client.state.StateManager;
 
@@ -32,6 +33,13 @@ public class ServerPoller {
 		jsonToModelTranslator = new JSONToModel();
 		currNumPlayers = 0;
 		initialize();
+	}
+	
+	public void forcePollServer() { //I feel like we need a function like this, but I can't seem to get it to work.
+		Facade f = stateManager.getFacade();
+		JsonObject cookies = f.getUserAndGameCookie();
+		JsonObject cm = server.getGameModel(cookies);
+		this.updateCurrentModel(cm);
 	}
 	
 	private class PollEvent extends TimerTask {		

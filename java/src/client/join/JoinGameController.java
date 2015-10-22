@@ -10,6 +10,7 @@ import server.ServerPoller.ServerPoller;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
+import client.facade.Facade;
 import client.misc.*;
 import client.models.User;
 import client.state.IStateBase;
@@ -207,7 +208,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().closeModal();
 			}
 			getJoinGameView().closeModal();
+			
+
+			
 			joinAction.execute();
+			/*Facade f = stateManager.getFacade();
+			ServerPoller sp = f.getPoller();
+			sp.forcePollServer();*/
 			
 //			System.out.println("JOINING GAME THING");
 //			System.out.println("UPDATING ClientModel");

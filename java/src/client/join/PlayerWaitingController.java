@@ -80,7 +80,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			ClientModel newModel = (ClientModel)o;
 			GameInfo gi = new GameInfo();
 			gi.setPlayers(newModel.getPlayers());
-			PlayerInfo[] playerList= gi.getPlayers().toArray(new PlayerInfo[gi.getPlayers().size()]);
+			PlayerInfo[] playerList = gi.getPlayers().toArray(new PlayerInfo[gi.getPlayers().size()]);
 
 			getView().setPlayers(playerList);
 			
