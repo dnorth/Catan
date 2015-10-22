@@ -3,6 +3,7 @@ package client.communication;
 import java.util.*;
 
 import client.base.*;
+import client.models.communication.MessageLine;
 import client.state.StateManager;
 import shared.definitions.*;
 
@@ -27,16 +28,17 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	
 	private void initFromModel() {
-		
-		//<temp>
+		List<MessageLine> messages = Arrays.asList(stateManager.getClientModel().getLog().getLines());
 		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
-		entries.add(new LogEntry(CatanColor.BLACK, "No Messages"));
+		for(MessageLine m : messages)
+		{
+			entries.add(new LogEntry(stateManager.getFacade().getUser().getColor(),m.getMessage()));
+		}
 		
-		
+		if(entries.isEmpty())
+		{entries.add(new LogEntry(CatanColor.BLACK, "No Messages"));}
 		getView().setEntries(entries);
-	
-		//</temp>
 	}
 
 	@Override
