@@ -1,18 +1,12 @@
 package client.join;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import jsonTranslator.JSONToModel;
-import jsonTranslator.ModelToJSON;
-import server.ServerPoller.ServerPoller;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
-import client.facade.Facade;
 import client.misc.*;
-import client.models.User;
 import client.state.IStateBase;
 import client.state.StateManager;
 

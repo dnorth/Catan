@@ -40,8 +40,6 @@ public class Resources{
 	public int getOreCount() {
 		return ore;
 	}
-
-	
 	
 	@Override
 	public String toString() {

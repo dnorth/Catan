@@ -63,6 +63,10 @@ public class StateManager implements Observer {
 		this.serverPoller.setActive(false);
 	}
 	
+	public void setPollerGameID(int id) {
+		this.serverPoller.setGameID(id);
+	}
+	
 	public int getCurrentVersion() {
 		return this.getClientModel().getVersion();
 	}
