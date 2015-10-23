@@ -26,7 +26,6 @@ public class ServerPoller {
 	private Timer timer;
 	private int currNumPlayers;
 	private CatanColor currColor;
-	private GameInfo[] gamesList;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -167,16 +166,12 @@ public class ServerPoller {
 	public IProxy getServer() {
 		return server;
 	}
-
-	public void setGameList() {
-		this.gamesList = stateManager.getFacade().getGamesList();
-	}
 	
 	public int getGameID() {
 		return stateManager.getFacade().getGame().getId();
 	}
 	
-	public void setGamesList() {
-		stateManager.getFacade().getGamesList();
+	public GameInfo[] getGamesList() {
+		return stateManager.getFacade().getGamesList();
 	}
 }
