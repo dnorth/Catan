@@ -56,6 +56,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		String[] AIChoices = state.getFacade().listAI();
 		getView().setAIChoices(AIChoices);
 		getView().showModal();
+		this.stateManager.setPollerGameID(game.getId());
 		this.stateManager.activatePoller();
 	}
 

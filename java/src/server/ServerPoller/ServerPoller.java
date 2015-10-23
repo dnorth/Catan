@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
 import client.facade.Facade;
+import client.data.GameInfo;
 import client.models.ClientModel;
 import client.state.StateManager;
 
@@ -22,6 +23,7 @@ public class ServerPoller {
 	private Timer timer;
 	private boolean active = false;
 	private int currNumPlayers;
+	private int gameID;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -47,6 +49,17 @@ public class ServerPoller {
 			if (active) try {
 				System.out.println("POLLING");
 				updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+				if (gameID != -1) {
+					GameInfo game = new GameInfo();
+					GameInfo[] gamesList = stateManager.getFacade().getGamesList();
+					for(GameInfo g: gamesList) {
+						if (g.getId() == gameID) {
+							game = g;
+						}
+					}
+					
+					stateManager.getFacade().setGame(game);
+				}
 			} catch (NullPointerException e) {
 				System.out.println("SERVER POLLER NULL EXCEPTION:");
 				e.printStackTrace();
@@ -140,6 +153,10 @@ public class ServerPoller {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
 	}
 
 }
