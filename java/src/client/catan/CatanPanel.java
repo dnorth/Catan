@@ -39,7 +39,7 @@ public class CatanPanel extends JPanel
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel(stateManager);
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(),stateManager);
-		rightPanel = new RightPanel(midPanel.getMapController());
+		rightPanel = new RightPanel(midPanel.getMapController(), stateManager);
 		
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(leftPanel, BorderLayout.WEST);

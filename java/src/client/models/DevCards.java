@@ -59,6 +59,10 @@ public void setYearOfPlentyCount(int yearOfPlentyCount) {
 	this.yearOfPlenty = yearOfPlentyCount;
 }
 
+public int getTotalCount()
+{
+return monopoly + monument + roadBuilding + soldier +yearOfPlenty;	
+}
 
 
 @Override

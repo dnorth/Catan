@@ -5,6 +5,7 @@ import javax.swing.*;
 import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;
+import client.state.StateManager;
 import client.base.*;
 import client.map.*;
 import client.devcards.*;
@@ -21,10 +22,11 @@ public class RightPanel extends JPanel
 	private PointsController pointsController;
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
+	private StateManager stateManager;
 	
-	public RightPanel(final IMapController mapController)
+	public RightPanel(final IMapController mapController, StateManager stateManager)
 	{
-		
+		this.stateManager= stateManager; 
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		
 		// Initialize development card views and controller
@@ -60,7 +62,7 @@ public class RightPanel extends JPanel
 		// Initialize resource bar view and controller
 		//
 		resourceView = new ResourceBarView();
-		resourceController = new ResourceBarController(resourceView);
+		resourceController = new ResourceBarController(resourceView, stateManager);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,
 																  PieceType.ROAD));

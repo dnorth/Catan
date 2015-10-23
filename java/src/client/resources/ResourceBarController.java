@@ -3,6 +3,10 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.models.DevCards;
+import client.models.Player;
+import client.models.Resources;
+import client.state.StateManager;
 
 
 /**
@@ -11,11 +15,10 @@ import client.base.*;
 public class ResourceBarController extends Controller implements IResourceBarController {
 
 	private Map<ResourceBarElement, IAction> elementActions;
-	
-	public ResourceBarController(IResourceBarView view) {
-
+	StateManager stateManager;
+	public ResourceBarController(IResourceBarView view, StateManager sm) {
 		super(view);
-		
+		stateManager = sm;
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 	}
 
@@ -42,8 +45,21 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	public void setResources()
 		{
+		Player p = stateManager.getClientModel().getPlayers()[0];
+		Resources r = p.getResources();
+		DevCards d = p.getNewDevCards(); 
 		
+		getView().setElementAmount(ResourceBarElement.WOOD, r.getWoodCount());
+		getView().setElementAmount(ResourceBarElement.BRICK, r.getBrickCount());
+		getView().setElementAmount(ResourceBarElement.SHEEP, r.getSheepCount());
+		getView().setElementAmount(ResourceBarElement.WHEAT, r.getWheatCount());
+		getView().setElementAmount(ResourceBarElement.ORE, r.getOreCount());
 		
+		getView().setElementAmount(ResourceBarElement.ROAD, p.getRoads());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, p.getSettlements());
+		getView().setElementAmount(ResourceBarElement.CITY, p.getCitiesNum());
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, p.getSoldiers());
+		getView().setElementAmount(ResourceBarElement.PLAY_CARD, d.getTotalCount());
 		}
 	
 	
@@ -56,6 +72,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void buildRoad() {
+		
+		stateManager.getState().buildRoad();
 		executeElementAction(ResourceBarElement.ROAD);
 	}
 
@@ -65,6 +83,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void buildSettlement() {
+		stateManager.getState().buildSettlement();
 		executeElementAction(ResourceBarElement.SETTLEMENT);
 	}
 
@@ -73,6 +92,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void buildCity() {
+		stateManager.getState().buildCity();
 		executeElementAction(ResourceBarElement.CITY);
 	}
 	
@@ -80,6 +100,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void buyCard() {
+		stateManager.getState().buyCard();
 		executeElementAction(ResourceBarElement.BUY_CARD);
 	}
 
@@ -89,6 +110,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void playCard() {
+		stateManager.getState().playCard();
 		executeElementAction(ResourceBarElement.PLAY_CARD);
 	}
 	
@@ -103,7 +125,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	setResources();
 		
 	}
 
