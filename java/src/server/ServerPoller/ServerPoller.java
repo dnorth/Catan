@@ -51,10 +51,12 @@ public class ServerPoller {
 			try {
 				if(stateManager.getState() instanceof JoinGameState) {
 					System.out.println("PRINT THE GAMES LIST");
-					
+					setFacadeGameList();
 				} else if (stateManager.getState() instanceof PlayerWaitingState) {
 					System.out.println("PRINT INFO ABOUT ONE GAME");
 					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+				} else {
+					System.out.println("Poller in Idle State");
 				}
 				/*if (gameID != -1) {
 					GameInfo game = new GameInfo();
@@ -67,7 +69,6 @@ public class ServerPoller {
 					
 					stateManager.getFacade().setGame(game);
 				}*/
-				System.out.println("Poller in Idle State");
 			} catch (NullPointerException e) {
 				System.out.println("SERVER POLLER NULL EXCEPTION:");
 				e.printStackTrace();
@@ -168,7 +169,34 @@ public class ServerPoller {
 		return stateManager.getFacade().getGame().getId();
 	}
 	
-	public GameInfo[] getGamesList() {
-		return stateManager.getFacade().getGamesList();
+	public void setFacadeGameList() {
+		GameInfo[] newGames = stateManager.getFacade().getGamesList();
+		GameInfo[] oldGames = stateManager.getFacade().getGames();
+		boolean matches = gameInfoMatches(newGames, oldGames);
+		if(!matches) {
+			System.out.println("Updating Games List.");
+			stateManager.getFacade().setGames(newGames);
+			this.stateManager.getClientModel().runUpdates();
+		}
+	}
+	
+	public boolean gameInfoMatches(GameInfo[] newGames, GameInfo[] oldGames) {
+		int i=0;
+		boolean matches = true;
+		if(oldGames == null) {
+			matches = false;
+		} else if( newGames.length != oldGames.length) {
+			matches = false;
+		} else {
+			for(GameInfo g : newGames) {
+				if( !g.equals(oldGames[i])) {
+					System.out.println("Doesn't match!");
+					matches = false;
+					break;
+				}
+				i++;
+			}
+		}
+		return matches;
 	}
 }

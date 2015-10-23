@@ -210,10 +210,12 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("UPDATING MAP!!!");
-		System.out.println("ClientModel:\n");
+	//	System.out.println("UPDATING MAP!!!");
+	//	System.out.println("ClientModel:\n");
 	//	System.out.println(this.stateManager.getClientModel().toString());
-		this.initFromModel();
+		if( arg != null) { //I'm assuming arg is ClientModel
+			this.initFromModel();
+		}
 	}
 	
 }

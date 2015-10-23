@@ -32,6 +32,7 @@ public class Facade {
 	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
 	private GameInfo game; //This is set by the "startJoinGame()" and used by the "joinGame()"
+	private GameInfo[] games;
 	private ServerPoller poller;
 	
 	public Facade (ClientModel cli) {
@@ -765,6 +766,14 @@ public class Facade {
 
 	public void setGame(GameInfo game) {
 		this.game = game;
+	}
+
+	public GameInfo[] getGames() {
+		return games;
+	}
+
+	public void setGames(GameInfo[] gamesList) {
+		this.games = gamesList;
 	}
 
 	public ServerPoller getPoller() {

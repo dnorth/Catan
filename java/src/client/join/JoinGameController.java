@@ -43,6 +43,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
 		this.stateManager = stateManager;
+		this.stateManager.addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -105,6 +106,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
+		System.out.println("\n\n\n\n\n\nCAN I SEE THIS? \n\n\n\n");
 		IStateBase state = stateManager.getState();
 		games = state.getFacade().getGamesList();
 		localPlayer = state.getFacade().getLocalPlayer();
@@ -223,10 +225,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		IStateBase state = stateManager.getState();
 		if(getJoinGameView().isModalShowing()) {
-			games = state.getFacade().getGamesList();
+			games = state.getFacade().getGames();
 			getJoinGameView().setGames(games, localPlayer);
+			getJoinGameView().closeModal();
+			getJoinGameView().showModal();
 		}
-		if(getSelectColorView().isModalShowing()) {
+		/*if(getSelectColorView().isModalShowing()) {
 			GameInfo game = null;
 			for (GameInfo g : games)
 			{
@@ -241,7 +245,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 					getSelectColorView().setColorEnabled(p.getColor(), false);
 				}
 			}
+		}*/
+	}
+	
+	public String gamesToString() {
+		StringBuilder sb = new StringBuilder();
+		for(GameInfo g : games) {
+			sb.append(g.toString());
 		}
+		
+		return sb.toString();
 	}
 
 }
