@@ -194,7 +194,7 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		System.out.println("UPDATING MAP!!!");
 		System.out.println("ClientModel:\n");
-		System.out.println(this.stateManager.getClientModel().toString());
+	//	System.out.println(this.stateManager.getClientModel().toString());
 		this.initFromModel();
 	}
 	

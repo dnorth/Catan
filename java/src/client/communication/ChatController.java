@@ -38,7 +38,7 @@ public class ChatController extends Controller implements IChatController {
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		for(MessageLine m : messages)
 		{
-			entries.add(new LogEntry(stateManager.getFacade().getUser().getColor(),m.getMessage()));
+			entries.add(new LogEntry(stateManager.getFacade().getLocalPlayer().getColor(),m.getMessage()));
 		}
 		
 		if(entries.isEmpty())

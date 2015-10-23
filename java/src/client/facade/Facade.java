@@ -27,7 +27,7 @@ import client.models.TradeOffer;
 public class Facade {
 	private CanDoManager canDo;
 	private ClientModel client;
-	private PlayerInfo user;
+	private PlayerInfo localPlayer;
 	private ModelToJSON modelToJSON;
 	private JSONToModel jsonToModel;
 	private ClientCommunicator clientCommunicator;
@@ -40,16 +40,16 @@ public class Facade {
 		this.clientCommunicator = new ClientCommunicator();
 		this.jsonToModel = new JSONToModel();
 		this.modelToJSON = new ModelToJSON();
-		this.user = null;
+		this.localPlayer = null;
 	}
 	
 	public int getPlayerIndex() {
 		//TODO! Don't just attach this to the user's ID. This needs to be connected to the playerIndex for the game they joined.
-		return user.getPlayerIndex();
+		return localPlayer.getPlayerIndex();
 	}
 	
-	public PlayerInfo getUser() {
-		return user;
+	public PlayerInfo getLocalPlayer() {
+		return localPlayer;
 	}
 	
 	//CHAT CONTROLLER
@@ -96,14 +96,14 @@ public class Facade {
 	 * @param resource The resource to take from other players
 	 */
 	public void playMonopolyCard(ResourceType resource) {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
 	public void playMonumentCard() {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class Facade {
 	 * @param resource2 Second resource to gain
 	 */
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2), modelToJSON.createUserAndGameCookie(user.getUserCookie(), game.getId()));
+		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
 	}
 	
 	// DISCARD CONTROLLER
@@ -304,7 +304,7 @@ public class Facade {
 	 */
 	public void joinGame(CatanColor color) {
 		
-		JsonObject joinGameObject = this.modelToJSON.createJoinGameObject(this.game, color, this.user.getUserCookie());
+		JsonObject joinGameObject = this.modelToJSON.createJoinGameObject(this.game, color, this.localPlayer.getUserCookie());
 		JsonObject returned = clientCommunicator.joinGame(joinGameObject);
 		String responseBody = returned.get("Response-body").getAsString();
 		if(!responseBody.equals("Success")) {
@@ -330,7 +330,7 @@ public class Facade {
 	 */
 	public void addAI(String AIType) {
 		JsonObject object = new JsonObject();
-		object.addProperty("User-cookie", user.getUserCookie());
+		object.addProperty("User-cookie", localPlayer.getUserCookie());
 		object.addProperty("Game-cookie", game.getId());
 		object.addProperty("AIType", AIType);
 		System.out.println(object.toString());
@@ -394,7 +394,7 @@ public class Facade {
 		String userCookie = returnedJson.get("User-cookie").getAsString();
 		int playerID = returnedJson.get("Set-cookie").getAsJsonObject().get("playerID").getAsInt();
 		PlayerInfo newUser = new PlayerInfo(playerID, -1, username, null, userCookie);
-		this.user = newUser;
+		this.localPlayer = newUser;
 		return true;
 	}
 	
@@ -736,7 +736,7 @@ public class Facade {
 	
 	public JsonObject getUserAndGameCookie() {
 		try {
-			return this.modelToJSON.createUserAndGameCookie(this.user.getUserCookie(), this.game.getId());
+			return this.modelToJSON.createUserAndGameCookie(this.localPlayer.getUserCookie(), this.game.getId());
 		} catch (NullPointerException e) {
 			System.out.println("NULL IN FACADE");
 			return null;
@@ -775,8 +775,8 @@ public class Facade {
 		this.poller = poller;
 	}
 
-	public void setUser(PlayerInfo user) {
-		this.user = user;
+	public void setLocalPlayer(PlayerInfo newLocalPlayer) {
+		this.localPlayer = newLocalPlayer;
 	}
 
 	public void addObserver(Observer o) {

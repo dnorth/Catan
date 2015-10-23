@@ -35,7 +35,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 			
 			for(MessageLine m : messages)
 			{
-				entries.add(new LogEntry(stateManager.getFacade().getUser().getColor(),m.getMessage()));
+				entries.add(new LogEntry(stateManager.getFacade().getLocalPlayer().getColor(),m.getMessage()));
 			}
 		}
 		else {
