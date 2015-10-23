@@ -8,7 +8,6 @@ import server.proxy.IProxy;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.facade.Facade;
-import client.models.ClientModel;
 import client.state.JoinGameState;
 import client.state.PlayerWaitingState;
 import client.state.StateManager;
@@ -50,10 +49,10 @@ public class ServerPoller {
 		public void run() {
 			try {
 				if(stateManager.getState() instanceof JoinGameState) {
-					System.out.println("PRINT THE GAMES LIST");
+					System.out.println("Poller printing game list");
 					setFacadeGameList();
 				} else if (stateManager.getState() instanceof PlayerWaitingState) {
-					System.out.println("PRINT INFO ABOUT ONE GAME");
+					System.out.println("Poller printing one game");
 					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
 				} else {
 					System.out.println("Poller in Idle State");
@@ -190,7 +189,6 @@ public class ServerPoller {
 		} else {
 			for(GameInfo g : newGames) {
 				if( !g.equals(oldGames[i])) {
-					System.out.println("Doesn't match!");
 					matches = false;
 					break;
 				}

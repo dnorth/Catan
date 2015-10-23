@@ -106,7 +106,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		System.out.println("\n\n\n\n\n\nCAN I SEE THIS? \n\n\n\n");
 		IStateBase state = stateManager.getState();
 		games = state.getFacade().getGamesList();
 		localPlayer = state.getFacade().getLocalPlayer();
@@ -149,8 +148,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(gameCreated) {
 			getNewGameView().closeModal();
 			state.joinGame(CatanColor.RED);
-			games = state.getFacade().getGamesList();
-			getJoinGameView().setGames(games, localPlayer);
+			//games = state.getFacade().getGamesList();
+			//getJoinGameView().setGames(games, localPlayer);
 		}
 	}
 
@@ -227,7 +226,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(getJoinGameView().isModalShowing()) {
 			games = state.getFacade().getGames();
 			getJoinGameView().setGames(games, localPlayer);
-			getJoinGameView().closeModal();
 			getJoinGameView().showModal();
 		}
 		/*if(getSelectColorView().isModalShowing()) {
