@@ -201,12 +201,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			state.joinGame(color);
 			if(getSelectColorView().isModalShowing()) {
 				getSelectColorView().closeModal();
+				this.stateManager.setState(new PlayerWaitingState(this.stateManager.getFacade()));
 			}
 			getJoinGameView().closeModal();
 
 			
 			joinAction.execute();
-			this.stateManager.setState(new PlayerWaitingState(this.stateManager.getFacade()));
 			/*Facade f = stateManager.getFacade();
 			ServerPoller sp = f.getPoller();
 			sp.forcePollServer();*/

@@ -5,8 +5,10 @@ import java.util.TimerTask;
 
 import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
+import shared.definitions.CatanColor;
 import client.facade.Facade;
 import client.models.ClientModel;
+import client.state.PlayerWaitingState;
 import client.state.StateManager;
 
 import com.google.gson.JsonObject;
@@ -22,6 +24,7 @@ public class ServerPoller {
 	private Timer timer;
 	private boolean active = false;
 	private int currNumPlayers;
+	private CatanColor currColor;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -87,7 +90,14 @@ public class ServerPoller {
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
 		
-		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies));
+		CatanColor color = null;
+		try {
+			color = CatanColor.getCatanColor(this.stateManager.getClientModel().getPlayers()[0].getColor());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies), color);
 		System.out.println("NEW VERSION = " + isNewVersion);
 		if(isNewVersion) {
 			System.out.println("UPDATING CURRENT MODEL");
@@ -111,13 +121,17 @@ public class ServerPoller {
 	 * @param newestVersion new version number
 	 * @return true if new version different than currVersion
 	 */
-	private boolean newVersion(int newestVersion, int numPlayers){ // compare newest version with currVersion - if different, return new
+	private boolean newVersion(int newestVersion, int numPlayers, CatanColor color){ // compare newest version with currVersion - if different, return new
 		System.out.println("NEW NUMBER OF PLAYERS = " + numPlayers + " -- CURRENT NUMBER OF PLAYERS = " + currNumPlayers);
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			return true;
 		}
-		else if(numPlayers > currNumPlayers) {
+		else if (numPlayers > currNumPlayers) {
 			currNumPlayers = numPlayers;
+			return true;
+		}
+		else if (color != currColor) {
+			currColor = color;
 			return true;
 		}
 		else
