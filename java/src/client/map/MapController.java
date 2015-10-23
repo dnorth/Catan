@@ -7,6 +7,7 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
@@ -109,8 +110,7 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
-		return true;
+		return stateManager.getState().canPlaceRoadAtLocation(edgeLoc);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -175,19 +175,18 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
-		
 	}
 	
 	public void playSoldierCard() {	
-		
+		stateManager.getState().playSoldierCard();
 	}
 	
 	public void playRoadBuildingCard() {	
-		
+		stateManager.getState().playRoadBuildingCard();
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
-		
+		stateManager.getState().robPlayer(victim);
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		Player p = stateManager.getClientModel().getPlayers()[0];
 		Resources r = p.getResources();
 		DevCards d = p.getNewDevCards(); 
-		
+		System.out.println();
 		getView().setElementAmount(ResourceBarElement.WOOD, r.getWoodCount());
 		getView().setElementAmount(ResourceBarElement.BRICK, r.getBrickCount());
 		getView().setElementAmount(ResourceBarElement.SHEEP, r.getSheepCount());

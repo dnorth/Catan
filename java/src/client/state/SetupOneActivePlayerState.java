@@ -110,12 +110,6 @@ public class SetupOneActivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void playRoadBuildCard() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		// TODO Auto-generated method stub
 		

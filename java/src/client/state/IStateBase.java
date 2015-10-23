@@ -41,7 +41,7 @@ public interface IStateBase {
 	public abstract void sendMessage (String message);
 	public abstract void playMonopolyCard(ResourceType resource);
 	public abstract void playMonumentCard();
-	public abstract void playRoadBuildCard();
+	public abstract void playRoadBuildingCard();
 	public abstract void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
 	public abstract void increaseAmount(ResourceType resource);
 	public abstract void decreaseAmount(ResourceType resource);
@@ -64,7 +64,6 @@ public interface IStateBase {
 	public abstract void placeRobber(HexLocation hexLoc);
 	public abstract void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected);
 	public abstract void playSoldierCard();
-	public abstract void playRoadBuildingCard();
 	public abstract void robPlayer(RobPlayerInfo victim);
 	public abstract void startMaritimeTrade();
 	public abstract void makeMaritimeTrade();
