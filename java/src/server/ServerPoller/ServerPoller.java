@@ -106,13 +106,12 @@ public class ServerPoller {
 	 * @param cookies
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
-		System.out.println("CLIENT MODEL: " + cookies.toString());
+		//System.out.println("CLIENT MODEL: " + cookies.toString());
 		CatanColor color = null;
 		try {
 			color = jsonToModelTranslator.getMyColor(cookies, this.stateManager.getFacade().getPlayerIndex());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Couldn't find color.");
 		}
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies), color);
 		if(isNewVersion) {

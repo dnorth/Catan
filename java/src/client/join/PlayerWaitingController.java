@@ -84,14 +84,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				getView().setPlayers(playerList);
 				getView().showModal();
 				
-				/*
-				if(playerList.size() == 4) {
+				
+				if(playerList.length == 4) {
 					System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
 					getView().closeModal();
 					if(stateManager.getState() instanceof JoinGameState) {
 						stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
 					}
-				}*/
+				}
 			}
 		}
 	}

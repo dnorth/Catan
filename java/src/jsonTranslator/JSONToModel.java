@@ -219,11 +219,9 @@ public class JSONToModel {
 	
 	public CatanColor getMyColor(JsonObject cookies, int playerIndex) {
 		Player[] players = translatePlayers(cookies);
-		System.out.println("Gimme DA PLAYUH CULUH: " + players[playerIndex].getColor());
 		try {
 			return CatanColor.getCatanColor(players[playerIndex].getColor());
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
