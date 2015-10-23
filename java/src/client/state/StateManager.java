@@ -52,14 +52,6 @@ public class StateManager {
 		return this.facade.getClient();
 	}
 	
-	public void activatePoller() {
-		this.serverPoller.setActive(true);
-	}
-	
-	public void deactivatePoller() {
-		this.serverPoller.setActive(false);
-	}
-	
 //	public void setPollerGameID(int id) {
 //		this.serverPoller.setGameID(id);
 //	}

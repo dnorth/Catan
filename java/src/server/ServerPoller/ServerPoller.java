@@ -6,8 +6,10 @@ import java.util.TimerTask;
 import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
 import shared.definitions.CatanColor;
+import client.data.GameInfo;
 import client.facade.Facade;
 import client.models.ClientModel;
+import client.state.JoinGameState;
 import client.state.PlayerWaitingState;
 import client.state.StateManager;
 
@@ -22,9 +24,9 @@ public class ServerPoller {
 	private StateManager stateManager;
 	private JSONToModel jsonToModelTranslator;
 	private Timer timer;
-	private boolean active = false;
 	private int currNumPlayers;
 	private CatanColor currColor;
+	private GameInfo[] gamesList;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -47,14 +49,30 @@ public class ServerPoller {
 	
 	private class PollEvent extends TimerTask {		
 		public void run() {
-			if (active) try {
-				System.out.println("POLLING");
-				updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+			try {
+				if(stateManager.getState() instanceof JoinGameState) {
+					System.out.println("PRINT THE GAMES LIST");
+					
+				} else if (stateManager.getState() instanceof PlayerWaitingState) {
+					System.out.println("PRINT INFO ABOUT ONE GAME");
+					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+				}
+				/*if (gameID != -1) {
+					GameInfo game = new GameInfo();
+					
+					for(GameInfo g: gamesList) {
+						if (g.getId() == gameID) {
+							game = g;
+						}
+					}
+					
+					stateManager.getFacade().setGame(game);
+				}*/
+				System.out.println("Poller in Idle State");
 			} catch (NullPointerException e) {
 				System.out.println("SERVER POLLER NULL EXCEPTION:");
 				e.printStackTrace();
 			}
-			else System.out.println("NOT YET RUNNING POLLER");
 		}
 	}
 	
@@ -150,12 +168,15 @@ public class ServerPoller {
 		return server;
 	}
 
-	public boolean isActive() {
-		return active;
+	public void setGameList() {
+		this.gamesList = stateManager.getFacade().getGamesList();
 	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+	
+	public int getGameID() {
+		return stateManager.getFacade().getGame().getId();
 	}
-
+	
+	public void setGamesList() {
+		stateManager.getFacade().getGamesList();
+	}
 }
