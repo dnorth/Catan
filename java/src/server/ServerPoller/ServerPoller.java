@@ -106,18 +106,16 @@ public class ServerPoller {
 	 * @param cookies
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
-		
+		System.out.println("CLIENT MODEL: " + cookies.toString());
 		CatanColor color = null;
 		try {
-			color = CatanColor.getCatanColor(this.stateManager.getClientModel().getPlayers()[0].getColor());
+			color = jsonToModelTranslator.getMyColor(cookies, this.stateManager.getFacade().getPlayerIndex());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies), color);
-		System.out.println("NEW VERSION = " + isNewVersion);
 		if(isNewVersion) {
-			System.out.println("UPDATING CURRENT MODEL");
 //			System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
@@ -139,7 +137,6 @@ public class ServerPoller {
 	 * @return true if new version different than currVersion
 	 */
 	private boolean newVersion(int newestVersion, int numPlayers, CatanColor color){ // compare newest version with currVersion - if different, return new
-		System.out.println("NEW NUMBER OF PLAYERS = " + numPlayers + " -- CURRENT NUMBER OF PLAYERS = " + currNumPlayers);
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			return true;
 		}

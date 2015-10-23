@@ -46,6 +46,20 @@ public class MapController extends Controller implements IMapController {
 		this.robView = robView;
 	}
 	
+	private HexLocation[] getWaterLocations() {
+		return new HexLocation[] {
+				new HexLocation(0,-3), new HexLocation(0,3),
+				new HexLocation(1,-3), new HexLocation(-1,3),
+				new HexLocation(2,-3), new HexLocation(-2,3),
+				new HexLocation(3,-3), new HexLocation(-3,3),
+				new HexLocation(3,-2), new HexLocation(-3,2),
+				new HexLocation(3,-1), new HexLocation(-3,1),
+				new HexLocation(3,0), new HexLocation(-3,0),
+				new HexLocation(2,1), new HexLocation(-2,-1),
+				new HexLocation(1,2), new HexLocation(-1,-2)
+		};
+	}
+	
 	protected void initFromModel() {
 		ClientModel clientModel;
 		try {
@@ -59,6 +73,11 @@ public class MapController extends Controller implements IMapController {
 		for (Hex h : board.getHexes()) {
 			getView().addHex(h.getLocation().getSharedHexLocation(), h.getHexType());
 			if (h.getNumberToken() != 0) getView().addNumber(h.getLocation().getSharedHexLocation(), h.getNumberToken());
+		}
+		
+		// Place Water
+		for (HexLocation hl : this.getWaterLocations())  {
+			getView().addHex(hl, HexType.WATER);
 		}
 		
 		// Place Ports
