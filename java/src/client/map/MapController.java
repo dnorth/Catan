@@ -213,7 +213,7 @@ public class MapController extends Controller implements IMapController {
 	//	System.out.println("UPDATING MAP!!!");
 	//	System.out.println("ClientModel:\n");
 	//	System.out.println(this.stateManager.getClientModel().toString());
-		if( arg != null) { //I'm assuming arg is ClientModel
+		if(stateManager.getClientModel() != null) { //I'm assuming arg is ClientModel
 			this.initFromModel();
 		}
 	}
