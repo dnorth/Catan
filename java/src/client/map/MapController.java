@@ -210,10 +210,7 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-	//	System.out.println("UPDATING MAP!!!");
-	//	System.out.println("ClientModel:\n");
-	//	System.out.println(this.stateManager.getClientModel().toString());
-		if(stateManager.getClientModel() != null) { //I'm assuming arg is ClientModel
+		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
 		}
 	}

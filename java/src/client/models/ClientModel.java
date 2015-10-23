@@ -24,12 +24,15 @@ public class ClientModel extends Observable
 	private int winner;
 	private DevCards deck;
 	boolean hasChanged = false;
+	private boolean newCli;
 	
 	public ClientModel() {
 		super();
+		newCli = true;
 	}
 	
 	public void update(ClientModel model) {
+		newCli = false;
 		this.setBank(model.getBank());
 		this.setChat(model.getChat());
 		this.setLog(model.getLog());
@@ -142,5 +145,14 @@ public class ClientModel extends Observable
 	public boolean hasChanged() {
 		return hasChanged;
 	}
+
+	public boolean newCli() {
+		return newCli;
+	}
+
+	public void setNewCli(boolean newCli) {
+		this.newCli = newCli;
+	}
+	
 	
 }

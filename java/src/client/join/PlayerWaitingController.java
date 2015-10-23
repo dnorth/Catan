@@ -43,15 +43,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void start() {
-		System.out.println("PLAYER WAITING");
 		IStateBase state = stateManager.getState();
 		GameInfo game = stateManager.getFacade().getGame();
-		System.out.println(game.toString());
+		//System.out.println(game.toString());
 		PlayerInfo[] playerList= game.getPlayers().toArray(new PlayerInfo[game.getPlayers().size()]);
 		
-		for(PlayerInfo p : playerList) {
+		/*for(PlayerInfo p : playerList) {
 			System.out.println("Player Name: " + p.getName());
-		}
+		}*/
 		
 		getView().setPlayers(playerList);
 		String[] AIChoices = state.getFacade().listAI();
@@ -73,9 +72,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void update(Observable o, Object arg) {
 		
-		if(getView().isModalShowing()) {
-			System.out.println("CAN I START NOW AGAIN?");
-			
+		if(getView().isModalShowing()) {			
 			if (this.stateManager.getState() instanceof PlayerWaitingState) {
 				getView().closeModal();
 				GameInfo game = stateManager.getFacade().getGame();
@@ -84,12 +81,27 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				getView().setPlayers(playerList);
 				getView().showModal();
 				
+				//Set the local player so that he has the real player index
+				for(PlayerInfo p : playerList) {
+					if(p.getId() == stateManager.getFacade().getLocalPlayer().getId()) {
+						stateManager.getFacade().setLocalPlayer(p);
+						break;
+					}
+				}
 				
 				if(playerList.length == 4) {
 					System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
 					getView().closeModal();
-					if(stateManager.getState() instanceof JoinGameState) {
-						stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
+					if(stateManager.getState() instanceof PlayerWaitingState) {
+						System.out.println("Current Turn: " + stateManager.getClientModel().getTurnTracker().getCurrentTurn());
+						System.out.println("Current Player Index: " + stateManager.getFacade().getLocalPlayer().getPlayerIndex());
+						if( stateManager.getClientModel().getTurnTracker().getCurrentTurn() == stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
+							System.out.println("Active Player Setup -- CHANGE STATE");
+							//stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
+						} else {
+							System.out.println("Inactive Player Setup -- CHANGE STATE");
+							//stateManager.setState(new InactivePlayer(stateManager.getFacade()));
+						}
 					}
 				}
 			}

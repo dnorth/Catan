@@ -161,8 +161,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void startJoinGame(GameInfo game) {
-
-		System.out.println("\nIN STARTJOINGAME FUNCTION!");
 		IStateBase state = stateManager.getState();
 		int myPlayerId = state.getFacade().getLocalPlayer().getId();
 		List<PlayerInfo> players = game.getPlayers();
@@ -195,7 +193,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void joinGame(CatanColor color) {
-		System.out.println("\nINSIDE JOINGAME FUNCTION");
 		IStateBase state = stateManager.getState();
 		boolean canJoinGame = state.canJoinGame();
 		if(canJoinGame) {
