@@ -8,6 +8,7 @@ import client.base.*;
 import client.data.*;
 import client.misc.*;
 import client.state.IStateBase;
+import client.state.PlayerWaitingState;
 import client.state.StateManager;
 
 
@@ -202,10 +203,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().closeModal();
 			}
 			getJoinGameView().closeModal();
-			
 
 			
 			joinAction.execute();
+			this.stateManager.setState(new PlayerWaitingState(this.stateManager.getFacade()));
 			/*Facade f = stateManager.getFacade();
 			ServerPoller sp = f.getPoller();
 			sp.forcePollServer();*/

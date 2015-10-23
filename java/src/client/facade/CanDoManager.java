@@ -124,7 +124,7 @@ public class CanDoManager {
 	}
 	
 	public void updatePointersToNewModel(ClientModel newModel) {
-		this.clientModel = newModel;
+//		this.clientModel = newModel;
 		this.boardManager.updatePointersToNewModel(newModel);
 		this.playerManager.updatePointersToNewModel(newModel);
 		this.turnManager.updatePointersToNewModel(newModel);

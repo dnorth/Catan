@@ -129,14 +129,15 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		
 		//the center panel contains the individual player panels
 		center.removeAll();
-		
+		System.out.println("PLAYER COUNT: " + String.valueOf(value.length));
 		//build an individual player panel and add it to the center panel
 		for(int i = 0; i < value.length; i++){
+			System.out.println("Player Name: " + value[i].getName());
 			String builtString = (i+1) + " " + value[i].getName();
 			JPanel playerPanel = new JPanel();
 			playerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); //left justify the text in the panel
 			playerPanel.setPreferredSize(new Dimension(200,50));
-
+			System.out.println("Player Color: " + value[i].getColor());
 			playerPanel.setBackground(value[i].getColor().getJavaColor()); //set the background color of the player
 			JLabel playerLabel = new JLabel(builtString, SwingConstants.LEFT); //justify the text left
 			FontUtils.setFont(playerLabel, LABEL_TEXT_SIZE);

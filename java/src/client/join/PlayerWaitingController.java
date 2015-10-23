@@ -10,6 +10,7 @@ import client.data.PlayerInfo;
 import client.models.ClientModel;
 import client.state.IStateBase;
 import client.state.JoinGameState;
+import client.state.PlayerWaitingState;
 import client.state.SetupOneActivePlayerState;
 import client.state.StateManager;
 
@@ -56,7 +57,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		String[] AIChoices = state.getFacade().listAI();
 		getView().setAIChoices(AIChoices);
 		getView().showModal();
-		this.stateManager.setPollerGameID(game.getId());
+//		this.stateManager.setPollerGameID(game.getId());
 		this.stateManager.activatePoller();
 	}
 
@@ -77,22 +78,23 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		if(getView().isModalShowing()) {
 			System.out.println("CAN I START NOW AGAIN?");
 			
-			
-			ClientModel newModel = (ClientModel)o;
-			GameInfo gi = new GameInfo();
-			gi.setPlayers(newModel.getPlayers());
-			PlayerInfo[] playerList = gi.getPlayers().toArray(new PlayerInfo[gi.getPlayers().size()]);
-
-			getView().setPlayers(playerList);
-			
-			/*
-			if(playerList.size() == 4) {
-				System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
+			if (this.stateManager.getState() instanceof PlayerWaitingState) {
 				getView().closeModal();
-				if(stateManager.getState() instanceof JoinGameState) {
-					stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
-				}
-			}*/
+				GameInfo game = stateManager.getFacade().getGame();
+				PlayerInfo[] playerList= game.getPlayers().toArray(new PlayerInfo[game.getPlayers().size()]);
+				
+				getView().setPlayers(playerList);
+				getView().showModal();
+				
+				/*
+				if(playerList.size() == 4) {
+					System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
+					getView().closeModal();
+					if(stateManager.getState() instanceof JoinGameState) {
+						stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
+					}
+				}*/
+			}
 		}
 	}
 

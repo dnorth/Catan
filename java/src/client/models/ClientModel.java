@@ -41,6 +41,9 @@ public class ClientModel extends Observable
 		this.setWinner(model.getWinner());
 		this.setDeck(model.getDeck());
 		System.out.println("ClientModel.update()");
+	}
+	
+	public void runUpdates() {
 		this.setChanged();
 		this.notifyObservers();
 	}

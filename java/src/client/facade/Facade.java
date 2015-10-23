@@ -783,9 +783,9 @@ public class Facade {
 		this.client.addObserver(o);
 	}
 	
-	public void updatePointersToNewModel(ClientModel newModel) {
-		this.client = newModel;
-		this.game.setPlayers(newModel.getPlayers());
-		this.canDo.updatePointersToNewModel(newModel);
+	public void updatePointersToNewModel() {
+//		this.client = newModel;
+		this.game.setPlayers(this.client.getPlayers());
+		this.canDo.updatePointersToNewModel(this.client);
 	}
 }
