@@ -13,7 +13,9 @@ import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
+import client.state.IStateBase;
 import client.state.SetupOneActivePlayerState;
+import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
 
 
@@ -197,8 +199,24 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		IStateBase state = stateManager.getState();
+		if(state instanceof SetupOneActivePlayerState || state instanceof SetupTwoActivePlayerState) {
+			if(pieceType.equals(PieceType.ROAD) || pieceType.equals(PieceType.SETTLEMENT)) {
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
+			}
+			else {
+				try {
+					throw new Exception("CANT PLACE A " + pieceType.toString() + " RIGHT NOW!");
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("These aren't the exceptions you're looking for");
+					System.out.println(e.getMessage());
+				}
+			}
+		}
+		else {
+			getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
+		}
 	}
 	
 	public void cancelMove() {
@@ -220,6 +238,7 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			startMove(PieceType.ROAD, true, true);
+			startMove()
 		}		
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
