@@ -1,6 +1,6 @@
 package client.facade;
 
-import java.util.Observer;
+import java.util.ArrayList;
 
 import client.models.ClientModel;
 import client.models.TradeOffer;
@@ -121,6 +121,17 @@ public class CanDoManager {
 	
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		return boardManager.canPlaceRobber(hexLoc);
+	}
+	
+	public ArrayList<Integer> whoCanIRob(int playerIndex, HexLocation hexLoc) {
+		Integer[] owners = this.boardManager.getOwnersOnHex(hexLoc);
+		ArrayList<Integer> theseOwners = new ArrayList<Integer>();
+		for(Integer i : owners) {
+			if (i != -1 && i != playerIndex && this.playerManager.hasResources(i) && !theseOwners.contains(i)) {
+				theseOwners.add(i);
+			}
+		}
+		return theseOwners;
 	}
 	
 	public void updatePointersToNewModel(ClientModel newModel) {

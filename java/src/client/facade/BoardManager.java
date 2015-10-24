@@ -36,6 +36,25 @@ public class BoardManager {
 		return true;
 	}
 	
+	public Integer[] getOwnersOnHex(HexLocation hexLoc) {
+		int x = hexLoc.getX();
+		int y = hexLoc.getY();
+		Integer[] owners = new Integer[6];
+		EdgeLocation edge = new EdgeLocation(x, y, "NW");
+		owners[0] = board.getVertexOwner(edge);
+		edge.setDirection("NE");
+		owners[1] = board.getVertexOwner(edge);
+		edge.setDirection("E");
+		owners[2] = board.getVertexOwner(edge);
+		edge.setDirection("SE");
+		owners[3] = board.getVertexOwner(edge);
+		edge.setDirection("SW");
+		owners[4] = board.getVertexOwner(edge);
+		edge.setDirection("W");
+		owners[5] = board.getVertexOwner(edge);
+		return owners;
+	}
+	
 	public Integer[] getAdjacentVertexOwners(EdgeLocation edge) {
 		//get three adjacent vertices
 		EdgeLocation adj1 = null;
