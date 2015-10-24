@@ -140,4 +140,22 @@ public class CanDoManager {
 		this.playerManager.updatePointersToNewModel(newModel);
 		this.turnManager.updatePointersToNewModel(newModel);
 	}
+
+	public ClientModel getClientModel() {
+		return clientModel;
+	}
+
+	public PlayerManager getPlayerManager() {
+		return playerManager;
+	}
+
+	public TurnManager getTurnManager() {
+		return turnManager;
+	}
+
+	public BoardManager getBoardManager() {
+		return boardManager;
+	}
+	
+	
 }

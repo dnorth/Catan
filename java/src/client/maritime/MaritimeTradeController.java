@@ -1,9 +1,13 @@
 package client.maritime;
 
+import java.util.List;
 import java.util.Observable;
 
 import shared.definitions.*;
 import client.base.*;
+import client.models.Resources;
+import client.models.TradeOffer;
+import client.state.StateManager;
 
 
 /**
@@ -12,11 +16,12 @@ import client.base.*;
 public class MaritimeTradeController extends Controller implements IMaritimeTradeController {
 
 	private IMaritimeTradeOverlay tradeOverlay;
+	StateManager stateManager;
 	
-	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
+	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay, StateManager stateManager) {
 		
 		super(tradeView);
-
+		this.stateManager= stateManager;
 		setTradeOverlay(tradeOverlay);
 	}
 	
@@ -34,14 +39,16 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	}
 
 	@Override
-	public void startTrade() {
-		
+	public void startTrade() {	
 		getTradeOverlay().showModal();
+		getTradeOverlay().setTradeEnabled(false);
+		List<ResourceType> resourcesToTrade= stateManager.getFacade().startMaritimeTrade();
+		getTradeOverlay().showGetOptions((ResourceType[]) resourcesToTrade.toArray());
 	}
 
 	@Override
 	public void makeTrade() {
-
+		stateManager.getState().makeMaritimeTrade();
 		getTradeOverlay().closeModal();
 	}
 
@@ -53,7 +60,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void setGetResource(ResourceType resource) {
-
 	}
 
 	@Override

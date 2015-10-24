@@ -1,5 +1,6 @@
 package client.models.mapdata;
 
+import client.models.Resources;
 import shared.definitions.HexType;
 import shared.definitions.PortType;
 
@@ -85,5 +86,4 @@ public class Port {
 			}
 		}
 	}
-	
 }

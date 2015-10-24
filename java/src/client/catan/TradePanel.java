@@ -1,11 +1,13 @@
 package client.catan;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import client.domestic.*;
 import client.maritime.*;
 import client.misc.*;
+import client.state.StateManager;
 
 @SuppressWarnings("serial")
 public class TradePanel extends JPanel
@@ -21,7 +23,7 @@ public class TradePanel extends JPanel
 	private MaritimeTradeOverlay maritimeOverlay;
 	private MaritimeTradeController maritimeController;
 	
-	public TradePanel()
+	public TradePanel(StateManager stateManager)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -43,7 +45,7 @@ public class TradePanel extends JPanel
 		maritimeView = new MaritimeTradeView();
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
-														 maritimeOverlay);
+														 maritimeOverlay, stateManager);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		
