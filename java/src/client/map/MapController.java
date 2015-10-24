@@ -130,6 +130,7 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
+		System.out.println("CANPLACEROAD?!");
 		return stateManager.getState().canPlaceRoadAtLocation(edgeLoc);
 	}
 
@@ -147,7 +148,8 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		CatanColor color = null;
+		this.stateManager.getState().placeRoad(edgeLoc);
+		/*CatanColor color = null;
 		try {
 			color = CatanColor.getCatanColor(
 					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
@@ -155,11 +157,13 @@ public class MapController extends Controller implements IMapController {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		getView().placeRoad(edgeLoc, color);
+		getView().placeRoad(edgeLoc, color);*/
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		CatanColor color = null;
+		
+		this.stateManager.getState().placeSettlement(vertLoc);
+		/*CatanColor color = null;
 		try {
 			color = CatanColor.getCatanColor(
 					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
@@ -167,11 +171,13 @@ public class MapController extends Controller implements IMapController {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		getView().placeSettlement(vertLoc, color);
+		getView().placeSettlement(vertLoc, color);*/
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		CatanColor color = null;
+		
+		this.stateManager.getState().placeCity(vertLoc);
+		/*CatanColor color = null;
 		try {
 			color = CatanColor.getCatanColor(
 					this.stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()].getColor());
@@ -179,14 +185,15 @@ public class MapController extends Controller implements IMapController {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		getView().placeCity(vertLoc, color);
+		getView().placeCity(vertLoc, color);*/
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
 		
-		getView().placeRobber(hexLoc);
+		this.stateManager.getState().placeRobber(hexLoc);
+		//getView().placeRobber(hexLoc);
 		
-		getRobView().showModal();
+		//getRobView().showModal();
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
