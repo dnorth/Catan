@@ -45,24 +45,26 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (!this.stateManager.clientTurn()) {
-			if (!(this.stateManager.getState() instanceof InactivePlayerState)) {
-				this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
-			}
-		}
-		else {
-			if (this.stateManager.getClientModel().getTurnTracker().getStatus() == "FirstRound") {
-				if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
-					this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));
+		if(!stateManager.getClientModel().newCli()) {
+			if (!this.stateManager.clientTurn()) {
+				if (!(this.stateManager.getState() instanceof InactivePlayerState)) {
+					this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
 				}
 			}
-			else if (this.stateManager.getClientModel().getTurnTracker().getStatus() == "SecondRound") {
-				if (!(this.stateManager.getState() instanceof SetupTwoActivePlayerState)) {
-					this.stateManager.setState(new SetupTwoActivePlayerState(this.stateManager.getFacade()));
+			else {
+				if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("FirstRound")) {
+					if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
+						this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));
+					}
 				}
-			}
-			else if (!(this.stateManager.getState() instanceof ActivePlayerState)) {
-				this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
+				else if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("SecondRound")) {
+					if (!(this.stateManager.getState() instanceof SetupTwoActivePlayerState)) {
+						this.stateManager.setState(new SetupTwoActivePlayerState(this.stateManager.getFacade()));
+					}
+				}
+				else if (!(this.stateManager.getState() instanceof ActivePlayerState)) {
+					this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
+				}
 			}
 		}
 	}

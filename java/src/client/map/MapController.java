@@ -13,6 +13,7 @@ import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
+import client.state.SetupOneActivePlayerState;
 import client.state.StateManager;
 
 
@@ -210,6 +211,10 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
+			startMove(PieceType.ROAD, true, true);
+		}		
+		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
 		}
