@@ -4,6 +4,10 @@ import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.state.ActivePlayerState;
+import client.state.InactivePlayerState;
+import client.state.SetupOneActivePlayerState;
+import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
 
 
@@ -17,6 +21,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 		super(view);
 		this.stateManager=stateManager;
+		this.stateManager.getClientModel().addObserver(this);
 		initFromModel();
 	}
 	
@@ -40,8 +45,26 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if (!this.stateManager.clientTurn()) {
+			if (!(this.stateManager.getState() instanceof InactivePlayerState)) {
+				this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
+			}
+		}
+		else {
+			if (this.stateManager.getClientModel().getTurnTracker().getStatus() == "FirstRound") {
+				if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
+					this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));
+				}
+			}
+			else if (this.stateManager.getClientModel().getTurnTracker().getStatus() == "SecondRound") {
+				if (!(this.stateManager.getState() instanceof SetupTwoActivePlayerState)) {
+					this.stateManager.setState(new SetupTwoActivePlayerState(this.stateManager.getFacade()));
+				}
+			}
+			else if (!(this.stateManager.getState() instanceof ActivePlayerState)) {
+				this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
+			}
+		}
 	}
 
 }

@@ -49,4 +49,5 @@ public class TurnManager
 	public void updatePointersToNewModel(ClientModel newModel) {
 		this.turnTracker = newModel.getTurnTracker();
 	}
+	
 }

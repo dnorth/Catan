@@ -67,4 +67,8 @@ public class StateManager {
 	public void addObserver(Observer o) {
 		this.facade.addObserver(o);
 	}
+	
+	public boolean clientTurn() {
+		return (this.getClientModel().getTurnTracker().getCurrentTurn() == this.facade.getPlayerIndex());
+	}
 }
