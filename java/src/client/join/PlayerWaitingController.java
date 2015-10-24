@@ -77,13 +77,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				getView().closeModal();
 				GameInfo game = stateManager.getFacade().getGame();
 				PlayerInfo[] playerList= game.getPlayers().toArray(new PlayerInfo[game.getPlayers().size()]);
-				
+				String userCookie = stateManager.getFacade().getLocalPlayer().getUserCookie();
 				getView().setPlayers(playerList);
 				getView().showModal();
 				
 				//Set the local player so that he has the real player index
 				for(PlayerInfo p : playerList) {
 					if(p.getId() == stateManager.getFacade().getLocalPlayer().getId()) {
+						p.setUserCookie(userCookie);
 						stateManager.getFacade().setLocalPlayer(p);
 						break;
 					}
