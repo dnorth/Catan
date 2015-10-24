@@ -88,6 +88,8 @@ public class BoardManager {
 			adj1 = new EdgeLocation(x, y, "SW");
 			adj2 = new EdgeLocation(x, y, "NW");
 			adj3 = new EdgeLocation(x-1, y+1, "NW");
+		default:
+			System.out.println("OH NO! dir=" + dir);
 		}
 		Integer[] owners = {board.getVertexOwner(adj1), board.getVertexOwner(adj2), board.getVertexOwner(adj3)};
 		return owners;
@@ -250,7 +252,7 @@ public class BoardManager {
 		EdgeLocation[] vertices = this.getEdgeVertices(edge);
 		for (EdgeLocation vertex : vertices) {
 			if (board.getVertexOwner(vertex) != -1) return false;
-			Integer[] adjVertexOwners = this.getAdjacentVertexOwners(edge);
+			Integer[] adjVertexOwners = this.getAdjacentVertexOwners(vertex);
 			for (Integer i : adjVertexOwners) {
 				if (i != -1) return false;
 			}
