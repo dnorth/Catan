@@ -238,7 +238,6 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			startMove(PieceType.ROAD, true, true);
-			startMove()
 		}		
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
