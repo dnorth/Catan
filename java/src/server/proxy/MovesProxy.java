@@ -199,7 +199,7 @@ public class MovesProxy extends ServerProxy{
     public JsonObject buildRoad (JsonObject data){ //int playerIndex, EdgeLocation roadLocation, boolean free
     	JsonObject clientModelJSON = null;
     	try {
-    		clientModelJSON = doPost("/moves/buildRoad", null);
+    		clientModelJSON = doPost("/moves/buildRoad", data);
     	} catch (ClientException e) {
     		e.printStackTrace();
     	}

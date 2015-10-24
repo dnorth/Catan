@@ -1,11 +1,12 @@
 package client.facade;
 
+import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Random;
 import java.util.regex.Pattern;
+
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
-import com.google.gson.JsonObject;
 import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
@@ -21,6 +22,8 @@ import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.TradeOffer;
 
+import com.google.gson.JsonObject;
+
 /**
  * Facade class interfaces from GUI to Client Communicator
  */
@@ -34,6 +37,7 @@ public class Facade {
 	private GameInfo game; //This is set by the "startJoinGame()" and used by the "joinGame()"
 	private GameInfo[] games;
 	private ServerPoller poller;
+	private HexLocation newRobberLocation; //this has to be here to store where the player wants to place robber
 	
 	public Facade (ClientModel cli) {
 		this.client = cli;
@@ -42,6 +46,7 @@ public class Facade {
 		this.jsonToModel = new JSONToModel();
 		this.modelToJSON = new ModelToJSON();
 		this.localPlayer = null;
+		this.newRobberLocation = null;
 	}
 	
 	public int getPlayerIndex() {
@@ -493,6 +498,8 @@ public class Facade {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
 		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true);
 		JsonObject cookie = this.getUserAndGameCookie();
+		System.out.println("COMMAND: " + roadCommand);
+		System.out.println("COOKIE: " + cookie);
 		clientCommunicator.buildRoad(roadCommand, cookie);
 	}
 	
@@ -541,12 +548,15 @@ public class Facade {
 	 * @param hexLoc
 	 *            The robber location
 	 */
-	public void placeRobber(HexLocation hexLoc) {
+	public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
 		client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(hexLoc);
+		newRobberLocation = hexLoc;
 		//Need to get victim index
 		//JsonObject robCommand = modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victimIndex, hex);
-		JsonObject cookie = this.getUserAndGameCookie();
+		ArrayList<Integer> candidates = canDo.whoCanIRob(this.getPlayerIndex(), hex);
+		//JsonObject cookie = this.getUserAndGameCookie();
 		//clientCommunicator.robPlayer(robCommand, cookie);
+		return null;
 	}
 	
 	/**
