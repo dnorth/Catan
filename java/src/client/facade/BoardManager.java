@@ -106,6 +106,8 @@ public class BoardManager {
 			adj1 = new EdgeLocation(x, y, "SW");
 			adj2 = new EdgeLocation(x, y, "NW");
 			adj3 = new EdgeLocation(x-1, y+1, "N");
+		default:
+			System.out.println("OH NO! dir=" + dir);
 		}
 		Integer[] owners = {board.getEdgeOwner(adj1), board.getEdgeOwner(adj2), board.getEdgeOwner(adj3)};
 		return owners;

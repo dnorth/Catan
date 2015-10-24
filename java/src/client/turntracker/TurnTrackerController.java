@@ -5,7 +5,11 @@ import java.util.Observable;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.state.ActivePlayerState;
+import client.state.GameOverState;
 import client.state.InactivePlayerState;
+import client.state.JoinGameState;
+import client.state.LoginState;
+import client.state.PlayerWaitingState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
@@ -38,13 +42,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	private void initFromModel() {
-		//<temp>
 		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (this.stateManager.getState() instanceof GameOverState ||
+				this.stateManager.getState() instanceof JoinGameState ||
+				this.stateManager.getState() instanceof LoginState ||
+				this.stateManager.getState() instanceof PlayerWaitingState) return;
 		if(!stateManager.getClientModel().newCli()) {
 			if (!this.stateManager.clientTurn()) {
 				if (!(this.stateManager.getState() instanceof InactivePlayerState)) {

@@ -206,8 +206,7 @@ public class Board {
 	}
 
 	public int getVertexOwner(EdgeLocation edgeLocation) {
-		EdgeLocation[] alternateEdgeLocations = this
-				.getAlternateEdgeLocations(edgeLocation);
+		EdgeLocation[] alternateEdgeLocations = this.getAlternateEdgeLocations(edgeLocation);
 		EdgeLocation altLoc1 = alternateEdgeLocations[0];
 		EdgeLocation altLoc2 = alternateEdgeLocations[1];
 		if (this.settlements != null) {

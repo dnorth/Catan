@@ -739,7 +739,6 @@ public class Facade {
 		try {
 			return this.modelToJSON.createUserAndGameCookie(this.localPlayer.getUserCookie(), this.game.getId());
 		} catch (NullPointerException e) {
-			System.out.println("NULL IN FACADE");
 			return null;
 		}
 	}

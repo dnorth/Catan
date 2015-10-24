@@ -49,13 +49,9 @@ public class ServerPoller {
 		public void run() {
 			try {
 				if(stateManager.getState() instanceof JoinGameState) {
-					System.out.println("Poller printing game list");
 					setFacadeGameList();
 				} else if (stateManager.getState() instanceof PlayerWaitingState) {
-					System.out.println("Poller printing one game");
 					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
-				} else {
-					System.out.println("Poller in Idle State");
 				}
 				/*if (gameID != -1) {
 					GameInfo game = new GameInfo();
