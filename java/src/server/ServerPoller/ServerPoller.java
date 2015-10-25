@@ -26,6 +26,7 @@ public class ServerPoller {
 	private int currNumPlayers;
 	private CatanColor currColor;
 	private boolean forceUpdate;
+	private int currTurn;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -36,21 +37,19 @@ public class ServerPoller {
 		this.stateManager = stateManager;
 		jsonToModelTranslator = new JSONToModel();
 		currNumPlayers = 0;
+		currTurn = -1;
 		forceUpdate = false;
 		initialize();
 	}
 	
 	public void forcePollServer() { //I feel like we need a function like this, but I can't seem to get it to work.
-//		Facade f = stateManager.getFacade();
-//		JsonObject cookies = f.getUserAndGameCookie();
-//		JsonObject cm = server.getGameModel(cookies);
-//		this.updateCurrentModel(cm);
 		this.forceUpdate = true;
 	}
 	
 	private class PollEvent extends TimerTask {		
 		public void run() {
 			try {
+				System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}
@@ -98,11 +97,13 @@ public class ServerPoller {
 		} catch (Exception e) {
 			System.out.println("Couldn't find color.");
 		}
+		System.out.println("SERVER PROXY TURN: " + String.valueOf(JSONToModel.translateTurnTracker(cookies).getCurrentTurn()));
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies),
 				JSONToModel.translateNumberOfPlayers(cookies),
+				JSONToModel.translateTurnTracker(cookies).getCurrentTurn(),
 				color);
 		
-		if(forceUpdate || isNewVersion) {
+		if(isNewVersion) {
 			System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
@@ -124,7 +125,7 @@ public class ServerPoller {
 	 * @param newestVersion new version number
 	 * @return true if new version different than currVersion
 	 */
-	private boolean newVersion(int newestVersion, int numPlayers, CatanColor color){ // compare newest version with currVersion - if different, return new
+	private boolean newVersion(int newestVersion, int numPlayers, int turn, CatanColor color){ // compare newest version with currVersion - if different, return new
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			return true;
 		}
@@ -134,6 +135,10 @@ public class ServerPoller {
 		}
 		else if (color != currColor) {
 			currColor = color;
+			return true;
+		}
+		else if (turn != currTurn) {
+			currTurn = turn;
 			return true;
 		}
 		else

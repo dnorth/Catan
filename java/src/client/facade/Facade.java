@@ -443,10 +443,7 @@ public class Facade {
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		if (canDo.canBuySettlement(this.getPlayerIndex())) {
-			return canDo.canPlaceSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));
-		}
-		else return false;
+		return canDo.canPlaceSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));
 	}
 	
 	/**
@@ -735,7 +732,7 @@ public class Facade {
 	 * This is called when the local player ends their turn
 	 */
 	public void endTurn() {
-		
+		this.clientCommunicator.finishTurn(this.modelToJSON.getFinishTurnCommand(this.getPlayerIndex()), this.getFullCookie());
 	}
 	
 	public void setServerPoller(ServerPoller serv) {

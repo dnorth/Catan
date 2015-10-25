@@ -58,6 +58,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 			}
 			else {
+				System.out.println("IT'S APPARENTLY YOUR TURN!!!");
 				if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("FirstRound")) {
 					if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
 						this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));

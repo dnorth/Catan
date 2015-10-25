@@ -159,7 +159,6 @@ public class JSONToModel {
 				playerCounter++;
 			}
 		}
-		System.out.println("JSONTOMODEL NUMBER OF PLAYERS IN MODEL = " + playerCounter);
 		return playerCounter;
 	}
 	

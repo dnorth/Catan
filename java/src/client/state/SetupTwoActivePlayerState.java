@@ -328,8 +328,7 @@ public class SetupTwoActivePlayerState implements IStateBase {
 
 	@Override
 	public void endTurn() {
-		// TODO Auto-generated method stub
-		
+		facade.endTurn();
 	}
 	
 	@Override

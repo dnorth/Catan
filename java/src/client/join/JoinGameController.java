@@ -8,6 +8,7 @@ import client.base.*;
 import client.data.*;
 import client.misc.*;
 import client.state.IStateBase;
+import client.state.JoinGameState;
 import client.state.PlayerWaitingState;
 import client.state.StateManager;
 
@@ -218,29 +219,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
-		IStateBase state = stateManager.getState();
-		if(getJoinGameView().isModalShowing()) {
-			games = state.getFacade().getGames();
-			getJoinGameView().setGames(games, localPlayer);
-			getJoinGameView().showModal();
+		if (stateManager.getState() instanceof JoinGameState) {
+			IStateBase state = stateManager.getState();
+			if(getJoinGameView().isModalShowing()) {
+				games = state.getFacade().getGames();
+				getJoinGameView().setGames(games, localPlayer);
+				getJoinGameView().showModal();
+			}
 		}
-		/*if(getSelectColorView().isModalShowing()) {
-			GameInfo game = null;
-			for (GameInfo g : games)
-			{
-				if (g.getId() == stateManager.getFacade().getGame().getId())
-				{
-					game = g;
-					break;
-				}
-			}
-			if(game != null) {
-				for(PlayerInfo p : game.getPlayers()) {
-					getSelectColorView().setColorEnabled(p.getColor(), false);
-				}
-			}
-		}*/
 	}
 	
 	public String gamesToString() {

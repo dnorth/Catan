@@ -149,7 +149,54 @@ public class BoardManager {
 		return owners;
 	}
 	
-	public Integer[] getAdjacentEdgeOwners(EdgeLocation edge) {
+	public Integer[] getAdjacentEdgeOwnersToVertex(EdgeLocation vertex) {
+		String dir = vertex.getDirection();
+		EdgeLocation edge1, edge2, edge3;
+		int x = vertex.getXcoord();
+		int y = vertex.getYcoord();
+		switch(dir) {
+		case "NW":
+			edge1 = new EdgeLocation(x, y, "NW");
+			edge2 = new EdgeLocation(x, y, "N");
+			edge3 = new EdgeLocation(x, y-1, "SW");
+			break;
+		case "NE":
+			edge1 = new EdgeLocation(x, y, "N");
+			edge2 = new EdgeLocation(x, y, "NE");
+			edge3 = new EdgeLocation(x+1, y-1, "NW");
+			break;
+		case "E":
+			edge1 = new EdgeLocation(x, y, "NE");
+			edge2 = new EdgeLocation(x, y, "SE");
+			edge3 = new EdgeLocation(x+1, y, "N");
+			break;
+		case "SE":
+			edge1 = new EdgeLocation(x, y, "SE");
+			edge2 = new EdgeLocation(x, y, "S");
+			edge3 = new EdgeLocation(x, y+1, "NE");
+			break;
+		case "SW":
+			edge1 = new EdgeLocation(x, y, "S");
+			edge2 = new EdgeLocation(x, y, "W");
+			edge3 = new EdgeLocation(x-1, y+1, "SE");
+			break;
+		case "W":
+			edge1 = new EdgeLocation(x, y, "NW");
+			edge2 = new EdgeLocation(x, y, "SW");
+			edge3 = new EdgeLocation(x-1, y, "S");
+			break;
+		default:
+			System.out.println("SOMETHING WENT WRONG WITH BoardManager.getAdjacentEdgeOwnersToVertex()");
+			edge1 = null;
+			edge2 = null;
+			edge3 = null;
+			break;
+		}
+		Integer[] owners = {board.getEdgeOwner(edge1), board.getEdgeOwner(edge2), board.getEdgeOwner(edge3)};
+		return owners;
+	}
+	
+	public Integer[] getAdjacentEdgeOwnersToEdge(EdgeLocation edge) {
 		String dir = edge.getDirection();
 		EdgeLocation altEdge1 = board.getAltEdge(edge);
 		EdgeLocation altEdge2 = board.getAltEdge(edge);
@@ -227,18 +274,20 @@ public class BoardManager {
 		return owners;
 	}
 	
-	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation edge) {
+	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation vertex) {
 		//check if someone owns vertex
-		if(board.getVertexOwner(edge) != -1) {
+		if(board.getVertexOwner(vertex) != -1) {
 			return false;
 		}
 		//make sure neighboring vertices are empty
-		Integer[] adjVertexOwners = this.getAdjacentVertexOwners(edge);
+		Integer[] adjVertexOwners = this.getAdjacentVertexOwners(vertex);
 		for (Integer i : adjVertexOwners) {
-			if (i != -1) return false;
+			if (i != -1) {
+				return false;
+			}
 		}
 		//make sure player owns road next to vertex
-		Integer[] adjEdgeOwners = this.getAdjacentEdgeOwners(edge);
+		Integer[] adjEdgeOwners = this.getAdjacentEdgeOwnersToVertex(vertex);
 		for (Integer i : adjEdgeOwners) {
 			if (i == playerIndex) return true;
 		}
@@ -254,11 +303,9 @@ public class BoardManager {
 	 */
 	public boolean canPlaceRoadAtLocation(int playerIndex, EdgeLocation edge){
 		if (this.getEdgeOwner(edge) != -1) return false;
-		Integer[] surrOwners = this.getAdjacentEdgeOwners(edge);
-		if (surrOwners == null) {
-			return false;
-		}
-		if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
+		Integer[] surrOwners = this.getAdjacentEdgeOwnersToEdge(edge);
+		if (surrOwners == null) return false;
+		else if (Arrays.asList(surrOwners).contains(playerIndex)) return true;
 		else return false;
 	}
 	

@@ -14,9 +14,11 @@ import client.models.TradeOffer;
 public class SetupOneActivePlayerState implements IStateBase {
 	
 	Facade facade;
+	boolean roadPlaced;
 	
 	public SetupOneActivePlayerState(Facade facade) {
 		this.facade = facade;
+		this.roadPlaced = false;
 	}
 
 	@Override
@@ -328,13 +330,20 @@ public class SetupOneActivePlayerState implements IStateBase {
 
 	@Override
 	public void endTurn() {
-		// TODO Auto-generated method stub
-		
+		facade.endTurn();
 	}
 	
 	@Override
 	public Facade getFacade() {
 		return facade;
+	}
+
+	public boolean isRoadPlaced() {
+		return roadPlaced;
+	}
+
+	public void setRoadPlaced(boolean roadPlaced) {
+		this.roadPlaced = roadPlaced;
 	}
 
 }

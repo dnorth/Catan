@@ -14,6 +14,7 @@ import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
 import client.state.IStateBase;
+import client.state.InactivePlayerState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
@@ -168,6 +169,8 @@ public class MapController extends Controller implements IMapController {
 		IStateBase state = stateManager.getState();
 		if(state instanceof SetupOneActivePlayerState || state instanceof SetupTwoActivePlayerState) {
 			if(pieceType.equals(PieceType.ROAD) || pieceType.equals(PieceType.SETTLEMENT)) {
+				if (pieceType.equals(PieceType.ROAD)) System.out.println("PIECE TYPE ROAD");
+				else if (pieceType.equals(PieceType.SETTLEMENT)) System.out.println("PIECE TYPE SETTLEMENT");
 				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
 			}
 			else {
@@ -203,9 +206,29 @@ public class MapController extends Controller implements IMapController {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
-			startMove(PieceType.ROAD, true, true);
-			startMove(PieceType.ROAD, true, false);
-		}		
+			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
+				startMove(PieceType.ROAD, true, false);
+			}
+			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
+				startMove(PieceType.SETTLEMENT, true, false);
+			}
+			else {
+				stateManager.getState().endTurn();
+				stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+			}
+		}
+		else if(stateManager.getState() instanceof SetupTwoActivePlayerState) {
+			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
+				startMove(PieceType.ROAD, true, false);
+			}
+			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
+				startMove(PieceType.SETTLEMENT, true, false);
+			}
+			else {
+				stateManager.getState().endTurn();
+				stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+			}
+		}
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();

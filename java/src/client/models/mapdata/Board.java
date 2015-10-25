@@ -56,6 +56,22 @@ public class Board {
 		return null;
 	}
 	
+	public int numRoadsOwnedByPlayer(int playerIndex) {
+		int i = 0;
+		for (Road r : this.roads) {
+			if (r.getOwner() == playerIndex) i += 1;
+		}
+		return i;
+	}
+	
+	public int numSettlementsOwnedByPlayer(int playerIndex) {
+		int i = 0;
+		for (VertexObject s : this.settlements) {
+			if (s.getOwner() == playerIndex) i += 1;
+		}
+		return i;
+	}
+	
 	public Hex[] getHexes() {
 		return hexes;
 	}
