@@ -13,7 +13,7 @@ import client.models.TradeOffer;
 
 public class ActivePlayerState implements IStateBase {
 	
-	Facade facade;
+	private Facade facade;
 	
 	public ActivePlayerState(Facade facade) {
 		this.facade = facade;

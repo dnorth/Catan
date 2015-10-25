@@ -13,7 +13,7 @@ import client.models.TradeOffer;
 
 public class InactivePlayerState implements IStateBase {
 	
-	Facade facade;
+	private Facade facade;
 	
 	public InactivePlayerState(Facade facade) {
 		this.facade = facade;

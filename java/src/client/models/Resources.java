@@ -21,7 +21,79 @@ public class Resources{
 		this.ore = ore;
 	}
 	
-	public Resources(){}
+	public Resources(){
+		this.wood = 0;
+		this.brick = 0;
+		this.sheep = 0;
+		this.wheat = 0;
+		this.ore = 0;
+	}
+	
+	public void addOne(ResourceType type) {
+		switch(type) {
+		case BRICK:
+			this.brick++;
+			break;
+		case ORE:
+			this.ore++;
+			break;
+		case SHEEP:
+			this.sheep++;
+			break;
+		case WHEAT:
+			this.wheat++;
+			break;
+		case WOOD:
+			this.wood++;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void subtractOne(ResourceType type) {
+		switch(type) {
+		case BRICK:
+			this.brick--;
+			break;
+		case ORE:
+			this.ore--;
+			break;
+		case SHEEP:
+			this.sheep--;
+			break;
+		case WHEAT:
+			this.wheat--;
+			break;
+		case WOOD:
+			this.wood--;
+			break;
+		default:
+			break;	
+		}
+	}
+	
+	public void unsetResource(ResourceType type) {
+		switch(type) {
+		case BRICK:
+			this.brick = 0;
+			break;
+		case ORE:
+			this.ore = 0;
+			break;
+		case SHEEP:
+			this.sheep = 0;
+			break;
+		case WHEAT:
+			this.wheat = 0;
+			break;
+		case WOOD:
+			this.wood = 0;
+			break;
+		default:
+			break;	
+		}
+	}
 
 	public int getWoodCount() {
 		return wood;
@@ -48,32 +120,16 @@ public class Resources{
 		this.wood = wood;
 	}
 
-	public int getBrick() {
-		return brick;
-	}
-
 	public void setBrick(int brick) {
 		this.brick = brick;
-	}
-
-	public int getSheep() {
-		return sheep;
 	}
 
 	public void setSheep(int sheep) {
 		this.sheep = sheep;
 	}
 
-	public int getWheat() {
-		return wheat;
-	}
-
 	public void setWheat(int wheat) {
 		this.wheat = wheat;
-	}
-
-	public int getOre() {
-		return ore;
 	}
 
 	public void setOre(int ore) {

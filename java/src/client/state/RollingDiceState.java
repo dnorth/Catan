@@ -16,6 +16,10 @@ public class RollingDiceState implements IStateBase {
 
 	private Facade facade;
 	
+	public RollingDiceState(Facade facade) {
+		this.facade = facade;
+	}
+	
 	@Override
 	public Facade getFacade() {
 		return this.facade;

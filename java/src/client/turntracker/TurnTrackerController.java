@@ -4,16 +4,8 @@ import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import client.base.*;
-import client.state.ActivePlayerState;
-import client.state.GameOverState;
-import client.state.InactivePlayerState;
-import client.state.JoinGameState;
-import client.state.LoginState;
-import client.state.PlayerWaitingState;
-import client.state.RollingDiceState;
-import client.state.SetupOneActivePlayerState;
-import client.state.SetupTwoActivePlayerState;
-import client.state.StateManager;
+import client.state.*;
+import client.state.trading.*;
 
 
 /**
@@ -54,7 +46,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				this.stateManager.getState() instanceof PlayerWaitingState) return;
 		if(!stateManager.getClientModel().newCli()) {
 			if (!this.stateManager.clientTurn()) {
-				if (!(this.stateManager.getState() instanceof InactivePlayerState)) {
+				if (!(this.stateManager.getState() instanceof InactivePlayerState) &&
+						//!(this.stateManager.getState() instanceof RollingDiceState) &&
+						//!(this.stateManager.getState() instanceof OfferingTradeState) &&
+						//!(this.stateManager.getState() instanceof TradeOfferedWaitingState) &&
+						!(this.stateManager.getState() instanceof ReceivingTradeState)) {
 					this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
 				}
 			}
@@ -69,12 +65,17 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 						this.stateManager.setState(new SetupTwoActivePlayerState(this.stateManager.getFacade()));
 					}
 				}
+//<<<<<<< Updated upstream
 				else if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("Rolling")) {
 					if (!(this.stateManager.getState() instanceof RollingDiceState)) {
 						this.stateManager.setState(new RollingDiceState());
 					}
 				}
 				else if (!(this.stateManager.getState() instanceof ActivePlayerState)) {
+				/*else if (!(this.stateManager.getState() instanceof ActivePlayerState) &&
+							!(this.stateManager.getState() instanceof TradeOfferedWaitingState) &&
+							!(this.stateManager.getState() instanceof RollingDiceState)) {
+>>>>>>> Stashed changes*/
 					this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
 				}
 			}

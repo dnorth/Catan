@@ -4,6 +4,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import client.data.GameInfo;
 import client.models.Resources;
+import client.models.TradeOffer;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.HexLocation;
 
@@ -21,6 +22,33 @@ public class ModelToJSON {
 	 */
 	public JsonObject translateModel() {
 		return null;
+	}
+	
+	public JsonObject createAcceptTradeObject(TradeOffer tradeOffer, boolean willAccept) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "acceptTrade");
+		object.addProperty("playerIndex", tradeOffer.getReceiver());
+		object.addProperty("willAccept", willAccept);
+		return object;
+	}
+	
+	public JsonObject createOfferTradeObject(TradeOffer tradeOffer) {
+		JsonObject object = new JsonObject();
+		
+		  object.addProperty("type", "offerTrade");
+		  object.addProperty("playerIndex", tradeOffer.getSender());
+		  
+		  JsonObject offer = new JsonObject();
+		  offer.addProperty("brick", tradeOffer.getBrickCount());
+		  offer.addProperty("ore", tradeOffer.getOreCount());
+		  offer.addProperty("sheep", tradeOffer.getSheepCount());
+		  offer.addProperty("wheat", tradeOffer.getWheatCount());
+		  offer.addProperty("wood", tradeOffer.getWoodCount());
+		  
+		  object.add("offer", offer);
+		  object.addProperty("receiver", tradeOffer.getReceiver());
+			
+		return object;
 	}
 	
 	public JsonObject createRollNumberObject(int playerIndex, int rollNumber) {

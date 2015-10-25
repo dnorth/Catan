@@ -13,7 +13,11 @@ import client.models.TradeOffer;
 
 public class GameOverState implements IStateBase {
 
-	Facade facade;
+	private Facade facade;
+	
+	public GameOverState(Facade facade) {
+		this.facade = facade;
+	}
 	
 	@Override
 	public boolean canJoinGame() {

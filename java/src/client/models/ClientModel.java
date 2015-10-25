@@ -18,7 +18,7 @@ public class ClientModel extends Observable
 	private MessageList log;
 	private Board board;
 	private Player[] players;
-	private TradeOffer tradeOffer;
+	private TradeOffer tradeOffer; //I assumed that we are just using this for Domestic trade, not Maritime trade. If I'm wrong, verify that this doesn't explode.
 	private TurnTracker turnTracker;
 	private int version = -1;
 	private int winner;

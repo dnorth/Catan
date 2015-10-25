@@ -13,8 +13,8 @@ import client.models.TradeOffer;
 
 public class SetupOneActivePlayerState implements IStateBase {
 	
-	Facade facade;
-	boolean roadPlaced;
+	private Facade facade;
+	private boolean roadPlaced;
 	
 	public SetupOneActivePlayerState(Facade facade) {
 		this.facade = facade;

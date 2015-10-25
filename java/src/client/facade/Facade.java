@@ -1,7 +1,7 @@
 package client.facade;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observer;
 import java.util.Random;
@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
+
 import com.google.gson.JsonObject;
+
 import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
@@ -24,6 +26,7 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.Player;
+import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.mapdata.Board;
 import client.models.mapdata.Port;
@@ -53,6 +56,10 @@ public class Facade {
 		this.modelToJSON = new ModelToJSON();
 		this.localPlayer = null;
 		this.newRobberLocation = null;
+	}
+	
+	public void setTradeOffer(TradeOffer tradeOffer) { //THIS FUNCTION SHOULD ONLY EVER GET CALLED BY THE OFFERINGTRADESTATE
+		this.client.setTradeOffer(tradeOffer);
 	}
 	
 	public int getPlayerIndex() {
@@ -143,6 +150,7 @@ public class Facade {
 	 *            The resource that was increased
 	 */
 	public void increaseAmount(ResourceType resource) {
+		
 	}
 	
 	/**
@@ -153,6 +161,7 @@ public class Facade {
 	 *            The resource that was decreased
 	 */
 	public void decreaseAmount(ResourceType resource) {
+		
 	}
 	
 	/**
@@ -168,7 +177,12 @@ public class Facade {
 	 * button.
 	 */
 	public boolean canDomesticTrade() {
-		return false;
+		if(localPlayer.getPlayerIndex() == this.client.getTurnTracker().getCurrentTurn()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	
@@ -180,6 +194,7 @@ public class Facade {
 	 *            The resource whose amount is being decreased
 	 */
 	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {
+		this.client.getTradeOffer().subtractOne(resource);
 	}
 	
 	/**
@@ -190,6 +205,7 @@ public class Facade {
 	 *            The resource whose amount is being increased
 	 */
 	public void increaseDomesticTradeResourceAmount(ResourceType resource) {
+		this.client.getTradeOffer().addOne(resource);
 	}
 	
 	/**
@@ -197,6 +213,7 @@ public class Facade {
 	 * button.
 	 */
 	public void sendTradeOffer() {
+		clientCommunicator.offerTrade(this.modelToJSON.createOfferTradeObject(this.client.getTradeOffer()), this.getFullCookie());
 	}
 	
 	/**
@@ -208,6 +225,7 @@ public class Facade {
 	 *            "None" was selected
 	 */
 	public void setPlayerToTradeWith(int playerIndex) {
+		this.client.getTradeOffer().setSender(playerIndex);
 	}
 	
 	/**
@@ -218,6 +236,7 @@ public class Facade {
 	 *            The resource to be received
 	 */
 	public void setResourceToReceive(ResourceType resource) {
+		this.client.getTradeOffer().setResourceReceiver(resource, 1); //This "1" means that the resource will be received. A "-1" would indicate that it is being sent. "0" means neither
 	}
 	
 	/**
@@ -228,6 +247,7 @@ public class Facade {
 	 *            The resource to be sent
 	 */
 	public void setResourceToSend(ResourceType resource) {
+		this.client.getTradeOffer().setResourceReceiver(resource, -1); //This "-1" means that the resource will be sent. A "1" would indicate that it is being received. "0" means neither
 	}
 	
 	/**
@@ -238,6 +258,7 @@ public class Facade {
 	 *            The resource for which "none" was selected
 	 */
 	public void unsetResource(ResourceType resource) {
+		this.client.getTradeOffer().unsetResource(resource);
 	}
 	
 	/**
@@ -248,6 +269,7 @@ public class Facade {
 	 *            Whether or not the user accepted the trade
 	 */
 	public void acceptTrade(boolean willAccept) {
+		clientCommunicator.acceptTrade(this.modelToJSON.createAcceptTradeObject(this.client.getTradeOffer(), willAccept), this.getFullCookie());
 	}
 	
 	
@@ -576,8 +598,8 @@ public class Facade {
 	 *            true if the piece can be disconnected, false otherwise. Set to
 	 *            true only during initial setup.
 	 */
-	public void startMove(PieceType pieceType, boolean isFree,
-				   boolean allowDisconnected) {
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+		// TODO IT APPEARS THAT WE BYPASSED THIS METHOD AND JUST HARD-CODED STUFF. ARE WE OKAY WITH THAT??
 	}
 	
 	/**
@@ -679,7 +701,7 @@ public class Facade {
 	/**
 	 * Called by the view then the user requests to build a road
 	 */
-	public void buildRoad(/*data*/) {
+	public void buildRoad(/*data*/) {  //THIS APPEARS TO HAVE BEEN REPLACED BY THE PLACEROAD AND PLACEFREEROAD FUNCTIONS
 		/*jsonData = modelToJSON.placeroad(modelData)
 		serverjsonData = clientCommunicator.buildRoad(jsonData)
 		client.update(JSONToModel.updateModel(serverjsonData))
@@ -689,7 +711,7 @@ public class Facade {
 	/**
 	 * Called by the view then the user requests to build a settlement
 	 */
-	public void buildSettlement() {
+	public void buildSettlement() { //THIS APPEARS TO HAVE BEEN REPLACED BY PLACESETTLEMENT AND PLACEFREESETTLEMENT
 	}
 	
 	/**

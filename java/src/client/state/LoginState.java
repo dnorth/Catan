@@ -15,7 +15,7 @@ import client.models.User;
 
 public class LoginState implements IStateBase {
 
-	Facade facade;
+	private Facade facade;
 	
 	public LoginState(Facade facade) {
 		this.facade = facade;
