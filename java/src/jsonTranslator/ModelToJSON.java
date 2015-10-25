@@ -23,6 +23,14 @@ public class ModelToJSON {
 		return null;
 	}
 	
+	public JsonObject createRollNumberObject(int playerIndex, int rollNumber) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "rollNumber");
+		object.addProperty("playerIndex", playerIndex);
+		object.addProperty("number", rollNumber);
+		return object;
+	}
+	
 	public JsonObject createJoinGameObject(GameInfo game, CatanColor color, String userCookie) {
 		JsonObject object = new JsonObject();
 		object.addProperty("id", game.getId());

@@ -723,6 +723,7 @@ public class Facade {
 
 		int  die1 = rand.nextInt(6) + 1;
 		int  die2 = rand.nextInt(6) + 1;
+		clientCommunicator.rollNumber(this.modelToJSON.createRollNumberObject(this.getPlayerIndex(), die1+die2), this.getFullCookie());
 		return die1+die2;
 	}
 	
