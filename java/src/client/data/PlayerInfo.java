@@ -1,5 +1,6 @@
 package client.data;
 
+import client.models.Player;
 import shared.definitions.*;
 
 /**
@@ -29,6 +30,16 @@ public class PlayerInfo
 		setPlayerIndex(-1);
 		setName("");
 		setColor(CatanColor.WHITE);
+		this.userCookie = null;
+	}
+	
+	public PlayerInfo(Player p) {
+		this.id = p.getPlayerIndex();
+		this.playerIndex = p.getPlayerIndex();
+		this.name = p.getName();
+		try {
+			this.color = CatanColor.getCatanColor(p.getColor());
+		} catch (Exception e) {e.printStackTrace();}
 		this.userCookie = null;
 	}
 	

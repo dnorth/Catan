@@ -4,7 +4,10 @@ import java.util.Observable;
 
 import shared.definitions.*;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.misc.*;
+import client.models.Player;
+import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
 import client.state.StateManager;
@@ -75,6 +78,19 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void startTrade() {
 
 		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
+		this.getTradeOverlay().setCancelEnabled(true);
+		this.getTradeOverlay().setPlayerSelectionEnabled(true);
+		this.getTradeOverlay().setTradeEnabled(false);
+		this.getTradeOverlay().setStateMessage("Select the resources you want to trade");
+		Player[] players = this.stateManager.getClientModel().getPlayers();
+		PlayerInfo[] tradePlayers = new PlayerInfo[3];
+		int tradePlayersIndex = 0;
+		for(int i = 0; i < 4; i++) {
+			if(players[i].getPlayerIndex() != this.stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
+				tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
+			}
+		}
+		this.getTradeOverlay().setPlayers(null);
 		getTradeOverlay().showModal();
 	}
 
@@ -139,9 +155,20 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if(this.stateManager.getState() instanceof ActivePlayerState) {
+			System.out.println("DOMESTIC TRADE BUTTON ENABLED");
+			this.getTradeView().enableDomesticTrade(true);
+		}
+		else {
+			this.getTradeView().enableDomesticTrade(false);
+		}
 		if(this.stateManager.getState() instanceof TradeOfferedWaitingState) {
+			
 			if(this.stateManager.getClientModel().getTradeOffer() == null) {
 				this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade())); //This may be completely unnecessary and maybe we should set them to ActivePlayerState here??
+			}
+			else {
+				
 			}
 		}
 	}

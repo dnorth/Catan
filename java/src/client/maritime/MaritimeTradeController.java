@@ -7,6 +7,7 @@ import shared.definitions.*;
 import client.base.*;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.state.ActivePlayerState;
 import client.state.StateManager;
 
 
@@ -21,8 +22,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay, StateManager stateManager) {
 		
 		super(tradeView);
-		this.stateManager= stateManager;
 		setTradeOverlay(tradeOverlay);
+		this.stateManager= stateManager;
+		this.stateManager.addObserver(this);
 	}
 	
 	public IMaritimeTradeView getTradeView() {
@@ -79,8 +81,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(this.stateManager.getState() instanceof ActivePlayerState) {
+			this.getTradeView().enableMaritimeTrade(true);
+		}
+		else {
+			this.getTradeView().enableMaritimeTrade(false);
+		}
 	}
 
 }

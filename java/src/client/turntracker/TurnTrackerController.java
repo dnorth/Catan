@@ -123,6 +123,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					System.out.println("MAKE ME THE ACTIVE PLAYER PLEEEEEASE!");
 					this.getView().updateGameState("Finish Turn", true);
 					this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
+					//this.stateManager.getClientModel().runUpdates();
 				}
 			}
 		}
