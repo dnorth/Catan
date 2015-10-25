@@ -61,7 +61,7 @@ public interface IStateBase {
 	public abstract void placeRoad(EdgeLocation edgeLoc);
 	public abstract void placeSettlement(VertexLocation vertLoc);
 	public abstract void placeCity(VertexLocation vertLoc);
-	public abstract void placeRobber(HexLocation hexLoc);
+	public abstract RobPlayerInfo[] placeRobber(HexLocation hexLoc);
 	public abstract void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected);
 	public abstract void playSoldierCard();
 	public abstract void robPlayer(RobPlayerInfo victim);

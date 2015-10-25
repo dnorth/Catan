@@ -30,6 +30,11 @@ public class PlayerManager {
 		return p.hasBrick() && p.hasWood();
 	}
 	
+	public int numResources(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.numResources();
+	}
+	
 	/**
 	 * Determines if a player has a resource to trade and if it is their turn.
 	 * @param playerIndex Number of player to determine ability to take action

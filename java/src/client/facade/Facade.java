@@ -96,6 +96,35 @@ public class Facade {
 		return localPlayer;
 	}
 	
+	/**
+	 * Used to get playerinfo for robbing players
+	 * @param players list of player indices
+	 * @return list of player info who have corresponding indices
+	 */
+	private List<RobPlayerInfo> getPlayersInList(List<Integer> players) {
+		List<RobPlayerInfo> playerList = new ArrayList<RobPlayerInfo>();
+		List<PlayerInfo> allPlayers = game.getPlayers();
+		for(Integer i : players) {
+			for (PlayerInfo p : allPlayers) {
+				if (p.getPlayerIndex() == i) {
+					playerList.add(convertPlayerToRobInfo(p));
+				}
+			}
+		}
+		return playerList;
+	}
+	
+	private RobPlayerInfo convertPlayerToRobInfo(PlayerInfo player) {
+		RobPlayerInfo rob = new RobPlayerInfo();
+		rob.setColor(player.getColor());
+		rob.setId(player.getId());
+		rob.setName(player.getName());
+		rob.setNumCards(this.canDo.numResources(player.getPlayerIndex()));
+		rob.setPlayerIndex(player.getPlayerIndex());
+		rob.setUserCookie(player.getUserCookie());
+		return rob;
+	}
+	
 	//CHAT CONTROLLER
 	
 	/**
@@ -592,6 +621,8 @@ public class Facade {
 		clientCommunicator.buildCity(cityCommand, cookie);
 	}
 	
+	
+	
 	/**
 	 * This method is called when the user clicks the mouse to place the robber.
 	 * 
@@ -600,13 +631,17 @@ public class Facade {
 	 */
 	public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
 		client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(hexLoc);
+		//temporarily sets new robber location until command is sent in robPlayer
 		newRobberLocation = hexLoc;
-		//Need to get victim index
-		//JsonObject robCommand = modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victimIndex, hex);
 		ArrayList<Integer> candidates = canDo.whoCanIRob(this.getPlayerIndex(), hex);
-		//JsonObject cookie = this.getUserAndGameCookie();
-		//clientCommunicator.robPlayer(robCommand, cookie);
-		return null;
+		
+		List<RobPlayerInfo> candidateVictimList = this.getPlayersInList(candidates);
+		
+		RobPlayerInfo[] candidateVictims = new RobPlayerInfo[candidateVictimList.size()];
+		for (int i = 0; i < candidateVictimList.size(); i++) {
+			candidateVictims[i] = candidateVictimList.get(i);
+		}
+		return candidateVictims;
 	}
 	
 	/**

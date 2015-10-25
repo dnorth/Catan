@@ -227,9 +227,9 @@ public class SetupOneActivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void placeRobber(HexLocation hexLoc) {
+	public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override

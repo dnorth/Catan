@@ -1,9 +1,5 @@
 package client.models;
 
-import java.util.List;
-
-import shared.locations.EdgeDirection;
-import client.models.mapdata.Hex;
 import client.models.mapdata.PortTrade;
 
 
@@ -147,6 +143,10 @@ public class Player
 
 	public void setPortTrade(PortTrade portTrade) {
 		this.portTrade = portTrade;
+	}
+	
+	public int numResources() {
+		return this.resources.getTotalCount();
 	}
 
 	

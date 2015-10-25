@@ -161,7 +161,10 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		this.stateManager.getState().placeRobber(hexLoc);
+		RobPlayerInfo[] candidateVictims = this.stateManager.getState().placeRobber(hexLoc);
+		if (candidateVictims != null) {
+			this.getRobView().setPlayers(candidateVictims);
+		}
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	

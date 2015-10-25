@@ -46,6 +46,10 @@ public class CanDoManager {
 		return this.boardManager.canPlaceInitialRoad(playerIndex, edge);
 	}
 	
+	public int numResources(int playerIndex) {
+		return this.playerManager.numResources(playerIndex);
+	}
+	
 	/**
 	 * Determines if player has any resources, in order to trade at all
 	 * @param playerIndex Number of player to determine ability to take action
