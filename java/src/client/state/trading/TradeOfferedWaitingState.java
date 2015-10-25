@@ -172,7 +172,9 @@ public class TradeOfferedWaitingState implements IStateBase {
 	public void placeCity(VertexLocation vertLoc) {}
 
 	@Override
-	public void placeRobber(HexLocation hexLoc) {}
+	public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
+		return null;
+	}
 
 	@Override
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {}
