@@ -285,7 +285,7 @@ public class Facade {
 		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
-		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, getFullCookie());
+		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, null);
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
 			game = jsonToModel.translateGameInfo(returnedJson);
