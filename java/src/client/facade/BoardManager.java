@@ -98,7 +98,7 @@ public class BoardManager {
 			adj3 = new EdgeLocation(x-1, y+1, "NW");
 			break;
 		default:
-			System.out.println("OH NO! dir=" + dir);
+			//System.out.println("OH NO! dir=" + dir);
 		}
 		Integer[] owners = {board.getVertexOwner(adj1), board.getVertexOwner(adj2), board.getVertexOwner(adj3)};
 		return owners;
@@ -143,7 +143,7 @@ public class BoardManager {
 			adj3 = new EdgeLocation(x-1, y+1, "N");
 			break;
 		default:
-			System.out.println("OH NO! dir=" + dir);
+			//System.out.println("OH NO! dir=" + dir);
 		}
 		Integer[] owners = {board.getEdgeOwner(adj1), board.getEdgeOwner(adj2), board.getEdgeOwner(adj3)};
 		return owners;
@@ -186,7 +186,7 @@ public class BoardManager {
 			edge3 = new EdgeLocation(x-1, y, "S");
 			break;
 		default:
-			System.out.println("SOMETHING WENT WRONG WITH BoardManager.getAdjacentEdgeOwnersToVertex()");
+			//System.out.println("SOMETHING WENT WRONG WITH BoardManager.getAdjacentEdgeOwnersToVertex()");
 			edge1 = null;
 			edge2 = null;
 			edge3 = null;

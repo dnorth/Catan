@@ -7,7 +7,6 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.models.ClientModel;
-import client.models.Player;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
@@ -169,7 +168,7 @@ public class MapController extends Controller implements IMapController {
 		IStateBase state = stateManager.getState();
 		if(state instanceof SetupOneActivePlayerState || state instanceof SetupTwoActivePlayerState) {
 			if(pieceType.equals(PieceType.ROAD) || pieceType.equals(PieceType.SETTLEMENT)) {
-				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
 			}
 			else {
 				try {
@@ -204,6 +203,8 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//System.out.println("MAP-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
+
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
 				startMove(PieceType.ROAD, true, true);
@@ -238,7 +239,7 @@ public class MapController extends Controller implements IMapController {
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
 		}
-	}
-	
+		//System.out.println("MAP-CONTROLLER EXIT-STATE: \t\t\t" + stateManager.getState().getClass().getSimpleName());
+	}	
 }
 

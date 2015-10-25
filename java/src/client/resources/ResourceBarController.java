@@ -19,6 +19,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public ResourceBarController(IResourceBarView view, StateManager sm) {
 		super(view);
 		stateManager = sm;
+		this.stateManager.addObserver(this);
 		elementActions = new HashMap<ResourceBarElement, IAction>();
 	}
 
@@ -45,7 +46,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	public void setResources()
 		{
-		Player p = stateManager.getClientModel().getPlayers()[0];
+		Player p = stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()];
 		Resources r = p.getResources();
 		DevCards d = p.getNewDevCards(); 
 		System.out.println();
@@ -125,7 +126,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-	setResources();
+		this.setResources();
 		
 	}
 

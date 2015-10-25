@@ -45,7 +45,7 @@ public class UserProxy extends ServerProxy{
 			//e.printStackTrace();
 		}
         
-        System.out.println(returnObject);
+        //System.out.println(returnObject);
        	
        	return returnObject;
     }

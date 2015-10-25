@@ -50,7 +50,7 @@ public class StateManager {
 	}
 	
 	public ClientModel getClientModel() {
-		return this.facade.getClient();
+		return this.facade.getModel();
 	}
 	
 	public int getCurrentVersion() {

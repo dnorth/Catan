@@ -141,8 +141,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean useRandomHexes   = getNewGameView().getRandomlyPlaceHexes();
 		boolean useRandomNumbers = getNewGameView().getRandomlyPlaceNumbers();
 		boolean useRandomPorts   = getNewGameView().getUseRandomPorts();
-		System.out.println("Trying to create new game with:   Name: " + title + ";   Random Tiles: " + useRandomHexes +
-				 ";   Random Numbers: " + useRandomNumbers + ";   Random Ports: " + useRandomPorts);
+		/*System.out.println("Trying to create new game with:   Name: " + title + ";   Random Tiles: " + useRandomHexes +
+				 ";   Random Numbers: " + useRandomNumbers + ";   Random Ports: " + useRandomPorts);*/
 		boolean gameCreated = state.createNewGame(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		//stateManager.getState().		create new game using data.
 		//System.out.println("Game Created: " + gameCreated);
@@ -219,6 +219,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//System.out.println("JOIN-GAME-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if (stateManager.getState() instanceof JoinGameState) {
 			IStateBase state = stateManager.getState();
 			if(getJoinGameView().isModalShowing()) {
@@ -227,6 +228,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getJoinGameView().showModal();
 			}
 		}
+		//System.out.println("JOIN-GAME-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 	}
 	
 	public String gamesToString() {

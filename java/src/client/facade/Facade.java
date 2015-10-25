@@ -29,6 +29,7 @@ import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.mapdata.Board;
+import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
 
 import com.google.gson.JsonObject;
@@ -47,7 +48,9 @@ public class Facade {
 	private GameInfo[] games;
 	private ServerPoller poller;
 	private HexLocation newRobberLocation; //this has to be here to store where the player wants to place robber
-	
+	private int playerWithLongestRoad;
+	private int playerWithLargestArmy;
+
 	public Facade (ClientModel cli) {
 		this.client = cli;
 		this.canDo = new CanDoManager(client);
@@ -56,9 +59,31 @@ public class Facade {
 		this.modelToJSON = new ModelToJSON();
 		this.localPlayer = null;
 		this.newRobberLocation = null;
+		playerWithLongestRoad = -1;
+		playerWithLargestArmy = -1;
 	}
 	
-	public void setTradeOffer(TradeOffer tradeOffer) { //THIS FUNCTION SHOULD ONLY EVER GET CALLED BY THE OFFERINGTRADESTATE
+	//FREEEEEEEAK I THINK THE SERVER DOES THIS ALL FOR US!!!! CRAP BUCKETS!! OKAY.....DONT DELETE THIS CODE. WE CAN USE IT WHEN WE WRITE THE SERVER SIDE.....
+/*	public void distributeResourcesByRollNumber(int rollNumber) {
+		ArrayList<Hex> hexes = this.client.getBoard().getHexesFromNumber(rollNumber);
+		for(Hex h : hexes) {
+			ResourceType resourceType = ResourceType.getResourceType(h.getResource());
+			Integer[] owners = this.canDo.getBoardManager().getOwnersOnHex(h.getLocation());
+			for(int owner : owners) {
+				if(owner != -1) {
+					clientCommunicator. ///////THIS IS WHERE I REALIZED HOW STUPID I AM :)
+				}
+			}
+		}
+		
+	}
+	*/
+	
+	public void cancelTradeOffer() {
+		this.client.setTradeOffer(null);
+	}
+	
+	public void setTradeOffer(TradeOffer tradeOffer) { //THIS FUNCTION SHOULD ONLY EVER GET CALLED BY THE OFFERINGTRADESTATE STUFF
 		this.client.setTradeOffer(tradeOffer);
 	}
 	
@@ -303,7 +328,7 @@ public class Facade {
 	 */
 	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
 		
-		System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
+		//System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
 		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
@@ -311,7 +336,7 @@ public class Facade {
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
 			game = jsonToModel.translateGameInfo(returnedJson);
-			System.out.println("GAME: " + game);
+			//System.out.println("GAME: " + game);
 			return true;
 		}		
 		return false;
@@ -341,9 +366,9 @@ public class Facade {
 		JsonObject returned = clientCommunicator.joinGame(joinGameObject, getFullCookie());
 		String responseBody = returned.get("Response-body").getAsString();
 		if(!responseBody.equals("Success")) {
-			System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
+			//System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
 		}
-		System.out.println("JOIN GAME OBJECT: " + returned);
+		//System.out.println("JOIN GAME OBJECT: " + returned);
 		
 	}
 	
@@ -366,7 +391,7 @@ public class Facade {
 		object.addProperty("User-cookie", localPlayer.getUserCookie());
 		object.addProperty("Game-cookie", game.getId());
 		object.addProperty("AIType", AIType);
-		System.out.println(object.toString());
+		//System.out.println(object.toString());
 		clientCommunicator.addAI(object, getFullCookie());
 	}
 	
@@ -522,8 +547,8 @@ public class Facade {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
 		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true);
 		JsonObject cookie = this.getUserAndGameCookie();
-		System.out.println("COMMAND: " + roadCommand);
-		System.out.println("COOKIE: " + cookie);
+		//System.out.println("COMMAND: " + roadCommand);
+		//System.out.println("COOKIE: " + cookie);
 		clientCommunicator.buildRoad(roadCommand, cookie);
 //		this.poller.setForceUpdate(true);
 	}
@@ -761,12 +786,8 @@ public class Facade {
 	public void setServerPoller(ServerPoller serv) {
 		this.poller = serv;
 	}
-	
-	public ClientModel getClient() {
-		return client;
-	}
 
-	public void setClient(ClientModel client) {
+	public void setModel(ClientModel client) {
 		this.client = client;
 	}
 
@@ -836,6 +857,22 @@ public class Facade {
 
 	public void setLocalPlayer(PlayerInfo newLocalPlayer) {
 		this.localPlayer = newLocalPlayer;
+	}
+	
+	public int getPlayerWithLongestRoad() {
+		return playerWithLongestRoad;
+	}
+
+	public int getPlayerWithLargestArmy() {
+		return playerWithLargestArmy;
+	}
+
+	public void setPlayerWithLongestRoad(int playerWithLongestRoad) {
+		this.playerWithLongestRoad = playerWithLongestRoad;
+	}
+
+	public void setPlayerWithLargestArmy(int playerWithLargestArmy) {
+		this.playerWithLargestArmy = playerWithLargestArmy;
 	}
 
 	public void addObserver(Observer o) {

@@ -61,6 +61,7 @@ public class RollView extends OverlayView implements IRollView {
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
 		buttonPanel.add(rollButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);
+		System.out.println("YOUR ROLL IS SHOWING");
 	}
 
 	private ActionListener actionListener = new ActionListener() {

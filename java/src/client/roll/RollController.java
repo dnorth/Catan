@@ -3,8 +3,7 @@ package client.roll;
 import java.util.Observable;
 
 import client.base.*;
-import client.state.RollingDiceState;
-import client.state.StateManager;
+import client.state.*;
 
 
 /**
@@ -41,15 +40,22 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-//		getResultView().setRollValue(stateManager.getFacade().rollDice());
+		
+		this.getRollView().closeModal();
+		int rollNumber = stateManager.getFacade().rollDice();
+		getResultView().setRollValue(rollNumber);
 		getResultView().showModal();
+		stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (stateManager.getState() instanceof RollingDiceState) {
-			rollDice();
+		//System.out.println("ROLL-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
+		if (this.stateManager.getState() instanceof RollingDiceState) {
+			System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
+			this.getRollView().showModal();
 		}
+		//System.out.println("ROLL-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 	}
 
 }

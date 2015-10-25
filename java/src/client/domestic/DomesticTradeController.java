@@ -5,6 +5,11 @@ import java.util.Observable;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
+import client.state.IStateBase;
+import client.state.InactivePlayerState;
+import client.state.StateManager;
+import client.state.trading.OfferingTradeState;
+import client.state.trading.TradeOfferedWaitingState;
 
 
 /**
@@ -15,6 +20,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
+	private StateManager stateManager;
 
 	/**
 	 * DomesticTradeController constructor
@@ -25,13 +31,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
+									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay, StateManager stateManager) {
 
 		super(tradeView);
 		
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
+		this.stateManager = stateManager;
+		this.stateManager.addObserver(this);
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -66,62 +74,76 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void startTrade() {
 
+		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		IStateBase state = this.stateManager.getState();
+		state.decreaseAmount(resource);
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-
+		IStateBase state = this.stateManager.getState();
+		state.increaseAmount(resource);
 	}
 
 	@Override
 	public void sendTradeOffer() {
-
+		IStateBase state = this.stateManager.getState();
 		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
+		state.sendTradeOffer();
+		this.stateManager.setState(new TradeOfferedWaitingState(this.stateManager.getFacade()));
+		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-
+		IStateBase state = this.stateManager.getState();
+		state.setPlayerToTradeWith(playerIndex);
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		IStateBase state = this.stateManager.getState();
+		state.setResourceToReceive(resource);
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-
+		IStateBase state = this.stateManager.getState();
+		state.setResourceToSend(resource);
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-
+		IStateBase state = this.stateManager.getState();
+		state.unsetResource(resource);
 	}
 
 	@Override
 	public void cancelTrade() {
-
+		this.stateManager.getFacade().cancelTradeOffer();		
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		IStateBase state = this.stateManager.getState();
+		state.acceptTrade(willAccept);
+		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
 		getAcceptOverlay().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(this.stateManager.getState() instanceof TradeOfferedWaitingState) {
+			if(this.stateManager.getClientModel().getTradeOffer() == null) {
+				this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade())); //This may be completely unnecessary and maybe we should set them to ActivePlayerState here??
+			}
+		}
 	}
 
 }

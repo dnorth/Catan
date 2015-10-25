@@ -1,5 +1,6 @@
 package client.models.mapdata;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,16 @@ public class Board {
 		adjVertices.put("NW", new String[] { "W", "NW" });
 		adjVertices = Collections.unmodifiableMap(adjVertices);
 		return adjVertices;
+	}
+	
+	public ArrayList<Hex> getHexesFromNumber(int number) {
+		ArrayList<Hex> hexesToReturn = new ArrayList<Hex>();
+		for(Hex h : this.hexes) {
+			if(h.getNumberToken() == number) {
+				hexesToReturn.add(h);
+			}
+		}
+		return hexesToReturn;
 	}
 
 	public Hex getHexFromCoords(int x, int y) {
@@ -235,7 +246,7 @@ public class Board {
 		if (this.settlements != null) {
 			for (VertexObject s : this.settlements) {
 				EdgeLocation checkLoc = s.getLocation();
-				System.out.println(s.toString());
+				//System.out.println(s.toString());
 				//if (checkLoc == null)
 					///System.out.println("OH MY EFFING GOSH");
 				if (checkLoc.equals(edgeLocation) || checkLoc.equals(altLoc1)

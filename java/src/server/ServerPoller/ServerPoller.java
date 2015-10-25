@@ -7,9 +7,7 @@ import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
-import client.facade.Facade;
 import client.state.JoinGameState;
-import client.state.PlayerWaitingState;
 import client.state.StateManager;
 
 import com.google.gson.JsonObject;
@@ -104,20 +102,11 @@ public class ServerPoller {
 				color);
 		
 		if(isNewVersion) {
-			System.out.println("NEW MODEL: " + cookies.toString());
+			//System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
 			this.stateManager.getClientModel().runUpdates();
 			if (this.forceUpdate) this.forceUpdate = false; 
-			/* THIS WAS MY VALLIANT ATTEMPT TO GET THE ADDAI METHOD TO WORK
-			 * The pointers are all messed up in the facade and that makes this next to impossible
-			 * I wish I had seen this "TODO" a couple hours ago
-			 * ClientModel toEditFacade = this.stateManager.getClientModel();
-			 * this.stateManager.getFacade().getGame().setPlayers(toEditFacade.getPlayers());
-			 */
-			
-			
-			//TODO reconnect managers/facade to model
 		}
 	}
 	/**
@@ -166,7 +155,7 @@ public class ServerPoller {
 		GameInfo[] oldGames = stateManager.getFacade().getGames();
 		boolean matches = gameInfoMatches(newGames, oldGames);
 		if(!matches) {
-			System.out.println("Updating Games List.");
+			//System.out.println("Updating Games List.");
 			stateManager.getFacade().setGames(newGames);
 			this.stateManager.getClientModel().runUpdates();
 		}

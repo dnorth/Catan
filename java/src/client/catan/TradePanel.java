@@ -36,7 +36,8 @@ public class TradePanel extends JPanel
 		domesticController = new DomesticTradeController(domesticView,
 														 domesticOverlay,
 														 domesticWaitView,
-														 domesticAcceptOverlay);
+														 domesticAcceptOverlay,
+														 stateManager);
 		domesticView.setController(domesticController);
 		domesticOverlay.setController(domesticController);
 		domesticWaitView.setController(domesticController);
@@ -45,7 +46,8 @@ public class TradePanel extends JPanel
 		maritimeView = new MaritimeTradeView();
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
-														 maritimeOverlay, stateManager);
+														 maritimeOverlay,
+														 stateManager);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		

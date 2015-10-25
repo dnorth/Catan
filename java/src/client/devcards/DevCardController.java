@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.state.StateManager;
 
 
 /**
@@ -14,6 +15,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private StateManager stateManager;
 	
 	/**
 	 * DevCardController constructor
@@ -24,13 +26,15 @@ public class DevCardController extends Controller implements IDevCardController 
 	 * @param roadAction Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
 	 */
 	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
-								IAction soldierAction, IAction roadAction) {
+								IAction soldierAction, IAction roadAction, StateManager stateManager) {
 
 		super(view);
 		
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		this.stateManager = stateManager;
+		this.stateManager.addObserver(this);
 	}
 
 	public IPlayDevCardView getPlayCardView() {
