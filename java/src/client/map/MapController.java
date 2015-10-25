@@ -219,7 +219,7 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if(stateManager.getState() instanceof SetupTwoActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				startMove(PieceType.ROAD, true, false);
+				startMove(PieceType.ROAD, true, true);
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
 				startMove(PieceType.SETTLEMENT, true, false);

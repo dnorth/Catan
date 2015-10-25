@@ -3,6 +3,7 @@ package client.communication;
 import java.util.*;
 
 import client.base.*;
+import client.data.PlayerInfo;
 import client.models.communication.MessageLine;
 import client.state.StateManager;
 import shared.definitions.*;
@@ -18,6 +19,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		super(view);
 		stateManager=sm;
+		this.stateManager.addObserver(this);
 		initFromModel();
 	}
 	
@@ -35,7 +37,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 			
 			for(MessageLine m : messages)
 			{
-				entries.add(new LogEntry(stateManager.getFacade().getLocalPlayer().getColor(),m.getMessage()));
+				entries.add(new LogEntry(getColorFromSource(m.getSource()),m.getMessage()));
 			}
 		}
 		else {
@@ -43,11 +45,21 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		}
 		getView().setEntries(entries);
 	}
+	
+	private CatanColor getColorFromSource(String messageSource) {
+		List<PlayerInfo> players = stateManager.getFacade().getGame().getPlayers();
+		for(PlayerInfo player : players) {
+			if(messageSource.equals(player.getName())) {
+				return player.getColor();
+			}
+		}
+		//Could not find that player. This should never happen....
+		return null;
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		initFromModel();
-		
 	}
 	
 }
