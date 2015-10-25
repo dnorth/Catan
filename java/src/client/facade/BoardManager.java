@@ -274,6 +274,19 @@ public class BoardManager {
 		return owners;
 	}
 	
+	public boolean canPlaceSettlementRoadCheck(int playerIndex, EdgeLocation vertex) {
+		if (board.getVertexOwner(vertex) != -1) {
+			return false;
+		}
+		Integer[] adjVertexOwners = this.getAdjacentVertexOwners(vertex);
+		for (Integer i : adjVertexOwners) {
+			if (i != -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public boolean canPlaceSettlementAtLocation(int playerIndex, EdgeLocation vertex) {
 		//check if someone owns vertex
 		if(board.getVertexOwner(vertex) != -1) {
@@ -310,17 +323,23 @@ public class BoardManager {
 	}
 	
 	public boolean canPlaceInitialRoad(int playerIndex, EdgeLocation edge) {
-		if (this.isOnlyWater(edge)) return false;
-		if (this.getEdgeOwner(edge) != -1) return false;
+		if (this.isOnlyWater(edge)) {
+			return false;
+		}
+		if (this.getEdgeOwner(edge) != -1) {
+			return false;
+		}
 		EdgeLocation[] vertices = this.getEdgeVertices(edge);
+		boolean canPlaceNearbySettlement = false;
 		for (EdgeLocation vertex : vertices) {
-			if (board.getVertexOwner(vertex) != -1) return false;
-			Integer[] adjVertexOwners = this.getAdjacentVertexOwners(vertex);
-			for (Integer i : adjVertexOwners) {
-				if (i != -1) return false;
+			if (board.getVertexOwner(vertex) != -1) {
+				return false;
+			}
+			if (this.canPlaceSettlementRoadCheck(playerIndex, vertex)) {
+				canPlaceNearbySettlement = true;
 			}
 		}
-		return true;
+		return canPlaceNearbySettlement;
 	}
 	
 	private boolean isOnlyWater(EdgeLocation edge) {
@@ -411,7 +430,6 @@ public class BoardManager {
 		for(Port port : ports)
 		{
 			EdgeLocation portLocation = port.getEdgeLocation();
-			//if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
 			String[] adjVertexDirs = Board.getAdjVertices().get(portLocation.getDirection());
 			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
 			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
@@ -430,7 +448,6 @@ public class BoardManager {
 		for(Port port : ports)
 		{
 			EdgeLocation portLocation = port.getEdgeLocation();
-			//if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
 			String[] adjVertexDirs = Board.getAdjVertices().get(portLocation.getDirection());
 			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
 			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
