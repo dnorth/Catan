@@ -7,4 +7,15 @@ package client.exceptions;
  */
 public class OutOfBoundsException extends Exception  {
 
+	public OutOfBoundsException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public OutOfBoundsException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	
 }

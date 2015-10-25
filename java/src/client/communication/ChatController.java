@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.models.communication.MessageLine;
 import client.state.StateManager;
 
@@ -20,6 +21,7 @@ public class ChatController extends Controller implements IChatController {
 	public ChatController(IChatView view, StateManager sm) {
 		super(view);
 		stateManager=sm;
+		this.stateManager.addObserver(this);
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class ChatController extends Controller implements IChatController {
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		for(MessageLine m : messages)
 		{
-			entries.add(new LogEntry(stateManager.getFacade().getLocalPlayer().getColor(),m.getMessage()));
+			entries.add(new LogEntry(getColorFromSource(m.getSource()),m.getMessage()));
 		}
 		
 		if(entries.isEmpty())
@@ -47,7 +49,17 @@ public class ChatController extends Controller implements IChatController {
 		getView().setEntries(entries);
 	}
 	
-
+	private CatanColor getColorFromSource(String messageSource) {
+		List<PlayerInfo> players = stateManager.getFacade().getGame().getPlayers();
+		for(PlayerInfo player : players) {
+			if(messageSource.equals(player.getName())) {
+				return player.getColor();
+			}
+		}
+		//Could not find that player. This should never happen....
+		return null;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		initFromModel();
