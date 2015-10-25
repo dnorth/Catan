@@ -163,6 +163,11 @@ public class JSONToModel {
 		return playerCounter;
 	}
 	
+	public static int translateNumberOfRoads(JsonObject serverModel) {
+		JsonArray array = serverModel.get("map").getAsJsonObject().get("roads").getAsJsonArray();
+		return array.size();
+	}
+	
 	/**
 	 * Obtains winner index from JSON
 	 * @return updated winner index

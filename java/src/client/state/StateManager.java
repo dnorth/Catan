@@ -20,8 +20,9 @@ public class StateManager {
 		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
 	}
 
-		public void updateStateManager() { // send myPlayerIndex to State
+	public void updateStateManager() { // send myPlayerIndex to State
 		facade.updatePointersToNewModel();
+		facade.setServerPoller(serverPoller);
 		System.out.println("STATEMANAGER UPDATED WITH NEW CLIENTMODEL!");
 	}
 

@@ -25,6 +25,7 @@ public class ServerPoller {
 	private Timer timer;
 	private int currNumPlayers;
 	private CatanColor currColor;
+	private boolean forceUpdate;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -35,14 +36,16 @@ public class ServerPoller {
 		this.stateManager = stateManager;
 		jsonToModelTranslator = new JSONToModel();
 		currNumPlayers = 0;
+		forceUpdate = false;
 		initialize();
 	}
 	
 	public void forcePollServer() { //I feel like we need a function like this, but I can't seem to get it to work.
-		Facade f = stateManager.getFacade();
-		JsonObject cookies = f.getUserAndGameCookie();
-		JsonObject cm = server.getGameModel(cookies);
-		this.updateCurrentModel(cm);
+//		Facade f = stateManager.getFacade();
+//		JsonObject cookies = f.getUserAndGameCookie();
+//		JsonObject cm = server.getGameModel(cookies);
+//		this.updateCurrentModel(cm);
+		this.forceUpdate = true;
 	}
 	
 	private class PollEvent extends TimerTask {		
@@ -50,23 +53,9 @@ public class ServerPoller {
 			try {
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
-				} else if (stateManager.getState() instanceof PlayerWaitingState) {
-					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
 				}
-				/*if (gameID != -1) {
-					GameInfo game = new GameInfo();
-					
-					for(GameInfo g: gamesList) {
-						if (g.getId() == gameID) {
-							game = g;
-						}
-					}
-					
-					stateManager.getFacade().setGame(game);
-				}*/
+				else updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
 			} catch (NullPointerException e) {
-				System.out.println("SERVER POLLER NULL EXCEPTION:");
-				e.printStackTrace();
 			}
 		}
 	}
@@ -109,12 +98,16 @@ public class ServerPoller {
 		} catch (Exception e) {
 			System.out.println("Couldn't find color.");
 		}
-		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies), JSONToModel.translateNumberOfPlayers(cookies), color);
-		if(isNewVersion) {
-//			System.out.println("NEW MODEL: " + cookies.toString());
+		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies),
+				JSONToModel.translateNumberOfPlayers(cookies),
+				color);
+		
+		if(forceUpdate || isNewVersion) {
+			System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
 			this.stateManager.getClientModel().runUpdates();
+			if (this.forceUpdate) this.forceUpdate = false; 
 			/* THIS WAS MY VALLIANT ATTEMPT TO GET THE ADDAI METHOD TO WORK
 			 * The pointers are all messed up in the facade and that makes this next to impossible
 			 * I wish I had seen this "TODO" a couple hours ago
@@ -191,5 +184,13 @@ public class ServerPoller {
 			}
 		}
 		return matches;
+	}
+
+	public boolean isForceUpdate() {
+		return forceUpdate;
+	}
+
+	public void setForceUpdate(boolean forceUpdate) {
+		this.forceUpdate = forceUpdate;
 	}
 }

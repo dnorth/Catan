@@ -506,6 +506,7 @@ public class Facade {
 		System.out.println("COMMAND: " + roadCommand);
 		System.out.println("COOKIE: " + cookie);
 		clientCommunicator.buildRoad(roadCommand, cookie);
+//		this.poller.setForceUpdate(true);
 	}
 	
 	/**
