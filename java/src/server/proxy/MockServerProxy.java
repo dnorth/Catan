@@ -50,7 +50,7 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject addAI(JsonObject AIType) {
+	public JsonObject addAI(JsonObject AIType, JsonObject optionalCookies) {
 		return this.returnSuccess(false, false);
 	}
 
@@ -67,23 +67,23 @@ public class MockServerProxy implements IProxy{
 	}
 
 	@Override
-	public JsonObject createGame(JsonObject inputGame) {
+	public JsonObject createGame(JsonObject inputGame, JsonObject optionalCookies) {
 		return this.getMockServerFileContents("createGame.json");
 	}
 
 	@Override
-	public JsonObject joinGame(JsonObject gameData) {
+	public JsonObject joinGame(JsonObject gameData, JsonObject optionalCookies) {
 		return this.returnSuccess(true, true);
 	}
 
 	@Override
-	public JsonObject saveGame(JsonObject data) { //int gameId, String fileName
+	public JsonObject saveGame(JsonObject data, JsonObject optionalCookies) { //int gameId, String fileName
 		// **DON'T** implement for Phase 1
 		return null;
 	}
 
 	@Override
-	public JsonObject loadGame(JsonObject gameName) {
+	public JsonObject loadGame(JsonObject gameName, JsonObject optionalCookies) {
 		// **DON'T** implement for Phase 1
 		return null;
 	}
@@ -98,7 +98,7 @@ public class MockServerProxy implements IProxy{
 
 
 	@Override
-	public JsonObject rollNumber(JsonObject optionalCookies) {
+	public JsonObject rollNumber(JsonObject data, JsonObject optionalCookies) {
 		return this.getMockServerFileContents("sample_model.json");
 	}
 
@@ -195,12 +195,12 @@ public class MockServerProxy implements IProxy{
 	
 	//USER API
 	@Override
-	public JsonObject userLogin(JsonObject user) {
+	public JsonObject userLogin(JsonObject user, JsonObject optionalCookies) {
 		return this.returnSuccess(true, false);
 	}
 
 	@Override
-	public JsonObject userRegister(JsonObject object) {
+	public JsonObject userRegister(JsonObject object, JsonObject optionalCookies) {
 		return this.returnSuccess(true, false);
 	}
 

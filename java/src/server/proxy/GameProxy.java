@@ -33,7 +33,7 @@ public class GameProxy extends ServerProxy{
 	public JsonObject resetGame (JsonObject optionalCookies){
 		JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = doPost("/game/reset", null);
+            clientModelJSON = doPost("/game/reset", null, optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class GameProxy extends ServerProxy{
 	public JsonObject executeCommandList (JsonObject commands, JsonObject optionalCookies){
 		JsonObject clientModelJSON = null;
         try {
-            clientModelJSON = doPost("/game/commands", commands);
+            clientModelJSON = doPost("/game/commands", commands, optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }
@@ -76,10 +76,10 @@ public class GameProxy extends ServerProxy{
 	 * @post a new AI has been added to the game
 	 * @param soldierType
 	 */
-	public JsonObject addAI (JsonObject AIObject){
+	public JsonObject addAI (JsonObject AIObject, JsonObject optionalCookies){
         JsonObject addAI = null;
 		try {
-            addAI = doPost("/game/addAI", AIObject);
+            addAI = doPost("/game/addAI", AIObject, optionalCookies);
         } catch (ClientException e) {
         	e.printStackTrace();
         }

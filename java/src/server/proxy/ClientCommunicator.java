@@ -77,8 +77,8 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject addAI(JsonObject AIObject) {
-		return gameProxy.addAI(AIObject);
+	public JsonObject addAI(JsonObject AIObject, JsonObject optionalCookies) {
+		return gameProxy.addAI(AIObject, optionalCookies);
 	}
 
 	@Override
@@ -94,23 +94,23 @@ public class ClientCommunicator implements IProxy{
 	}
 
 	@Override
-	public JsonObject createGame(JsonObject inputGame) {
-		return gamesProxy.createGame(inputGame);
+	public JsonObject createGame(JsonObject inputGame, JsonObject optionalCookies) {
+		return gamesProxy.createGame(inputGame, optionalCookies);
 	}
 
 	@Override
-	public JsonObject joinGame(JsonObject gameData) {
-		return gamesProxy.joinGame(gameData);
+	public JsonObject joinGame(JsonObject gameData, JsonObject optionalCookies) {
+		return gamesProxy.joinGame(gameData, optionalCookies);
 	}
 
 	@Override
-	public JsonObject saveGame(JsonObject data) { // int gameId, String fileName
-		return gamesProxy.saveGame(data);
+	public JsonObject saveGame(JsonObject data, JsonObject optionalCookies) { // int gameId, String fileName
+		return gamesProxy.saveGame(data, optionalCookies);
 	}
 
 	@Override
-	public JsonObject loadGame(JsonObject gameName) {
-		return gamesProxy.loadGame(gameName);
+	public JsonObject loadGame(JsonObject gameName, JsonObject optionalCookies) {
+		return gamesProxy.loadGame(gameName, optionalCookies);
 	}
 
 	
@@ -118,42 +118,42 @@ public class ClientCommunicator implements IProxy{
 	//MOVES API
 	@Override
 	public JsonObject sendChat(JsonObject data, JsonObject optionalCookies) { // int playerIndex, String content
-		return movesProxy.sendChat(data);
+		return movesProxy.sendChat(data, optionalCookies);
 	}
 
 	@Override
-	public JsonObject rollNumber(JsonObject optionalCookies) {
-		return movesProxy.rollNumber();
+	public JsonObject rollNumber(JsonObject data, JsonObject optionalCookies) {
+		return movesProxy.rollNumber(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject robPlayer(JsonObject data, JsonObject optionalCookies) { // int playerIndex, int victimIndex, HexLocation hexLocation
-		return movesProxy.robPlayer(data);
+		return movesProxy.robPlayer(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject finishTurn(JsonObject data, JsonObject optionalCookies) { //int playerIndex
-		return movesProxy.finishTurn(data);
+		return movesProxy.finishTurn(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject buyDevCard(JsonObject data, JsonObject optionalCookies) { //int playerIndex
-		return movesProxy.buyDevCard(data);
+		return movesProxy.buyDevCard(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject playYearOfPlenty(JsonObject data, JsonObject optionalCookies) { //int playerIndex, int resource1, int resource2
-		return movesProxy.playYearOfPlenty(data);
+		return movesProxy.playYearOfPlenty(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject playRoadBuilding(JsonObject data, JsonObject optionalCookies) { //int playerIndex, EdgeLocation edgeLocation1, EdgeLocation edgeLocation2
-		return movesProxy.playRoadBuilding(data);
+		return movesProxy.playRoadBuilding(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject playSoldier(JsonObject data, JsonObject optionalCookies) { // int playerIndex, int victimIndex, HexLocation newRobberHexLocation
-		return movesProxy.playSoldier(data);
+		return movesProxy.playSoldier(data, optionalCookies);
 	}
 
 	/*
@@ -162,59 +162,59 @@ public class ClientCommunicator implements IProxy{
 	 */
 	@Override
 	public JsonObject playMonopoly(JsonObject data, JsonObject optionalCookies) {
-		return movesProxy.playMonopoly(data);
+		return movesProxy.playMonopoly(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject playMonument(JsonObject data, JsonObject optionalCookies) { //int playerIndex
-		return movesProxy.playMonument(data);
+		return movesProxy.playMonument(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject buildRoad(JsonObject data, JsonObject optionalCookies) { //int playerIndex, EdgeLocation roadLocation, boolean free
-		return movesProxy.buildRoad(data);
+		return movesProxy.buildRoad(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject buildSettlement(JsonObject data, JsonObject optionalCookies) { //int playerIndex, VertexLocation settlementLocation, boolean free
-		return movesProxy.buildSettlement(data);
+		return movesProxy.buildSettlement(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject buildCity(JsonObject data, JsonObject optionalCookies) { //int playerIndex, VertexLocation cityLocation
-		return movesProxy.buildCity(data);
+		return movesProxy.buildCity(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject offerTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, Resources resourceList, int receivingPlayerIndex
-		return movesProxy.offerTrade(data);
+		return movesProxy.offerTrade(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject acceptTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, boolean willAccept
-		return movesProxy.acceptTrade(data);
+		return movesProxy.acceptTrade(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject maritimeTrade(JsonObject data, JsonObject optionalCookies) { //int playerIndex, int ratio, String inputResource, String outputResource
-		return movesProxy.maritimeTrade(data);
+		return movesProxy.maritimeTrade(data, optionalCookies);
 	}
 
 	@Override
 	public JsonObject discardCards(JsonObject data, JsonObject optionalCookies) { //int playerIndex, Resources discardedCards
-		return movesProxy.discardCards(data);
+		return movesProxy.discardCards(data, optionalCookies);
 	}
 
 	
 	//USER API
 	@Override
-	public JsonObject userLogin(JsonObject user) throws ClientException {
-		return userProxy.userLogin(user);
+	public JsonObject userLogin(JsonObject user, JsonObject optionalCookies) throws ClientException {
+		return userProxy.userLogin(user, optionalCookies);
 	}
 
 	@Override
-	public JsonObject userRegister(JsonObject user) throws ClientException {
-		return userProxy.userRegister(user);
+	public JsonObject userRegister(JsonObject user, JsonObject optionalCookies) throws ClientException {
+		return userProxy.userRegister(user, optionalCookies);
 	}
 
 	

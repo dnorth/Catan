@@ -104,7 +104,7 @@ public class Facade {
 	 * Called by client when player wants to play Monument card
 	 */
 	public void playMonumentCard() {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
+		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), getFullCookie());
 	}
 	
 	/**
@@ -275,7 +275,7 @@ public class Facade {
 		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
-		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame);
+		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, getFullCookie());
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
 			game = jsonToModel.translateGameInfo(returnedJson);
@@ -306,7 +306,7 @@ public class Facade {
 	public void joinGame(CatanColor color) {
 		
 		JsonObject joinGameObject = this.modelToJSON.createJoinGameObject(this.game, color, this.localPlayer.getUserCookie());
-		JsonObject returned = clientCommunicator.joinGame(joinGameObject);
+		JsonObject returned = clientCommunicator.joinGame(joinGameObject, getFullCookie());
 		String responseBody = returned.get("Response-body").getAsString();
 		if(!responseBody.equals("Success")) {
 			System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
@@ -335,7 +335,7 @@ public class Facade {
 		object.addProperty("Game-cookie", game.getId());
 		object.addProperty("AIType", AIType);
 		System.out.println(object.toString());
-		clientCommunicator.addAI(object);
+		clientCommunicator.addAI(object, getFullCookie());
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public class Facade {
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
-		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject);
+		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject, getFullCookie());
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
 			return loginUser(returnedJson, username);
@@ -382,7 +382,7 @@ public class Facade {
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
-		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject);
+		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject, getFullCookie());
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
 			return loginUser(returnedJson, username);
@@ -795,5 +795,9 @@ public class Facade {
 //		this.client = newModel;
 		this.game.setPlayers(this.client.getPlayers());
 		this.canDo.updatePointersToNewModel(this.client);
+	}
+	
+	public JsonObject getFullCookie() {
+		return modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId());
 	}
 }

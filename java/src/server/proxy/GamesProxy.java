@@ -34,12 +34,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param name
 	 * @return newly created game
 	 */
-	public JsonObject createGame (JsonObject inputGame){
+	public JsonObject createGame (JsonObject inputGame, JsonObject optionalCookies){
 	
 		
 		JsonObject newGame = null;
 		try {
-			newGame = doPost("/games/create", inputGame);
+			newGame = doPost("/games/create", inputGame,  optionalCookies);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -55,11 +55,11 @@ public class GamesProxy extends ServerProxy{
 	 * @param color
 	 * @return
 	 */
-	public JsonObject joinGame(JsonObject gameData){
+	public JsonObject joinGame(JsonObject gameData, JsonObject optionalCookies){
 		
 		JsonObject success = null;
 		try {
-			success = doPost("/games/join", gameData);
+			success = doPost("/games/join", gameData, optionalCookies);
 		} catch (ClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,12 +75,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param fileName
 	 * @return boolean stating whether or not the save was successful
 	 */
-	public JsonObject saveGame (JsonObject data){ //int gameId, String fileName
+	public JsonObject saveGame (JsonObject data, JsonObject optionalCookies){ //int gameId, String fileName
 
 		JsonObject success = null;
         
         try {
-			success = doPost("/games/save", null);
+			success = doPost("/games/save", data, optionalCookies);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}
@@ -93,12 +93,12 @@ public class GamesProxy extends ServerProxy{
 	 * @param gameName
 	 * @return Game that was originally saved
 	 */
-	public JsonObject loadGame (JsonObject gameName){
+	public JsonObject loadGame (JsonObject gameName, JsonObject optionalCookies){
 
 		JsonObject game = null;
 		
 		try {
-			game = doPost("/games/load", gameName);
+			game = doPost("/games/load", gameName, optionalCookies);
 		} catch (ClientException e) {
 			e.printStackTrace();
 		}

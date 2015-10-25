@@ -16,20 +16,20 @@ public interface IProxy {
 	public JsonObject resetGame (JsonObject optionalCookies);
 	public JsonObject executeCommandList (JsonObject commands, JsonObject optionalCookies);
 	public JsonObject getExecutedCommands (JsonObject optionalCookies);
-	public JsonObject addAI (JsonObject AIObject);
+	public JsonObject addAI (JsonObject AIObject, JsonObject optionalCookies);
 	public JsonObject listAI ();
 
 
 	//GAMES PROXY
 	public JsonObject getGamesList ();
-	public JsonObject createGame (JsonObject inputGame);
-	public JsonObject joinGame (JsonObject gameData);
-	public JsonObject saveGame (JsonObject data);
-	public JsonObject loadGame (JsonObject gameName);
+	public JsonObject createGame (JsonObject inputGame, JsonObject optionalCookies);
+	public JsonObject joinGame (JsonObject gameData, JsonObject optionalCookies);
+	public JsonObject saveGame (JsonObject data, JsonObject optionalCookies);
+	public JsonObject loadGame (JsonObject gameName, JsonObject optionalCookies);
 
 	//MOVES PROXY
 	public JsonObject sendChat (JsonObject data, JsonObject optionalCookies);
-	public JsonObject rollNumber(JsonObject optionalCookies);
+	public JsonObject rollNumber(JsonObject data, JsonObject optionalCookies);
 	public JsonObject robPlayer (JsonObject data, JsonObject optionalCookies);
 	public JsonObject finishTurn (JsonObject data, JsonObject optionalCookies);
 	public JsonObject buyDevCard (JsonObject data, JsonObject optionalCookies);
@@ -47,8 +47,8 @@ public interface IProxy {
 	public JsonObject discardCards (JsonObject data, JsonObject optionalCookies);
 	
 	//USER PROXY
-	public JsonObject userLogin (JsonObject user) throws ClientException;
-	public JsonObject userRegister (JsonObject user) throws ClientException;
+	public JsonObject userLogin (JsonObject user, JsonObject optionalCookies) throws ClientException;
+	public JsonObject userRegister (JsonObject user, JsonObject optionalCookies) throws ClientException;
 	
 	//UTIL PROXY
 	public void utilChangeLogLevel ();

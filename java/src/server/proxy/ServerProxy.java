@@ -97,7 +97,7 @@ abstract class ServerProxy {
         }
     }
     
-    protected JsonObject doPost(String urlPath, JsonObject postData) throws ClientException { //Return a JSON Object
+    protected JsonObject doPost(String urlPath, JsonObject postData, JsonObject optionalCookies) throws ClientException { //Return a JSON Object
         try {
         	//System.out.println(postData.toString());
             URL url = new URL(URL_PREFIX + urlPath);
@@ -105,13 +105,13 @@ abstract class ServerProxy {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            if(postData.has("User-cookie")) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
+            if(optionalCookies != null) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
             	String userCookie = null;
             	String gameCookie = null;
-            	userCookie = postData.get("User-cookie").getAsString();
+            	userCookie = optionalCookies.get("User-cookie").getAsString();
 //            	System.out.println(postData.toString());
-            	if(postData.has("Game-cookie")) {
-            		gameCookie = postData.get("Game-cookie").getAsString();
+            	if(optionalCookies.has("Game-cookie")) {
+            		gameCookie = optionalCookies.get("Game-cookie").getAsString();
             	}
             	String cookies = DressCookie(userCookie, gameCookie);
             	connection.setRequestProperty("Cookie", cookies);

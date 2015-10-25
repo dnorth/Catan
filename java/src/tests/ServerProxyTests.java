@@ -46,7 +46,7 @@ public class ServerProxyTests {
 		newUser.addProperty("username", "Tommy" + rand);
 		newUser.addProperty("password", "Williams");
 
-		JsonObject responseObject = proxy1.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser, null);
 		//System.out.println(responseObject.toString());
 		
 		userCookie = responseObject.get("User-cookie").getAsString();
@@ -61,7 +61,7 @@ public class ServerProxyTests {
 		newUser.addProperty("password", "Williams");
 		
 		
-		JsonObject responseObject = proxy1.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser, null);
 		System.out.println(responseObject.toString());
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand + 1) + '"';
 		String shouldMatchPassword = "\"Williams\"";
@@ -86,7 +86,7 @@ public class ServerProxyTests {
 		newUser.addProperty("password", "Williams");
 		
 		
-		JsonObject responseObject = proxy1.userRegister(newUser);
+		JsonObject responseObject = proxy1.userRegister(newUser, null);
 		System.out.println(responseObject.toString());
 		
 		JsonObject cookie = responseObject.getAsJsonObject("Set-cookie");
@@ -103,7 +103,7 @@ public class ServerProxyTests {
 		user.addProperty("username", "Tommy" + rand);
 		user.addProperty("password", "Williams");		
 		
-		JsonObject responseObject = proxy1.userLogin(user);
+		JsonObject responseObject = proxy1.userLogin(user, null);
 		System.out.println(responseObject.toString());
 		String shouldMatchUsername = "\"Tommy" + Integer.toString(rand) + '"';
 		String shouldMatchPassword = "\"Williams\"";
@@ -149,7 +149,7 @@ public class ServerProxyTests {
 		inputNewGameData.addProperty("randomPorts", true);
 		inputNewGameData.addProperty("name", "Test Game2");
 		
-		JsonObject responseObject1 = proxy1.createGame(inputNewGameData);
+		JsonObject responseObject1 = proxy1.createGame(inputNewGameData, null);
 		JsonObject responseBody1 = (JsonObject) responseObject1.get("Response-body");
 
 		int gameId = responseBody1.get("id").getAsInt();
@@ -161,7 +161,7 @@ public class ServerProxyTests {
 		gameData.addProperty("color", "puce");
 		gameData.addProperty("User-cookie", userCookie);
 			
-		JsonObject responseObject2 = proxy1.joinGame(gameData);
+		JsonObject responseObject2 = proxy1.joinGame(gameData, null);
 		
 		String responseBody2 = responseObject2.get("Response-body").toString();
 		System.out.println(responseObject2.toString());
@@ -176,7 +176,7 @@ public class ServerProxyTests {
 		inputGame.addProperty("randomPorts", true);
 		inputGame.addProperty("name", "New Game!");
 		
-		JsonObject newGame = proxy2.createGame(inputGame);
+		JsonObject newGame = proxy2.createGame(inputGame, null);
 		assertTrue(newGame.get("title").getAsString().equals("game"));
 	}
 	
@@ -187,7 +187,7 @@ public class ServerProxyTests {
 		AIInput.addProperty("User-cookie", userCookie);
 		AIInput.addProperty("Game-cookie", 3);
 		AIInput.addProperty("AIType", "LARGEST_ARMY");
-		JsonObject resultObject = proxy1.addAI(AIInput);
+		JsonObject resultObject = proxy1.addAI(AIInput, null);
 		assertNotNull(resultObject);
 		assertEquals(resultObject.get("Response-body").getAsString(), "Success");
 	}

@@ -132,7 +132,7 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		System.out.println("CANPLACEROAD?!");
+		System.out.println("Trying to place road: " + stateManager.getState().canPlaceRoadAtLocation(edgeLoc));
 		return stateManager.getState().canPlaceRoadAtLocation(edgeLoc);
 	}
 
@@ -238,6 +238,7 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			startMove(PieceType.ROAD, true, true);
+			startMove(PieceType.ROAD, true, false);
 		}		
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...

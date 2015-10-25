@@ -52,10 +52,6 @@ public class StateManager {
 		return this.facade.getClient();
 	}
 	
-//	public void setPollerGameID(int id) {
-//		this.serverPoller.setGameID(id);
-//	}
-	
 	public int getCurrentVersion() {
 		return this.getClientModel().getVersion();
 	}

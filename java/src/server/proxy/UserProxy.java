@@ -8,11 +8,10 @@ public class UserProxy extends ServerProxy{
 	 * @return
 	 * @throws ClientException 
 	 */
-	public JsonObject userLogin (JsonObject user) throws ClientException {
-        
-		JsonObject returned = doPost("/user/login", user);
-        try {
-			return doPost("/user/login", user);
+	public JsonObject userLogin (JsonObject user, JsonObject optionalCookies) throws ClientException {        
+		try {
+			JsonObject returned = doPost("/user/login", user, optionalCookies);
+			return returned;
 		} catch (ClientException e) {
 			throw e;
 		}
@@ -35,11 +34,11 @@ public class UserProxy extends ServerProxy{
 	 * @return
 	 * @throws ClientException 
 	 */
-	public JsonObject userRegister (JsonObject user) throws ClientException{
+	public JsonObject userRegister (JsonObject user, JsonObject optionalCookies) throws ClientException{
       
 		JsonObject returnObject = new JsonObject();
         try {
-			returnObject = doPost("/user/register", user);
+			returnObject = doPost("/user/register", user, optionalCookies);
 		} catch (ClientException e) { //TODO have this return the failed response body
 			throw e;
 			//returnObject.addProperty("Error-message", e.getMessage());
