@@ -4,6 +4,7 @@ import java.util.List;
 
 import shared.locations.EdgeDirection;
 import client.models.mapdata.Hex;
+import client.models.mapdata.PortTrade;
 
 
 
@@ -24,6 +25,15 @@ public class Player
 	private int settlements;
 	private int soldiers;
 	private int victoryPoints;
+	private PortTrade portTrade;
+	
+	public Player(){
+	newDevCards = new DevCards();
+	oldDevCards = new DevCards();
+	name="";
+	resources = new Resources();
+	portTrade = new PortTrade();
+	}
 	
 	public int getCitiesNum() {
 		return cities;
@@ -115,6 +125,31 @@ public class Player
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+	public int getCities() {
+		return cities;
+	}
+
+	public void setCities(int cities) {
+		this.cities = cities;
+	}
+
+	public DevCards getOldDevCards() {
+		return oldDevCards;
+	}
+
+	public void setOldDevCards(DevCards oldDevCards) {
+		this.oldDevCards = oldDevCards;
+	}
+
+	public PortTrade getPortTrade() {
+		return portTrade;
+	}
+
+	public void setPortTrade(PortTrade portTrade) {
+		this.portTrade = portTrade;
+	}
+
+	
 	
 	public boolean hasBrick(){return resources.getBrickCount()>0;}
 	public boolean hasOre(){return resources.getOreCount()>0;}
@@ -135,6 +170,7 @@ public class Player
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 	
 	
+
 	@Override
 	public String toString() {
 		return "Player [cities=" + cities + ", color=" + color + ", discarded=" + discarded + ", monuments=" + monuments

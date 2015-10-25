@@ -198,7 +198,7 @@ public class ModelToJSON {
 		edgeLoc.addProperty("direction", edge.getDirection());
 		object.add("roadLocation", edgeLoc);
 		
-		if (free) object.addProperty("free", false);
+		if (free) object.addProperty("free", true);
 		else object.addProperty("free", false);
 		return object;
 	}

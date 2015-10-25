@@ -11,6 +11,7 @@ private int roadBuilding;
 private int soldier;
 private int yearOfPlenty;
 
+public DevCards(){}
 public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int soldierCount, int yearOfPlentyCount) {
 	this.monopoly = monopolyCount;
 	this.monument = monumentCount;

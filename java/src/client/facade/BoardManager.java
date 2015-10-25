@@ -8,6 +8,8 @@ import java.util.Observer;
 
 import client.models.ClientModel;
 import client.models.Player;
+import client.models.Resources;
+import client.models.TradeOffer;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
@@ -16,7 +18,6 @@ import client.models.mapdata.Port;
 
 public class BoardManager {
 	private Board board;
-	
 	public BoardManager(Board board) {
 		this.board = board;
 	}
@@ -309,7 +310,7 @@ public class BoardManager {
 		{
 			EdgeLocation portLocation = port.getEdgeLocation();
 			//if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
-			String[] adjVertexDirs = this.board.getAdjVertices().get(portLocation.getDirection());
+			String[] adjVertexDirs = Board.getAdjVertices().get(portLocation.getDirection());
 			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
 			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
 			
@@ -319,8 +320,28 @@ public class BoardManager {
 
 		return false;
 	}
+	
+	public void updatePlayerMaritimeTradeCosts(Player p, Board board)
+	{
+		Port[] ports = board.getPorts();
+	
+		for(Port port : ports)
+		{
+			EdgeLocation portLocation = port.getEdgeLocation();
+			//if (portLocation.getDirection() == null) System.out.println("WHY DOES THIS KEEP HAPPENNING TO ME");
+			String[] adjVertexDirs = Board.getAdjVertices().get(portLocation.getDirection());
+			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
+			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
+			
+			if (this.board.getVertexOwner(adj1) == p.getPlayerIndex()) {p.getPortTrade().setTradeCosts(port);}
+			if (this.board.getVertexOwner(adj2) == p.getPlayerIndex()) {p.getPortTrade().setTradeCosts(port);}
+		}
+	}
+	
 
 	public void updatePointersToNewModel(ClientModel newModel) {
 		this.board = newModel.getBoard();
 	}
+	
+	
 }
