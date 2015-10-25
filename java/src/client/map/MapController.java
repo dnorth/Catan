@@ -187,7 +187,7 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
-		(super).cancelMove();
+		
 	}
 	
 	public void playSoldierCard() {	
@@ -234,7 +234,6 @@ public class MapController extends Controller implements IMapController {
 				this.cancelMove();
 			}
 		}
-		this.
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
