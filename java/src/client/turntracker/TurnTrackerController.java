@@ -10,6 +10,7 @@ import client.state.InactivePlayerState;
 import client.state.JoinGameState;
 import client.state.LoginState;
 import client.state.PlayerWaitingState;
+import client.state.RollingDiceState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
@@ -58,7 +59,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 			}
 			else {
-				System.out.println("IT'S APPARENTLY YOUR TURN!!!");
 				if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("FirstRound")) {
 					if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
 						this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));
@@ -67,6 +67,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				else if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("SecondRound")) {
 					if (!(this.stateManager.getState() instanceof SetupTwoActivePlayerState)) {
 						this.stateManager.setState(new SetupTwoActivePlayerState(this.stateManager.getFacade()));
+					}
+				}
+				else if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("Rolling")) {
+					if (!(this.stateManager.getState() instanceof RollingDiceState)) {
+						this.stateManager.setState(new RollingDiceState());
 					}
 				}
 				else if (!(this.stateManager.getState() instanceof ActivePlayerState)) {

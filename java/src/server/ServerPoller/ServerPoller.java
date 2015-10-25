@@ -104,7 +104,7 @@ public class ServerPoller {
 				color);
 		
 		if(isNewVersion) {
-//			System.out.println("NEW MODEL: " + cookies.toString());
+			System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
 			this.stateManager.getClientModel().runUpdates();
