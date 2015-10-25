@@ -169,9 +169,7 @@ public class MapController extends Controller implements IMapController {
 		IStateBase state = stateManager.getState();
 		if(state instanceof SetupOneActivePlayerState || state instanceof SetupTwoActivePlayerState) {
 			if(pieceType.equals(PieceType.ROAD) || pieceType.equals(PieceType.SETTLEMENT)) {
-				if (pieceType.equals(PieceType.ROAD)) System.out.println("PIECE TYPE ROAD");
-				else if (pieceType.equals(PieceType.SETTLEMENT)) System.out.println("PIECE TYPE SETTLEMENT");
-				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
 			}
 			else {
 				try {
@@ -189,6 +187,7 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
+		(super).cancelMove();
 	}
 	
 	public void playSoldierCard() {	
@@ -207,14 +206,17 @@ public class MapController extends Controller implements IMapController {
 	public void update(Observable o, Object arg) {
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				startMove(PieceType.ROAD, true, false);
+				startMove(PieceType.ROAD, true, true);
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				startMove(PieceType.SETTLEMENT, true, false);
+				startMove(PieceType.SETTLEMENT, true, true);
 			}
 			else {
-				stateManager.getState().endTurn();
-				stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+				if (this.stateManager.clientTurn()) {
+					stateManager.getState().endTurn();
+					stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+				}
+				this.cancelMove();
 			}
 		}
 		else if(stateManager.getState() instanceof SetupTwoActivePlayerState) {
@@ -222,13 +224,17 @@ public class MapController extends Controller implements IMapController {
 				startMove(PieceType.ROAD, true, true);
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				startMove(PieceType.SETTLEMENT, true, false);
+				startMove(PieceType.SETTLEMENT, true, true);
 			}
 			else {
-				stateManager.getState().endTurn();
-				stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+				if (this.stateManager.clientTurn()) {
+					stateManager.getState().endTurn();
+					stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+				}
+				this.cancelMove();
 			}
 		}
+		this.
 		
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
