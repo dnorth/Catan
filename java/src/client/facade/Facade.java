@@ -1,12 +1,15 @@
 package client.facade;
 
 import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Observer;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
+import com.google.gson.JsonObject;
 import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
@@ -20,7 +23,10 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.TradeOffer;
+import client.models.mapdata.Board;
+import client.models.mapdata.Port;
 
 import com.google.gson.JsonObject;
 
@@ -65,7 +71,6 @@ public class Facade {
 	 * @param message received from client
 	 */
 	public void sendMessage (String message) {
-		
 		
 	}
 	
@@ -611,7 +616,22 @@ public class Facade {
 	 * Called by the maritime trade view when the user clicks the maritime trade
 	 * button.
 	 */
-	public void startMaritimeTrade() {
+	
+
+	
+	public List<ResourceType> startMaritimeTrade() 
+	{
+		List<ResourceType> resources = new ArrayList<ResourceType>();
+		Player p = client.getPlayers()[getPlayerIndex()];
+		canDo.getBoardManager().updatePlayerMaritimeTradeCosts(p, client.getBoard());
+		
+		if(p.hasBrick(p.getPortTrade().getBrickCost())){resources.add(ResourceType.BRICK);}
+		if(p.hasWood(p.getPortTrade().getWoodCost())){resources.add(ResourceType.WOOD);}
+		if(p.hasWheat(p.getPortTrade().getWheatCost())){resources.add(ResourceType.WHEAT);}
+		if(p.hasOre(p.getPortTrade().getOreCost())){resources.add(ResourceType.ORE);}
+		if(p.hasSheep(p.getPortTrade().getSheepCost())){resources.add(ResourceType.SHEEP);}
+		
+		return resources;
 	}
 	
 	/**
