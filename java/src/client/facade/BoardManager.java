@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.HexType;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -13,6 +14,7 @@ import client.models.TradeOffer;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
 import client.models.mapdata.Port;
 
@@ -69,26 +71,32 @@ public class BoardManager {
 			adj1 = new EdgeLocation(x, y, "W");
 			adj2 = new EdgeLocation(x, y, "NE");
 			adj3 = new EdgeLocation(x-1, y, "NE");
+			break;
 		case "NE":
 			adj1 = new EdgeLocation(x, y, "NW");
 			adj2 = new EdgeLocation(x, y, "E");
 			adj3 = new EdgeLocation(x, y-1, "E");
+			break;
 		case "E":
 			adj1 = new EdgeLocation(x, y, "NE");
 			adj2 = new EdgeLocation(x, y, "SE");
 			adj3 = new EdgeLocation(x+1, y-1, "SE");
+			break;
 		case "SE":
 			adj1 = new EdgeLocation(x, y, "E");
 			adj2 = new EdgeLocation(x, y, "SW");
 			adj3 = new EdgeLocation(x+1, y, "SW");
+			break;
 		case "SW":
 			adj1 = new EdgeLocation(x, y, "SE");
 			adj2 = new EdgeLocation(x, y, "W");
 			adj3 = new EdgeLocation(x, y+1, "W");
+			break;
 		case "W":
 			adj1 = new EdgeLocation(x, y, "SW");
 			adj2 = new EdgeLocation(x, y, "NW");
 			adj3 = new EdgeLocation(x-1, y+1, "NW");
+			break;
 		default:
 			System.out.println("OH NO! dir=" + dir);
 		}
@@ -108,26 +116,32 @@ public class BoardManager {
 			adj1 = new EdgeLocation(x, y, "NW");
 			adj2 = new EdgeLocation(x, y, "N");
 			adj3 = new EdgeLocation(x-1, y, "NE");
+			break;
 		case "NE":
 			adj1 = new EdgeLocation(x, y, "N");
 			adj2 = new EdgeLocation(x, y, "NE");
 			adj3 = new EdgeLocation(x, y-1, "SE");
+			break;
 		case "E":
 			adj1 = new EdgeLocation(x, y, "NE");
 			adj2 = new EdgeLocation(x, y, "SE");
 			adj3 = new EdgeLocation(x+1, y-1, "S");
+			break;
 		case "SE":
 			adj1 = new EdgeLocation(x, y, "SE");
 			adj2 = new EdgeLocation(x, y, "S");
 			adj3 = new EdgeLocation(x+1, y, "SW");
+			break;
 		case "SW":
 			adj1 = new EdgeLocation(x, y, "S");
 			adj2 = new EdgeLocation(x, y, "SW");
 			adj3 = new EdgeLocation(x, y+1, "NW");
+			break;
 		case "W":
 			adj1 = new EdgeLocation(x, y, "SW");
 			adj2 = new EdgeLocation(x, y, "NW");
 			adj3 = new EdgeLocation(x-1, y+1, "N");
+			break;
 		default:
 			System.out.println("OH NO! dir=" + dir);
 		}
@@ -249,6 +263,7 @@ public class BoardManager {
 	}
 	
 	public boolean canPlaceInitialRoad(int playerIndex, EdgeLocation edge) {
+		if (this.isOnlyWater(edge)) return false;
 		if (this.getEdgeOwner(edge) != -1) return false;
 		EdgeLocation[] vertices = this.getEdgeVertices(edge);
 		for (EdgeLocation vertex : vertices) {
@@ -261,6 +276,40 @@ public class BoardManager {
 		return true;
 	}
 	
+	private boolean isOnlyWater(EdgeLocation edge) {
+		Hex hex = this.board.getHexFromCoords(edge.getXcoord(), edge.getYcoord());
+		if (hex == null) {
+			int xDiff = 0;
+			int yDiff = 0;
+			switch(edge.getDirection()) {
+				case "NW":
+					xDiff = -1;
+					break;
+				case "N":
+					yDiff = -1;
+					break;
+				case "NE":
+					xDiff = 1;
+					yDiff = -1;
+					break;
+				case "SE":
+					xDiff = 1;
+					break;
+				case "S":
+					yDiff = 1;
+					break;
+				case "SW":
+					xDiff = -1;
+					yDiff = 1;
+					break;
+			}
+			Hex adjHex = this.board.getHexFromCoords(edge.getXcoord()+xDiff, edge.getYcoord()+yDiff);
+			if (adjHex == null) return true;
+			else return false;
+		}
+		else return false;
+	}
+
 	EdgeLocation[] getEdgeVertices(EdgeLocation edge) {
 		String vert1 = "";
 		String vert2 = "";
@@ -268,21 +317,27 @@ public class BoardManager {
 		case "N":
 			vert1 = "NW";
 			vert2 = "NE";
+			break;
 		case "NE":
 			vert1 = "NE";
 			vert2 = "E";
+			break;
 		case "SE":
 			vert1 = "E";
 			vert2 = "SE";
+			break;
 		case "S":
 			vert1 = "SE";
 			vert2 = "SW";
+			break;
 		case "SW":
 			vert1 = "SW";
 			vert2 = "W";
+			break;
 		case "NW":
 			vert1 = "W";
 			vert2 = "NW";
+			break;
 		}
 		EdgeLocation vertex1 = new EdgeLocation(edge.getXcoord(), edge.getYcoord(), vert1);
 		EdgeLocation vertex2 = new EdgeLocation(edge.getXcoord(), edge.getYcoord(), vert2);

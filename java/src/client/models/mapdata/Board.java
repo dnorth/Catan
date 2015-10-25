@@ -49,6 +49,13 @@ public class Board {
 		return adjVertices;
 	}
 
+	public Hex getHexFromCoords(int x, int y) {
+		for (Hex hex : this.hexes) { 
+			if (hex.getLocation().getX() == x && hex.getLocation().getY() == y) return hex;
+		}
+		return null;
+	}
+	
 	public Hex[] getHexes() {
 		return hexes;
 	}
