@@ -374,7 +374,7 @@ public class Facade {
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
-		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject, getFullCookie());
+		JsonObject returnedJson = this.clientCommunicator.userLogin(userObject, null);
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
 			return loginUser(returnedJson, username);
@@ -392,7 +392,7 @@ public class Facade {
 		if (p.matcher(username).find() || p.matcher(password).find()) return false;
 		
 		JsonObject userObject = this.modelToJSON.createUserObject(username, password);
-		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject, getFullCookie());
+		JsonObject returnedJson = this.clientCommunicator.userRegister(userObject, null);
 		
 		if(returnedJson.get("Response-body").getAsString().equals("Success")) {
 			return loginUser(returnedJson, username);
