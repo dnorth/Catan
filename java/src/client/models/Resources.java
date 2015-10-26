@@ -29,6 +29,17 @@ public class Resources{
 		this.ore = 0;
 	}
 	
+	public int getAmountOfSpecificResource(ResourceType type) {
+		switch(type) {
+		case BRICK: return this.brick;
+		case ORE: return this.ore;
+		case SHEEP: return this.sheep;
+		case WHEAT: return this.wheat;
+		case WOOD: return this.wood;
+		default: return -1;
+		}
+	}
+	
 	public void addOne(ResourceType type) {
 		switch(type) {
 		case BRICK:

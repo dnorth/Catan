@@ -49,7 +49,7 @@ public class CatanPanel extends JPanel
 		discardView = new DiscardView();
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
-		discardController = new DiscardController(discardView, discardWaitView);
+		discardController = new DiscardController(discardView, discardWaitView, stateManager);
 		discardView.setController(discardController);
 		discardWaitView.setController(discardController);
 		
@@ -89,11 +89,11 @@ public class CatanPanel extends JPanel
 			{
 //				rollView.showModal();
 				
-				discardView.setResourceMaxAmount(ResourceType.WOOD, 1);
-				discardView.setResourceMaxAmount(ResourceType.BRICK, 0);
-				discardView.setResourceMaxAmount(ResourceType.SHEEP, 11);
-				discardView.setResourceMaxAmount(ResourceType.WHEAT, 1);
-				discardView.setResourceMaxAmount(ResourceType.ORE, 0);
+				discardView.setResourceMaxAmount(ResourceType.WOOD, 5);
+				discardView.setResourceMaxAmount(ResourceType.BRICK, 5);
+				discardView.setResourceMaxAmount(ResourceType.SHEEP, 5);
+				discardView.setResourceMaxAmount(ResourceType.WHEAT, 5);
+				discardView.setResourceMaxAmount(ResourceType.ORE, 5);
 				
 				discardView.setResourceAmountChangeEnabled(ResourceType.WOOD, true, false);
 				discardView.setResourceAmountChangeEnabled(ResourceType.SHEEP, true, false);
