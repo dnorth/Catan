@@ -49,7 +49,6 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.waitView = waitView;
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
-		initialize();
 	}
 	
 	private void initialize() {
