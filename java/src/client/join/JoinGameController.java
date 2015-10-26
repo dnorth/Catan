@@ -116,7 +116,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startCreateNewGame() {
-		
+		getJoinGameView().closeModal();
 		getNewGameView().showModal();
 	}
 
@@ -124,6 +124,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void cancelCreateNewGame() {
 		
 		getNewGameView().closeModal();
+		getJoinGameView().setGames(games, localPlayer);
+		getJoinGameView().showModal();
 	}
 
 	/**
@@ -151,6 +153,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			state.joinGame(CatanColor.RED);
 			games = state.getFacade().getGamesList();
 			getJoinGameView().setGames(games, localPlayer);
+			getJoinGameView().showModal();
 		}
 	}
 
@@ -169,13 +172,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			CatanColor cc = players.get(playerCounter).getColor();
 			if(players.get(playerCounter).getId() == myPlayerId) {
 				state.startJoinGame(game);
-				joinGame(cc);
+				//joinGame(cc);
 			}
 			else {
 				getSelectColorView().setColorEnabled(cc, false);
 			}
 		}
 		state.startJoinGame(game);
+		getJoinGameView().closeModal();
 		getSelectColorView().showModal();
 	}
 
@@ -202,27 +206,40 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().closeModal();
 				this.stateManager.setState(new PlayerWaitingState(this.stateManager.getFacade()));
 			}
-			getJoinGameView().closeModal();
-
-			
+			if(getJoinGameView().isModalShowing()){
+				getJoinGameView().closeModal();	
+			}
 			joinAction.execute();
-			/*Facade f = stateManager.getFacade();
-			ServerPoller sp = f.getPoller();
-			sp.forcePollServer();*/
-			
-//			System.out.println("JOINING GAME THING");
-//			System.out.println("UPDATING ClientModel");
-//			JSONToModel.translateClientModel(this.stateManager.getFacade().getClientCommunicator().getGameModel(null));
-//			this.stateManager.getClientModel().update(model);
+//			if(this.getJoinGameView().isModalShowing()) {
+//				this.getJoinGameView().closeModal();
+//			}
+//			if(this.getMessageView().isModalShowing()) {
+//				this.getMessageView().closeModal();
+//			}
+//			if(this.getNewGameView().isModalShowing()) {
+//				this.getNewGameView().closeModal();
+//			}
+//			if(this.getSelectColorView().isModalShowing()) {
+//				this.getSelectColorView().closeModal();
+//			}
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("JOIN-GAME-CONTROLLER:");
+		System.out.println("\tJOIN-GAME-VIEW: " + this.getJoinGameView().isModalShowing());
+		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());
+		System.out.println("\tNEW-GAME-VIEW: " + this.getNewGameView().isModalShowing());
+		System.out.println("\tSELECT-COLOR-VIEW: " + this.getSelectColorView().isModalShowing());
+
+
+
 		//System.out.println("JOIN-GAME-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if (stateManager.getState() instanceof JoinGameState) {
 			IStateBase state = stateManager.getState();
 			if(getJoinGameView().isModalShowing()) {
+				getJoinGameView().closeModal();
 				games = state.getFacade().getGames();
 				getJoinGameView().setGames(games, localPlayer);
 				getJoinGameView().showModal();

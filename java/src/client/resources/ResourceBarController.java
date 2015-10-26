@@ -126,7 +126,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.setResources();
+		//this.setResources();
 		
 	}
 

@@ -40,16 +40,24 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-		
-		this.getRollView().closeModal();
+		if(this.getRollView().isModalShowing()) {
+			this.getRollView().closeModal();
+		}
+		else {
+			System.out.println("ROLL CONTROLLER SHOULD NEVER GET HERE. LINE 47");
+		}
 		int rollNumber = stateManager.getFacade().rollDice();
 		getResultView().setRollValue(rollNumber);
 		getResultView().showModal();
 		stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
+		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("ROLL-CONTROLLER");
+		System.out.println("\tROLL-VIEW: " + this.getRollView().isModalShowing());
+		System.out.println("\tRESULT-VIEW: " + this.getResultView().isModalShowing());
 		//System.out.println("ROLL-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 		if (this.stateManager.getState() instanceof RollingDiceState) {
 			System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");

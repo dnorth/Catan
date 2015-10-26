@@ -73,6 +73,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("TURN-TRACKER-CONTROLLER");
+		System.out.println();
 		//System.out.println("TURN-TRACKER-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if(this.stateManager.getState() instanceof PlayerWaitingState) {
 			this.getView().updateGameState("Waiting For Other Players", false);
@@ -123,8 +125,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 							!(this.stateManager.getState() instanceof TradeOfferedWaitingState)) {
 					System.out.println("MAKE ME THE ACTIVE PLAYER PLEEEEEASE!");
 					this.getView().updateGameState("Finish Turn", true);
+					this.getView().updateGameState("I'm dooooone", true);
 					this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
-					//this.stateManager.getClientModel().runUpdates();
+					this.stateManager.getClientModel().runUpdates();
 				}
 			}
 		}

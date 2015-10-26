@@ -206,6 +206,8 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("MAP-CONTROLLER");
+		System.out.println("\tROB-VIEW: " + this.getRobView().isModalShowing());
 		//System.out.println("MAP-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {

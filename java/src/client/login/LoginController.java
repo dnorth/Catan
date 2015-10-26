@@ -154,7 +154,10 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		System.out.println("LOGIN-CONTROLLER:");
+		System.out.println("\tLOGIN-VIEW: " + this.getLoginView().isModalShowing());
+		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());
+
 		
 	}
 

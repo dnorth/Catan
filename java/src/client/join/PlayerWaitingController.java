@@ -72,6 +72,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("PLAYER-WAITING-CONTROLLER");
+		System.out.println();
 		//System.out.println("PLAYER-WAITING-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if(getView().isModalShowing()) {			
 			if (this.stateManager.getState() instanceof PlayerWaitingState) {
