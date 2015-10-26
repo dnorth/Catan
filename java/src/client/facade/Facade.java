@@ -661,7 +661,9 @@ public class Facade {
 	/**
 	 * Make the specified trade with the bank.
 	 */
-	public void makeMaritimeTrade() {
+	public void makeMaritimeTrade(ResourceType giveResource, ResourceType getResource, int ratio) {
+		JsonObject object = this.modelToJSON.getMaritimeTradeCommand(getPlayerIndex(), ratio, giveResource, getResource);
+		clientCommunicator.maritimeTrade(object, this.getFullCookie());
 	}
 	
 	/**

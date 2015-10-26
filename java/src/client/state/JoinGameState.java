@@ -1,5 +1,8 @@
 package client.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
@@ -251,13 +254,13 @@ public class JoinGameState implements IStateBase {
 	}
 
 	@Override
-	public void startMaritimeTrade() {
-		// TODO Auto-generated method stub
+	public List<ResourceType> startMaritimeTrade() {
+		return new ArrayList<ResourceType>();
 		
 	}
 
 	@Override
-	public void makeMaritimeTrade() {
+	public void makeMaritimeTrade(ResourceType giveResource, ResourceType getResource, int ratio) {
 		// TODO Auto-generated method stub
 		
 	}

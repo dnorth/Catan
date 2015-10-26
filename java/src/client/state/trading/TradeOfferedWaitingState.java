@@ -1,5 +1,8 @@
 package client.state.trading;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import server.proxy.ClientException;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
@@ -184,10 +187,10 @@ public class TradeOfferedWaitingState implements IStateBase {
 	public void robPlayer(RobPlayerInfo victim) {}
 
 	@Override
-	public void startMaritimeTrade() {}
+	public List<ResourceType> startMaritimeTrade() {return new ArrayList<ResourceType>();}
 
 	@Override
-	public void makeMaritimeTrade() {}
+	public void makeMaritimeTrade(ResourceType giveResource, ResourceType getResource, int ratio) {}
 
 	@Override
 	public void setGetResource(ResourceType resource) {}
