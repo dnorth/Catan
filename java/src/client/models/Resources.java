@@ -1,6 +1,6 @@
 package client.models;
 
-import java.awt.List;
+import java.util.List;
 import java.util.ArrayList;
 
 import shared.definitions.ResourceType;
@@ -29,6 +29,16 @@ public class Resources{
 		this.ore = 0;
 	}
 	
+	public List<ResourceType> getAvailableResourceTypes()
+	{
+		List<ResourceType> r = new ArrayList<ResourceType>();
+		if(wood>0){r.add(ResourceType.WOOD);}
+		if(brick>0){r.add(ResourceType.BRICK);}
+		if(sheep>0){r.add(ResourceType.SHEEP);}
+		if(wheat>0){r.add(ResourceType.WHEAT);}
+		if(ore>0){r.add(ResourceType.ORE);}
+		return r;
+	}
 	public int getAmountOfSpecificResource(ResourceType type) {
 		switch(type) {
 		case BRICK: return this.brick;

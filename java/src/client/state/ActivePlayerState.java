@@ -1,5 +1,7 @@
 package client.state;
 
+import java.util.List;
+
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
@@ -249,15 +251,14 @@ public class ActivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void startMaritimeTrade() {
-		// TODO Auto-generated method stub
+	public List<ResourceType> startMaritimeTrade() {
+		return facade.startMaritimeTrade();
 		
 	}
 
 	@Override
-	public void makeMaritimeTrade() {
-		// TODO Auto-generated method stub
-		
+	public void makeMaritimeTrade(ResourceType giveResource, ResourceType getResource, int ratio) {
+		facade.makeMaritimeTrade(giveResource, getResource, ratio);
 	}
 
 	@Override
@@ -311,7 +312,6 @@ public class ActivePlayerState implements IStateBase {
 	@Override
 	public void playCard() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

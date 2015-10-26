@@ -8,6 +8,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -66,8 +67,8 @@ public interface IStateBase {
 	public abstract void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected);
 	public abstract void playSoldierCard();
 	public abstract void robPlayer(RobPlayerInfo victim);
-	public abstract void startMaritimeTrade();
-	public abstract void makeMaritimeTrade();
+	public abstract List<ResourceType> startMaritimeTrade();
+	public abstract void makeMaritimeTrade(ResourceType giveResource, ResourceType getResource, int ratio);
 	public abstract void setGetResource(ResourceType resource);
 	public abstract void setGiveResource(ResourceType resource);
 	public abstract void unsetGetValue();
