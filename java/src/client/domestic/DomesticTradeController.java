@@ -127,6 +127,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				
 				if( (offerCount + 1) == 0) {
 					getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+				} else {
+					getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
 				}
 			}
 		} else if (recieving) {
@@ -145,11 +147,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int localCount = localResources.getResourceCount(resource);
 		int offerCount = tradeOffer.getResourceCount(resource);
 		if(sending) {  //Sending an offer makes the resource a negative number
-			if( offerCount < localCount) {
+			if( Math.abs(offerCount) < localCount) {
 				tradeOffer.subtractOne(resource);
 			
-				if( localCount == (offerCount + 1)) {
+				if( localCount == (Math.abs(offerCount) + 1)) {
 					getTradeOverlay().setResourceAmountChangeEnabled(resource, false, true);
+				} else {
+					getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
 				}
 			}
 		} else { //This means we're receiving. so we add the number
