@@ -14,5 +14,16 @@ public enum ResourceType
 			default: return null;
 		}
 	}
+	
+	public static String getResourceName(ResourceType type) {
+		switch(type) {
+			case WOOD: return "wood";
+			case BRICK: return "brick";
+			case SHEEP: return "sheep";
+			case WHEAT: return "wheat";
+			case ORE: return "ore";
+			default: return null;
+		}
+	}
 }
 

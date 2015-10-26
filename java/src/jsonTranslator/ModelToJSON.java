@@ -105,27 +105,25 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	public JsonObject createPlayMonopolyObject(int playerIndex, ResourceType resource)
-	{
-		JsonObject object = new JsonObject();
-		object.addProperty("Player Index", playerIndex);
-		object.addProperty("ResourceType", resource.name());
-		return object;
-	}
-	
 	public JsonObject createPlayRoadBuildingObject(int playerIndex, EdgeLocation roadLocation, EdgeLocation roadLocation2, boolean free)
 	{
-//		JsonObject object = new JsonObject();
-//		object.addProperty("Player Index", playerIndex);
-//		object.addProperty("Road Location 1", roadLocation);
-		return null;
-	}
-	
-	public JsonObject createYearOfPlentyObject(ResourceType resource1, ResourceType resource2){
 		JsonObject object = new JsonObject();
-		object.addProperty("ResourceType", resource1.name());
-		object.addProperty("ResourceType", resource2.name());
-		return  object;
+		object.addProperty("type", "Road_Building");
+		object.addProperty("playerIndex", playerIndex);
+		
+		JsonObject spot1 = new JsonObject();
+		spot1.addProperty("x", roadLocation.getXcoord());
+		spot1.addProperty("y", roadLocation.getYcoord());
+		spot1.addProperty("direction", roadLocation.getDirection());
+		
+		JsonObject spot2 = new JsonObject();
+		spot2.addProperty("x", roadLocation2.getXcoord());
+		spot2.addProperty("y", roadLocation2.getYcoord());
+		spot2.addProperty("direction", roadLocation2.getDirection());
+		
+		object.add("spot1", spot1);
+		object.add("spot2", spot2);
+		return object;
 	}
 	
 	//MOVES COMMANDS
@@ -179,8 +177,8 @@ public class ModelToJSON {
 		JsonObject command = new JsonObject();
 		command.addProperty("type", "Year_of_Plenty");
 		command.addProperty("playerIndex", playerIndex);
-		command.addProperty("resource1", resource1.name());
-		command.addProperty("resource2", resource2.name());
+		command.addProperty("resource1", ResourceType.getResourceName(resource1));
+		command.addProperty("resource2", ResourceType.getResourceName(resource2));
 		return command;
 	}
 	
@@ -219,7 +217,7 @@ public class ModelToJSON {
 	public JsonObject getPlayMonopolyCommand(int playerIndex, ResourceType resource) {
 		JsonObject command = new JsonObject();
 		command.addProperty("type", "Monopoly");
-		command.addProperty("resource", resource.name());
+		command.addProperty("resource", ResourceType.getResourceName(resource));
 		command.addProperty("playerIndex", playerIndex);
 		return command;
 	}

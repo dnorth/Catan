@@ -122,6 +122,17 @@ public class Board {
 	public void setRoads(Road[] roads) {
 		this.roads = roads;
 	}
+	
+	public void addRoad(Road road) {
+		Road[] newRoads = new Road[roads.length+1];
+		int i = 0;
+		while (i < roads.length) {
+			newRoads[i] = roads[i];
+			i += 1;
+		}
+		newRoads[i] = road;
+		setRoads(newRoads);
+	}
 
 	public int getRadius() {
 		return radius;

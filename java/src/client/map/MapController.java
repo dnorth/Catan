@@ -33,6 +33,7 @@ public class MapController extends Controller implements IMapController {
 	private IRobView robView;
 	private StateManager stateManager;
 	private int roadBuildingCount;
+	private Road[] roadBuildingRoads;
 	
 	public MapController(IMapView view, IRobView robView, StateManager stateManager) {
 		
@@ -42,6 +43,7 @@ public class MapController extends Controller implements IMapController {
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
 		this.roadBuildingCount = 0;
+		this.roadBuildingRoads = new Road[2];
 		
 //		initFromModel();
 	}
@@ -159,7 +161,15 @@ public class MapController extends Controller implements IMapController {
 	public void placeRoad(EdgeLocation edgeLoc) {
 		this.stateManager.getState().placeRoad(edgeLoc);
 		this.stateManager.setPlacing(false);
-		if (stateManager.getState() instanceof RoadBuildingState) roadBuildingCount += 1;
+		if (stateManager.getState() instanceof RoadBuildingState) {
+			Road newRoad = new Road(stateManager.getFacade().getPlayerIndex(),
+					new client.models.mapdata.EdgeLocation(edgeLoc));
+			if (roadBuildingRoads[0] == null)
+				roadBuildingRoads[0] = newRoad;
+			else roadBuildingRoads[1] = newRoad;
+			roadBuildingCount += 1;
+			stateManager.getClientModel().runUpdates();
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {	
@@ -277,9 +287,11 @@ public class MapController extends Controller implements IMapController {
 					startMove(PieceType.ROAD, true, false);
 					stateManager.setPlacing(true);
 				}
+				else System.out.println("PLACING IS TRUE...?");
 			}
 			else {
 				roadBuildingCount = 0;
+				stateManager.getFacade().playRoadBuildingCard(roadBuildingRoads);
 				stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 			}
 		}

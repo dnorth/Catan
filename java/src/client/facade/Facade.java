@@ -31,6 +31,7 @@ import client.models.TradeOffer;
 import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
+import client.models.mapdata.Road;
 
 import com.google.gson.JsonObject;
 
@@ -168,14 +169,14 @@ public class Facade {
 	 * @param resource The resource to take from other players
 	 */
 	public void playMonopolyCard(ResourceType resource) {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayMonopolyObject(this.getPlayerIndex(), resource), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
+		clientCommunicator.playMonopoly(modelToJSON.getPlayMonopolyCommand(this.getPlayerIndex(), resource), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
 	}
 	
 	/**
 	 * Called by client when player wants to play Monument card
 	 */
 	public void playMonumentCard() {
-		clientCommunicator.playMonopoly(modelToJSON.createPlayerIndex(this.getPlayerIndex()), getFullCookie());
+		clientCommunicator.playMonument(modelToJSON.getPlayMonumentCommand(getPlayerIndex()), getFullCookie());
 	}
 	
 	/**
@@ -192,7 +193,7 @@ public class Facade {
 	 * @param resource2 Second resource to gain
 	 */
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		clientCommunicator.playYearOfPlenty(modelToJSON.createYearOfPlentyObject(resource1, resource2), modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId()));
+		clientCommunicator.playYearOfPlenty(modelToJSON.getPlayYearOfPlentyCommand(getPlayerIndex(), resource1, resource2), getFullCookie());
 	}
 	
 	// DISCARD CONTROLLER
@@ -605,8 +606,13 @@ public class Facade {
 	 * This method is called when the user plays a "road building" progress
 	 * development card. It should initiate the process of allowing the player
 	 * to place two roads.
+	 * @param roadBuildingRoads 
 	 */
-	public void playRoadBuildingCard() {
+	public void playRoadBuildingCard(Road[] roads) {
+		this.clientCommunicator.playRoadBuilding(this.modelToJSON
+				.createPlayRoadBuildingObject(getPlayerIndex(),
+						roads[0].getLocation(), roads[1].getLocation(), true),
+				getFullCookie());
 	}
 	
 	/**
@@ -866,5 +872,9 @@ public class Facade {
 	
 	public JsonObject getFullCookie() {
 		return modelToJSON.createUserAndGameCookie(localPlayer.getUserCookie(), game.getId());
+	}
+
+	public void placeLocalRoad(EdgeLocation edgeLoc) {
+		this.client.getBoard().addRoad(new Road(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(edgeLoc)));
 	}
 }

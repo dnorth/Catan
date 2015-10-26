@@ -129,7 +129,6 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playRoadBuildCard() {
-		stateManager.getFacade().playRoadBuildingCard();
 		stateManager.setState(new RoadBuildingState(stateManager.getFacade()));
 		stateManager.getClientModel().runUpdates();
 		roadAction.execute();
@@ -143,7 +142,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		stateManager.getFacade().playYearOfPlentyCard(resource1, resource2);
 	}
 
 	@Override
