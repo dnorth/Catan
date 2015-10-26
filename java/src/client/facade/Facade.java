@@ -287,7 +287,7 @@ public class Facade {
 	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
 		
 		//System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
-		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, null);
