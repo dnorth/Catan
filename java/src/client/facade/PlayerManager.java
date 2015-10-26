@@ -77,15 +77,15 @@ public class PlayerManager {
 	 */
 	public boolean hasSpecifiedResources(int playerIndex, TradeOffer tradeOffer){	
 		Player p = players[playerIndex];
-		Resources senderNeeds=tradeOffer.getSenderNeeds();
+		Resources offer = tradeOffer.getOffer();
 		
-		return p.hasBrick(senderNeeds.getBrickCount()) && 
-			   p.hasOre(senderNeeds.getOreCount())     && 
-			   p.hasSheep(senderNeeds.getSheepCount()) && 
-			   p.hasWheat(senderNeeds.getWheatCount()) &&
-			   p.hasWood(senderNeeds.getWoodCount());
+		return p.hasBrick(offer.getBrickCount()) && 
+			   p.hasOre(offer.getOreCount())     && 
+			   p.hasSheep(offer.getSheepCount()) && 
+			   p.hasWheat(offer.getWheatCount()) &&
+			   p.hasWood(offer.getWoodCount());
 	}
-	
+
 	
 	/**
 	 * Determines if a player has the resources necessary to buy a settlement.

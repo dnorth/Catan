@@ -149,7 +149,7 @@ public class InactivePlayerState implements IStateBase {
 	}
 
 	@Override
-	public void sendTradeOffer() {
+	public void sendTradeOffer(TradeOffer offer) {
 		// TODO Auto-generated method stub
 		
 	}

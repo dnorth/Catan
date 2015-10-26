@@ -48,6 +48,7 @@ public class JSONToModel {
 		MessageList log = translateLog(serverModel);
 		Board board = translateBoard(serverModel);
 		TurnTracker turnTracker = translateTurnTracker(serverModel);
+		TradeOffer tradeOffer = translateTradeOffer(serverModel);
 		Player[] players = translatePlayers(serverModel);
 		int version = translateVersion(serverModel);
 		int winner = translateWinner(serverModel);
@@ -61,6 +62,8 @@ public class JSONToModel {
 		clientModel.setBoard(board);
 		
 		clientModel.setTurnTracker(turnTracker);
+		
+		clientModel.setTradeOffer(tradeOffer);
 		
 		clientModel.setPlayers(players);
 		
@@ -79,6 +82,11 @@ public class JSONToModel {
 	public static Resources translateBank(JsonObject serverModel) {
 		Resources bank = (Resources)g.fromJson(serverModel.get("bank"), Resources.class);
 		return bank;
+	}
+	
+	public static TradeOffer translateTradeOffer(JsonObject serverModel) {
+		TradeOffer tradeOffer = (TradeOffer)g.fromJson(serverModel.get("tradeOffer"), TradeOffer.class);
+		return tradeOffer;
 	}
 	
 	/**
@@ -113,7 +121,6 @@ public class JSONToModel {
 	 * @return updated player list
 	 */
 	
-	//TODO GET PLAYERS TO WORK - THIS IS HARDER BECAUSE ITS A LIST OF PLAYERS
 	public static Player[] translatePlayers(JsonObject serverModel) {
 		final JsonArray playersArray = serverModel.get("players").getAsJsonArray();
 		Player[] players = new Player[playersArray.size()];
@@ -123,15 +130,6 @@ public class JSONToModel {
 		}
 
 		return players;
-	}
-	
-	//TODO Is this REALLY part of the client model? How will we integrate it?
-	/**
-	 * Translates trade offer to put in updated client model
-	 * @return updated trade offer
-	 */
-	public static TradeOffer translateTradeOffer(JsonObject serverModel) {
-		return null;
 	}
 	
 	/**

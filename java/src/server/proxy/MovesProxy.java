@@ -243,6 +243,7 @@ public class MovesProxy extends ServerProxy{
     public JsonObject offerTrade (JsonObject data, JsonObject optionalCookies){ //int playerIndex, Resources resourceList, int receivingPlayerIndex
     	JsonObject clientModelJSON = null;
     	try {
+    		System.out.println("\n\n\n TRADE SENT \n\n\n");
     		clientModelJSON = doPost("/moves/offerTrade", data, optionalCookies);
     	} catch (ClientException e) {
     		e.printStackTrace();

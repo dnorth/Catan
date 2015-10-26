@@ -8,11 +8,13 @@ import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.Player;
 import client.models.Resources;
+import client.models.TradeOffer;
 import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
 import client.state.StateManager;
 import client.state.trading.OfferingTradeState;
+import client.state.trading.ReceivingTradeState;
 import client.state.trading.TradeOfferedWaitingState;
 
 
@@ -29,6 +31,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private Resources localResources;
 	private boolean sending;
 	private boolean recieving;
+	int tradingPlayerIndex;
 
 	/**
 	 * DomesticTradeController constructor
@@ -51,6 +54,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.tradeOffer = new Resources();
 		this.sending = false;
 		this.recieving = false;
+		this.tradingPlayerIndex = -1;
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -87,20 +91,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
 		this.getTradeOverlay().setCancelEnabled(true);
 		this.getTradeOverlay().setPlayerSelectionEnabled(true);
-		this.getTradeOverlay().setTradeEnabled(false);
-		this.getTradeOverlay().setStateMessage("Select the resources you want to trade");
+		setTradeButton();
 		Player[] players = this.stateManager.getClientModel().getPlayers();
 		PlayerInfo[] tradePlayers = new PlayerInfo[3];
 		int tradePlayersIndex = 0;
-		for(int i = 0; i < 4; i++) {
+		for(int i=0; i < 4; i++) {
 			if(players[i].getPlayerIndex() != this.stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
-				if(players[i].getResources().getTotalCount() > 0) { //Only want to trade with players who have cards
-					tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
-				}
+				tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
 			}
 		}
 		this.localResources = getLocalResources();
-		this.getTradeOverlay().setPlayers(tradePlayers);
+
+		this.getTradeOverlay().setPlayers(tradePlayers); //TODO What happens when we find no one?
 		getTradeOverlay().showModal();
 	}
 	
@@ -121,11 +123,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 			}
 		} else if (recieving) {
+			tradeOffer.subtractOne(resource);
+			offerCount = tradeOffer.getResourceCount(resource);
 			if(offerCount == 0) {
 				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
 			}
 		}
-		
+		setTradeButton();
 		System.out.println("Current Trade Offer: " + tradeOffer.toString());
 	}
 
@@ -145,7 +149,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			tradeOffer.addOne(resource);
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
 		}
-		
+		setTradeButton();
 		System.out.println("Current Trade Offer: " + tradeOffer.toString());
 	}
 
@@ -153,15 +157,17 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 		IStateBase state = this.stateManager.getState();
 		getTradeOverlay().closeModal();
-		state.sendTradeOffer();
+		int localPlayerIndex = this.stateManager.getFacade().getLocalPlayer().getPlayerIndex();
+		TradeOffer newTrade = new TradeOffer(localPlayerIndex, tradingPlayerIndex, tradeOffer);
+		state.sendTradeOffer(newTrade);
 		this.stateManager.setState(new TradeOfferedWaitingState(this.stateManager.getFacade()));
 		getWaitOverlay().showModal();
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		IStateBase state = this.stateManager.getState();
-		state.setPlayerToTradeWith(playerIndex);
+		tradingPlayerIndex = playerIndex;
+		setTradeButton();
 	}
 
 	@Override
@@ -173,6 +179,35 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int offerCount = tradeOffer.getResourceCount(resource);
 		if( offerCount == 0) {
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		}
+	}
+	
+	public boolean tradeIsValid() {
+		//There needs to be a valid player index for the trade to be valid
+		if(tradingPlayerIndex == -1) {
+			System.out.println("Part 1 failed");
+			return false;
+		}
+		//There needs to be at least ONE resource being sent and ONE resource being received for a trade to be valid
+		if(tradeOffer.getBrickCount() < 0 || tradeOffer.getOreCount() < 0 || tradeOffer.getSheepCount() < 0 || tradeOffer.getWheatCount() < 0 || tradeOffer.getWoodCount() < 0) {
+			System.out.println("Part 2 pass!");
+			if(tradeOffer.getBrickCount() > 0 || tradeOffer.getOreCount() > 0 || tradeOffer.getSheepCount() > 0 || tradeOffer.getWheatCount() > 0 || tradeOffer.getWoodCount() > 0){
+				System.out.println("Part 3 pass!");
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void setTradeButton() {
+		System.out.println("Checking for a valid trade");
+		if(tradeIsValid()) {
+			this.getTradeOverlay().setTradeEnabled(true);
+			this.getTradeOverlay().setStateMessage("Trade!");
+		} else {
+			this.getTradeOverlay().setTradeEnabled(false);
+			this.getTradeOverlay().setStateMessage("Select the resources you want to trade");
 		}
 	}
 
@@ -211,21 +246,78 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if(this.stateManager.getState() instanceof TradeOfferedWaitingState) {
+			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();
+			if(offer == null) {
+				this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade())); //This may be completely unnecessary and maybe we should set them to ActivePlayerState here??
+				getWaitOverlay().closeModal();
+			}
+		}
+		if(this.stateManager.getState() instanceof InactivePlayerState) {
+			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();	
+			System.out.println("Waiting for a trade: " + offer);
+			if(offer != null) {
+				if(offer.getReceiver() == stateManager.getFacade().getPlayerIndex()) {
+					this.stateManager.setState(new ReceivingTradeState(this.stateManager.getFacade()));
+					getAcceptOverlay().setPlayerName(stateManager.getClientModel().getPlayers()[offer.getSender()].getName());
+					addGetResources(offer);
+					addGiveResources(offer);
+					getAcceptOverlay().showModal();
+				}
+			}
+		}
 		if(this.stateManager.getState() instanceof ActivePlayerState) {
-			System.out.println("DOMESTIC TRADE BUTTON ENABLED");
-			this.getTradeView().enableDomesticTrade(true);
+			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();
+
+			if(offer != null) {
+				if(offer.getSender() == stateManager.getFacade().getPlayerIndex()) {
+					this.stateManager.setState(new TradeOfferedWaitingState(this.stateManager.getFacade()));
+					if(!getWaitOverlay().isModalShowing()) {
+						getWaitOverlay().showModal();
+					}
+				}
+			} else {
+				this.getTradeView().enableDomesticTrade(true);
+			}
 		}
 		else {
 			this.getTradeView().enableDomesticTrade(false);
 		}
-		if(this.stateManager.getState() instanceof TradeOfferedWaitingState) {
-			
-			if(this.stateManager.getClientModel().getTradeOffer() == null) {
-				this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade())); //This may be completely unnecessary and maybe we should set them to ActivePlayerState here??
-			}
-			else {
-				
-			}
+	}
+	
+	private void addGetResources(TradeOffer offer) {
+		if(offer.getOreCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
+		}
+		if(offer.getBrickCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
+		}
+		if(offer.getSheepCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
+		}
+		if(offer.getWheatCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
+		}
+		if(offer.getWoodCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
+		}
+	}
+	
+	private void addGiveResources(TradeOffer offer) {
+		if(offer.getOreCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
+		}
+		if(offer.getBrickCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
+		}
+		if(offer.getSheepCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
+		}
+		if(offer.getWheatCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
+		}
+		if(offer.getWoodCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
 		}
 	}
 

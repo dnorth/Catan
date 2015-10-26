@@ -49,7 +49,7 @@ public interface IStateBase {
 	public abstract void discard(Resources toDiscard);
 	public abstract void decreaseDomesticTradeResourceAmount(ResourceType resource);
 	public abstract void increaseDomesticTradeResourceAmount(ResourceType resource);
-	public abstract void sendTradeOffer();
+	public abstract void sendTradeOffer(TradeOffer offer);
 	public abstract void setPlayerToTradeWith(int playerIndex);
 	public abstract void setResourceToReceive(ResourceType resource);
 	public abstract void setResourceToSend(ResourceType resource);

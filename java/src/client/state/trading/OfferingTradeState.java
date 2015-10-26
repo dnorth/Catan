@@ -124,41 +124,6 @@ public class OfferingTradeState implements IStateBase {
 	public void discard(Resources toDiscard) {}
 
 	@Override
-	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {
-		facade.decreaseDomesticTradeResourceAmount(resource);
-	}
-
-	@Override
-	public void increaseDomesticTradeResourceAmount(ResourceType resource) {
-		facade.increaseDomesticTradeResourceAmount(resource);
-	}
-
-	@Override
-	public void sendTradeOffer() {
-		facade.sendTradeOffer();
-	}
-
-	@Override
-	public void setPlayerToTradeWith(int playerIndex) {
-		facade.setPlayerToTradeWith(playerIndex);
-	}
-
-	@Override
-	public void setResourceToReceive(ResourceType resource) {
-		facade.setResourceToReceive(resource);
-	}
-
-	@Override
-	public void setResourceToSend(ResourceType resource) {
-		facade.setResourceToSend(resource);
-	}
-
-	@Override
-	public void unsetResource(ResourceType resource) {
-		facade.unsetResource(resource);
-	}
-
-	@Override
 	public void acceptTrade(boolean willAccept) {}
 
 	@Override
@@ -247,5 +212,46 @@ public class OfferingTradeState implements IStateBase {
 
 	@Override
 	public void endTurn() {}
+
+	@Override
+	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void increaseDomesticTradeResourceAmount(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setResourceToReceive(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setResourceToSend(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unsetResource(ResourceType resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPlayerToTradeWith(int playerIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendTradeOffer(TradeOffer offer) {
+		this.getFacade().sendTradeOffer(offer);	
+	}
 
 }

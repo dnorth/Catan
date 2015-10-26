@@ -204,7 +204,6 @@ public class Facade {
 	 *            The resource that was increased
 	 */
 	public void increaseAmount(ResourceType resource) {
-		
 	}
 	
 	/**
@@ -240,82 +239,14 @@ public class Facade {
 		}
 	}
 	
-	
-	/**
-	 * Called by the domestic trade overlay when the user decreases the amount
-	 * of a resource.
-	 * 
-	 * @param resource
-	 *            The resource whose amount is being decreased
-	 */
-	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {
-		this.client.getTradeOffer().subtractOne(resource);
-	}
-	
-	/**
-	 * Called by the domestic trade overlay when the user increases the amount
-	 * of a resource.
-	 * 
-	 * @param resource
-	 *            The resource whose amount is being increased
-	 */
-	public void increaseDomesticTradeResourceAmount(ResourceType resource) {
-		this.client.getTradeOffer().addOne(resource);
-	}
-	
 	/**
 	 * Called by the domestic trade overlay when the user clicks the trade
 	 * button.
 	 */
-	public void sendTradeOffer() {
-		clientCommunicator.offerTrade(this.modelToJSON.createOfferTradeObject(this.client.getTradeOffer()), this.getFullCookie());
+	public void sendTradeOffer(TradeOffer offer) {
+		clientCommunicator.offerTrade(this.modelToJSON.createOfferTradeObject(offer), this.getFullCookie());
 	}
-	
-	/**
-	 * Called by the domestic trade overlay when the user selects a player to
-	 * trade with.
-	 * 
-	 * @param playerIndex
-	 *            The index [0, 3] of the selected trading partner, or -1 if
-	 *            "None" was selected
-	 */
-	public void setPlayerToTradeWith(int playerIndex) {
-		this.client.getTradeOffer().setSender(playerIndex);
-	}
-	
-	/**
-	 * Called by the domestic trade overlay when the user selects a resource to
-	 * be received.
-	 * 
-	 * @param resource
-	 *            The resource to be received
-	 */
-	public void setResourceToReceive(ResourceType resource) {
-		this.client.getTradeOffer().setResourceReceiver(resource, 1); //This "1" means that the resource will be received. A "-1" would indicate that it is being sent. "0" means neither
-	}
-	
-	/**
-	 * Called by the domestic trade overlay when the user selects a resource to
-	 * be sent.
-	 * 
-	 * @param resource
-	 *            The resource to be sent
-	 */
-	public void setResourceToSend(ResourceType resource) {
-		this.client.getTradeOffer().setResourceReceiver(resource, -1); //This "-1" means that the resource will be sent. A "1" would indicate that it is being received. "0" means neither
-	}
-	
-	/**
-	 * Called by the domestic trade overlay when user selects "none" for a
-	 * resource.
-	 * 
-	 * @param resource
-	 *            The resource for which "none" was selected
-	 */
-	public void unsetResource(ResourceType resource) {
-		this.client.getTradeOffer().unsetResource(resource);
-	}
-	
+
 	/**
 	 * Called by the accept trade overlay when the user either accepts or
 	 * rejects a trade.

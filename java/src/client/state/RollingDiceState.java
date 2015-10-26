@@ -129,7 +129,7 @@ public class RollingDiceState implements IStateBase {
 	public void increaseDomesticTradeResourceAmount(ResourceType resource) {}
 
 	@Override
-	public void sendTradeOffer() {}
+	public void sendTradeOffer(TradeOffer offer) {}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {}

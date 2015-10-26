@@ -132,9 +132,6 @@ public class TradeOfferedWaitingState implements IStateBase {
 	public void increaseDomesticTradeResourceAmount(ResourceType resource) {}
 
 	@Override
-	public void sendTradeOffer() {}
-
-	@Override
 	public void setPlayerToTradeWith(int playerIndex) {}
 
 	@Override
@@ -226,5 +223,11 @@ public class TradeOfferedWaitingState implements IStateBase {
 
 	@Override
 	public void endTurn() {}
+
+	@Override
+	public void sendTradeOffer(TradeOffer offer) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
