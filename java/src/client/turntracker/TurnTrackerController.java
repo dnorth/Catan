@@ -37,6 +37,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn() 
 	{
+		System.out.println("WE MADE IT TO THE ENDTURN FUNCTION!");
 		IStateBase state = this.stateManager.getState();
 		state.endTurn();
 		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));

@@ -325,8 +325,7 @@ public class ActivePlayerState implements IStateBase {
 
 	@Override
 	public void endTurn() {
-		// TODO Auto-generated method stub
-		
+		this.facade.endTurn();
 	}
 
 	@Override
