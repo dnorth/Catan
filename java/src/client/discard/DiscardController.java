@@ -7,6 +7,7 @@ import client.base.*;
 import client.misc.*;
 import client.models.Player;
 import client.models.Resources;
+import client.state.IStateBase;
 import client.state.StateManager;
 
 
@@ -133,45 +134,71 @@ public class DiscardController extends Controller implements IDiscardController 
 		}
 		
 		if(++currTotal == totalToDiscard) {
-			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, true);
-			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, true);
-			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, true);
-			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, true);
-			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, true);
-			this.getDiscardView().setDiscardButtonEnabled(true);
+			if (currBrick > 0)this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
+			
+			if (currOre > 0) this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
+			
+			if (currSheep > 0) this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
+			
+			if (currWheat > 0) this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
+			
+			if (currWood > 0) this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
 		}
 		else {
 			this.getDiscardView().setDiscardButtonEnabled(false);
 		}
-		this.getDiscardView().setStateMessage(currTotal + "/" + totalToDiscard);
-		
+		this.getDiscardView().setStateMessage(currTotal + "/" + totalToDiscard);	
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) {
 		switch(resource) {
 		case BRICK:
+			if(--currBrick > 0)this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+			this.getDiscardView().setResourceDiscardAmount(resource, currBrick); //just to clarify, the third line in each switch statement is NOT supposed to be a part of the "else"
 			break;
 		case ORE:
+			if(--currOre > 0) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+			this.getDiscardView().setResourceDiscardAmount(resource, currOre);
 			break;
 		case SHEEP:
+			if(--currSheep > 0) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+			this.getDiscardView().setResourceDiscardAmount(resource, currSheep);
 			break;
 		case WHEAT:
+			if(--currWheat > 0) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+			this.getDiscardView().setResourceDiscardAmount(resource, currWheat);
 			break;
 		case WOOD:
+			if(--currWood > 0) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, true, false);
+			this.getDiscardView().setResourceDiscardAmount(resource, currWood);
 			break;
 		}
+		
+		this.getDiscardView().setDiscardButtonEnabled(false);
+		this.getDiscardView().setStateMessage(--currTotal + "/" + totalToDiscard);
+
 	}
 
 	@Override
 	public void discard() {
-		
+		IStateBase state = this.stateManager.getState();
+		state.discard();
 		getDiscardView().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		
 	}
 
