@@ -205,20 +205,17 @@ public class ActivePlayerState implements IStateBase {
 
 	@Override
 	public void placeRoad(EdgeLocation edgeLoc) {
-		// TODO Auto-generated method stub
-		
+		this.facade.placeRoad(edgeLoc);
 	}
 
 	@Override
 	public void placeSettlement(VertexLocation vertLoc) {
-		// TODO Auto-generated method stub
-		
+		this.facade.placeSettlement(vertLoc);
 	}
 
 	@Override
 	public void placeCity(VertexLocation vertLoc) {
-		// TODO Auto-generated method stub
-		
+		this.facade.placeCity(vertLoc);
 	}
 
 	@Override
