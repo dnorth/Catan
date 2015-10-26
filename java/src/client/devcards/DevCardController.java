@@ -22,6 +22,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private boolean playedYearOfPlenty;
 	private boolean playedRoadBuilding;
 	private boolean playedMonopoly;
+	private boolean playedSoldier;
 	
 	/**
 	 * DevCardController constructor
@@ -85,16 +86,20 @@ public class DevCardController extends Controller implements IDevCardController 
 		return getOldAmount(type) + getNewAmount(type);
 	}
 	
+	public boolean enoughRoads() {
+		return stateManager.getClientModel().getPlayers()[stateManager.getFacade().getPlayerIndex()].getRoads() > 1;
+	}
+	
 	public boolean canPlayCard(DevCardType type) {
 		switch(type) {
 		case SOLDIER:
-			return (getOldAmount(type) > 0);
+			return (!playedSoldier && getOldAmount(type) > 0);
 		case YEAR_OF_PLENTY:
 			return (!playedYearOfPlenty && getOldAmount(type) > 0);
 		case MONOPOLY:
 			return (!playedMonopoly && getOldAmount(type) > 0);
 		case ROAD_BUILD:
-			return (!playedRoadBuilding && getOldAmount(type) > 0);
+			return (!playedRoadBuilding && getOldAmount(type) > 0 && enoughRoads());
 		case MONUMENT:
 			return (getTotalAmount(type) > 0);
 		}
@@ -138,6 +143,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void playSoldierCard() {
 		stateManager.setState(new RobbingState(stateManager.getFacade()));
 		stateManager.getClientModel().runUpdates();
+		this.playedSoldier = true;
 //		soldierAction.execute();
 	}
 
@@ -151,6 +157,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.playedMonopoly = false;
 		this.playedRoadBuilding = false;
 		this.playedYearOfPlenty = false;
+		this.playedSoldier = false;
 	}
 
 }
