@@ -87,7 +87,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			this.getView().updateGameState("Waiting For Other Players", false);
 			return;
 		}
-		else if (this.stateManager.getState() instanceof RoadBuildingState) {
+		else if (this.stateManager.getState() instanceof RoadBuildingState ||
+				this.stateManager.getState() instanceof RobbingState) {
 			//System.out.println("ROAD BUILDING STATE");
 			return;
 		}

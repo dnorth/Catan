@@ -6,6 +6,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
 import client.state.RoadBuildingState;
+import client.state.RobbingState;
 import client.state.StateManager;
 
 
@@ -136,8 +137,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void playSoldierCard() {
-		
-		soldierAction.execute();
+		stateManager.setState(new RobbingState(stateManager.getFacade()));
+		stateManager.getClientModel().runUpdates();
+//		soldierAction.execute();
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
 import client.state.RoadBuildingState;
+import client.state.RobbingState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
@@ -174,7 +175,7 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeSettlement(VertexLocation vertLoc) {	
 		this.stateManager.getState().placeSettlement(vertLoc);
-		this.stateManager.setPlacing(false);
+		this.stateManager.setPlacing(false);;
 	}
 
 	public void placeCity(VertexLocation vertLoc) {	
@@ -208,14 +209,16 @@ public class MapController extends Controller implements IMapController {
 		}
 		else {
 			if(state instanceof ActivePlayerState) {
-				if(this.stateManager.getFacade().getCanDo().canBuyRoad(this.stateManager.getFacade().getPlayerIndex())){
-					getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
-				}
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
+			}
+			else if (state instanceof RobbingState) {
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
 			}
 		}
 	}
 	
 	public void cancelMove() {
+		if (stateManager.getState() instanceof RobbingState) stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 	}
 	
 	public void playSoldierCard() {	
@@ -229,6 +232,7 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {
 		stateManager.getState().robPlayer(victim);
 		stateManager.setCurrentlyRobbing(false);
+		if (stateManager.getState() instanceof RobbingState) stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 	}
 
 	@Override
@@ -303,7 +307,14 @@ public class MapController extends Controller implements IMapController {
 		else if(stateManager.getState() instanceof ActivePlayerState) {
 			if (!stateManager.getCurrentlyRobbing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
 				stateManager.setCurrentlyRobbing(true);
-				startMove(PieceType.ROBBER, true, true);
+				startMove(PieceType.ROBBER, true, false);
+			}
+		}
+		
+		else if (stateManager.getState() instanceof RobbingState) {
+			if (!stateManager.getCurrentlyRobbing()) {
+				stateManager.setCurrentlyRobbing(true);
+				startMove(PieceType.ROBBER, true, false);
 			}
 		}
 		

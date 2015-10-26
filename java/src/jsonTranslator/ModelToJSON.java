@@ -207,8 +207,8 @@ public class ModelToJSON {
 		command.addProperty("victimIndex", victimIndex);
 		
 		JsonObject hexLoc = new JsonObject();
-		hexLoc.addProperty("x", hex.getX());
-		hexLoc.addProperty("y", hex.getY());
+		hexLoc.addProperty("x", String.valueOf(hex.getX()));
+		hexLoc.addProperty("y", String.valueOf(hex.getY()));
 		
 		command.add("location", hexLoc);
 		return command;

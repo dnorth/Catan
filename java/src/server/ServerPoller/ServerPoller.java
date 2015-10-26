@@ -47,7 +47,7 @@ public class ServerPoller {
 	private class PollEvent extends TimerTask {		
 		public void run() {
 			try {
-				//System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
+				System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}

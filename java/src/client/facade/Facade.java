@@ -598,8 +598,14 @@ public class Facade {
 	/**
 	 * This method is called when the user plays a "soldier" development card.
 	 * It should initiate robber placement.
+	 * @param victim 
+	 * @param newRobberHexLoc 
 	 */
-	public void playSoldierCard() {
+	public void playSoldierCard(RobPlayerInfo victim, HexLocation hexLoc) {
+		JsonObject commandCookie = modelToJSON.getPlaySoldierCommand(
+				getPlayerIndex(), victim.getPlayerIndex(),
+				new client.models.mapdata.HexLocation(hexLoc));
+		clientCommunicator.playSoldier(commandCookie, getFullCookie());
 	}
 	
 	/**
