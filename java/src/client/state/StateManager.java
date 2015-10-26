@@ -13,11 +13,13 @@ public class StateManager {
 	private IStateBase state;
 	Facade facade;
 	ServerPoller serverPoller;
+	boolean placing;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
 		this.state = new LoginState(facade);
 		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
+		this.placing = false;
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State
@@ -67,5 +69,13 @@ public class StateManager {
 	
 	public boolean clientTurn() {
 		return (this.getClientModel().getTurnTracker().getCurrentTurn() == this.facade.getPlayerIndex());
+	}
+
+	public boolean isPlacing() {
+		return placing;
+	}
+
+	public void setPlacing(boolean placing) {
+		this.placing = placing;
 	}
 }

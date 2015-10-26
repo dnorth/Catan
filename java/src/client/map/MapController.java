@@ -150,10 +150,12 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		this.stateManager.getState().placeRoad(edgeLoc);
+		this.stateManager.setPlacing(false);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {	
 		this.stateManager.getState().placeSettlement(vertLoc);
+		this.stateManager.setPlacing(false);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {	
@@ -189,7 +191,6 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
-		
 	}
 	
 	public void playSoldierCard() {	
@@ -212,10 +213,18 @@ public class MapController extends Controller implements IMapController {
 
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				startMove(PieceType.ROAD, true, true);
+				System.out.println("PLACE1");
+				if (!stateManager.isPlacing()) {
+					startMove(PieceType.ROAD, true, true);
+					stateManager.setPlacing(true);
+				}
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				startMove(PieceType.SETTLEMENT, true, true);
+				System.out.println("PLACE2");
+				if (!stateManager.isPlacing()) {
+					startMove(PieceType.SETTLEMENT, true, true);
+					stateManager.setPlacing(true);
+				}
 			}
 			else {
 				if (this.stateManager.clientTurn()) {
@@ -227,10 +236,18 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if(stateManager.getState() instanceof SetupTwoActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				startMove(PieceType.ROAD, true, true);
+				System.out.println("PLACE3");
+				if (!stateManager.isPlacing()) {
+					startMove(PieceType.ROAD, true, true);
+					stateManager.setPlacing(true);
+				}
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				startMove(PieceType.SETTLEMENT, true, true);
+				System.out.println("PLACE4");
+				if (!stateManager.isPlacing()) {
+					startMove(PieceType.SETTLEMENT, true, true);
+					stateManager.setPlacing(true);
+				}
 			}
 			else {
 				if (this.stateManager.clientTurn()) {
