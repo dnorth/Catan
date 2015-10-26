@@ -27,7 +27,7 @@ public class PlayerManager {
 	 */
 	public boolean canBuyRoad(int playerIndex){
 		Player p = players[playerIndex];
-		return p.hasBrick() && p.hasWood();
+		return p.hasBrick() && p.hasWood() && p.getRoads() > 0;
 	}
 	
 	public int numResources(int playerIndex) {
@@ -94,7 +94,7 @@ public class PlayerManager {
 	 */
 	public boolean canBuySettlement(int playerIndex){
 		Player p = players[playerIndex];
-		return p.hasBrick() && p.hasWheat() && p.hasSheep() && p.hasWood();
+		return p.hasBrick() && p.hasWheat() && p.hasSheep() && p.hasWood() && p.getSettlements() > 0;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class PlayerManager {
 	 */
 	public boolean canUpgradeSettlement(int playerIndex){
 		Player p = players[playerIndex];
-		return p.hasWheat(2) && p.hasOre(3);
+		return p.hasWheat(2) && p.hasOre(3) && p.getCities() > 0;
 	}
 	
 	/**
