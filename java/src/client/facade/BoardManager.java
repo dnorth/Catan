@@ -413,15 +413,7 @@ public class BoardManager {
 	}
 	
 	public boolean canUpgradeSettlementAtLocation(int playerIndex, EdgeLocation edge) {
-		VertexObject[] e = board.getSettlements();
-		for (VertexObject v : e) {
-			if(edge.equals(v.getLocation())) {
-				if (v.getOwner() == playerIndex) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return board.getVertexOwner(edge) == playerIndex;
 	}
 	
 	public boolean canMaritimeTrade(int playerIndex)

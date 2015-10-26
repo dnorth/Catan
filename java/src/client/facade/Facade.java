@@ -466,10 +466,7 @@ public class Facade {
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		if (canDo.canUpgradeSettlement(this.getPlayerIndex())) {
-			return canDo.canUpgradeSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));			
-		}
-		else return false;
+		return canDo.canUpgradeSettlementAtLocation(this.getPlayerIndex(), new client.models.mapdata.EdgeLocation(vertLoc));			
 	}
 	
 	/**
