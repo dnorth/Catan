@@ -94,6 +94,23 @@ public class Resources{
 			break;	
 		}
 	}
+	
+	public int getResourceCount(ResourceType resource) {
+		switch (resource) {
+		case WOOD:
+			return getWoodCount();
+		case BRICK:
+			return getBrickCount();
+		case SHEEP:
+			return getSheepCount();
+		case WHEAT:
+			return getWheatCount();
+		case ORE:
+			return getOreCount();
+		default:
+			return -1;
+		}
+	}
 
 	public int getWoodCount() {
 		return wood;

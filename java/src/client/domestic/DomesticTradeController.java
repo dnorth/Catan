@@ -7,6 +7,7 @@ import client.base.*;
 import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.Player;
+import client.models.Resources;
 import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
@@ -24,6 +25,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private StateManager stateManager;
+	private Resources tradeOffer;
+	private Resources localResources;
+	private boolean sending;
+	private boolean recieving;
 
 	/**
 	 * DomesticTradeController constructor
@@ -43,6 +48,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setAcceptOverlay(acceptOverlay);
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
+		this.tradeOffer = new Resources();
+		this.sending = false;
+		this.recieving = false;
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -76,7 +84,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
-
 		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
 		this.getTradeOverlay().setCancelEnabled(true);
 		this.getTradeOverlay().setPlayerSelectionEnabled(true);
@@ -87,23 +94,59 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int tradePlayersIndex = 0;
 		for(int i = 0; i < 4; i++) {
 			if(players[i].getPlayerIndex() != this.stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
-				tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
+				if(players[i].getResources().getTotalCount() > 0) { //Only want to trade with players who have cards
+					tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
+				}
 			}
 		}
-		this.getTradeOverlay().setPlayers(null);
+		this.localResources = getLocalResources();
+		this.getTradeOverlay().setPlayers(tradePlayers);
 		getTradeOverlay().showModal();
+	}
+	
+	private Resources getLocalResources() {
+		int gameIndex = stateManager.getFacade().getPlayerIndex();
+		return stateManager.getClientModel().getPlayers()[gameIndex].getResources();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		IStateBase state = this.stateManager.getState();
-		state.decreaseAmount(resource);
+		int offerCount = tradeOffer.getResourceCount(resource);
+		if(sending) {
+			if(offerCount < 0) {
+				tradeOffer.addOne(resource);
+				
+				if( (offerCount + 1) == 0) {
+					getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+				}
+			}
+		} else if (recieving) {
+			if(offerCount == 0) {
+				getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+			}
+		}
+		
+		System.out.println("Current Trade Offer: " + tradeOffer.toString());
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		IStateBase state = this.stateManager.getState();
-		state.increaseAmount(resource);
+		int localCount = localResources.getResourceCount(resource);
+		int offerCount = tradeOffer.getResourceCount(resource);
+		if(sending) {  //Sending an offer makes the resource a negative number
+			if( offerCount < localCount) {
+				tradeOffer.subtractOne(resource);
+			
+				if( localCount == (offerCount + 1)) {
+					getTradeOverlay().setResourceAmountChangeEnabled(resource, false, true);
+				}
+			}
+		} else { //This means we're receiving. so we add the number
+			tradeOffer.addOne(resource);
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
+		}
+		
+		System.out.println("Current Trade Offer: " + tradeOffer.toString());
 	}
 
 	@Override
@@ -123,20 +166,33 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-		IStateBase state = this.stateManager.getState();
-		state.setResourceToReceive(resource);
+		tradeOffer.unsetResource(resource);
+		getTradeOverlay().setResourceAmount(resource, "0");
+		sending = false;
+		recieving = true;
+		int offerCount = tradeOffer.getResourceCount(resource);
+		if( offerCount == 0) {
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		}
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-		IStateBase state = this.stateManager.getState();
-		state.setResourceToSend(resource);
+		tradeOffer.unsetResource(resource);
+		getTradeOverlay().setResourceAmount(resource, "0");
+		sending = true;
+		recieving = false;
+		int localCount = localResources.getResourceCount(resource);
+		if( localCount == 0) {
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, false);
+		} else {
+			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		}
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-		IStateBase state = this.stateManager.getState();
-		state.unsetResource(resource);
+		tradeOffer.unsetResource(resource);
 	}
 
 	@Override
