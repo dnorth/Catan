@@ -178,7 +178,7 @@ public class CanDoTests {
 		System.out.println();
 	}
 
-	@Test
+	/*@Test
 	public void testCanAcceptTrade() {
 
 		System.out.println("Testing canAcceptTrade()");
@@ -217,7 +217,7 @@ public class CanDoTests {
 		assertTrue(pm.hasSpecifiedResources(1, to2));
 
 		System.out.println();
-	}
+	}*/
 
 	@Test
 	public void testCanMaritimeTrade() {

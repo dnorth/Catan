@@ -31,6 +31,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private Resources localResources;
 	private boolean sending;
 	private boolean recieving;
+	private boolean newDomestic;
 	int tradingPlayerIndex;
 
 	/**
@@ -55,6 +56,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.sending = false;
 		this.recieving = false;
 		this.tradingPlayerIndex = -1;
+		this.newDomestic = true;
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -88,21 +90,26 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		this.setPlayerToTradeWith(-1);
+		this.tradeOffer = new Resources();
 		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
 		this.getTradeOverlay().setCancelEnabled(true);
 		this.getTradeOverlay().setPlayerSelectionEnabled(true);
 		setTradeButton();
-		Player[] players = this.stateManager.getClientModel().getPlayers();
-		PlayerInfo[] tradePlayers = new PlayerInfo[3];
-		int tradePlayersIndex = 0;
-		for(int i=0; i < 4; i++) {
-			if(players[i].getPlayerIndex() != this.stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
-				tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
+		if(newDomestic) {
+			Player[] players = this.stateManager.getClientModel().getPlayers();
+			PlayerInfo[] tradePlayers = new PlayerInfo[3];
+			int tradePlayersIndex = 0;
+			for(int i=0; i < 4; i++) {
+				if(players[i].getPlayerIndex() != this.stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
+					tradePlayers[tradePlayersIndex++] = new PlayerInfo(players[i]);
+				}
 			}
+	
+			this.getTradeOverlay().setPlayers(tradePlayers);
+			this.newDomestic = false;
 		}
 		this.localResources = getLocalResources();
-
-		this.getTradeOverlay().setPlayers(tradePlayers); //TODO What happens when we find no one?
 		getTradeOverlay().showModal();
 	}
 	
@@ -183,16 +190,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	
 	public boolean tradeIsValid() {
-		//There needs to be a valid player index for the trade to be valid
-		if(tradingPlayerIndex == -1) {
-			System.out.println("Part 1 failed");
-			return false;
-		}
 		//There needs to be at least ONE resource being sent and ONE resource being received for a trade to be valid
 		if(tradeOffer.getBrickCount() < 0 || tradeOffer.getOreCount() < 0 || tradeOffer.getSheepCount() < 0 || tradeOffer.getWheatCount() < 0 || tradeOffer.getWoodCount() < 0) {
-			System.out.println("Part 2 pass!");
 			if(tradeOffer.getBrickCount() > 0 || tradeOffer.getOreCount() > 0 || tradeOffer.getSheepCount() > 0 || tradeOffer.getWheatCount() > 0 || tradeOffer.getWoodCount() > 0){
-				System.out.println("Part 3 pass!");
 				return true;
 			}
 		}
@@ -200,11 +200,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		return false;
 	}
 	
+	public boolean tradingIndexIsValid() {
+		//There needs to be a valid player index for the trade to be valid
+		if(tradingPlayerIndex == -1) {
+			return false;
+		}
+		return true;
+	}
+	
 	public void setTradeButton() {
-		System.out.println("Checking for a valid trade");
 		if(tradeIsValid()) {
-			this.getTradeOverlay().setTradeEnabled(true);
-			this.getTradeOverlay().setStateMessage("Trade!");
+			if(tradingIndexIsValid()) {
+				this.getTradeOverlay().setTradeEnabled(true);
+				this.getTradeOverlay().setStateMessage("Trade!");
+			} else {
+				this.getTradeOverlay().setTradeEnabled(false);
+				this.getTradeOverlay().setStateMessage("Choose with whom you want to trade");
+			}
 		} else {
 			this.getTradeOverlay().setTradeEnabled(false);
 			this.getTradeOverlay().setStateMessage("Select the resources you want to trade");
@@ -255,7 +267,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 		if(this.stateManager.getState() instanceof InactivePlayerState) {
 			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();	
-			System.out.println("Waiting for a trade: " + offer);
 			if(offer != null) {
 				if(offer.getReceiver() == stateManager.getFacade().getPlayerIndex()) {
 					this.stateManager.setState(new ReceivingTradeState(this.stateManager.getFacade()));

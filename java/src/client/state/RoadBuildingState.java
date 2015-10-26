@@ -146,11 +146,6 @@ public class RoadBuildingState implements IStateBase {
 		
 	}
 
-	@Override
-	public void sendTradeOffer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
@@ -335,6 +330,12 @@ public class RoadBuildingState implements IStateBase {
 	@Override
 	public Facade getFacade() {
 		return facade;
+	}
+
+	@Override
+	public void sendTradeOffer(TradeOffer offer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
