@@ -32,6 +32,9 @@ public class DiscardController extends Controller implements IDiscardController 
 	private int currWheat;
 	private int currWood;
 	
+	private int totalToDiscard;
+	private int currTotal;
+	
 	/**
 	 * DiscardController constructor
 	 * 
@@ -67,6 +70,9 @@ public class DiscardController extends Controller implements IDiscardController 
 		currWheat = 0;
 		currWood = 0;
 		
+		totalToDiscard = totalPlayerResources/2;
+		currTotal = 0;
+		
 		this.getDiscardView().setResourceMaxAmount(ResourceType.BRICK, maxBrick);
 		this.getDiscardView().setResourceMaxAmount(ResourceType.ORE, maxOre);
 		this.getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, maxSheep);
@@ -85,7 +91,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, p.hasWheat(), false);
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, p.hasWood(), false);
 			
-		this.getDiscardView().setStateMessage("0/" + totalPlayerResources);
+		this.getDiscardView().setStateMessage("0/" + totalToDiscard);
 	}
 
 	public IDiscardView getDiscardView() {
@@ -125,6 +131,20 @@ public class DiscardController extends Controller implements IDiscardController 
 			this.getDiscardView().setResourceDiscardAmount(resource, currWood);
 			break;
 		}
+		
+		if(++currTotal == totalToDiscard) {
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, false, true);
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, false, true);
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, false, true);
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, false, true);
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, true);
+			this.getDiscardView().setDiscardButtonEnabled(true);
+		}
+		else {
+			this.getDiscardView().setDiscardButtonEnabled(false);
+		}
+		this.getDiscardView().setStateMessage(currTotal + "/" + totalToDiscard);
+		
 	}
 
 	@Override
