@@ -45,6 +45,30 @@ public class PlayerManager {
 		return p.hasBrick() || p.hasOre() || p.hasSheep() || p.hasWheat() || p.hasWood();
 	}
 	
+	public boolean hasBrick(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.hasBrick();
+	}
+	
+	public boolean hasOre(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.hasOre();
+	}
+	
+	public boolean hasSheep(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.hasSheep();
+	}
+	
+	public boolean hasWheat(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.hasWheat();
+	}
+	
+	public boolean hasWood(int playerIndex) {
+		Player p = players[playerIndex];
+		return p.hasWood();
+	}
 
 	/**
 	 * Determines if a player has the resources requested from the player offering the trade.

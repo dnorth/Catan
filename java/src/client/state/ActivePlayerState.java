@@ -248,7 +248,7 @@ public class ActivePlayerState implements IStateBase {
 	@Override
 	public void robPlayer(RobPlayerInfo victim) {
 		// TODO Auto-generated method stub
-		
+		this.facade.robPlayer(victim);
 	}
 
 	@Override

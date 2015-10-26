@@ -1,22 +1,27 @@
 package client.map;
 
-import java.util.*;
+import java.util.Observable;
 
-import shared.definitions.*;
-import shared.locations.*;
-import client.base.*;
-import client.data.*;
+import client.base.Controller;
+import client.data.RobPlayerInfo;
 import client.models.ClientModel;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.Hex;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
+import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 
 /**
@@ -164,9 +169,11 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRobber(HexLocation hexLoc) {
 		RobPlayerInfo[] candidateVictims = this.stateManager.getState().placeRobber(hexLoc);
+		//System.out.println("ROBBER LOCATION SELECTED!");
 		if (candidateVictims != null) {
 			this.getRobView().setPlayers(candidateVictims);
 		}
+		this.robView.showModal();
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
@@ -201,7 +208,7 @@ public class MapController extends Controller implements IMapController {
 		stateManager.getState().playRoadBuildingCard();
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
+	public void robPlayer(RobPlayerInfo victim) {
 		stateManager.getState().robPlayer(victim);
 	}
 
@@ -255,6 +262,13 @@ public class MapController extends Controller implements IMapController {
 					stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
 				}
 				this.cancelMove();
+			}
+		}
+		
+		else if(stateManager.getState() instanceof ActivePlayerState) {
+			if (!stateManager.isPlacing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
+				startMove(PieceType.ROBBER, true, true);
+				stateManager.setPlacing(true);
 			}
 		}
 		

@@ -686,7 +686,6 @@ public class Facade {
 	 */
 	public void robPlayer(RobPlayerInfo victim) {
 		if(newRobberLocation != null) {
-			//TODO: take random resource from victim, give to local playerID
 			client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(newRobberLocation);
 			JsonObject command = this.modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victim.getPlayerIndex(), hex);
 			JsonObject cookie = this.getFullCookie();
@@ -815,6 +814,9 @@ public class Facade {
 		int  die2 = rand.nextInt(6) + 1;
 		clientCommunicator.rollNumber(this.modelToJSON.createRollNumberObject(this.getPlayerIndex(), die1+die2), this.getFullCookie());
 		return die1+die2;
+		//uncomment to debug robber
+		//clientCommunicator.rollNumber(this.modelToJSON.createRollNumberObject(this.getPlayerIndex(), 7), this.getFullCookie());
+		//return 7;
 	}
 	
 	// TURN TRACKER CONTROLLER

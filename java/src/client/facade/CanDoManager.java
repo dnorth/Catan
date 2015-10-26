@@ -3,6 +3,7 @@ package client.facade;
 import java.util.ArrayList;
 
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.TradeOffer;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.HexLocation;
@@ -136,6 +137,26 @@ public class CanDoManager {
 			}
 		}
 		return theseOwners;
+	}
+	
+	public boolean hasBrick(int playerIndex) {
+		return playerManager.hasBrick(playerIndex);
+	}
+	
+	public boolean hasOre(int playerIndex) {
+		return playerManager.hasOre(playerIndex);
+	}
+	
+	public boolean hasSheep(int playerIndex) {
+		return playerManager.hasSheep(playerIndex);
+	}
+	
+	public boolean hasWheat(int playerIndex) {
+		return playerManager.hasWheat(playerIndex);
+	}
+	
+	public boolean hasWood(int playerIndex) {
+		return playerManager.hasWood(playerIndex);
 	}
 	
 	public void updatePointersToNewModel(ClientModel newModel) {

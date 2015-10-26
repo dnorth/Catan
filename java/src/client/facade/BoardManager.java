@@ -36,6 +36,7 @@ public class BoardManager {
 	
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		if (hexLoc.equals(this.board.getRobber())) return false;
+		else if (this.board.getHexFromCoords(hexLoc.getX(), hexLoc.getY()) == null) return false;
 		return true;
 	}
 	
