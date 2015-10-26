@@ -45,7 +45,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getTradeOverlay().showModal();
 		getTradeOverlay().setTradeEnabled(false);
 		List<ResourceType> resourcesToTrade= stateManager.getFacade().startMaritimeTrade();
-		getTradeOverlay().showGetOptions((ResourceType[]) resourcesToTrade.toArray());
+		
+		ResourceType[] resultArray = new ResourceType[resourcesToTrade.size()];
+		resultArray = resourcesToTrade.toArray(resultArray);
+		getTradeOverlay().showGetOptions(resourcesToTrade.toArray(resultArray));
 	}
 
 	@Override
@@ -63,6 +66,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 		PortTrade p =stateManager.getClientModel().getPlayers()[stateManager.getFacade().getPlayerIndex()].getPortTrade();
 		getTradeOverlay().selectGetOption(resource, 1);
+		getTradeOverlay().setTradeEnabled(true);
 	}
 
 	@Override
@@ -73,12 +77,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void unsetGetValue() {
-		getTradeOverlay().hideGetOptions();
+		getTradeOverlay().reset();
 	}
 
 	@Override
 	public void unsetGiveValue() {
-		getTradeOverlay().hideGiveOptions();
+		getTradeOverlay().reset();
 	}
 
 	@Override
