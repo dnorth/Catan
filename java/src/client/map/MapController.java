@@ -207,7 +207,11 @@ public class MapController extends Controller implements IMapController {
 			}
 		}
 		else {
-			getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
+			if(state instanceof ActivePlayerState) {
+				if(this.stateManager.getFacade().getCanDo().canBuyRoad(this.stateManager.getFacade().getPlayerIndex())){
+					getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
+				}
+			}
 		}
 	}
 	

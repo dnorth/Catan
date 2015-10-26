@@ -6,6 +6,8 @@ import client.base.*;
 import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
+import client.state.ActivePlayerState;
+import client.state.IStateBase;
 import client.state.StateManager;
 
 
@@ -75,7 +77,6 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void buildRoad() {
-		
 		stateManager.getState().buildRoad();
 		executeElementAction(ResourceBarElement.ROAD);
 	}
@@ -129,7 +130,38 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	@Override
 	public void update(Observable o, Object arg) {
 		this.setResources();
-		
+		IStateBase state = this.stateManager.getState();
+		if(state instanceof ActivePlayerState) {
+			int playerIndex = this.stateManager.getFacade().getPlayerIndex();
+			if(this.stateManager.getFacade().getCanDo().canBuyRoad(playerIndex)) {
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, true);
+			}
+			else {
+				this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			}
+			if(this.stateManager.getFacade().getCanDo().canBuySettlement(playerIndex)) {
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+			}
+			else {
+				this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			}
+			if(this.stateManager.getFacade().getCanDo().canUpgradeSettlement(playerIndex)) {
+				this.getView().setElementEnabled(ResourceBarElement.CITY, true);
+			}
+			else {
+				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+			}
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, true);
+		}
+		else {
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, false);
+
+		}
 	}
 
 }
