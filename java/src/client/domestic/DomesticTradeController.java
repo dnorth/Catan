@@ -29,8 +29,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private StateManager stateManager;
 	private Resources tradeOffer;
 	private Resources localResources;
-	private boolean sending;
-	private boolean recieving;
+	private boolean woodSending;
+	private boolean sheepSending;
+	private boolean brickSending;
+	private boolean oreSending;
+	private boolean wheatSending;
+	
 	private boolean newDomestic;
 	int tradingPlayerIndex;
 
@@ -53,8 +57,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
 		this.tradeOffer = new Resources();
-		this.sending = false;
-		this.recieving = false;
+		unsetAllSending();
 		this.tradingPlayerIndex = -1;
 		this.newDomestic = true;
 	}
@@ -90,6 +93,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		System.out.println("\n\nSTARTING TRADE\n\n");
 		this.setPlayerToTradeWith(-1);
 		this.tradeOffer = new Resources();
 		this.stateManager.setState(new OfferingTradeState(this.stateManager.getFacade()));
@@ -121,7 +125,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
 		int offerCount = tradeOffer.getResourceCount(resource);
-		if(sending) {
+		if(getSendForResource(resource)) {
 			if(offerCount < 0) {
 				tradeOffer.addOne(resource);
 				
@@ -131,7 +135,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
 				}
 			}
-		} else if (recieving) {
+		} else {
 			tradeOffer.subtractOne(resource);
 			offerCount = tradeOffer.getResourceCount(resource);
 			if(offerCount == 0) {
@@ -146,7 +150,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void increaseResourceAmount(ResourceType resource) {
 		int localCount = localResources.getResourceCount(resource);
 		int offerCount = tradeOffer.getResourceCount(resource);
-		if(sending) {  //Sending an offer makes the resource a negative number
+		if(getSendForResource(resource)) {  //Sending an offer makes the resource a negative number
 			if( Math.abs(offerCount) < localCount) {
 				tradeOffer.subtractOne(resource);
 			
@@ -185,8 +189,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void setResourceToReceive(ResourceType resource) {
 		tradeOffer.unsetResource(resource);
 		getTradeOverlay().setResourceAmount(resource, "0");
-		sending = false;
-		recieving = true;
+		setReceivingForResource(resource);
 		int offerCount = tradeOffer.getResourceCount(resource);
 		if( offerCount == 0) {
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
@@ -231,8 +234,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void setResourceToSend(ResourceType resource) {
 		tradeOffer.unsetResource(resource);
 		getTradeOverlay().setResourceAmount(resource, "0");
-		sending = true;
-		recieving = false;
+		setSendingForResource(resource);
 		int localCount = localResources.getResourceCount(resource);
 		if( localCount == 0) {
 			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, false);
@@ -244,11 +246,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void unsetResource(ResourceType resource) {
 		tradeOffer.unsetResource(resource);
+		setReceivingForResource(resource);
 		setTradeButton();
 	}
 
 	@Override
 	public void cancelTrade() {
+		unsetAllSending();
+		this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
 		this.setPlayerToTradeWith(-1);
 		this.tradeOffer = new Resources();
 		getTradeOverlay().closeModal();
@@ -261,7 +266,119 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
 		getAcceptOverlay().closeModal();
 	}
-
+	
+	private void addGetResources(TradeOffer offer) {
+		if(offer.getOreCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
+		}
+		if(offer.getBrickCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
+		}
+		if(offer.getSheepCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
+		}
+		if(offer.getWheatCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
+		}
+		if(offer.getWoodCount() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
+		}
+	}
+	
+	private void addGiveResources(TradeOffer offer) {
+		if(offer.getOreCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
+		}
+		if(offer.getBrickCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
+		}
+		if(offer.getSheepCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
+		}
+		if(offer.getWheatCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
+		}
+		if(offer.getWoodCount() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
+		}
+	}
+	
+	private void setSendingForResource(ResourceType resource) { 
+		switch(resource) {
+			case WOOD:
+				woodSending = true;
+				break;
+			case BRICK:
+				brickSending = true;
+				break;
+			case SHEEP:
+				sheepSending = true;
+				break;
+			case WHEAT: 
+				wheatSending = true;
+				break;
+			case ORE:
+				oreSending = true;
+				break;
+			default:
+				break;
+		}
+	}
+	
+	private void setReceivingForResource(ResourceType resource) { 
+		switch(resource) {
+			case WOOD:
+				woodSending = false;
+				break;
+			case BRICK:
+				brickSending = false;
+				break;
+			case SHEEP:
+				sheepSending = false;
+				break;
+			case WHEAT: 
+				wheatSending = false;
+				break;
+			case ORE:
+				oreSending = false;
+				break;
+			default:
+				break;
+		}
+	}
+	
+	private void unsetAllSending() {
+		woodSending = false;
+		getTradeOverlay().setResourceSelectionEnabled(false);
+		getTradeOverlay().setResourceSelectionEnabled(true);
+		getTradeOverlay().setResourceAmount(ResourceType.WOOD, "0");
+		brickSending = false;
+		getTradeOverlay().setResourceAmount(ResourceType.BRICK, "0");
+		sheepSending = false;
+		getTradeOverlay().setResourceAmount(ResourceType.SHEEP, "0");
+		wheatSending = false;
+		getTradeOverlay().setResourceAmount(ResourceType.WHEAT, "0");
+		oreSending = false;
+		getTradeOverlay().setResourceAmount(ResourceType.ORE, "0");
+	}
+	
+	private boolean getSendForResource(ResourceType resource) {
+		switch(resource) {
+		case WOOD:
+			return woodSending;
+		case BRICK:
+			return brickSending;
+		case SHEEP:
+			return sheepSending;
+		case WHEAT: 
+			return wheatSending;
+		case ORE:
+			return oreSending;
+		default:
+			return false;
+		}
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		if(this.stateManager.getState() instanceof TradeOfferedWaitingState) {
@@ -299,42 +416,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 		else {
 			this.getTradeView().enableDomesticTrade(false);
-		}
-	}
-	
-	private void addGetResources(TradeOffer offer) {
-		if(offer.getOreCount() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
-		}
-		if(offer.getBrickCount() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
-		}
-		if(offer.getSheepCount() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
-		}
-		if(offer.getWheatCount() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
-		}
-		if(offer.getWoodCount() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
-		}
-	}
-	
-	private void addGiveResources(TradeOffer offer) {
-		if(offer.getOreCount() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
-		}
-		if(offer.getBrickCount() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
-		}
-		if(offer.getSheepCount() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
-		}
-		if(offer.getWheatCount() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
-		}
-		if(offer.getWoodCount() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
 		}
 	}
 
