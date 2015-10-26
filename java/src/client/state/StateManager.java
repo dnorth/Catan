@@ -16,6 +16,7 @@ public class StateManager {
 	ServerPoller serverPoller;
 	boolean placing;
 	boolean currentlyRobbing;
+	boolean setTitleColor;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
@@ -23,6 +24,7 @@ public class StateManager {
 		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
 		this.placing = false;
 		this.currentlyRobbing = false;
+		this.setTitleColor = false;
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State
@@ -92,5 +94,13 @@ public class StateManager {
 	
 	public CatanColor getClientColor() {
 		return this.facade.getLocalPlayer().getColor();
+	}
+
+	public boolean isSetTitleColor() {
+		return setTitleColor;
+	}
+
+	public void setSetTitleColor(boolean setTitleColor) {
+		this.setTitleColor = setTitleColor;
 	}
 }
