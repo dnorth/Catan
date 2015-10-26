@@ -21,6 +21,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	private Resources toDiscard;
 	private Player p;
 	private boolean alreadyDiscarding;
+	private boolean waiting;
 	
 	private int maxBrick;
 	private int maxOre;
@@ -51,6 +52,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
 		alreadyDiscarding = false;
+		waiting = false;
 	}
 	
 	private void initialize() {
@@ -240,15 +242,26 @@ public class DiscardController extends Controller implements IDiscardController 
 		toDiscard.setWood(currWood);
 		alreadyDiscarding = false;
 		state.discard(toDiscard);
+		waiting = true;
 		getDiscardView().closeModal();
+		waitView.setMessage("Waiting for other players to discard");
+		waitView.showModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (stateManager.getClientModel().getTurnTracker().getStatus().equals("Discarding") && !alreadyDiscarding) {
-			alreadyDiscarding = true;
-			initialize();
-			this.getDiscardView().showModal();
+		if (stateManager.getClientModel().getTurnTracker().getStatus().equals("Discarding")) {
+			if (!alreadyDiscarding && !waiting) {
+				alreadyDiscarding = true;
+				initialize();
+				this.getDiscardView().showModal();				
+			}
+		}
+		else {
+			if (waitView.isModalShowing()) {
+				waitView.closeModal();
+				waiting = false;
+			}
 		}
 	}
 
