@@ -14,12 +14,14 @@ public class StateManager {
 	Facade facade;
 	ServerPoller serverPoller;
 	boolean placing;
+	boolean currentlyRobbing;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
 		this.state = new LoginState(facade);
 		this.serverPoller = new ServerPoller(this.facade.getClientCommunicator(), this);
 		this.placing = false;
+		this.currentlyRobbing = false;
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State
@@ -77,5 +79,13 @@ public class StateManager {
 
 	public void setPlacing(boolean placing) {
 		this.placing = placing;
+	}
+	
+	public void setCurrentlyRobbing(boolean currentRob) {
+		this.currentlyRobbing = currentRob;
+	}
+	
+	public boolean getCurrentlyRobbing() {
+		return this.currentlyRobbing;
 	}
 }

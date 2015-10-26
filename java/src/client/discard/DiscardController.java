@@ -241,11 +241,9 @@ public class DiscardController extends Controller implements IDiscardController 
 		toDiscard.setWheat(currWheat);
 		toDiscard.setWood(currWood);
 		alreadyDiscarding = false;
-		state.discard(toDiscard);
 		waiting = true;
+		state.discard(toDiscard);
 		getDiscardView().closeModal();
-		waitView.setMessage("Waiting for other players to discard");
-		waitView.showModal();
 	}
 
 	@Override
@@ -256,11 +254,15 @@ public class DiscardController extends Controller implements IDiscardController 
 				initialize();
 				this.getDiscardView().showModal();				
 			}
+			else if (waiting) {
+				waitView.setMessage("Waiting for other players to discard");
+				waitView.showModal();				
+			}
 		}
 		else {
+			waiting = false;
 			if (waitView.isModalShowing()) {
 				waitView.closeModal();
-				waiting = false;
 			}
 		}
 	}

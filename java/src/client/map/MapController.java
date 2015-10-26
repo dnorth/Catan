@@ -214,6 +214,7 @@ public class MapController extends Controller implements IMapController {
 	
 	public void robPlayer(RobPlayerInfo victim) {
 		stateManager.getState().robPlayer(victim);
+		stateManager.setCurrentlyRobbing(false);
 	}
 
 	@Override
@@ -284,9 +285,9 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		else if(stateManager.getState() instanceof ActivePlayerState) {
-			if (!stateManager.isPlacing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
+			if (!stateManager.getCurrentlyRobbing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
+				stateManager.setCurrentlyRobbing(true);
 				startMove(PieceType.ROBBER, true, true);
-				stateManager.setPlacing(true);
 			}
 		}
 		
