@@ -244,11 +244,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void unsetResource(ResourceType resource) {
 		tradeOffer.unsetResource(resource);
+		setTradeButton();
 	}
 
 	@Override
 	public void cancelTrade() {
-		this.stateManager.getFacade().cancelTradeOffer();		
+		this.setPlayerToTradeWith(-1);
+		this.tradeOffer = new Resources();
 		getTradeOverlay().closeModal();
 	}
 

@@ -8,6 +8,7 @@ import server.proxy.IProxy;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.state.JoinGameState;
+import client.state.LoginState;
 import client.state.StateManager;
 
 import com.google.gson.JsonObject;
@@ -51,7 +52,9 @@ public class ServerPoller {
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}
-				else updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+				else if(!(stateManager.getState() instanceof LoginState)) {
+					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+				}
 			} catch (NullPointerException e) {
 			}
 		}

@@ -80,10 +80,6 @@ public class Facade {
 	}
 	*/
 	
-	public void cancelTradeOffer() {
-		this.client.setTradeOffer(null);
-	}
-	
 	public void setTradeOffer(TradeOffer tradeOffer) { //THIS FUNCTION SHOULD ONLY EVER GET CALLED BY THE OFFERINGTRADESTATE STUFF
 		this.client.setTradeOffer(tradeOffer);
 	}
