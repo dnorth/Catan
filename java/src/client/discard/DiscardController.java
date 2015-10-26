@@ -98,12 +98,49 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		
+		switch(resource) {
+		case BRICK:
+			if(++currBrick < maxBrick)this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+			this.getDiscardView().setResourceDiscardAmount(resource, currBrick); //just to clarify, the third line in each switch statement is NOT supposed to be a part of the "else"
+			break;
+		case ORE:
+			if(++currOre < maxOre) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+			this.getDiscardView().setResourceDiscardAmount(resource, currOre);
+			break;
+		case SHEEP:
+			if(++currSheep < maxSheep) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+			this.getDiscardView().setResourceDiscardAmount(resource, currSheep);
+			break;
+		case WHEAT:
+			if(++currWheat < maxWheat) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+			this.getDiscardView().setResourceDiscardAmount(resource, currWheat);
+			break;
+		case WOOD:
+			if(++currWood < maxWood) this.getDiscardView().setResourceAmountChangeEnabled(resource, true, true);
+			else this.getDiscardView().setResourceAmountChangeEnabled(resource, false, true);
+			this.getDiscardView().setResourceDiscardAmount(resource, currWood);
+			break;
+		}
 	}
 
 	@Override
 	public void decreaseAmount(ResourceType resource) {
-		
+		switch(resource) {
+		case BRICK:
+			break;
+		case ORE:
+			break;
+		case SHEEP:
+			break;
+		case WHEAT:
+			break;
+		case WOOD:
+			break;
+		}
 	}
 
 	@Override
