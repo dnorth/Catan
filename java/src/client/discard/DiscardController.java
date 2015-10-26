@@ -20,6 +20,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	private StateManager stateManager;
 	private Resources toDiscard;
 	private Player p;
+	private boolean alreadyDiscarding;
 	
 	private int maxBrick;
 	private int maxOre;
@@ -49,6 +50,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.waitView = waitView;
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
+		alreadyDiscarding = false;
 	}
 	
 	private void initialize() {
@@ -147,6 +149,8 @@ public class DiscardController extends Controller implements IDiscardController 
 			
 			if (currWood > 0) this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, true);
 			else this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
+			
+			this.getDiscardView().setDiscardButtonEnabled(true);
 		}
 		else {
 			this.getDiscardView().setDiscardButtonEnabled(false);
@@ -187,18 +191,65 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.getDiscardView().setDiscardButtonEnabled(false);
 		this.getDiscardView().setStateMessage(--currTotal + "/" + totalToDiscard);
 
+		this.updateIncreasability();
+	}
+	
+	private void updateIncreasability() {
+		boolean decrease = false;
+		boolean increase = false;
+		if (currTotal < totalToDiscard) {
+			if(currBrick < maxBrick) increase = true;
+			else increase = false;
+			if(currBrick > 0) decrease = true;
+			else decrease = false;
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, increase, decrease);
+			
+			if(currOre < maxOre) increase = true;
+			else increase = false;
+			if(currOre > 0) decrease = true;
+			else decrease = false;
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, increase, decrease);
+			
+			if(currSheep < maxSheep) increase = true;
+			else increase = false;
+			if(currSheep > 0) decrease = true;
+			else decrease = false;
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, increase, decrease);
+			
+			if(currWheat < maxWheat) increase = true;
+			else increase = false;
+			if(currWheat > 0) decrease = true;
+			else decrease = false;
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, increase, decrease);
+			
+			if(currWood < maxWood) increase = true;
+			else increase = false;
+			if(currWood > 0) decrease = true;
+			else decrease = false;
+			this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, increase, decrease);
+		}
 	}
 
 	@Override
 	public void discard() {
 		IStateBase state = this.stateManager.getState();
+		toDiscard.setBrick(currBrick);
+		toDiscard.setOre(currOre);
+		toDiscard.setSheep(currSheep);
+		toDiscard.setWheat(currWheat);
+		toDiscard.setWood(currWood);
+		alreadyDiscarding = false;
 		state.discard(toDiscard);
 		getDiscardView().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		if (stateManager.getClientModel().getTurnTracker().getStatus().equals("Discarding") && !alreadyDiscarding) {
+			alreadyDiscarding = true;
+			initialize();
+			this.getDiscardView().showModal();
+		}
 	}
 
 }
