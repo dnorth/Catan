@@ -22,6 +22,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	private Player p;
 	private boolean alreadyDiscarding;
 	private boolean waiting;
+	private int currTurnIndex;
 	
 	private int maxBrick;
 	private int maxOre;
@@ -53,6 +54,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		this.stateManager.addObserver(this);
 		alreadyDiscarding = false;
 		waiting = false;
+		this.currTurnIndex = -1;
 	}
 	
 	private void initialize() {
@@ -249,7 +251,9 @@ public class DiscardController extends Controller implements IDiscardController 
 	@Override
 	public void update(Observable o, Object arg) {
 		if (stateManager.getClientModel().getTurnTracker().getStatus().equals("Discarding")) {
-			if (!alreadyDiscarding && !waiting) {
+			int currTurn = stateManager.getClientModel().getTurnTracker().getCurrentTurn();
+			if (!alreadyDiscarding && this.currTurnIndex != currTurn) {
+				this.currTurnIndex = currTurn;
 				alreadyDiscarding = true;
 				initialize();
 				this.getDiscardView().showModal();				
@@ -261,6 +265,7 @@ public class DiscardController extends Controller implements IDiscardController 
 		}
 		else {
 			waiting = false;
+			this.currTurnIndex = -1;
 			if (waitView.isModalShowing()) {
 				waitView.closeModal();
 			}
