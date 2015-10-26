@@ -227,11 +227,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("JOIN-GAME-CONTROLLER:");
+		/*System.out.println("JOIN-GAME-CONTROLLER:");
 		System.out.println("\tJOIN-GAME-VIEW: " + this.getJoinGameView().isModalShowing());
 		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());
 		System.out.println("\tNEW-GAME-VIEW: " + this.getNewGameView().isModalShowing());
-		System.out.println("\tSELECT-COLOR-VIEW: " + this.getSelectColorView().isModalShowing());
+		System.out.println("\tSELECT-COLOR-VIEW: " + this.getSelectColorView().isModalShowing());*/
 
 
 

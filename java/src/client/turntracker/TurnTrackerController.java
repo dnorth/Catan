@@ -37,7 +37,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn() 
 	{
-		System.out.println("WE MADE IT TO THE ENDTURN FUNCTION!");
+		//System.out.println("WE MADE IT TO THE ENDTURN FUNCTION!");
 		IStateBase state = this.stateManager.getState();
 		state.endTurn();
 		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
@@ -73,8 +73,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("TURN-TRACKER-CONTROLLER");
-		System.out.println();
+		//System.out.println("TURN-TRACKER-CONTROLLER");
+		//System.out.println();
 		//System.out.println("TURN-TRACKER-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if(this.stateManager.getState() instanceof PlayerWaitingState) {
 			this.getView().updateGameState("Waiting For Other Players", false);
@@ -87,7 +87,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			return;
 		}
 		else if (this.stateManager.getState() instanceof RoadBuildingState) {
-			System.out.println("ROAD BUILDING STATE");
+			//System.out.println("ROAD BUILDING STATE");
 			return;
 		}
 		
@@ -127,7 +127,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 				else if (!(this.stateManager.getState() instanceof ActivePlayerState) &&
 							!(this.stateManager.getState() instanceof TradeOfferedWaitingState)) {
-					System.out.println("MAKE ME THE ACTIVE PLAYER PLEEEEEASE!");
+					//System.out.println("MAKE ME THE ACTIVE PLAYER PLEEEEEASE!");
 					this.getView().updateGameState("Finish Turn", true);
 					this.getView().updateGameState("I'm dooooone", true);
 					this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));

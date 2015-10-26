@@ -47,7 +47,7 @@ public class ServerPoller {
 	private class PollEvent extends TimerTask {		
 		public void run() {
 			try {
-				System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
+				//System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}
@@ -95,7 +95,7 @@ public class ServerPoller {
 		} catch (Exception e) {
 			System.out.println("Couldn't find color.");
 		}
-		System.out.println("SERVER PROXY TURN: " + String.valueOf(JSONToModel.translateTurnTracker(cookies).getCurrentTurn()));
+		//System.out.println("SERVER PROXY TURN: " + String.valueOf(JSONToModel.translateTurnTracker(cookies).getCurrentTurn()));
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies),
 				JSONToModel.translateNumberOfPlayers(cookies),
 				JSONToModel.translateTurnTracker(cookies).getCurrentTurn(),
@@ -119,14 +119,20 @@ public class ServerPoller {
 			return true;
 		}
 		else if (numPlayers > currNumPlayers) {
+			//System.out.println("NEW BECAUSE NUMBER OF PLAYERS");
+			if(currColor != color) currColor = color;
+			if(currTurn != turn) currTurn = turn;
 			currNumPlayers = numPlayers;
-			return true;
+			if(numPlayers > 1) return true;
 		}
-		else if (color != currColor) {
+		if (color != currColor) {
+			//System.out.println("NEW BECAUSE COLOR");
+			if(currTurn != turn) currTurn = turn;
 			currColor = color;
 			return true;
 		}
 		else if (turn != currTurn) {
+			//System.out.println("NEW BEACUSE NEW TURN");
 			currTurn = turn;
 			return true;
 		}

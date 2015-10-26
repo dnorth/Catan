@@ -154,9 +154,9 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("LOGIN-CONTROLLER:");
+		/*System.out.println("LOGIN-CONTROLLER:");
 		System.out.println("\tLOGIN-VIEW: " + this.getLoginView().isModalShowing());
-		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());
+		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());*/
 
 		
 	}

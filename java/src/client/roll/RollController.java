@@ -55,12 +55,12 @@ public class RollController extends Controller implements IRollController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("ROLL-CONTROLLER");
-		System.out.println("\tROLL-VIEW: " + this.getRollView().isModalShowing());
-		System.out.println("\tRESULT-VIEW: " + this.getResultView().isModalShowing());
+		//System.out.println("ROLL-CONTROLLER");
+		//System.out.println("\tROLL-VIEW: " + this.getRollView().isModalShowing());
+		//System.out.println("\tRESULT-VIEW: " + this.getResultView().isModalShowing());
 		//System.out.println("ROLL-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 		if (this.stateManager.getState() instanceof RollingDiceState) {
-			System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
+			//System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
 			this.getRollView().showModal();
 		}
 		//System.out.println("ROLL-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());

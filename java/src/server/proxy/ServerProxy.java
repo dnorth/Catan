@@ -87,7 +87,7 @@ abstract class ServerProxy {
                 }
             	es.close();
             	System.out.println("ClientException error message: " + errorMessage);
-            	System.out.println("Here's the cookie: " + optionalCookies.toString());
+            	//System.out.println("Here's the cookie: " + optionalCookies.toString());
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",
                                             urlPath, connection.getResponseCode()));
             }
