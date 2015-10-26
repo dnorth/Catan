@@ -20,6 +20,18 @@ public class DiscardController extends Controller implements IDiscardController 
 	private Resources toDiscard;
 	private Player p;
 	
+	private int maxBrick;
+	private int maxOre;
+	private int maxSheep;
+	private int maxWheat;
+	private int maxWood;
+	
+	private int currBrick;
+	private int currOre;
+	private int currSheep;
+	private int currWheat;
+	private int currWood;
+	
 	/**
 	 * DiscardController constructor
 	 * 
@@ -42,19 +54,37 @@ public class DiscardController extends Controller implements IDiscardController 
 		p = this.stateManager.getClientModel().getPlayers()[playerIndex];
 		int totalPlayerResources = p.getResources().getTotalCount();
 		this.getDiscardView().setDiscardButtonEnabled(false);
-		this.getDiscardView().setResourceMaxAmount(ResourceType.BRICK, p.getResources().getBrickCount());
-		this.getDiscardView().setResourceMaxAmount(ResourceType.ORE, p.getResources().getOreCount());
-		this.getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, p.getResources().getSheepCount());
-		this.getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, p.getResources().getWheatCount());
-		this.getDiscardView().setResourceMaxAmount(ResourceType.WOOD, p.getResources().getWoodCount());
 		
+		maxBrick = p.getResources().getBrickCount();
+		maxOre = p.getResources().getOreCount();
+		maxSheep = p.getResources().getSheepCount();
+		maxWheat = p.getResources().getWheatCount();
+		maxWood = p.getResources().getWoodCount();
+		
+		currBrick = 0;
+		currOre = 0;
+		currSheep = 0;
+		currWheat = 0;
+		currWood = 0;
+		
+		this.getDiscardView().setResourceMaxAmount(ResourceType.BRICK, maxBrick);
+		this.getDiscardView().setResourceMaxAmount(ResourceType.ORE, maxOre);
+		this.getDiscardView().setResourceMaxAmount(ResourceType.SHEEP, maxSheep);
+		this.getDiscardView().setResourceMaxAmount(ResourceType.WHEAT, maxWheat);
+		this.getDiscardView().setResourceMaxAmount(ResourceType.WOOD, maxWood);
+
+		this.getDiscardView().setResourceDiscardAmount(ResourceType.BRICK, 0);
+		this.getDiscardView().setResourceDiscardAmount(ResourceType.ORE, 0);
+		this.getDiscardView().setResourceDiscardAmount(ResourceType.SHEEP, 0);
+		this.getDiscardView().setResourceDiscardAmount(ResourceType.WHEAT, 0);
+		this.getDiscardView().setResourceDiscardAmount(ResourceType.WOOD, 0);
+
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.BRICK, p.hasBrick(), false);
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.ORE, p.hasOre(), false);
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.SHEEP, p.hasSheep(), false);
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WHEAT, p.hasWheat(), false);
 		this.getDiscardView().setResourceAmountChangeEnabled(ResourceType.WOOD, p.hasWood(), false);
-
-		
+			
 		this.getDiscardView().setStateMessage("0/" + totalPlayerResources);
 	}
 
@@ -68,10 +98,7 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		int playerIndex = this.stateManager.getFacade().getPlayerIndex();
-		Player p = this.stateManager.getClientModel().getPlayers()[playerIndex];
-		int playerResourceNum = p.getResources().getAmountOfSpecificResource(resource);
-		//this.getDiscardView().
+		
 	}
 
 	@Override
