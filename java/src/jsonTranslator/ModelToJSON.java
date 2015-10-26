@@ -24,6 +24,14 @@ public class ModelToJSON {
 		return null;
 	}
 	
+	public JsonObject createSendChatObject( int playerIndex, String message) {
+		JsonObject object = new JsonObject();
+		object.addProperty("type", "sendChat");
+		object.addProperty("playerIndex", playerIndex);
+		object.addProperty("content", message);
+		return object;
+	}
+	
 	public JsonObject createAcceptTradeObject(TradeOffer tradeOffer, boolean willAccept) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "acceptTrade");

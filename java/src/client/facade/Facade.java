@@ -132,7 +132,7 @@ public class Facade {
 	 * @param message received from client
 	 */
 	public void sendMessage (String message) {
-		
+		this.clientCommunicator.sendChat(this.modelToJSON.createSendChatObject(this.getPlayerIndex(), message), this.getFullCookie());
 	}
 	
 	//GAMEHISTORY CONTROLLER
