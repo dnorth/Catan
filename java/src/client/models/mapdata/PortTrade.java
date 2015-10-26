@@ -66,6 +66,20 @@ public int getBrickCost() {
 public int getOreCost() {
 	return oreCost;
 }
+
+public int getCost(ResourceType resource)
+{
+	switch(resource)
+	{
+	case WHEAT: return wheatCost;
+	case WOOD: return woodCost; 
+	case SHEEP: return sheepCost; 
+	case BRICK: return brickCost; 
+	case ORE: return oreCost; 
+	}
+	
+return 0;	
+}
 public PortType getType() {
 	return type;
 }

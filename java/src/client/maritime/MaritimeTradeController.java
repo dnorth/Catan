@@ -7,6 +7,7 @@ import shared.definitions.*;
 import client.base.*;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.mapdata.PortTrade;
 import client.state.ActivePlayerState;
 import client.state.StateManager;
 
@@ -28,7 +29,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	}
 	
 	public IMaritimeTradeView getTradeView() {
-		
 		return (IMaritimeTradeView)super.getView();
 	}
 	
@@ -56,27 +56,29 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void cancelTrade() {
-
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void setGetResource(ResourceType resource) {
+		PortTrade p =stateManager.getClientModel().getPlayers()[stateManager.getFacade().getPlayerIndex()].getPortTrade();
+		getTradeOverlay().selectGetOption(resource, 1);
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
-
+		PortTrade p =stateManager.getClientModel().getPlayers()[stateManager.getFacade().getPlayerIndex()].getPortTrade();
+		getTradeOverlay().selectGiveOption(resource, p.getCost(resource));
 	}
 
 	@Override
 	public void unsetGetValue() {
-
+		getTradeOverlay().hideGetOptions();
 	}
 
 	@Override
 	public void unsetGiveValue() {
-
+		getTradeOverlay().hideGiveOptions();
 	}
 
 	@Override
@@ -88,6 +90,5 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			this.getTradeView().enableMaritimeTrade(false);
 		}
 	}
-
 }
 
