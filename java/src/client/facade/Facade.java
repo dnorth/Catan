@@ -792,6 +792,8 @@ public class Facade {
 	 * Called by the view then the user requests to buy a card
 	 */
 	public void buyCard() {
+		if (canDo.canBuyDevCard(getPlayerIndex())) clientCommunicator.buyDevCard(this.modelToJSON.getBuyDevCardCommand(getPlayerIndex()), this.getFullCookie());
+//		else 
 	}
 	
 	/**

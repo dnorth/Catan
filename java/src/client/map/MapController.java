@@ -13,6 +13,7 @@ import client.models.mapdata.Road;
 import client.state.ActivePlayerState;
 import client.state.IStateBase;
 import client.state.InactivePlayerState;
+import client.state.RoadBuildingState;
 import client.state.SetupOneActivePlayerState;
 import client.state.SetupTwoActivePlayerState;
 import client.state.StateManager;
@@ -31,6 +32,7 @@ public class MapController extends Controller implements IMapController {
 	
 	private IRobView robView;
 	private StateManager stateManager;
+	private int roadBuildingCount;
 	
 	public MapController(IMapView view, IRobView robView, StateManager stateManager) {
 		
@@ -39,6 +41,7 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
+		this.roadBuildingCount = 0;
 		
 //		initFromModel();
 	}
@@ -156,6 +159,7 @@ public class MapController extends Controller implements IMapController {
 	public void placeRoad(EdgeLocation edgeLoc) {
 		this.stateManager.getState().placeRoad(edgeLoc);
 		this.stateManager.setPlacing(false);
+		if (stateManager.getState() instanceof RoadBuildingState) roadBuildingCount += 1;
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {	
@@ -262,6 +266,20 @@ public class MapController extends Controller implements IMapController {
 					stateManager.setState(new InactivePlayerState(stateManager.getFacade()));
 				}
 				this.cancelMove();
+			}
+		}
+		else if (stateManager.getState() instanceof RoadBuildingState) {
+			if (roadBuildingCount < 2) {
+				System.out.println("TEST1");
+				if (!stateManager.isPlacing()) {
+					System.out.println("TEST2");
+					startMove(PieceType.ROAD, true, false);
+					stateManager.setPlacing(true);
+				}
+			}
+			else {
+				roadBuildingCount = 0;
+				stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 			}
 		}
 		

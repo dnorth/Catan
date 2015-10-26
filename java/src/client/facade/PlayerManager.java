@@ -114,7 +114,7 @@ public class PlayerManager {
 	 */
 	public boolean canBuyDevCard(int playerIndex){
 		Player p = players[playerIndex];
-		return p.hasSheep() && p.hasWheat() && p.hasOre();
+		return (p.hasSheep() && p.hasWheat() && p.hasOre());
 	}
 	
 	/**

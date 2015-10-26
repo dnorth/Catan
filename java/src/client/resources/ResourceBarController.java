@@ -61,6 +61,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.CITY, p.getCitiesNum());
 		getView().setElementAmount(ResourceBarElement.SOLDIERS, p.getSoldiers());
 		getView().setElementAmount(ResourceBarElement.PLAY_CARD, d.getTotalCount());
+		if (stateManager.getFacade().canBuyCard()) getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+		else getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
 		}
 	
 	

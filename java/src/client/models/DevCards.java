@@ -1,5 +1,7 @@
 package client.models;
 
+import shared.definitions.DevCardType;
+
 
 
 public class DevCards{
@@ -18,6 +20,22 @@ public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int
 	this.roadBuilding = roadBuildingCount;
 	this.soldier = soldierCount;
 	this.yearOfPlenty = yearOfPlentyCount;
+}
+
+public int getSpecifiedDevCardCount(DevCardType type) {
+	switch (type) {
+	case SOLDIER:
+		return getSoldierCount();
+	case YEAR_OF_PLENTY:
+		return getYearOfPlentyCount();
+	case MONOPOLY:
+		return getMonopolyCount();
+	case ROAD_BUILD:
+		return getRoadBuildingCount();
+	case MONUMENT:
+		return getMonumentCount();
+	}
+	return -99;
 }
 
 public int getMonopolyCount() {
