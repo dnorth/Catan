@@ -17,6 +17,7 @@ import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.facade.Facade;
 import client.models.ClientModel;
+import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.User;
 
@@ -45,7 +46,7 @@ public interface IStateBase {
 	public abstract void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
 	public abstract void increaseAmount(ResourceType resource);
 	public abstract void decreaseAmount(ResourceType resource);
-	public abstract void discard();
+	public abstract void discard(Resources toDiscard);
 	public abstract void decreaseDomesticTradeResourceAmount(ResourceType resource);
 	public abstract void increaseDomesticTradeResourceAmount(ResourceType resource);
 	public abstract void sendTradeOffer();

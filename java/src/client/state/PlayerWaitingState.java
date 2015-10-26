@@ -9,6 +9,7 @@ import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.facade.Facade;
+import client.models.Resources;
 import client.models.TradeOffer;
 
 public class PlayerWaitingState implements IStateBase {
@@ -127,7 +128,7 @@ public class PlayerWaitingState implements IStateBase {
 	}
 
 	@Override
-	public void discard() {
+	public void discard(Resources toDiscard) {
 		// TODO Auto-generated method stub
 		
 	}

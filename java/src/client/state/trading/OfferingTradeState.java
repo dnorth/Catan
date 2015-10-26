@@ -10,6 +10,7 @@ import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.facade.Facade;
+import client.models.Resources;
 import client.models.TradeOffer;
 import client.state.IStateBase;
 
@@ -120,7 +121,7 @@ public class OfferingTradeState implements IStateBase {
 	public void decreaseAmount(ResourceType resource) {}
 
 	@Override
-	public void discard() {}
+	public void discard(Resources toDiscard) {}
 
 	@Override
 	public void decreaseDomesticTradeResourceAmount(ResourceType resource) {

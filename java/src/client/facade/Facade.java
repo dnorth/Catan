@@ -221,7 +221,8 @@ public class Facade {
 	/**
 	 * This method is called when the user clicks the discard button.
 	 */
-	public void discard() {
+	public void discard(Resources toDiscard) {
+		clientCommunicator.discardCards(this.modelToJSON.getDiscardCardsCommand(this.getPlayerIndex(), toDiscard), this.getFullCookie());
 	}
 	
 	

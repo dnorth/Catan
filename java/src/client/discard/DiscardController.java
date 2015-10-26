@@ -193,7 +193,7 @@ public class DiscardController extends Controller implements IDiscardController 
 	@Override
 	public void discard() {
 		IStateBase state = this.stateManager.getState();
-		state.discard();
+		state.discard(toDiscard);
 		getDiscardView().closeModal();
 	}
 
