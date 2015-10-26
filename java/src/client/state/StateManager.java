@@ -7,6 +7,7 @@ import client.facade.Facade;
 import client.models.ClientModel;
 import client.models.User;
 import server.ServerPoller.ServerPoller;
+import shared.definitions.CatanColor;
 
 public class StateManager {
 
@@ -87,5 +88,9 @@ public class StateManager {
 	
 	public boolean getCurrentlyRobbing() {
 		return this.currentlyRobbing;
+	}
+	
+	public CatanColor getClientColor() {
+		return this.facade.getLocalPlayer().getColor();
 	}
 }

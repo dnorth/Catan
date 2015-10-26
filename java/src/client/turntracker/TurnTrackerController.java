@@ -78,6 +78,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		//System.out.println("TURN-TRACKER-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if(this.stateManager.getState() instanceof PlayerWaitingState) {
 			this.getView().updateGameState("Waiting For Other Players", false);
+			this.getView().setLocalPlayerColor(stateManager.getClientColor());
 			return;
 		}
 		else if (this.stateManager.getState() instanceof GameOverState ||
