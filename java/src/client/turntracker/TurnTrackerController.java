@@ -77,6 +77,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			this.getView().setLocalPlayerColor(stateManager.getClientColor());
 			stateManager.setSetTitleColor(false);
 		}
+		
+		if (this.stateManager.getState() instanceof GameOverState) {
+			stateManager.getFacade().setGame(null);
+			stateManager.setState(new JoinGameState(stateManager.getFacade()));
+		}
+		
 		if(this.stateManager.getState() instanceof PlayerWaitingState) {
 			this.getView().updateGameState("Waiting For Other Players", false);
 			return;

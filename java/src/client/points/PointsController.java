@@ -5,6 +5,8 @@ import java.util.Observable;
 import client.base.*;
 import client.exceptions.OutOfBoundsException;
 import client.models.Player;
+import client.state.GameOverState;
+import client.state.JoinGameState;
 import client.state.StateManager;
 
 
@@ -64,6 +66,14 @@ public class PointsController extends Controller implements IPointsController {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(!stateManager.getClientModel().newCli()) {
+			for (Player p : stateManager.getClientModel().getPlayers()) {
+				if (p.getVictoryPoints() > 9) {
+					finishedView.setWinner(p.getName(), p.getPlayerIndex()==stateManager.getFacade().getPlayerIndex());
+					finishedView.showModal();
+					stateManager.setState(new GameOverState(stateManager.getFacade()));
+					stateManager.getFacade().setGame(null);
+				}
+			}
 			initFromModel();
 		}
 	}

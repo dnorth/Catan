@@ -19,7 +19,6 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IAction soldierAction;
 	private IAction roadAction;
 	private StateManager stateManager;
-	private boolean playedSoldier;
 	private boolean playedYearOfPlenty;
 	private boolean playedRoadBuilding;
 	private boolean playedMonopoly;
@@ -89,7 +88,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	public boolean canPlayCard(DevCardType type) {
 		switch(type) {
 		case SOLDIER:
-			return (!playedSoldier && getOldAmount(type) > 0);
+			return (getOldAmount(type) > 0);
 		case YEAR_OF_PLENTY:
 			return (!playedYearOfPlenty && getOldAmount(type) > 0);
 		case MONOPOLY:
@@ -151,7 +150,6 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void update(Observable o, Object arg) {
 		this.playedMonopoly = false;
 		this.playedRoadBuilding = false;
-		this.playedSoldier = false;
 		this.playedYearOfPlenty = false;
 	}
 
