@@ -99,6 +99,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			return;
 		}
 		
+		if(!initialized) {
+			this.initializeAllPlayers();
+		}
 		if(initialized) {updatePlayers();}
 		
 		if(!stateManager.getClientModel().newCli()) {
@@ -117,7 +120,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					if (!(this.stateManager.getState() instanceof SetupOneActivePlayerState)) {
 						this.getView().updateGameState("Place Initial Pieces", false);
 						this.stateManager.setState(new SetupOneActivePlayerState(this.stateManager.getFacade()));
-						this.initializeAllPlayers();
 					}
 				}
 				else if (this.stateManager.getClientModel().getTurnTracker().getStatus().equals("SecondRound")) {
