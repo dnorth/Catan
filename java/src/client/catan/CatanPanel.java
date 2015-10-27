@@ -62,11 +62,11 @@ public class CatanPanel extends JPanel
 		JButton testButton = new JButton("Test");
 		testButton.addActionListener(new ActionListener() {
 			
-//			 @Override
-//			 public void actionPerformed(ActionEvent e) {
-//			
-//			 new client.points.GameFinishedView().showModal();
-//			 }
+			 @Override
+			 public void actionPerformed(ActionEvent e) {
+			
+			 new client.points.GameFinishedView().showModal();
+			 }
 //			
 //			 @Override
 //			 public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class CatanPanel extends JPanel
 //			 false, false);
 //			 }
 			
-			int state = 0;
+/*			int state = 0;
 			
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -113,9 +113,9 @@ public class CatanPanel extends JPanel
 					discardWaitView.showModal();
 					state = 2;
 				}
-			}
+			}*/
 		});
-		this.add(testButton, BorderLayout.SOUTH);
+		//this.add(testButton, BorderLayout.SOUTH);
 	}
 	
 }

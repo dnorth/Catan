@@ -68,7 +68,8 @@ public class PointsController extends Controller implements IPointsController {
 		if(!stateManager.getClientModel().newCli()) {
 			for (Player p : stateManager.getClientModel().getPlayers()) {
 				if (p.getVictoryPoints() > 9) {
-					finishedView.setWinner(p.getName(), p.getPlayerIndex()==stateManager.getFacade().getPlayerIndex());
+					System.out.println("SET GAMEOVER STATE TRUE2");
+					finishedView.setWinner(p.getName(), p.getPlayerIndex() == stateManager.getFacade().getPlayerIndex());
 					finishedView.showModal();
 					stateManager.setState(new GameOverState(stateManager.getFacade()));
 					stateManager.getFacade().setGame(null);
