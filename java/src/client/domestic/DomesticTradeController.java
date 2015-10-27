@@ -263,7 +263,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		IStateBase state = this.stateManager.getState();
 		state.acceptTrade(willAccept);
 		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
-		getAcceptOverlay().closeModal();
+		if(getAcceptOverlay().isModalShowing()) {
+			getAcceptOverlay().closeModal();
+		}
 	}
 	
 	private void addGetResources(TradeOffer offer) {
@@ -396,7 +398,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					getAcceptOverlay().setPlayerName(stateManager.getClientModel().getPlayers()[offer.getSender()].getName());
 					addGetResources(offer);
 					addGiveResources(offer);
-					getAcceptOverlay().showModal();
+					if(stateManager.getFacade().canAcceptTrade(offer)) {
+						getAcceptOverlay().showModal();						
+					} else {
+						acceptTrade(false);
+					}
 				}
 			}
 		}
