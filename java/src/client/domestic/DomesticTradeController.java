@@ -271,7 +271,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 	}
 	
-	private void addGetResources(TradeOffer offer) {
+	private void addGiveResources(TradeOffer offer) {
 		if(offer.getOreCount() < 0) {
 			getAcceptOverlay().addGetResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
 		}
@@ -289,7 +289,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 	}
 	
-	private void addGiveResources(TradeOffer offer) {
+	private void addGetResources(TradeOffer offer) {
 		if(offer.getOreCount() > 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
 		}
