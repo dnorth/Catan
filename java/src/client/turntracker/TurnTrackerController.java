@@ -41,6 +41,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		IStateBase state = this.stateManager.getState();
 		state.endTurn();
 		this.stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
+		this.getView().updateGameState("Waiting For Other Players", false);
 	}
 	
 	private void initFromModel() {

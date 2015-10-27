@@ -29,7 +29,7 @@ abstract class ServerProxy {
 
 
     public ServerProxy() { 
-        SERVER_HOST = "narwhallife.com";
+        SERVER_HOST = "localhost";
         SERVER_PORT = 8081;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
     }    
