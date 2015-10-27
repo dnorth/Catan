@@ -1,5 +1,6 @@
 package server.ServerPoller;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,6 +8,7 @@ import jsonTranslator.JSONToModel;
 import server.proxy.IProxy;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
+import client.models.Player;
 import client.state.JoinGameState;
 import client.state.LoginState;
 import client.state.StateManager;
@@ -26,6 +28,7 @@ public class ServerPoller {
 	private CatanColor currColor;
 	private boolean forceUpdate;
 	private int currTurn;
+	private ArrayList<CatanColor> playerColors;
 	/**
 	 * Constructs ServerPoller, calls initialize
 	 * @param serv pointer to server or mock proxy
@@ -38,6 +41,7 @@ public class ServerPoller {
 		currNumPlayers = 0;
 		currTurn = -1;
 		forceUpdate = false;
+		playerColors = new ArrayList<CatanColor>();
 		initialize();
 	}
 	
@@ -48,7 +52,7 @@ public class ServerPoller {
 	private class PollEvent extends TimerTask {		
 		public void run() {
 			try {
-		//		System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
+//				System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}
@@ -102,6 +106,7 @@ public class ServerPoller {
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies),
 				JSONToModel.translateNumberOfPlayers(cookies),
 				JSONToModel.translateTurnTracker(cookies).getCurrentTurn(),
+				JSONToModel.translatePlayers(cookies),
 				color);
 		
 		if(isNewVersion) {
@@ -117,30 +122,45 @@ public class ServerPoller {
 	 * @param newestVersion new version number
 	 * @return true if new version different than currVersion
 	 */
-	private boolean newVersion(int newestVersion, int numPlayers, int turn, CatanColor color){ // compare newest version with currVersion - if different, return new
+	private boolean newVersion(int newestVersion, int numPlayers, int turn, Player[] players, CatanColor color){ // compare newest version with currVersion - if different, return new
+		boolean newnew = false;
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
-			return true;
+			newnew = true;
 		}
-		else if (numPlayers > currNumPlayers) {
-			//System.out.println("NEW BECAUSE NUMBER OF PLAYERS");
-			if(currColor != color) currColor = color;
-			if(currTurn != turn) currTurn = turn;
+		try {
+			if (colorsChanged(players)) newnew = true;
+		} catch (NullPointerException e)
+		{}
+		if (numPlayers > currNumPlayers) {
 			currNumPlayers = numPlayers;
-			if(numPlayers > 1) return true;
+			if(numPlayers > 1) newnew = true;
 		}
 		if (color != currColor) {
-			//System.out.println("NEW BECAUSE COLOR");
-			if(currTurn != turn) currTurn = turn;
 			currColor = color;
-			return true;
+			newnew = true;
 		}
-		else if (turn != currTurn) {
+		if (turn != currTurn) {
 			//System.out.println("NEW BEACUSE NEW TURN");
 			currTurn = turn;
+			newnew = true;
+		}
+		return newnew;
+	}
+
+	private boolean colorsChanged(Player[] players) {
+		ArrayList<CatanColor> newColors = new ArrayList<CatanColor>();
+		for (Player p : players) {
+			try {
+				newColors.add(CatanColor.getCatanColor(p.getColor()));
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		if (!newColors.equals(playerColors)) {
+			playerColors = newColors;
 			return true;
 		}
-		else
-			return false;
+		return false;
 	}
 
 	public JSONToModel getJsonToModelTranslator() {
@@ -164,7 +184,6 @@ public class ServerPoller {
 		GameInfo[] oldGames = stateManager.getFacade().getGames();
 		boolean matches = gameInfoMatches(newGames, oldGames);
 		if(!matches) {
-			//System.out.println("Updating Games List.");
 			stateManager.getFacade().setGames(newGames);
 			this.stateManager.getClientModel().runUpdates();
 		}

@@ -7,6 +7,7 @@ import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.models.Player;
 import client.state.IStateBase;
 import client.state.JoinGameState;
 import client.state.PlayerWaitingState;
@@ -216,6 +217,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("IN JOINGAME UPDATE");
 		if (stateManager.getState() instanceof JoinGameState) {
 			IStateBase state = stateManager.getState();
 			if(getJoinGameView().isModalShowing()) {
@@ -224,6 +226,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getJoinGameView().setGames(games, localPlayer);
 				getJoinGameView().showModal();
 			}
+		}
+		GameInfo game = stateManager.getFacade().getGame();
+		int myPlayerId = stateManager.getState().getFacade().getLocalPlayer().getId();
+		List<PlayerInfo> players = game.getPlayers();
+		for (CatanColor cc : CatanColor.values()) {
+			try {
+				getSelectColorView().setColorEnabled(cc, true);
+			} catch (AssertionError e) {}
+		}
+		for(int playerCounter = 0; playerCounter < players.size(); playerCounter++) {
+			CatanColor cc = players.get(playerCounter).getColor();
+			if(!(players.get(playerCounter).getId() == myPlayerId)) getSelectColorView().setColorEnabled(cc, false);
 		}
 	}
 	

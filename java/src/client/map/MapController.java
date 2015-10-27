@@ -208,7 +208,7 @@ public class MapController extends Controller implements IMapController {
 			}
 		}
 		else {
-			if(state instanceof ActivePlayerState) {
+			if(state instanceof ActivePlayerState || state instanceof RoadBuildingState) {
 				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
 			}
 			else if (state instanceof RobbingState) {
@@ -237,7 +237,7 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println("MAP-CONTROLLER");
+		System.out.println("MAP-CONTROLLER");
 		//System.out.println("\tROB-VIEW: " + this.getRobView().isModalShowing());
 		//System.out.println("MAP-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 
