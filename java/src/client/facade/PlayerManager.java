@@ -79,11 +79,11 @@ public class PlayerManager {
 		Player p = players[playerIndex];
 		Resources offer = tradeOffer.getOffer();
 		
-		return p.hasBrick(offer.getBrickCount()) && 
-			   p.hasOre(offer.getOreCount())     && 
-			   p.hasSheep(offer.getSheepCount()) && 
-			   p.hasWheat(offer.getWheatCount()) &&
-			   p.hasWood(offer.getWoodCount());
+		return p.hasBrick(offer.getBrickCount()*-1) && 
+			   p.hasOre(offer.getOreCount()*-1)     && 
+			   p.hasSheep(offer.getSheepCount()*-1) && 
+			   p.hasWheat(offer.getWheatCount()*-1) &&
+			   p.hasWood(offer.getWoodCount()*-1);
 	}
 
 	
