@@ -175,7 +175,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		IStateBase state = this.stateManager.getState();
 		getTradeOverlay().closeModal();
 		int localPlayerIndex = this.stateManager.getFacade().getLocalPlayer().getPlayerIndex();
-		//tradeOffer.invert();
+		tradeOffer.invert();
 		TradeOffer newTrade = new TradeOffer(localPlayerIndex, tradingPlayerIndex, tradeOffer);
 		state.sendTradeOffer(newTrade);
 		this.stateManager.setState(new TradeOfferedWaitingState(this.stateManager.getFacade()));
@@ -271,38 +271,38 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 	}
 	
-	private void addGiveResources(TradeOffer offer) {
-		if(offer.getOreCount() < 0) {
+	private void addGetResources(TradeOffer offer) {
+		if(offer.getOreCount() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
 		}
-		if(offer.getBrickCount() < 0) {
+		if(offer.getBrickCount() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
 		}
-		if(offer.getSheepCount() < 0) {
+		if(offer.getSheepCount() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
 		}
-		if(offer.getWheatCount() < 0) {
+		if(offer.getWheatCount() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
 		}
-		if(offer.getWoodCount() < 0) {
+		if(offer.getWoodCount() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
 		}
 	}
 	
-	private void addGetResources(TradeOffer offer) {
-		if(offer.getOreCount() > 0) {
+	private void addGiveResources(TradeOffer offer) {
+		if(offer.getOreCount() < 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.ORE, Math.abs(offer.getOreCount()));
 		}
-		if(offer.getBrickCount() > 0) {
+		if(offer.getBrickCount() < 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.BRICK, Math.abs(offer.getBrickCount()));
 		}
-		if(offer.getSheepCount() > 0) {
+		if(offer.getSheepCount() < 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, Math.abs(offer.getSheepCount()));
 		}
-		if(offer.getWheatCount() > 0) {
+		if(offer.getWheatCount() < 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, Math.abs(offer.getWheatCount()));
 		}
-		if(offer.getWoodCount() > 0) {
+		if(offer.getWoodCount() < 0) {
 			getAcceptOverlay().addGiveResource(ResourceType.WOOD, Math.abs(offer.getWoodCount()));
 		}
 	}
