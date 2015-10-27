@@ -251,8 +251,11 @@ public class DiscardController extends Controller implements IDiscardController 
 	@Override
 	public void update(Observable o, Object arg) {
 		if (stateManager.getClientModel().getTurnTracker().getStatus().equals("Discarding")) {
+			int playerIndex = this.stateManager.getFacade().getPlayerIndex();
+			p = this.stateManager.getClientModel().getPlayers()[playerIndex];
+			int totalPlayerResources = p.getResources().getTotalCount();
 			int currTurn = stateManager.getClientModel().getTurnTracker().getCurrentTurn();
-			if (!alreadyDiscarding && this.currTurnIndex != currTurn) {
+			if (!alreadyDiscarding && this.currTurnIndex != currTurn && totalPlayerResources > 7) {
 				this.currTurnIndex = currTurn;
 				alreadyDiscarding = true;
 				initialize();
@@ -261,6 +264,11 @@ public class DiscardController extends Controller implements IDiscardController 
 			else if (waiting) {
 				waitView.setMessage("Waiting for other players to discard");
 				waitView.showModal();				
+			}
+			else if (!alreadyDiscarding) {
+				waiting = true;
+				waitView.setMessage("Waiting for other players to discard");
+				waitView.showModal();
 			}
 		}
 		else {
