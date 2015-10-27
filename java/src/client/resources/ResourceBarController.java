@@ -157,6 +157,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			}
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, devCardsLeft() && stateManager.getFacade().canBuyCard());
 			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, true);
+			this.getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
 			
 		}
 		else {
@@ -164,6 +165,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
 			this.getView().setElementEnabled(ResourceBarElement.CITY, false);
 			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			this.getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
 			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, false);
 			
 
