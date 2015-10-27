@@ -306,8 +306,8 @@ public class ModelToJSON {
 		command.addProperty("type", "maritimeTrade");
 		command.addProperty("playerIndex", playerIndex);
 		command.addProperty("ratio", ratio);
-		command.addProperty("inputResource", inputResource.name());
-		command.addProperty("outputResource", outputResource.name());
+		command.addProperty("inputResource", inputResource.name().toLowerCase());
+		command.addProperty("outputResource", outputResource.name().toLowerCase());
 		return command;
 	}
 	
