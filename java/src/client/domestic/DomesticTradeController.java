@@ -57,6 +57,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.stateManager = stateManager;
 		this.stateManager.addObserver(this);
 		this.tradeOffer = new Resources();
+		unsetAllSending();
 		this.tradingPlayerIndex = -1;
 		this.newDomestic = true;
 	}
@@ -112,7 +113,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			this.getTradeOverlay().setPlayers(tradePlayers);
 			this.newDomestic = false;
 		}
-		getTradeOverlay().reset();
 		this.localResources = getLocalResources();
 		getTradeOverlay().showModal();
 	}
@@ -252,6 +252,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void cancelTrade() {
+		unsetAllSending();
 		this.stateManager.setState(new ActivePlayerState(this.stateManager.getFacade()));
 		this.setPlayerToTradeWith(-1);
 		this.tradeOffer = new Resources();
@@ -346,7 +347,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 	}
 	
-	/*
 	private void unsetAllSending() {
 		woodSending = false;
 		getTradeOverlay().setResourceSelectionEnabled(false);
@@ -360,7 +360,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		getTradeOverlay().setResourceAmount(ResourceType.WHEAT, "0");
 		oreSending = false;
 		getTradeOverlay().setResourceAmount(ResourceType.ORE, "0");
-	}*/
+	}
 	
 	private boolean getSendForResource(ResourceType resource) {
 		switch(resource) {
