@@ -127,10 +127,6 @@ public class ServerPoller {
 		if (newestVersion != this.stateManager.getCurrentVersion()) {
 			newnew = true;
 		}
-		try {
-			if (colorsChanged(players)) newnew = true;
-		} catch (NullPointerException e)
-		{}
 		if (numPlayers > currNumPlayers) {
 			currNumPlayers = numPlayers;
 			if(numPlayers > 1) newnew = true;
@@ -145,22 +141,6 @@ public class ServerPoller {
 			newnew = true;
 		}
 		return newnew;
-	}
-
-	private boolean colorsChanged(Player[] players) {
-		ArrayList<CatanColor> newColors = new ArrayList<CatanColor>();
-		for (Player p : players) {
-			try {
-				newColors.add(CatanColor.getCatanColor(p.getColor()));
-			} catch (Exception e) {
-				return false;
-			}
-		}
-		if (!newColors.equals(playerColors)) {
-			playerColors = newColors;
-			return true;
-		}
-		return false;
 	}
 
 	public JSONToModel getJsonToModelTranslator() {

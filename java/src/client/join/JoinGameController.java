@@ -150,7 +150,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		//System.out.println("Game Created: " + gameCreated);
 		if(gameCreated) {
 			getNewGameView().closeModal();
-			state.joinGame(CatanColor.WHITE);
+			state.joinGame(CatanColor.RED);
 			games = state.getFacade().getGamesList();
 			getJoinGameView().setGames(games, localPlayer);
 			getJoinGameView().showModal();
