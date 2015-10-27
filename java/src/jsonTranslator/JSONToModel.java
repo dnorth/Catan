@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.ClientModel;
+import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
@@ -52,6 +53,7 @@ public class JSONToModel {
 		Player[] players = translatePlayers(serverModel);
 		int version = translateVersion(serverModel);
 		int winner = translateWinner(serverModel);
+		DevCards deck = translateDeck(serverModel);
 		
 		clientModel.setBank(bank);
 				
@@ -70,10 +72,16 @@ public class JSONToModel {
 		clientModel.setVersion(version);
 
 		clientModel.setWinner(winner);
+		
+		clientModel.setDeck(deck);
 
 		return clientModel;
 	}
 	
+	public static DevCards translateDeck(JsonObject serverModel) {
+		DevCards deck = (DevCards)g.fromJson(serverModel.get("deck"), DevCards.class);
+		return deck;
+	}
 	
 	/**
 	 * Translates bank to put in updated client model

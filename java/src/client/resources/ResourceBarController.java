@@ -126,6 +126,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			action.execute();
 		}
 	}
+	
+	public boolean devCardsLeft() {
+		return stateManager.getClientModel().getDeck().getTotalCount() > 0;
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -151,8 +155,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			else {
 				this.getView().setElementEnabled(ResourceBarElement.CITY, false);
 			}
-			if (stateManager.getFacade().canBuyCard()) getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
-			else getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, devCardsLeft() && stateManager.getFacade().canBuyCard());
 			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, true);
 			
 		}

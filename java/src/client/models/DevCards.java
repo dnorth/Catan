@@ -80,7 +80,7 @@ public void setYearOfPlentyCount(int yearOfPlentyCount) {
 
 public int getTotalCount()
 {
-return monopoly + monument + roadBuilding + soldier +yearOfPlenty;	
+	return monopoly + monument + roadBuilding + soldier + yearOfPlenty;	
 }
 
 
