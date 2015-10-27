@@ -208,7 +208,10 @@ public class MapController extends Controller implements IMapController {
 			}
 		}
 		else {
-			if(state instanceof ActivePlayerState || state instanceof RoadBuildingState) {
+			if (state instanceof ActivePlayerState && pieceType.equals(PieceType.ROBBER)) {
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
+			}
+			else if (state instanceof ActivePlayerState || state instanceof RoadBuildingState) {
 				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
 			}
 			else if (state instanceof RobbingState) {
