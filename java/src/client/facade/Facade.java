@@ -567,6 +567,19 @@ public class Facade {
 		for (int i = 0; i < candidateVictimList.size(); i++) {
 			candidateVictims[i] = candidateVictimList.get(i);
 		}
+		
+		if (candidateVictims.length == 0) {
+			RobPlayerInfo emptyPlayer = new RobPlayerInfo();
+			emptyPlayer.setColor(CatanColor.WHITE);
+			emptyPlayer.setName("None");
+			emptyPlayer.setId(-1);
+			emptyPlayer.setPlayerIndex(-1);
+			emptyPlayer.setNumCards(0);
+			emptyPlayer.setUserCookie("");
+			candidateVictims = new RobPlayerInfo[1];
+			candidateVictims[0] = emptyPlayer;
+		}
+		
 		return candidateVictims;
 	}
 	
