@@ -190,4 +190,12 @@ public class Resources{
 		{sb.append(count + " "+ type +", ");}
 	}
 	
+	public void invert() {
+		this.wood *= -1;
+		this.brick *= -1;
+		this.sheep *= -1;
+		this.wheat *= -1;
+		this.ore *= -1;
+	}
+	
 }
