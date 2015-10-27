@@ -226,18 +226,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getJoinGameView().showModal();
 			}
 		}
-		GameInfo game = stateManager.getFacade().getGame();
-		int myPlayerId = stateManager.getState().getFacade().getLocalPlayer().getId();
-		List<PlayerInfo> players = game.getPlayers();
-		for (CatanColor cc : CatanColor.values()) {
-			try {
-				getSelectColorView().setColorEnabled(cc, true);
-			} catch (AssertionError e) {}
-		}
-		for(int playerCounter = 0; playerCounter < players.size(); playerCounter++) {
-			CatanColor cc = players.get(playerCounter).getColor();
-			if(!(players.get(playerCounter).getId() == myPlayerId)) getSelectColorView().setColorEnabled(cc, false);
-		}
+//		GameInfo game = stateManager.getFacade().getGame();
+//		int myPlayerId = stateManager.getState().getFacade().getLocalPlayer().getId();
+//		List<PlayerInfo> players = game.getPlayers();
+//		for (CatanColor cc : CatanColor.values()) {
+//			try {
+//				getSelectColorView().setColorEnabled(cc, true);
+//			} catch (AssertionError e) {}
+//		}
+//		for(int playerCounter = 0; playerCounter < players.size(); playerCounter++) {
+//			CatanColor cc = players.get(playerCounter).getColor();
+//			if(!(players.get(playerCounter).getId() == myPlayerId)) getSelectColorView().setColorEnabled(cc, false);
+//		}
 	}
 	
 	public String gamesToString() {
