@@ -175,7 +175,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		IStateBase state = this.stateManager.getState();
 		getTradeOverlay().closeModal();
 		int localPlayerIndex = this.stateManager.getFacade().getLocalPlayer().getPlayerIndex();
-		tradeOffer.invert();
+		//tradeOffer.invert();
 		TradeOffer newTrade = new TradeOffer(localPlayerIndex, tradingPlayerIndex, tradeOffer);
 		state.sendTradeOffer(newTrade);
 		this.stateManager.setState(new TradeOfferedWaitingState(this.stateManager.getFacade()));
