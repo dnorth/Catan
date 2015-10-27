@@ -59,6 +59,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.tradeOffer = new Resources();
 		this.tradingPlayerIndex = -1;
 		this.newDomestic = true;
+		System.out.println("Disabled domestic");
+		this.getTradeView().enableDomesticTrade(false);
 	}
 	
 	public IDomesticTradeView getTradeView() {
