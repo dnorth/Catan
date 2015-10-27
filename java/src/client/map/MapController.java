@@ -209,7 +209,7 @@ public class MapController extends Controller implements IMapController {
 		}
 		else {
 			if(state instanceof ActivePlayerState) {
-				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
+				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), false);
 			}
 			else if (state instanceof RobbingState) {
 				getView().startDrop(pieceType, stateManager.getFacade().getLocalPlayer().getColor(), true);
