@@ -19,10 +19,6 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IAction soldierAction;
 	private IAction roadAction;
 	private StateManager stateManager;
-	private boolean playedYearOfPlenty;
-	private boolean playedRoadBuilding;
-	private boolean playedMonopoly;
-	private boolean playedSoldier;
 	
 	/**
 	 * DevCardController constructor
@@ -93,13 +89,13 @@ public class DevCardController extends Controller implements IDevCardController 
 	public boolean canPlayCard(DevCardType type) {
 		switch(type) {
 		case SOLDIER:
-			return (!playedSoldier && getOldAmount(type) > 0);
+			return (!stateManager.hasPlayedDevCard() && getOldAmount(type) > 0);
 		case YEAR_OF_PLENTY:
-			return (!playedYearOfPlenty && getOldAmount(type) > 0);
+			return (!stateManager.hasPlayedDevCard() && getOldAmount(type) > 0);
 		case MONOPOLY:
-			return (!playedMonopoly && getOldAmount(type) > 0);
+			return (!stateManager.hasPlayedDevCard() && getOldAmount(type) > 0);
 		case ROAD_BUILD:
-			return (!playedRoadBuilding && getOldAmount(type) > 0 && enoughRoads());
+			return (!stateManager.hasPlayedDevCard() && getOldAmount(type) > 0 && enoughRoads());
 		case MONUMENT:
 			return (getTotalAmount(type) > 0);
 		}
@@ -108,12 +104,6 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startPlayCard() {
-		for (DevCardType type : DevCardType.values()) {
-			if (canPlayCard(type)) getPlayCardView().setCardEnabled(type, true);
-			else getPlayCardView().setCardEnabled(type, false);
-			System.out.println(type.toString() + " COUNT: " + String.valueOf(getTotalAmount(type)));
-			getPlayCardView().setCardAmount(type, getTotalAmount(type));
-		}
 		getPlayCardView().showModal();
 	}
 
@@ -125,6 +115,8 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
 		stateManager.getFacade().playMonopolyCard(resource);
+		stateManager.setPlayedDevCard(true);
+		stateManager.getClientModel().runUpdates();
 	}
 
 	@Override
@@ -135,6 +127,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playRoadBuildCard() {
 		stateManager.setState(new RoadBuildingState(stateManager.getFacade()));
+		stateManager.setPlayedDevCard(true);
 		stateManager.getClientModel().runUpdates();
 		roadAction.execute();
 	}
@@ -142,22 +135,24 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playSoldierCard() {
 		stateManager.setState(new RobbingState(stateManager.getFacade()));
+		stateManager.setPlayedDevCard(true);
 		stateManager.getClientModel().runUpdates();
-		this.playedSoldier = true;
 //		soldierAction.execute();
 	}
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		stateManager.getFacade().playYearOfPlentyCard(resource1, resource2);
+		stateManager.setPlayedDevCard(true);
+		stateManager.getClientModel().runUpdates();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.playedMonopoly = false;
-		this.playedRoadBuilding = false;
-		this.playedYearOfPlenty = false;
-		this.playedSoldier = false;
+		for (DevCardType type : DevCardType.values()) {
+			getPlayCardView().setCardEnabled(type, canPlayCard(type));
+			getPlayCardView().setCardAmount(type, getTotalAmount(type));
+		}
 	}
 
 }

@@ -61,6 +61,7 @@ public class RollController extends Controller implements IRollController {
 		//System.out.println("ROLL-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 		if (this.stateManager.getState() instanceof RollingDiceState) {
 			//System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
+			stateManager.setPlayedDevCard(false);
 			this.getRollView().showModal();
 		}
 		//System.out.println("ROLL-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());

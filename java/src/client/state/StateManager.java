@@ -17,6 +17,7 @@ public class StateManager {
 	boolean placing;
 	boolean currentlyRobbing;
 	boolean setTitleColor;
+	boolean playedDevCard;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
@@ -25,6 +26,7 @@ public class StateManager {
 		this.placing = false;
 		this.currentlyRobbing = false;
 		this.setTitleColor = false;
+		this.playedDevCard = false;
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State
@@ -102,5 +104,13 @@ public class StateManager {
 
 	public void setSetTitleColor(boolean setTitleColor) {
 		this.setTitleColor = setTitleColor;
+	}
+
+	public boolean hasPlayedDevCard() {
+		return playedDevCard;
+	}
+
+	public void setPlayedDevCard(boolean playedDevCard) {
+		this.playedDevCard = playedDevCard;
 	}
 }
