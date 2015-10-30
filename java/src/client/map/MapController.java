@@ -184,8 +184,18 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRobber(HexLocation hexLoc) {
 		RobPlayerInfo[] candidateVictims = this.stateManager.getState().placeRobber(hexLoc);
-		//System.out.println("ROBBER LOCATION SELECTED!");
 		if (candidateVictims != null) {
+			if(candidateVictims.length == 0) {
+				RobPlayerInfo emptyPlayer = new RobPlayerInfo();
+				emptyPlayer.setColor(CatanColor.WHITE);
+				emptyPlayer.setName("None");
+				emptyPlayer.setId(-1);
+				emptyPlayer.setPlayerIndex(-1);
+				emptyPlayer.setNumCards(0);
+				emptyPlayer.setUserCookie("");
+				stateManager.getState().robPlayer(emptyPlayer);
+			}
+			if(candidateVictims.length == 0) stateManager.setCurrentlyRobbing(false);
 			this.getRobView().setPlayers(candidateVictims);
 		}
 		this.robView.showModal();

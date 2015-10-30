@@ -413,7 +413,17 @@ public class BoardManager {
 	}
 	
 	public boolean canUpgradeSettlementAtLocation(int playerIndex, EdgeLocation edge) {
-		return board.getVertexOwner(edge) == playerIndex;
+		if (this.board.getVertexOwner(edge) != playerIndex) return false;
+		for (VertexObject v : this.board.getSettlements()) {
+			if (v.getOwner() == playerIndex) {
+				if(v.getLocation().equals(edge) && v.getOwner() == playerIndex) return true;
+				EdgeLocation[] altVertices = board.getAlternateEdgeLocations(v.getLocation());
+				for(EdgeLocation e : altVertices){
+					if(e.equals(edge) && v.getOwner() == playerIndex) return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean canMaritimeTrade(int playerIndex)
