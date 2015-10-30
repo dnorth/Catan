@@ -576,8 +576,9 @@ public class Facade {
 			emptyPlayer.setPlayerIndex(-1);
 			emptyPlayer.setNumCards(0);
 			emptyPlayer.setUserCookie("");
-			candidateVictims = new RobPlayerInfo[1];
-			candidateVictims[0] = emptyPlayer;
+			//candidateVictims = new RobPlayerInfo[1];
+			//candidateVictims[0] = emptyPlayer;
+			this.robPlayer(emptyPlayer);
 		}
 		
 		return candidateVictims;
