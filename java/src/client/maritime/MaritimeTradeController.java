@@ -10,6 +10,7 @@ import client.models.TradeOffer;
 import client.models.mapdata.PortTrade;
 import client.state.ActivePlayerState;
 import client.state.StateManager;
+import client.state.trading.TradeOfferedWaitingState;
 
 
 /**
@@ -109,7 +110,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(this.stateManager.getState() instanceof ActivePlayerState) {
+		if(this.stateManager.getState() instanceof ActivePlayerState || stateManager.getState() instanceof TradeOfferedWaitingState) {
 			this.getTradeView().enableMaritimeTrade(true);
 		}
 		else {
