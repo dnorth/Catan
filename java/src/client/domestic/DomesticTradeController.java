@@ -393,24 +393,26 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				getWaitOverlay().closeModal();
 			}
 		}
-		if(this.stateManager.getState() instanceof InactivePlayerState) {
+		else if(this.stateManager.getState() instanceof InactivePlayerState) {
 			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();	
 			if(offer != null) {
 				if(offer.getReceiver() == stateManager.getFacade().getPlayerIndex()) {
 					this.stateManager.setState(new ReceivingTradeState(this.stateManager.getFacade()));
+					getAcceptOverlay().reset();
+					getAcceptOverlay().setPlayerName(stateManager.getClientModel().getPlayers()[offer.getSender()].getName());
+					addGetResources(offer);
+					addGiveResources(offer);
+					getAcceptOverlay().showModal();		
 					if(stateManager.getFacade().canAcceptTrade(offer)) {
-						getAcceptOverlay().reset();
-						getAcceptOverlay().setPlayerName(stateManager.getClientModel().getPlayers()[offer.getSender()].getName());
-						addGetResources(offer);
-						addGiveResources(offer);
-						getAcceptOverlay().showModal();						
+						getAcceptOverlay().setAcceptEnabled(true);
 					} else {
-						acceptTrade(false);
+						getAcceptOverlay().setAcceptEnabled(false);
 					}
 				}
 			}
+			this.getTradeView().enableDomesticTrade(false);
 		}
-		if(this.stateManager.getState() instanceof ActivePlayerState) {
+		else if(this.stateManager.getState() instanceof ActivePlayerState) {
 			TradeOffer offer = this.stateManager.getClientModel().getTradeOffer();
 
 			if(offer != null) {
@@ -420,9 +422,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 						getWaitOverlay().showModal();
 					}
 				}
-			} else {
-				this.getTradeView().enableDomesticTrade(true);
-			}
+			} 
+			this.getTradeView().enableDomesticTrade(true);
 		}
 		else {
 			this.getTradeView().enableDomesticTrade(false);
