@@ -399,6 +399,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				if(offer.getReceiver() == stateManager.getFacade().getPlayerIndex()) {
 					this.stateManager.setState(new ReceivingTradeState(this.stateManager.getFacade()));
 					if(stateManager.getFacade().canAcceptTrade(offer)) {
+						getAcceptOverlay().reset();
 						getAcceptOverlay().setPlayerName(stateManager.getClientModel().getPlayers()[offer.getSender()].getName());
 						addGetResources(offer);
 						addGiveResources(offer);
