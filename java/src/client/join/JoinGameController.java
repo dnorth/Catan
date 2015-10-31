@@ -155,6 +155,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getJoinGameView().setGames(games, localPlayer);
 			getJoinGameView().showModal();
 		}
+		else
+		{
+			System.out.println("THISNEIGNSKLDNFS");
+			this.messageView.setMessage("Only alphanumerical characters and '\\s' allowed");
+			this.messageView.setTitle("Invalid game name");
+			this.messageView.showModal();
+		}
 	}
 
 	/**
