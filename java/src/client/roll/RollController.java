@@ -28,6 +28,11 @@ public class RollController extends Controller implements IRollController {
 		this.stateManager.getClientModel().addObserver(this);
 		setResultView(resultView);
 		timer = new Timer();
+		stateManager.setRollController(this);
+	}
+	
+	public boolean resultShowing(){
+		return resultView.isModalShowing();
 	}
 	
 	public IRollResultView getResultView() {

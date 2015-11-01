@@ -1,6 +1,7 @@
 package client.map;
 
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import client.base.Controller;
 import client.data.RobPlayerInfo;
@@ -320,6 +321,12 @@ public class MapController extends Controller implements IMapController {
 		else if(stateManager.getState() instanceof ActivePlayerState) {
 			if (!stateManager.getCurrentlyRobbing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
 				stateManager.setCurrentlyRobbing(true);
+				while(stateManager.rollResultShowing()){
+					try{
+						TimeUnit.MILLISECONDS.sleep(250);
+					}
+					catch(Exception e) {}
+				}
 				startMove(PieceType.ROBBER, true, false);
 			}
 		}

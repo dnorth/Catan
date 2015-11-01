@@ -1,6 +1,7 @@
 package client.discard;
 
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import shared.definitions.*;
 import client.base.*;
@@ -259,6 +260,12 @@ public class DiscardController extends Controller implements IDiscardController 
 				this.currTurnIndex = currTurn;
 				alreadyDiscarding = true;
 				initialize();
+				while(stateManager.rollResultShowing()){
+					try{
+						TimeUnit.MILLISECONDS.sleep(250);
+					}
+					catch(Exception e) {}
+				}
 				this.getDiscardView().showModal();				
 			}
 			else if (waiting) {

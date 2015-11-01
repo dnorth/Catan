@@ -1,11 +1,10 @@
 package client.state;
 
-import java.util.Observable;
 import java.util.Observer;
 
 import client.facade.Facade;
 import client.models.ClientModel;
-import client.models.User;
+import client.roll.RollController;
 import server.ServerPoller.ServerPoller;
 import shared.definitions.CatanColor;
 
@@ -14,6 +13,7 @@ public class StateManager {
 	private IStateBase state;
 	Facade facade;
 	ServerPoller serverPoller;
+	RollController roller;
 	boolean placing;
 	boolean currentlyRobbing;
 	boolean setTitleColor;
@@ -27,6 +27,14 @@ public class StateManager {
 		this.currentlyRobbing = false;
 		this.setTitleColor = false;
 		this.playedDevCard = false;
+	}
+	
+	public void setRollController(RollController rc){
+		this.roller = rc;
+	}
+	
+	public boolean rollResultShowing(){
+		return roller.resultShowing();
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State
