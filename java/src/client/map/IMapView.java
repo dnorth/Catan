@@ -40,6 +40,8 @@ public interface IMapView extends IView
 	 */
 	void addPort(EdgeLocation edgeLoc, PortType portType);
 	
+	void clearRoads();
+	
 	/**
 	 * This method places a road on the map.
 	 * 

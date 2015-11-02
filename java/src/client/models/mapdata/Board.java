@@ -83,6 +83,16 @@ public class Board {
 		return i;
 	}
 	
+	public void removeLocalOnlyRoad() {
+		Road[] newRoads = new Road[roads.length-1];
+		int i = 0;
+		while (i < roads.length-1) {
+			newRoads[i] = roads[i];
+			i += 1;
+		}
+		setRoads(newRoads);
+	}
+	
 	public Hex[] getHexes() {
 		return hexes;
 	}

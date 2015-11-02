@@ -235,6 +235,13 @@ public class MapController extends Controller implements IMapController {
 		if (stateManager.getState() instanceof RobbingState || stateManager.getState() instanceof RoadBuildingState) {
 			stateManager.setPlayedDevCard(false);
 			stateManager.setCurrentlyRobbing(false);
+			if (stateManager.getState() instanceof RoadBuildingState) {
+				stateManager.getClientModel().getBoard().removeLocalOnlyRoad();
+				stateManager.setPlacing(false);
+				getView().clearRoads();
+				this.roadBuildingRoads = new Road[2];
+				roadBuildingCount = 0;
+			}
 			stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 		}
 		stateManager.getClientModel().runUpdates();
@@ -251,7 +258,6 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {
 		stateManager.getState().robPlayer(victim);
 		stateManager.setCurrentlyRobbing(false);
-		System.out.println("Got here.");
 		if (stateManager.getState() instanceof RobbingState) stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 	}
 

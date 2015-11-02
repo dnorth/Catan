@@ -1008,4 +1008,8 @@ public class MapComponent extends JComponent {
 				(int) (pt1.getY() + pt2.getY()));
 	}
 
+	public void clearRoads() {
+		roads = new HashMap<EdgeLocation, CatanColor>();
+	}
+
 }
