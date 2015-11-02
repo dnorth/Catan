@@ -243,8 +243,8 @@ public class MapController extends Controller implements IMapController {
 				roadBuildingCount = 0;
 			}
 			stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
+			stateManager.getClientModel().runUpdates();
 		}
-		stateManager.getClientModel().runUpdates();
 	}
 	
 	public void playSoldierCard() {	
