@@ -232,7 +232,12 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void cancelMove() {
-		if (stateManager.getState() instanceof RobbingState) stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
+		if (stateManager.getState() instanceof RobbingState || stateManager.getState() instanceof RoadBuildingState) {
+			stateManager.setPlayedDevCard(false);
+			stateManager.setCurrentlyRobbing(false);
+			stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
+		}
+		stateManager.getClientModel().runUpdates();
 	}
 	
 	public void playSoldierCard() {	
@@ -246,6 +251,7 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {
 		stateManager.getState().robPlayer(victim);
 		stateManager.setCurrentlyRobbing(false);
+		System.out.println("Got here.");
 		if (stateManager.getState() instanceof RobbingState) stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 	}
 
@@ -303,13 +309,10 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if (stateManager.getState() instanceof RoadBuildingState) {
 			if (roadBuildingCount < 2) {
-				System.out.println("TEST1");
 				if (!stateManager.isPlacing()) {
-					System.out.println("TEST2");
 					startMove(PieceType.ROAD, true, false);
 					stateManager.setPlacing(true);
 				}
-				else System.out.println("PLACING IS TRUE...?");
 			}
 			else {
 				roadBuildingCount = 0;
@@ -317,7 +320,6 @@ public class MapController extends Controller implements IMapController {
 				stateManager.setState(new ActivePlayerState(stateManager.getFacade()));
 			}
 		}
-		
 		else if(stateManager.getState() instanceof ActivePlayerState) {
 			if (!stateManager.getCurrentlyRobbing() && stateManager.getClientModel().getTurnTracker().getStatus().equals("Robbing")) {
 				stateManager.setCurrentlyRobbing(true);
@@ -330,7 +332,6 @@ public class MapController extends Controller implements IMapController {
 				startMove(PieceType.ROBBER, true, false);
 			}
 		}
-		
 		else if (stateManager.getState() instanceof RobbingState) {
 			if (!stateManager.getCurrentlyRobbing()) {
 				stateManager.setCurrentlyRobbing(true);
