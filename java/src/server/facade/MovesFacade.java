@@ -7,98 +7,150 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MovesFacade.
+ */
 public class MovesFacade implements iMovesFacade {
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#sendChat(java.lang.String, int, java.lang.String)
+	 */
 	@Override
 	public ClientModel sendChat(String type, int playerIndex, String content) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#rollNumber(java.lang.String, int, int)
+	 */
 	@Override
 	public ClientModel rollNumber(String type, int playerIndex, int number) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#robPlayer(java.lang.String, int, int, shared.locations.HexLocation)
+	 */
 	@Override
 	public ClientModel robPlayer(String type, int playerIndex, int victimIndex, HexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#finishTurn(java.lang.String, int)
+	 */
 	@Override
 	public ClientModel finishTurn(String type, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#buyDevCard(java.lang.String, int)
+	 */
 	@Override
 	public ClientModel buyDevCard(String type, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#playYearOfPlenty(java.lang.String, int, shared.definitions.ResourceType, shared.definitions.ResourceType)
+	 */
 	@Override
 	public ClientModel playYearOfPlenty(String type, int playerIndex, ResourceType resource1, ResourceType resource2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#playRoadBuilding(java.lang.String, int, shared.locations.EdgeLocation, shared.locations.EdgeLocation)
+	 */
 	@Override
 	public ClientModel playRoadBuilding(String type, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#playSoldier(java.lang.String, int, int, shared.locations.HexLocation)
+	 */
 	@Override
 	public ClientModel playSoldier(String type, int playerIndex, int victimIndex, HexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#playMonopoly(java.lang.String, shared.definitions.ResourceType, int)
+	 */
 	@Override
 	public ClientModel playMonopoly(String type, ResourceType resource, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#playMonument(java.lang.String, int)
+	 */
 	@Override
 	public ClientModel playMonument(String type, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#buildRoad(java.lang.String, int, shared.locations.EdgeLocation, boolean)
+	 */
 	@Override
 	public ClientModel buildRoad(String type, int playerIndex, EdgeLocation roadLocation, boolean free) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#buildSettlement(java.lang.String, int, shared.locations.VertexLocation, boolean)
+	 */
 	@Override
 	public ClientModel buildSettlement(String type, int playerIndex, VertexLocation vertexLocation, boolean free) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#buildCity(java.lang.String, int, shared.locations.VertexLocation)
+	 */
 	@Override
 	public ClientModel buildCity(String type, int playerIndex, VertexLocation vertexLocation) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#offerTrade(java.lang.String, int, client.models.Resources, int)
+	 */
 	@Override
 	public ClientModel offerTrade(String type, int playerIndex, Resources offer, int receiver) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#acceptTrade(java.lang.String, int, boolean)
+	 */
 	@Override
 	public ClientModel acceptTrade(String type, int playerIndex, boolean willAccept) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#maritimeTrade(java.lang.String, int, int, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public ClientModel maritimeTrade(String type, int playerIndex, int ratio, String inputResource,
 			String outputResource) {
@@ -106,6 +158,9 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see server.facade.iMovesFacade#discardCards(java.lang.String, int, client.models.Resources)
+	 */
 	@Override
 	public ClientModel discardCards(String type, int playerIndex, Resources discardedCards) {
 		// TODO Auto-generated method stub

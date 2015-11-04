@@ -2,8 +2,15 @@ package server.commands.user;
 
 import server.commands.IUserCommand;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RegisterCommand.
+ */
 public class RegisterCommand implements IUserCommand {
 
+	/* (non-Javadoc)
+	 * @see server.commands.IUserCommand#execute()
+	 */
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
