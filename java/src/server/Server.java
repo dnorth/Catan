@@ -97,16 +97,33 @@ public class Server {
 		
 		server.setExecutor(null); // user the default executor
 		
-		/*
-		server.createContext("/ValidateUser", validateUserHandler);
-		server.createContext("/GetProjects", getProjectsHandler);
-		server.createContext("/GetSampleImage", getSampleImageHandler);
-		server.createContext("/DownloadBatch", downloadBatchHandler);
-		server.createContext("/GetFields", getFieldsHandler);
-		server.createContext("/SubmitBatch", submitBatchHandler);
-		server.createContext("/Search", searchHandler);
-		server.createContext("/", downloadHandler);
-		*/
+		
+		server.createContext("/user/login", loginHandler);
+		server.createContext("/user/register", registerHandler);
+		server.createContext("/games/list", listHandler);
+		server.createContext("/games/create", createHandler);
+		server.createContext("/games/join", joinHandler);
+		server.createContext("/moves/SendChat", sendChatHandler);
+		server.createContext("/moves/rollNumber", rollNumberHandler);
+		server.createContext("/moves/robPlayer", robPlayerHandler);
+		server.createContext("/moves/finishTurn", finishTurnHandler);
+		server.createContext("/moves/buyDevCard", buyDevCardHandler);
+		server.createContext("/moves/Year_or_Plenty", yearOfPlentyHandler);
+		server.createContext("/moves/Road_Building", roadBuildingHandler);
+		server.createContext("/moves/Soldier", soldierHandler);
+		server.createContext("/moves/Monopoly", monopolyHandler);
+		server.createContext("/moves/Monument", monumentHandler);
+		server.createContext("/moves/buildRoad", buildRoadHandler);
+		server.createContext("/moves/buildSettlement", buildSettlementHandler);
+		server.createContext("/moves/buildCity", buildCityHandler);
+		server.createContext("/moves/offerTrade", offerTradeHandler);
+		server.createContext("/moves/acceptTrade", acceptTradeHandler);
+		server.createContext("/moves/maritimeTrade", maritimeTradeHandler);
+		server.createContext("/moves/discardCards", discardCardsHandler);
+		server.createContext("/game/model", modelHandler);
+
+
+		
 		//The other contexts as well
 		
 		logger.info("Starting HTTP Server.");
@@ -156,6 +173,9 @@ public class Server {
 	
 	/** The soldier handler. */
 	private HttpHandler soldierHandler = new SoldierHandler();
+	
+	/** The monopoly handler. */
+	private HttpHandler monopolyHandler = new MonopolyHandler();
 	
 	/** The monument handler. */
 	private HttpHandler monumentHandler = new MonumentHandler();
