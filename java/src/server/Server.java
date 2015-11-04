@@ -13,11 +13,22 @@ import server.handlers.game.*;
 
 import com.sun.net.httpserver.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Server.
+ */
 public class Server {
 
+	/** The server_port_number. */
 	private static int server_port_number = 8081;
+	
+	/** The Constant MAX_WAITING_CONNECTIONS. */
 	private static final int MAX_WAITING_CONNECTIONS = 10;
+	
+	/** The logger. */
 	private static Logger logger;	
+	
+	/** The server. */
 	private HttpServer server;
 	
 	static {
@@ -29,6 +40,11 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * Inits the log.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void initLog() throws IOException {
 		
 		Level logLevel = Level.FINE;
@@ -48,10 +64,16 @@ public class Server {
 		logger.addHandler(fileHandler);
 	}
 		
+	/**
+	 * Instantiates a new server.
+	 */
 	public Server(){
 		return;
 	}
 	
+	/**
+	 * Run.
+	 */
 	public void run(){
 		logger.info("Initializing Model");
 		
@@ -93,30 +115,79 @@ public class Server {
 	}
 	
 	
+	/** The login handler. */
 	private HttpHandler loginHandler = new LoginHandler();
+	
+	/** The register handler. */
 	private HttpHandler registerHandler = new RegisterHandler();
+	
+	/** The list handler. */
 	private HttpHandler listHandler = new ListHandler();
+	
+	/** The create handler. */
 	private HttpHandler createHandler = new CreateHandler();
+	
+	/** The join handler. */
 	private HttpHandler joinHandler = new JoinHandler();
+	
+	/** The model handler. */
 	private HttpHandler modelHandler = new ModelHandler();
+	
+	/** The send chat handler. */
 	private HttpHandler sendChatHandler = new SendChatHandler();
+	
+	/** The roll number handler. */
 	private HttpHandler rollNumberHandler = new RollNumberHandler();
+	
+	/** The rob player handler. */
 	private HttpHandler robPlayerHandler = new RobPlayerHandler();
+	
+	/** The finish turn handler. */
 	private HttpHandler finishTurnHandler = new FinishTurnHandler();
+	
+	/** The buy dev card handler. */
 	private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
+	
+	/** The year of plenty handler. */
 	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
+	
+	/** The road building handler. */
 	private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
+	
+	/** The soldier handler. */
 	private HttpHandler soldierHandler = new SoldierHandler();
+	
+	/** The monument handler. */
 	private HttpHandler monumentHandler = new MonumentHandler();
+	
+	/** The build road handler. */
 	private HttpHandler buildRoadHandler = new BuildRoadHandler();
+	
+	/** The build city handler. */
 	private HttpHandler buildCityHandler = new BuildCityHandler();
+	
+	/** The build settlement handler. */
 	private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
+	
+	/** The offer trade handler. */
 	private HttpHandler offerTradeHandler = new OfferTradeHandler();
+	
+	/** The accept trade handler. */
 	private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
+	
+	/** The maritime trade handler. */
 	private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
+	
+	/** The discard cards handler. */
 	private HttpHandler discardCardsHandler = new DiscardCardsHandler();
 
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws ServerException the server exception
+	 */
 	public static void main(String[] args) throws ServerException {
 		try{
 			if(args.length > 0)
