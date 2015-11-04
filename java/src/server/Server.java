@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.logging.*;
 
-import server.facade.ServerFacade;
+import server.facade.iGameFacade;
 import server.handlers.moves.*;
 import server.handlers.user.*;
 import server.handlers.games.*;
