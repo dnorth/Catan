@@ -18,10 +18,10 @@ public interface iGamesFacade {
 	/**
 	 * Creates the game.
 	 *
-	 * @param randomTiles the random tiles
-	 * @param randomNumbers the random numbers
-	 * @param randomPorts the random ports
-	 * @param name the name
+	 * @param randomTiles whether or not to randomize tiles
+	 * @param randomNumbers whether or not to randomize numbers
+	 * @param randomPorts whether or not to randomize ports
+	 * @param name the name of the game
 	 * @return the game info
 	 */
 	public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
@@ -29,9 +29,9 @@ public interface iGamesFacade {
 	/**
 	 * Join game.
 	 *
-	 * @param id the id
-	 * @param color the color
-	 * @return the string
+	 * @param id the id of the game being chosen
+	 * @param color the color of the player
+	 * @return "Success" or an error if failed
 	 */
 	public String joinGame(int id, String color);
 }

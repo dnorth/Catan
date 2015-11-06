@@ -16,9 +16,9 @@ public interface iMovesFacade {
 	/**
 	 * Send chat.
 	 *
-	 * @param type the type
+	 * @param type "sendChat"
 	 * @param playerIndex the player index
-	 * @param content the content
+	 * @param content the content of the chat
 	 * @return the client model
 	 */
 	public ClientModel sendChat(String type, int playerIndex, String content);
@@ -26,9 +26,9 @@ public interface iMovesFacade {
 	/**
 	 * Roll number.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param number the number
+	 * @param type "rollNumber"
+	 * @param playerIndex the player index of who's rolling
+	 * @param number the number rolled
 	 * @return the client model
 	 */
 	public ClientModel rollNumber(String type, int playerIndex, int number);
@@ -36,10 +36,10 @@ public interface iMovesFacade {
 	/**
 	 * Rob player.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "robPlayer"
+	 * @param playerIndex the player index of who is robbing
 	 * @param victimIndex the victim index
-	 * @param location the location
+	 * @param location the hex location of where the robber is going
 	 * @return the client model
 	 */
 	public ClientModel robPlayer(String type, int playerIndex, int victimIndex, HexLocation location);
@@ -47,8 +47,8 @@ public interface iMovesFacade {
 	/**
 	 * Finish turn.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "finishTurn"
+	 * @param playerIndex the player index of whose turn is being finished
 	 * @return the client model
 	 */
 	public ClientModel finishTurn(String type, int playerIndex);
@@ -56,8 +56,8 @@ public interface iMovesFacade {
 	/**
 	 * Buy dev card.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "buyDevCard"
+	 * @param playerIndex the player index of the person buying a dev card
 	 * @return the client model
 	 */
 	public ClientModel buyDevCard(String type, int playerIndex);
@@ -65,10 +65,10 @@ public interface iMovesFacade {
 	/**
 	 * Play year of plenty.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param resource1 the resource1
-	 * @param resource2 the resource2
+	 * @param type "Year_of_Plenty"
+	 * @param playerIndex the player index of the person playing the dev card
+	 * @param resource1 the first resource type
+	 * @param resource2 the second resource type
 	 * @return the client model
 	 */
 	public ClientModel playYearOfPlenty(String type, int playerIndex, ResourceType resource1, ResourceType resource2);
@@ -76,10 +76,10 @@ public interface iMovesFacade {
 	/**
 	 * Play road building.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param spot1 the spot1
-	 * @param spot2 the spot2
+	 * @param type "Road_Building"
+	 * @param playerIndex the player index of the person playing the dev card
+	 * @param spot1 the first edge location to build a road
+	 * @param spot2 the second edge location to build a road
 	 * @return the client model
 	 */
 	public ClientModel playRoadBuilding(String type, int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
@@ -87,10 +87,10 @@ public interface iMovesFacade {
 	/**
 	 * Play soldier.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "Soldier"
+	 * @param playerIndex the player index of the person playing the dev card
 	 * @param victimIndex the victim index
-	 * @param location the location
+	 * @param location the hex location of the robber being moved to
 	 * @return the client model
 	 */
 	public ClientModel playSoldier(String type, int playerIndex, int victimIndex, HexLocation location);
@@ -98,8 +98,8 @@ public interface iMovesFacade {
 	/**
 	 * Play monopoly.
 	 *
-	 * @param type the type
-	 * @param resource the resource
+	 * @param type "Monopoly"
+	 * @param resource the resource of the person playing the dev card
 	 * @param playerIndex the player index
 	 * @return the client model
 	 */
@@ -108,8 +108,8 @@ public interface iMovesFacade {
 	/**
 	 * Play monument.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "Monument"
+	 * @param playerIndex the player index of the person playing the dev card
 	 * @return the client model
 	 */
 	public ClientModel playMonument(String type, int playerIndex);
@@ -117,10 +117,10 @@ public interface iMovesFacade {
 	/**
 	 * Builds the road.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param roadLocation the road location
-	 * @param free the free
+	 * @param type "buildRoad"
+	 * @param playerIndex the player index of the person building the road
+	 * @param roadLocation the Edge Location where the road is located
+	 * @param free whether or not the road is built for free
 	 * @return the client model
 	 */
 	public ClientModel buildRoad(String type, int playerIndex, EdgeLocation roadLocation, boolean free);
@@ -128,10 +128,10 @@ public interface iMovesFacade {
 	/**
 	 * Builds the settlement.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param vertexLocation the vertex location
-	 * @param free the free
+	 * @param type "buildSettlement"
+	 * @param playerIndex the player index of the person building the settlement
+	 * @param vertexLocation the vertex location where the settlement is placed
+	 * @param free whether or no the settlement is built for free
 	 * @return the client model
 	 */
 	public ClientModel buildSettlement(String type, int playerIndex, VertexLocation vertexLocation, boolean free);
@@ -139,9 +139,9 @@ public interface iMovesFacade {
 	/**
 	 * Builds the city.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param vertexLocation the vertex location
+	 * @param type "buildCity"
+	 * @param playerIndex the player index of the person building the city
+	 * @param vertexLocation the vertex location where the city will be placed
 	 * @return the client model
 	 */
 	public ClientModel buildCity(String type, int playerIndex, VertexLocation vertexLocation);
@@ -149,8 +149,8 @@ public interface iMovesFacade {
 	/**
 	 * Offer trade.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
+	 * @param type "offerTrade"
+	 * @param playerIndex the player index 
 	 * @param offer the offer
 	 * @param receiver the receiver
 	 * @return the client model
@@ -160,9 +160,9 @@ public interface iMovesFacade {
 	/**
 	 * Accept trade.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param willAccept the will accept
+	 * @param type "acceptTrade"
+	 * @param playerIndex the player index of the player accepting the trade
+	 * @param willAccept whether or not the player accepts the trade
 	 * @return the client model
 	 */
 	public ClientModel acceptTrade(String type, int playerIndex, boolean willAccept);
@@ -170,11 +170,11 @@ public interface iMovesFacade {
 	/**
 	 * Maritime trade.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param ratio the ratio
-	 * @param inputResource the input resource
-	 * @param outputResource the output resource
+	 * @param type "maritimeTrade"
+	 * @param playerIndex the player index of the player offering the trade
+	 * @param ratio the ratio (Optional) of resources to trade
+	 * @param inputResource the resource type that is being traded
+	 * @param outputResource the resource type that is being received 
 	 * @return the client model
 	 */
 	public ClientModel maritimeTrade(String type, int playerIndex, int ratio, String inputResource, String outputResource);
@@ -182,9 +182,9 @@ public interface iMovesFacade {
 	/**
 	 * Discard cards.
 	 *
-	 * @param type the type
-	 * @param playerIndex the player index
-	 * @param discardedCards the discarded cards
+	 * @param type "discardCards"
+	 * @param playerIndex the player index of ther person discarding
+	 * @param discardedCards the resource list of the discarded cards
 	 * @return the client model
 	 */
 	public ClientModel discardCards(String type, int playerIndex, Resources discardedCards);
