@@ -8,8 +8,9 @@ import server.commands.IGamesCommand;
  */
 public class CreateCommand implements IGamesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IGamesCommand#execute()
+	/**
+	 * 
+	 *Creates a game. 
 	 */
 	@Override
 	public void execute() {

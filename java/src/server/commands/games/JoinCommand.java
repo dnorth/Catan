@@ -8,8 +8,8 @@ import server.commands.IGamesCommand;
  */
 public class JoinCommand implements IGamesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IGamesCommand#execute()
+	/**
+	 * Joins a game.
 	 */
 	@Override
 	public void execute() {

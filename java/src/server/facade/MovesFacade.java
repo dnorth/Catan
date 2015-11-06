@@ -13,8 +13,8 @@ import shared.locations.VertexLocation;
  */
 public class MovesFacade implements iMovesFacade {
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#sendChat(java.lang.String, int, java.lang.String)
+	/**
+	 * Facade for the command moves/sendChat
 	 */
 	@Override
 	public ClientModel sendChat(String type, int playerIndex, String content) {
@@ -22,8 +22,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#rollNumber(java.lang.String, int, int)
+	/**
+	 * Facade for the command moves/rollNumber
 	 */
 	@Override
 	public ClientModel rollNumber(String type, int playerIndex, int number) {
@@ -31,8 +31,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#robPlayer(java.lang.String, int, int, shared.locations.HexLocation)
+	/**
+	 * Facade for the command moves/robPlayer
 	 */
 	@Override
 	public ClientModel robPlayer(String type, int playerIndex, int victimIndex, HexLocation location) {
@@ -40,8 +40,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#finishTurn(java.lang.String, int)
+	/**
+	 * Facade for the command moves/finishTurn
 	 */
 	@Override
 	public ClientModel finishTurn(String type, int playerIndex) {
@@ -49,8 +49,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#buyDevCard(java.lang.String, int)
+	/**
+	 * Facade for the command moves/buyDevCard
 	 */
 	@Override
 	public ClientModel buyDevCard(String type, int playerIndex) {
@@ -58,8 +58,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#playYearOfPlenty(java.lang.String, int, shared.definitions.ResourceType, shared.definitions.ResourceType)
+	/**
+	 * Facade for the command moves/Year_of_Plenty
 	 */
 	@Override
 	public ClientModel playYearOfPlenty(String type, int playerIndex, ResourceType resource1, ResourceType resource2) {
@@ -67,8 +67,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#playRoadBuilding(java.lang.String, int, shared.locations.EdgeLocation, shared.locations.EdgeLocation)
+	/**
+	 * Facade for the command moves/Road_Building
 	 */
 	@Override
 	public ClientModel playRoadBuilding(String type, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
@@ -76,8 +76,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#playSoldier(java.lang.String, int, int, shared.locations.HexLocation)
+	/**
+	 * Facade for the command moves/Soldier
 	 */
 	@Override
 	public ClientModel playSoldier(String type, int playerIndex, int victimIndex, HexLocation location) {
@@ -85,8 +85,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#playMonopoly(java.lang.String, shared.definitions.ResourceType, int)
+	/**
+	 * Facade for the command moves/Monopoly
 	 */
 	@Override
 	public ClientModel playMonopoly(String type, ResourceType resource, int playerIndex) {
@@ -94,8 +94,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#playMonument(java.lang.String, int)
+	/**
+	 * Facade for the command moves/Monument
 	 */
 	@Override
 	public ClientModel playMonument(String type, int playerIndex) {
@@ -103,26 +103,16 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#buildRoad(java.lang.String, int, shared.locations.EdgeLocation, boolean)
+	/**
+	 * Facade for the command moves/buildRoad
 	 */
 	@Override
 	public ClientModel buildRoad(String type, int playerIndex, EdgeLocation roadLocation, boolean free) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#buildSettlement(java.lang.String, int, shared.locations.VertexLocation, boolean)
-	 */
-	@Override
-	public ClientModel buildSettlement(String type, int playerIndex, VertexLocation vertexLocation, boolean free) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#buildCity(java.lang.String, int, shared.locations.VertexLocation)
+	/**
+	 * Facade for the command moves/buildCity
 	 */
 	@Override
 	public ClientModel buildCity(String type, int playerIndex, VertexLocation vertexLocation) {
@@ -130,8 +120,18 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#offerTrade(java.lang.String, int, client.models.Resources, int)
+	/**
+	 * Facade for the command moves/buildSettlement
+	 */
+	@Override
+	public ClientModel buildSettlement(String type, int playerIndex, VertexLocation vertexLocation, boolean free) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * Facade for the command moves/offerTrade
 	 */
 	@Override
 	public ClientModel offerTrade(String type, int playerIndex, Resources offer, int receiver) {
@@ -139,8 +139,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#acceptTrade(java.lang.String, int, boolean)
+	/**
+	 * Facade for the command moves/acceptTrade
 	 */
 	@Override
 	public ClientModel acceptTrade(String type, int playerIndex, boolean willAccept) {
@@ -148,8 +148,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#maritimeTrade(java.lang.String, int, int, java.lang.String, java.lang.String)
+	/**
+	 * Facade for the command moves/maritimeTrade
 	 */
 	@Override
 	public ClientModel maritimeTrade(String type, int playerIndex, int ratio, String inputResource,
@@ -158,8 +158,8 @@ public class MovesFacade implements iMovesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iMovesFacade#discardCards(java.lang.String, int, client.models.Resources)
+	/**
+	 * Facade for the command moves/discardCards
 	 */
 	@Override
 	public ClientModel discardCards(String type, int playerIndex, Resources discardedCards) {

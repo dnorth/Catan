@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class BuildSettlementCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Builds a settlement.
 	 */
 	@Override
 	public void execute() {

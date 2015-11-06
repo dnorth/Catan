@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class RobPlayerCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Robs a player.
 	 */
 	@Override
 	public void execute() {

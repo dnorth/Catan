@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class SendChatCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Sends a chat.
 	 */
 	@Override
 	public void execute() {

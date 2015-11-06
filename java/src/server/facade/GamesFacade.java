@@ -8,8 +8,8 @@ import client.data.GameInfo;
  */
 public class GamesFacade implements iGamesFacade {
 
-	/* (non-Javadoc)
-	 * @see server.facade.iGamesFacade#listGames()
+	/**
+	 * Facade for the command games/list
 	 */
 	@Override
 	public GameInfo[] listGames() {
@@ -17,8 +17,8 @@ public class GamesFacade implements iGamesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iGamesFacade#createGame(boolean, boolean, boolean, java.lang.String)
+	/**
+	 * Facade for the command games/create
 	 */
 	@Override
 	public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
@@ -26,8 +26,8 @@ public class GamesFacade implements iGamesFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iGamesFacade#joinGame(int, java.lang.String)
+	/**
+	 * Facade for the command games/join
 	 */
 	@Override
 	public String joinGame(int id, String color) {

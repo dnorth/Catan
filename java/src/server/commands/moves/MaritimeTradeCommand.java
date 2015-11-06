@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class MaritimeTradeCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Does a Maritime Trade.
 	 */
 	@Override
 	public void execute() {

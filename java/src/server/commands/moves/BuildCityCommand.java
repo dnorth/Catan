@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class BuildCityCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Builds a city.
 	 */
 	@Override
 	public void execute() {

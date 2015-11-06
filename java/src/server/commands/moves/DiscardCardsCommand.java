@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class DiscardCardsCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 * Discards Cards.
 	 */
 	@Override
 	public void execute() {

@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class AcceptTradeCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 * Accepts a trade.
 	 */
 	@Override
 	public void execute() {

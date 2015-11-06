@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class SoldierCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 * Plays a Soldier card.
 	 */
 	@Override
 	public void execute() {

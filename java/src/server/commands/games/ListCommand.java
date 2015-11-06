@@ -8,8 +8,8 @@ import server.commands.IGamesCommand;
  */
 public class ListCommand implements IGamesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IGamesCommand#execute()
+	/**
+	 * Lists all games on the server.
 	 */
 	@Override
 	public void execute() {

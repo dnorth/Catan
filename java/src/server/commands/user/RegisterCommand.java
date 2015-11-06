@@ -8,9 +8,10 @@ import server.commands.IUserCommand;
  */
 public class RegisterCommand implements IUserCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IUserCommand#execute()
+	/**
+	 * Registers a user.
 	 */
+	
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub

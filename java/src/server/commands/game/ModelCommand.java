@@ -11,6 +11,9 @@ public class ModelCommand implements IGameCommand {
 	/* (non-Javadoc)
 	 * @see server.commands.IGameCommand#execute()
 	 */
+	/**
+	 * executes the game/model (GET) commmand
+	 */
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub

@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class MonumentCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Plays a monument Card.
 	 */
 	@Override
 	public void execute() {

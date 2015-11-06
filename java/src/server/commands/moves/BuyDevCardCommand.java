@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class BuyDevCardCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Buys a DevCard.
 	 */
 	@Override
 	public void execute() {

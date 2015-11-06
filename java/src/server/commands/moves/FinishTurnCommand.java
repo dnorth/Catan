@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class FinishTurnCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Finishes a turn.
 	 */
 	@Override
 	public void execute() {

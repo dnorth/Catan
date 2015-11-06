@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class RoadBuildingCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Plays RoadBuilding Card.
 	 */
 	@Override
 	public void execute() {

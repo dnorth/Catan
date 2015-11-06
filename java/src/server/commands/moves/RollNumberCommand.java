@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class RollNumberCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 *  Rolls the "dice". 
 	 */
 	@Override
 	public void execute() {

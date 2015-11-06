@@ -8,8 +8,8 @@ import server.commands.IMovesCommand;
  */
 public class BuildRoadCommand implements IMovesCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IMovesCommand#execute()
+	/**
+	 * Builds a road.
 	 */
 	@Override
 	public void execute() {

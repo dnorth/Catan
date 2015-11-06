@@ -8,8 +8,8 @@ import server.commands.IUserCommand;
  */
 public class LoginCommand implements IUserCommand {
 
-	/* (non-Javadoc)
-	 * @see server.commands.IUserCommand#execute()
+	/**
+	 *  Logs in a user.
 	 */
 	@Override
 	public void execute() {

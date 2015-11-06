@@ -6,8 +6,8 @@ package server.facade;
  */
 public class UserFacade implements iUserFacade {
 
-	/* (non-Javadoc)
-	 * @see server.facade.iUserFacade#loginUser(java.lang.String, java.lang.String)
+	/**
+	 * Facade for the command user/login
 	 */
 	@Override
 	public String loginUser(String username, String password) {
@@ -15,8 +15,8 @@ public class UserFacade implements iUserFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see server.facade.iUserFacade#registerUser(java.lang.String, java.lang.String)
+	/**
+	 * Facade for the command user/register
 	 */
 	@Override
 	public String registerUser(String username, String password) {
