@@ -1,5 +1,8 @@
 package server.model;
 
+/**
+ * Holds all user, game, and child info for those things.
+ */
 public class ServerData {
 	
 	private ServerUser[] users;

@@ -1,5 +1,8 @@
 package server.model;
 
+/**
+ * Contains server-level player info.
+ */
 public class ServerPlayer {
 	
 	private String color;

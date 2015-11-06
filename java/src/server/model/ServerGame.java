@@ -3,6 +3,9 @@
 import client.models.ClientModel;
 import client.models.Player;
 
+/**
+ * Contains Game info, including the ClientModel object for each game.
+ */
 public class ServerGame {
 	
 	private String title;

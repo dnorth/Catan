@@ -1,5 +1,8 @@
 package server.model;
 
+/**
+ * Contains server-level user info.
+ */
 public class ServerUser {
 	
 	private String username;
