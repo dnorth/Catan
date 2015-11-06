@@ -3,6 +3,7 @@ import java.util.Observable;
 
 import server.model.ServerPlayer;
 import shared.definitions.ResourceType;
+import shared.locations.VertexLocation;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
@@ -249,5 +250,54 @@ public class ClientModel extends Observable
 	 * @param free - if settlement is free (should only be in first two (setup) turns
 	 */
 	public void buildSettlement(int playerIndex, EdgeLocation vertex, boolean free){}
+	
+	/**
+	 * Builds the city. Decrements player's resources.
+	 *
+	 * @param type "buildCity"
+	 * @param playerIndex the player index of the person building the city
+	 * @param vertexLocation the vertex location where the city will be placed
+	 */
+	public void buildCity(String type, int playerIndex, VertexLocation vertexLocation){}
+	
+	/**
+	 * Offers a trade. If the trade is accepted, the positive numbered resources are taken from the player index o
+	 * the person offering the trade, and the negative numbered resources are taken from the person receiving it
+	 * 
+	 * @param type "offerTrade"
+	 * @param playerIndex the player index 
+	 * @param offer the offer
+	 * @param receiver the receiver
+	 */
+	public void offerTrade(String type, int playerIndex, Resources offer, int receiver){}
+	
+	/**
+	 * Whether or not to Accept a trade. 
+	 *
+	 * @param type "acceptTrade"
+	 * @param playerIndex the player index of the player accepting the trade
+	 * @param willAccept whether or not the player accepts the trade
+	 */
+	public void acceptTrade(String type, int playerIndex, boolean willAccept){}
+	
+	/**
+	 * Maritime trade. Decrements the inputResource and increments the output resource based on 
+	 * the ratio. Or 4:1 if no ratio is specified
+	 * @param type "maritimeTrade"
+	 * @param playerIndex the player index of the player offering the trade
+	 * @param ratio the ratio (Optional) of resources to trade
+	 * @param inputResource the resource type that is being traded
+	 * @param outputResource the resource type that is being received 
+	 */
+	public void maritimeTrade(String type, int playerIndex, int ratio, String inputResource, String outputResource){}
+	
+	/**
+	 * Discard cards. Decrements resources
+	 *
+	 * @param type "discardCards"
+	 * @param playerIndex the player index of ther person discarding
+	 * @param discardedCards the resource list of the discarded cards
+	 */
+	public void discardCards(String type, int playerIndex, Resources discardedCards){}
 
 }
