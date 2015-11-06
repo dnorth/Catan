@@ -1,11 +1,12 @@
 package client.models;
-import java.awt.List;
-import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
+import server.model.ServerPlayer;
+import shared.definitions.ResourceType;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
+import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.HexLocation;
 
 /**
  * Client model interacts with Client Communicator (Server Proxy), holds pointers to all necessary data
@@ -154,5 +155,99 @@ public class ClientModel extends Observable
 		this.newCli = newCli;
 	}
 	
+	/**
+	 * Adds player to list of players
+	 * @param newPlayer - new player info
+	 */
+	public void joinGame(ServerPlayer newPlayer){}
 	
+	
+	/**
+	 * Sends chat to player from player
+	 * @param sendPlayerIndex - index of player sending message
+	 * @param receivePlayerIndex - index of player receiving message
+	 * @param message - message to send
+	 */
+	public void sendChat(int sendPlayerIndex, int receivePlayerIndex, String message) {}
+	
+	/**
+	 * Updates dice rolled, gives players necessary resources
+	 * @param numRolled - number rolled - between 2-12
+	 * @param playerIndex - player that rolled dice
+	 */
+	public void rollNumber(int numRolled, int playerIndex){}
+	
+	/**
+	 * Places robber in new location, and takes one resource from victim player and adds it to player
+	 * @param playerIndex - index of player who is robbing
+	 * @param victimIndex - index of player getting robbed
+	 * @param hex - new location of robber
+	 */
+	public void robPlayer(int playerIndex, int victimIndex, HexLocation hex) {}
+	
+	/**
+	 * Sets current turn to next player
+	 * @param playerIndex - index of player sending command
+	 */
+	public void finishTurn(int playerIndex){}
+	
+	/**
+	 * Takes one devcard from bank and gives it to player, decreases players resources
+	 * @param playerIndex - player buying devcard
+	 */
+	public void buyDevCard(int playerIndex){}
+	
+	/**
+	 * Plays Year of Plenty devcard - removes YOP card from players hand, increments indicated resources
+	 * @param playerIndex - index of player playing card
+	 * @param resource1 - first resource to be added
+	 * @param resource2 - second resource to be added
+	 */
+	public void playYearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2){}
+	
+	/**
+	 * Plays Road Building devcard - removes RB card from player's hand, places roads in indicated locations
+	 * @param playerIndex - index of player playing card
+	 * @param edge1 - location of first road
+	 * @param edge2 - location of second road
+	 */
+	public void playRoadBuilding(int playerIndex, EdgeLocation edge1, EdgeLocation edge2){}
+	
+	/**
+	 * Plays Soldier devcard - removes S card from player's hand, robs player and sets robber
+	 * @param playerIndex - index of player playing card
+	 * @param victimIndex - index of victim
+	 * @param hex - new location of robber
+	 */
+	public void playSoldier(int playerIndex, int victimIndex, HexLocation hex){}
+	
+	/**
+	 * Plays Monopoly devcard - removes Monopoly card from player's hand, moves indicated resource from other players' hands to this player's hand
+	 * @param playerIndex - index of player playing card
+	 * @param resource - resource to be taken
+	 */
+	public void playMonopoly(int playerIndex, ResourceType resource){}
+	
+	/**
+	 * Plays Monument devcard - removes Monument card from player's hand, adds victory point
+	 * @param playerIndex - index of player playing card
+	 */
+	public void playMonument(int playerIndex){}
+	
+	/**
+	 * Places road on indicated edge, ownership of indicated player.  If necessary, decrements player's resources.
+	 * @param playerIndex - index of player placing road
+	 * @param edge - location of road
+	 * @param free - if road is free (should only be in first two (setup) turns
+	 */
+	public void buildRoad(int playerIndex, EdgeLocation edge, boolean free){}
+	
+	/**
+	 * Places settlement on indicated vertex, ownership of indicated player.  If necessary, decrements player's resources.
+	 * @param playerIndex - index of player placing road
+	 * @param vertex - location of settlement
+	 * @param free - if settlement is free (should only be in first two (setup) turns
+	 */
+	public void buildSettlement(int playerIndex, EdgeLocation vertex, boolean free){}
+
 }
