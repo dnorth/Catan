@@ -1,6 +1,6 @@
 package server.model;
 
-public class User {
+public class ServerUser {
 	
 	private String username;
 	private String password;

@@ -1,13 +1,13 @@
-package server.model;
+ package server.model;
 
 import client.models.ClientModel;
 import client.models.Player;
 
-public class Game {
+public class ServerGame {
 	
 	private String title;
 	private int id;
-	private Player[] players;
+	private ServerPlayer[] players;
 	private ClientModel clientModel;
 	
 	/**
@@ -45,7 +45,7 @@ public class Game {
 	 * Get players.
 	 * @return players
 	 */
-	public Player[] getPlayers() {
+	public ServerPlayer[] getPlayers() {
 		return players;
 	}
 	
@@ -53,7 +53,7 @@ public class Game {
 	 * Set players.
 	 * @param players
 	 */
-	public void setPlayers(Player[] players) {
+	public void setPlayers(ServerPlayer[] players) {
 		this.players = players;
 	}
 	

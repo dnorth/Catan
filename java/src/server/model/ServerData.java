@@ -2,14 +2,14 @@ package server.model;
 
 public class ServerData {
 	
-	private User[] users;
-	private Game[] games;
+	private ServerUser[] users;
+	private ServerGame[] games;
 	
 	/**
 	 * Get users.
 	 * @return list of users
 	 */
-	public User[] getUsers() {
+	public ServerUser[] getUsers() {
 		return users;
 	}
 	
@@ -17,7 +17,7 @@ public class ServerData {
 	 * Set users.
 	 * @param users
 	 */
-	public void setUsers(User[] users) {
+	public void setUsers(ServerUser[] users) {
 		this.users = users;
 	}
 	
@@ -25,7 +25,7 @@ public class ServerData {
 	 * Get games.
 	 * @return list of games
 	 */
-	public Game[] getGames() {
+	public ServerGame[] getGames() {
 		return games;
 	}
 	
@@ -33,7 +33,7 @@ public class ServerData {
 	 * Set Games.
 	 * @param games
 	 */
-	public void setGames(Game[] games) {
+	public void setGames(ServerGame[] games) {
 		this.games = games;
 	}
 
