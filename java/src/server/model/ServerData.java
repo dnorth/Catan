@@ -1,18 +1,20 @@
 package server.model;
 
+import java.util.List;
+
 /**
  * Holds all user, game, and child info for those things.
  */
 public class ServerData {
 	
-	private ServerUser[] users;
-	private ServerGame[] games;
+	private List<ServerUser> users;
+	private List<ServerGame> games;
 	
 	/**
 	 * Get users.
 	 * @return list of users
 	 */
-	public ServerUser[] getUsers() {
+	public List<ServerUser> getUsers() {
 		return users;
 	}
 	
@@ -20,7 +22,7 @@ public class ServerData {
 	 * Set users.
 	 * @param users
 	 */
-	public void setUsers(ServerUser[] users) {
+	public void setUsers(List<ServerUser> users) {
 		this.users = users;
 	}
 	
@@ -28,7 +30,7 @@ public class ServerData {
 	 * Get games.
 	 * @return list of games
 	 */
-	public ServerGame[] getGames() {
+	public List<ServerGame> getGames() {
 		return games;
 	}
 	
@@ -36,7 +38,7 @@ public class ServerData {
 	 * Set Games.
 	 * @param games
 	 */
-	public void setGames(ServerGame[] games) {
+	public void setGames(List<ServerGame>games) {
 		this.games = games;
 	}
 

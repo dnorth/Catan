@@ -1,5 +1,7 @@
  package server.model;
 
+import java.util.List;
+
 import client.models.ClientModel;
 import client.models.Player;
 
@@ -10,7 +12,7 @@ public class ServerGame {
 	
 	private String title;
 	private int id;
-	private ServerPlayer[] players;
+	private List<ServerPlayer> players;
 	private ClientModel clientModel;
 	
 	/**
@@ -48,7 +50,7 @@ public class ServerGame {
 	 * Get players.
 	 * @return players
 	 */
-	public ServerPlayer[] getPlayers() {
+	public List<ServerPlayer> getPlayers() {
 		return players;
 	}
 	
@@ -56,7 +58,7 @@ public class ServerGame {
 	 * Set players.
 	 * @param players
 	 */
-	public void setPlayers(ServerPlayer[] players) {
+	public void setPlayers(List<ServerPlayer> players) {
 		this.players = players;
 	}
 	

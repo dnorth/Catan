@@ -1,5 +1,6 @@
 package client.models;
 
+import server.model.ServerPlayer;
 import client.models.mapdata.PortTrade;
 
 
@@ -27,6 +28,16 @@ public class Player
 	newDevCards = new DevCards();
 	oldDevCards = new DevCards();
 	name="";
+	resources = new Resources();
+	portTrade = new PortTrade();
+	}
+	
+	public Player(ServerPlayer p){
+	newDevCards = new DevCards();
+	oldDevCards = new DevCards();
+	name= p.getName();
+	color =p.getColor();
+	playerIndex=p.getId();
 	resources = new Resources();
 	portTrade = new PortTrade();
 	}
