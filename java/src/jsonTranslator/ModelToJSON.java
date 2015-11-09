@@ -1,14 +1,18 @@
 package jsonTranslator;
 
-import shared.definitions.CatanColor;
-import shared.definitions.ResourceType;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import client.data.GameInfo;
+import client.models.ClientModel;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.communication.MessageLine;
+import client.models.communication.MessageList;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.HexLocation;
-
-import com.google.gson.JsonObject;
+import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 
 /**
  * Translates Model class structure to JSON format
@@ -20,8 +24,60 @@ public class ModelToJSON {
 	 * Takes the existing model and translates it into a JSON object to send to the server
 	 *
 	 */
-	public JsonObject translateModel() {
-		return null;
+	public JsonObject translateModel(ClientModel model) {
+		JsonObject newModel = new JsonObject();
+		JsonObject bank = this.translateBank(model.getBank());
+		newModel.add("bank", bank);
+		
+		JsonObject chat = this.translateChat(model.getChat());
+		newModel.add("chat", chat);
+		
+		JsonObject log = new JsonObject();
+		newModel.add("log", log);
+		
+		JsonObject map = new JsonObject();
+		newModel.add("map", map);
+		
+		JsonObject players = new JsonObject();
+		newModel.add("players", players);
+		
+		JsonObject tradeOffer = new JsonObject();
+		newModel.add("tradeOffer", tradeOffer);
+		
+		JsonObject turnTracker = new JsonObject();
+		newModel.add("turnTracker", turnTracker);
+		
+		//add version num
+		//add move (???)
+		//add winner index
+		
+		return newModel;
+	}
+	
+	private JsonObject translateBank(Resources modelBank){
+		JsonObject bank = new JsonObject();
+		bank.addProperty("brick", modelBank.getBrickCount());
+		bank.addProperty("ore", modelBank.getOreCount());
+		bank.addProperty("sheep", modelBank.getSheepCount());
+		bank.addProperty("wheat", modelBank.getWheatCount());
+		bank.addProperty("wood", modelBank.getWoodCount());
+		return bank;
+	}
+	
+	private JsonObject translateChat(MessageList modelChat){
+		JsonObject chat = new JsonObject();
+		JsonArray messages = new JsonArray();
+		//I NEED TO CHECK THIS!!!!
+		for(MessageLine message : modelChat.getLines()){
+			JsonObject m = new JsonObject();
+			m.addProperty("message", message.getMessage());
+			JsonObject source = new JsonObject();
+			source.addProperty("source", message.getSource());
+			messages.add(m);
+			messages.add(source);
+		}
+		chat.add("lines", messages);
+		return chat;
 	}
 	
 	public JsonObject createSendChatObject( int playerIndex, String message) {
