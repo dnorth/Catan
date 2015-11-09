@@ -45,6 +45,7 @@ public class GamesFacade implements iGamesFacade {
 		
 		JoinCommand command = new JoinCommand(serverData, id, color);
 		command.execute();
+		return null;
 		
 	}
 
