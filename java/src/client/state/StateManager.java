@@ -13,11 +13,12 @@ public class StateManager {
 	private IStateBase state;
 	Facade facade;
 	ServerPoller serverPoller;
-	RollController roller;
+	//RollController roller;
 	boolean placing;
 	boolean currentlyRobbing;
 	boolean setTitleColor;
 	boolean playedDevCard;
+	boolean showingRollModal;
 	
 	public StateManager(Facade facade) {
 		this.facade = facade;
@@ -27,14 +28,20 @@ public class StateManager {
 		this.currentlyRobbing = false;
 		this.setTitleColor = false;
 		this.playedDevCard = false;
+		this.showingRollModal = false;
 	}
 	
-	public void setRollController(RollController rc){
-		this.roller = rc;
+	//public void setRollController(RollController rc){
+	//	this.roller = rc;
+	//}
+	
+	public void setRollShowing(boolean showing) {
+		this.showingRollModal = showing;
 	}
 	
 	public boolean rollResultShowing(){
-		return roller.resultShowing();
+		return this.showingRollModal;
+		//return roller.resultShowing();
 	}
 
 	public void updateStateManager() { // send myPlayerIndex to State

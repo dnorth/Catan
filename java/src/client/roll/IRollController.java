@@ -13,5 +13,6 @@ public interface IRollController extends IController
 	 */
 	void rollDice();
 	
+	void setRollShowing(boolean showing);
 }
 

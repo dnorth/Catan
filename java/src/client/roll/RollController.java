@@ -28,7 +28,7 @@ public class RollController extends Controller implements IRollController {
 		this.stateManager.getClientModel().addObserver(this);
 		setResultView(resultView);
 		timer = new Timer();
-		stateManager.setRollController(this);
+		//stateManager.setRollController(this);
 	}
 	
 	public boolean resultShowing(){
@@ -44,6 +44,11 @@ public class RollController extends Controller implements IRollController {
 
 	public IRollView getRollView() {
 		return (IRollView)getView();
+	}
+	
+	@Override
+	public void setRollShowing(boolean showing){
+		this.stateManager.setRollShowing(showing);
 	}
 	
 	@Override
@@ -70,6 +75,7 @@ public class RollController extends Controller implements IRollController {
 		if (this.stateManager.getState() instanceof RollingDiceState) {
 			//System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
 			stateManager.setPlayedDevCard(false);
+			stateManager.setRollShowing(true);
 			this.getRollView().showModal();
 			//set timer to roll in 5 seconds
 			timer = new Timer();
