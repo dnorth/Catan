@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -15,6 +19,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import server.facade.UserFacade;
 import shared.locations.VertexLocation;
 
 // TODO: Auto-generated Javadoc
@@ -23,7 +28,14 @@ import shared.locations.VertexLocation;
  */
 public class RegisterHandler implements HttpHandler {
 	Logger logger;
-	Gson gson; 
+	Gson gson;
+	JSONToModel jsonToModel = new JSONToModel();
+	ModelToJSON modelToJSON = new ModelToJSON();
+	UserFacade userFacade;
+	
+	public RegisterHandler(UserFacade userFacade) {
+		this.userFacade = userFacade;
+	}
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
 	 */
@@ -32,16 +44,30 @@ public class RegisterHandler implements HttpHandler {
 		logger = Logger.getLogger("Catan");
 		logger.info("Handling Register");
 		try{
-			String requestBody = getString(exchange);
-			logger.info("MESSAGE: " + requestBody);
-			JsonObject registerObject = new JsonParser().parse(requestBody).getAsJsonObject();
-		
-			logger.info("Username" + registerObject.get("username").getAsString());
+			JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
+			String username = jsonToModel.getUsername(jsonObject);
+			String password = jsonToModel.getPassword(jsonObject);
+					
+			logger.info("Username: " + username);
+			logger.info("Password: " + password);
 			
-		// TODO Auto-generated method stub
+			String response = "";
 			exchange.getResponseHeaders().set("Content-Type", "application/json");
-			String response = "Success";
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
+			int playerID = userFacade.registerUser(username, password);
+			if (playerID > 0) {
+				response = "Success";
+				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
+				Headers headers = exchange.getResponseHeaders();
+				String header = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
+				logger.info("HEADER: " + header);
+				headers.add("Set-cookie:", header);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+			}
+			else  {
+				response = "Failed to register - someone already has that username.";
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+			}
 			exchange.getResponseBody().write(response.getBytes());
 			exchange.close();
 		}
@@ -51,26 +77,6 @@ public class RegisterHandler implements HttpHandler {
 			return;
 		}
 	}
-	
-	public String getString(HttpExchange exchange) {
-		InputStreamReader isr = null;
-		try {
-			isr = new InputStreamReader(exchange.getRequestBody(),"utf-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 BufferedReader br = new BufferedReader(isr);
-		 String value = "NOT WORKING";
-		try {
-			value = br.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return value;
-	}
-
 }
 
 

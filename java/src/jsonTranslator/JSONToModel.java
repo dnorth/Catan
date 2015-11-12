@@ -1,5 +1,9 @@
 package jsonTranslator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,6 +12,8 @@ import shared.definitions.CatanColor;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.sun.net.httpserver.HttpExchange;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -234,5 +240,33 @@ public class JSONToModel {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	// HERETO LIES THE SERVER JUNK
+	public JsonObject exchangeToJson(HttpExchange exchange) {
+		InputStreamReader isr = null;
+		try {
+			isr = new InputStreamReader(exchange.getRequestBody(),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		 BufferedReader br = new BufferedReader(isr);
+		 int b;
+		 StringBuilder buf = new StringBuilder(512);
+		 try {
+			while ((b = br.read()) != -1) {
+				 buf.append((char) b);
+			 }
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		JsonObject registerObject = new JsonParser().parse(buf.toString()).getAsJsonObject();
+		return registerObject;
+	}
+	
+	public String getUsername(JsonObject object) {
+		return object.get("username").getAsString();
+	}
+	public String getPassword(JsonObject object) {
+		return object.get("password").getAsString();
 	}
 }

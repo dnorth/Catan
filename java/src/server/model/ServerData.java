@@ -1,5 +1,6 @@
 package server.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,21 @@ public class ServerData {
 	
 	private List<ServerUser> users;
 	private List<ServerGame> games;
+	private int nextUserID = 1;
+	
+	public ServerData() {
+		this.users = new ArrayList<ServerUser>();
+		this.games = new ArrayList<ServerGame>();
+	}
+
+	public int addUser(String username, String password) {
+		for (ServerUser u : users) {
+			if (u.getUsername().equals(username)) return -1;
+		}
+		users.add(new ServerUser(username, password, this.nextUserID));
+		this.nextUserID += 1;
+		return this.nextUserID-1;
+	}
 	
 	/**
 	 * Get users.
@@ -40,6 +56,16 @@ public class ServerData {
 	 */
 	public void setGames(List<ServerGame>games) {
 		this.games = games;
+	}
+
+	public int getPlayerID(String username, String password) {
+		for (ServerUser u : users) {
+			if (u.getUsername().equals(username)) {
+				if (u.getPassword().equals(password)) return u.getPlayerID();
+				else return -1;
+			}
+		}
+		return -1;
 	}
 
 }

@@ -3,6 +3,8 @@ package server.handlers.games;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import server.facade.GamesFacade;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -12,6 +14,11 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class CreateHandler implements HttpHandler {
 	Logger logger;
+	GamesFacade gamesFacade;
+
+	public CreateHandler(GamesFacade gamesFacade) {
+		this.gamesFacade = gamesFacade;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)

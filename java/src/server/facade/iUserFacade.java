@@ -13,7 +13,7 @@ public interface iUserFacade {
 	 * @param password the password
 	 * @return "Success" or an error if failed
 	 */
-	public String loginUser(String username, String password);
+	public int loginUser(String username, String password);
 	
 	/**
 	 * Register user.
@@ -22,5 +22,5 @@ public interface iUserFacade {
 	 * @param password the password
 	 * @return "Success" or an error if failed
 	 */
-	public String registerUser(String username, String password);
+	public int registerUser(String username, String password);
 }

@@ -8,6 +8,7 @@ public interface IUserCommand {
 	
 	/**
 	 * Execute.
+	 * @return 
 	 */
-	public void execute();
+	public int execute();
 }

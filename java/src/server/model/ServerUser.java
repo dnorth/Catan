@@ -7,7 +7,13 @@ public class ServerUser {
 	
 	private String username;
 	private String password;
+	private int playerID;
 	
+	public ServerUser(String username, String password, int playerID) {
+		this.username = username;
+		this.password = password;
+		this.playerID = playerID;
+	}
 	/**
 	 * Get username.
 	 * @return username
@@ -35,6 +41,12 @@ public class ServerUser {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getPlayerID() {
+		return playerID;
+	}
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
 	}
 
 }

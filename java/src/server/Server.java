@@ -4,12 +4,16 @@ import java.io.*;
 import java.net.*;
 import java.util.logging.*;
 
+import server.facade.GameFacade;
+import server.facade.GamesFacade;
+import server.facade.MovesFacade;
+import server.facade.UserFacade;
 import server.facade.iGameFacade;
 import server.handlers.moves.*;
 import server.handlers.user.*;
 import server.handlers.games.*;
 import server.handlers.game.*;
-
+import server.model.ServerData;
 
 import com.sun.net.httpserver.*;
 
@@ -39,6 +43,12 @@ public class Server {
 			System.out.println("Could not initialize log: " + e.getMessage());
 		}
 	}
+	
+	private ServerData serverData = new ServerData();
+	private GamesFacade gamesFacade = new GamesFacade(serverData);
+	private GameFacade gameFacade = new GameFacade(serverData);
+	private UserFacade userFacade = new UserFacade(serverData);
+	private MovesFacade movesFacade = new MovesFacade(serverData);
 	
 	/**
 	 * Inits the log.
@@ -76,7 +86,11 @@ public class Server {
 	 */
 	public void run(){
 		logger.info("Initializing Model");
-		
+//		serverData = new ServerData();
+//		gameFacade = new GameFacade(serverData);
+//		gamesFacade = new GamesFacade(serverData);
+//		movesFacade = new MovesFacade(serverData);
+//		userFacade = new UserFacade(serverData);
 		/*try {
 			ServerFacade.initialize();		
 		}
@@ -133,73 +147,73 @@ public class Server {
 	
 	
 	/** The login handler. */
-	private HttpHandler loginHandler = new LoginHandler();
+	private HttpHandler loginHandler = new LoginHandler(userFacade);
 	
 	/** The register handler. */
-	private HttpHandler registerHandler = new RegisterHandler();
+	private HttpHandler registerHandler = new RegisterHandler(userFacade);
 	
 	/** The list handler. */
-	private HttpHandler listHandler = new ListHandler();
+	private HttpHandler listHandler = new ListHandler(gamesFacade);
 	
 	/** The create handler. */
-	private HttpHandler createHandler = new CreateHandler();
+	private HttpHandler createHandler = new CreateHandler(gamesFacade);
 	
 	/** The join handler. */
-	private HttpHandler joinHandler = new JoinHandler();
+	private HttpHandler joinHandler = new JoinHandler(gamesFacade);
 	
 	/** The model handler. */
-	private HttpHandler modelHandler = new ModelHandler();
+	private HttpHandler modelHandler = new ModelHandler(gameFacade);
 	
 	/** The send chat handler. */
-	private HttpHandler sendChatHandler = new SendChatHandler();
+	private HttpHandler sendChatHandler = new SendChatHandler(movesFacade);
 	
 	/** The roll number handler. */
-	private HttpHandler rollNumberHandler = new RollNumberHandler();
+	private HttpHandler rollNumberHandler = new RollNumberHandler(movesFacade);
 	
 	/** The rob player handler. */
-	private HttpHandler robPlayerHandler = new RobPlayerHandler();
+	private HttpHandler robPlayerHandler = new RobPlayerHandler(movesFacade);
 	
 	/** The finish turn handler. */
-	private HttpHandler finishTurnHandler = new FinishTurnHandler();
+	private HttpHandler finishTurnHandler = new FinishTurnHandler(movesFacade);
 	
 	/** The buy dev card handler. */
-	private HttpHandler buyDevCardHandler = new BuyDevCardHandler();
+	private HttpHandler buyDevCardHandler = new BuyDevCardHandler(movesFacade);
 	
 	/** The year of plenty handler. */
-	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler();
+	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler(movesFacade);
 	
 	/** The road building handler. */
-	private HttpHandler roadBuildingHandler = new RoadBuildingHandler();
+	private HttpHandler roadBuildingHandler = new RoadBuildingHandler(movesFacade);
 	
 	/** The soldier handler. */
-	private HttpHandler soldierHandler = new SoldierHandler();
+	private HttpHandler soldierHandler = new SoldierHandler(movesFacade);
 	
 	/** The monopoly handler. */
-	private HttpHandler monopolyHandler = new MonopolyHandler();
+	private HttpHandler monopolyHandler = new MonopolyHandler(movesFacade);
 	
 	/** The monument handler. */
-	private HttpHandler monumentHandler = new MonumentHandler();
+	private HttpHandler monumentHandler = new MonumentHandler(movesFacade);
 	
 	/** The build road handler. */
-	private HttpHandler buildRoadHandler = new BuildRoadHandler();
+	private HttpHandler buildRoadHandler = new BuildRoadHandler(movesFacade);
 	
 	/** The build city handler. */
-	private HttpHandler buildCityHandler = new BuildCityHandler();
+	private HttpHandler buildCityHandler = new BuildCityHandler(movesFacade);
 	
 	/** The build settlement handler. */
-	private HttpHandler buildSettlementHandler = new BuildSettlementHandler();
+	private HttpHandler buildSettlementHandler = new BuildSettlementHandler(movesFacade);
 	
 	/** The offer trade handler. */
-	private HttpHandler offerTradeHandler = new OfferTradeHandler();
+	private HttpHandler offerTradeHandler = new OfferTradeHandler(movesFacade);
 	
 	/** The accept trade handler. */
-	private HttpHandler acceptTradeHandler = new AcceptTradeHandler();
+	private HttpHandler acceptTradeHandler = new AcceptTradeHandler(movesFacade);
 	
 	/** The maritime trade handler. */
-	private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler();
+	private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler(movesFacade);
 	
 	/** The discard cards handler. */
-	private HttpHandler discardCardsHandler = new DiscardCardsHandler();
+	private HttpHandler discardCardsHandler = new DiscardCardsHandler(movesFacade);
 
 	
 	/**

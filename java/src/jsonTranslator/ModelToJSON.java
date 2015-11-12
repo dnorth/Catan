@@ -1,5 +1,8 @@
 package jsonTranslator;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -391,13 +394,14 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	public JsonObject generatePlayerCookie(String username, String password, int playerID) {
+		JsonObject object = new JsonObject();
+		object.addProperty("name", username);
+		object.addProperty("password", password);
+		object.addProperty("playerID", playerID);
+		return object;
+	}
+		
 	
 	
 }

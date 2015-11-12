@@ -194,7 +194,7 @@ abstract class ServerProxy {
     }
     
     private String StripCookie(String cookieHeader) {
-    	
+    	System.out.println("COOKIE: " + cookieHeader);
     	int startingIndex = cookieHeader.indexOf('=') + 1;
     	int endingIndex = cookieHeader.indexOf(";Path=/;");
     	String cookie = cookieHeader.substring(startingIndex, endingIndex);
