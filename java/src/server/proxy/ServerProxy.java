@@ -35,7 +35,13 @@ abstract class ServerProxy {
     }    
     
     protected JsonObject doGet(String urlPath, JsonObject optionalCookies) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
+        System.out.println("doGet_urlPath: " + urlPath);
         try {
+    		System.out.println("doGet_optionalCookies: " + optionalCookies.toString());
+    	} catch (NullPointerException e) {
+    		
+    	}
+    	try {
     		JsonObject jsonReturnObject = new JsonObject();
     		JsonParser jsonParser = new JsonParser();
             URL url = new URL(URL_PREFIX + urlPath);
@@ -98,7 +104,13 @@ abstract class ServerProxy {
     }
     
     protected JsonObject doPost(String urlPath, JsonObject postData, JsonObject optionalCookies) throws ClientException { //Return a JSON Object
-        try {
+    	System.out.println("doPost_urlPath: " + urlPath);
+    	try {
+    		System.out.println("doPost_optionalCookies: " + optionalCookies.toString());
+    	} catch (NullPointerException e) {
+    		
+    	}
+    	try {
         	//System.out.println(postData.toString());
             URL url = new URL(URL_PREFIX + urlPath);
             //System.out.println("Test1");
@@ -145,7 +157,6 @@ abstract class ServerProxy {
             		}	
             			
             		
-            		
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
@@ -153,7 +164,6 @@ abstract class ServerProxy {
                     }
                     br.close();
                     String responseBody = sb.toString();
-                    
                     try {
                     	try {
                           	 JsonArray j = (JsonArray)jsonParser.parse(responseBody);
@@ -165,8 +175,6 @@ abstract class ServerProxy {
                     } catch (ClassCastException e) {
                         jsonReturnObject.addProperty("Response-body", responseBody);
                     }
-                    //System.out.print("What is returned: ");
-                    //System.out.println(jsonReturnObject.toString());
                     return jsonReturnObject;
             	}
             	catch (ClassCastException e) {
@@ -194,7 +202,7 @@ abstract class ServerProxy {
     }
     
     private String StripCookie(String cookieHeader) {
-    	System.out.println("COOKIE: " + cookieHeader);
+    	System.out.println("COOKIE:" + cookieHeader);
     	int startingIndex = cookieHeader.indexOf('=') + 1;
     	int endingIndex = cookieHeader.indexOf(";Path=/;");
     	String cookie = cookieHeader.substring(startingIndex, endingIndex);

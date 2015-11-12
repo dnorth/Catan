@@ -47,21 +47,21 @@ public class RegisterHandler implements HttpHandler {
 			JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 			String username = jsonToModel.getUsername(jsonObject);
 			String password = jsonToModel.getPassword(jsonObject);
-					
+			
 			logger.info("Username: " + username);
 			logger.info("Password: " + password);
 			
 			String response = "";
-			exchange.getResponseHeaders().set("Content-Type", "application/json");
+			Headers headers = exchange.getResponseHeaders();
+			headers.add("Content-Type", "application/json");
 			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
 			int playerID = userFacade.registerUser(username, password);
 			if (playerID > 0) {
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
-				Headers headers = exchange.getResponseHeaders();
-				String header = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
-				logger.info("HEADER: " + header);
-				headers.add("Set-cookie:", header);
+				String playerCookieHeader = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
+				logger.info("PLAYER COOKIE HEADER: " + playerCookieHeader);
+				headers.add("Set-cookie", playerCookieHeader);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			}
 			else  {

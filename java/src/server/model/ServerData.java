@@ -10,7 +10,7 @@ public class ServerData {
 	
 	private List<ServerUser> users;
 	private List<ServerGame> games;
-	private int nextUserID = 1;
+	private int nextUserID = 12;
 	
 	public ServerData() {
 		this.users = new ArrayList<ServerUser>();

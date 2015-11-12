@@ -41,7 +41,7 @@ public class LoginHandler implements HttpHandler {
 			JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 			String username = jsonToModel.getUsername(jsonObject);
 			String password = jsonToModel.getPassword(jsonObject);
-		
+			
 			logger.info("Username: " + username);
 			logger.info("Password: " + password);
 			
@@ -53,7 +53,9 @@ public class LoginHandler implements HttpHandler {
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				Headers headers = exchange.getResponseHeaders();
-				headers.add("Set-cookie:", URLEncoder.encode(playerCookie.toString()+";Path=/;", "UTF-8"));
+				String header = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
+				logger.info("HEADER: " + header);
+				headers.add("Set-cookie", header);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			}
 			else  {

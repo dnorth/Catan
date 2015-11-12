@@ -396,6 +396,7 @@ public class ModelToJSON {
 	
 	public JsonObject generatePlayerCookie(String username, String password, int playerID) {
 		JsonObject object = new JsonObject();
+		object.addProperty("authentication", "-1669576507");
 		object.addProperty("name", username);
 		object.addProperty("password", password);
 		object.addProperty("playerID", playerID);
