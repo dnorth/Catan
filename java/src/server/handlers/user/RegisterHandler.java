@@ -28,7 +28,6 @@ import shared.locations.VertexLocation;
  */
 public class RegisterHandler implements HttpHandler {
 	Logger logger;
-	Gson gson;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
 	UserFacade userFacade;
@@ -56,7 +55,7 @@ public class RegisterHandler implements HttpHandler {
 			headers.add("Content-Type", "application/json");
 			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
 			int playerID = userFacade.registerUser(username, password);
-			if (playerID > 0) {
+			if (playerID != -1) {
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				String playerCookieHeader = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";

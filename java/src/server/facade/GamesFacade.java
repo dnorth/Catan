@@ -1,7 +1,10 @@
 package server.facade;
 
+import java.util.List;
+
 import server.commands.games.JoinCommand;
 import server.model.ServerData;
+import server.model.ServerGame;
 import client.data.GameInfo;
 
 
@@ -24,9 +27,8 @@ public class GamesFacade implements iGamesFacade {
 	 * Facade for the command games/list
 	 */
 	@Override
-	public GameInfo[] listGames() {
-
-		return null;
+	public List<ServerGame> listGames() {
+		return serverData.getGames();
 	}
 
 	/**

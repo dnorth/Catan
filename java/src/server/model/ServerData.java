@@ -11,10 +11,10 @@ public class ServerData {
 	private List<ServerUser> users;
 	private List<ServerGame> games;
 	private int nextUserID = 12;
+	private int nextGameID = 3;
 	
 	public ServerData() {
-		this.users = new ArrayList<ServerUser>();
-		this.games = new ArrayList<ServerGame>();
+		initServerData();
 	}
 
 	public int addUser(String username, String password) {
@@ -24,6 +24,13 @@ public class ServerData {
 		users.add(new ServerUser(username, password, this.nextUserID));
 		this.nextUserID += 1;
 		return this.nextUserID-1;
+	}
+	
+	public ServerUser getUserByID(int id) {
+		for (ServerUser u : users) {
+			if (u.getPlayerID() == id) return u;
+		}
+		return null;
 	}
 	
 	/**
@@ -67,5 +74,44 @@ public class ServerData {
 		}
 		return -1;
 	}
-
+	
+	/**
+	 * initServerData
+	 * Add standard/default server data as seen from demo server
+	 */
+	public void initServerData() {
+		this.users = new ArrayList<ServerUser>();
+		
+		this.users.add(new ServerUser("Sam", "sam", 0));
+		this.users.add(new ServerUser("Brooke", "brooke", 1));
+		this.users.add(new ServerUser("Pete", "pete", 10));
+		this.users.add(new ServerUser("Mark", "mark", 11));
+		this.users.add(new ServerUser("Quinn", "quinn", -2));
+		this.users.add(new ServerUser("Scott", "scott", -3));
+		this.users.add(new ServerUser("Hannah", "hannah", -4));
+		this.users.add(new ServerUser("Sam", "sam", 0));
+		
+		this.games = new ArrayList<ServerGame>();
+		
+		ServerGame initGame0 = new ServerGame("Default Game", 0);
+		initGame0.addUser(getUserByID(0), "orange");
+		initGame0.addUser(getUserByID(1), "blue");
+		initGame0.addUser(getUserByID(10), "red");
+		initGame0.addUser(getUserByID(11), "green");
+		this.games.add(initGame0);
+		
+		ServerGame initGame1 = new ServerGame("AI Game", 1);
+		initGame1.addUser(getUserByID(10), "orange");
+		initGame1.addUser(getUserByID(-2), "blue");
+		initGame1.addUser(getUserByID(-3), "puce");
+		initGame1.addUser(getUserByID(-4), "white");
+		this.games.add(initGame1);
+		
+		ServerGame initGame2 = new ServerGame("Empty Game", 2);
+		initGame2.addUser(getUserByID(0), "orange");
+		initGame2.addUser(getUserByID(1), "blue");
+		initGame2.addUser(getUserByID(10), "red");
+		initGame2.addUser(getUserByID(11), "green");
+		this.games.add(initGame2);
+	}
 }

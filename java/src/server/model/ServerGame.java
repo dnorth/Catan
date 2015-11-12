@@ -1,5 +1,6 @@
  package server.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.models.ClientModel;
@@ -23,6 +24,27 @@ public class ServerGame {
 		return title;
 	}
 	
+	public ServerGame(String title, int id) {
+		this.title = title;
+		this.id = id;
+		this.players = new ArrayList<ServerPlayer>();
+		this.clientModel = new ClientModel();
+	}
+	
+	public boolean addUser(ServerUser user, String color) {
+		if (players.size() > 3) return false;
+		else {
+			// don't add the same player in twice
+			for (ServerPlayer p : players) {
+				if (p.getId() == user.getPlayerID()) {
+					return true;
+				}
+			}
+			this.players.add(new ServerPlayer(color, user.getUsername(), user));
+			return true;
+		}
+	}
+
 	/**
 	 * Set title.
 	 * @param title

@@ -1,10 +1,20 @@
 package server.handlers.games;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
 import server.facade.GamesFacade;
+import server.model.ServerGame;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -14,6 +24,8 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class ListHandler implements HttpHandler {
 	Logger logger;
+	JSONToModel jsonToModel = new JSONToModel();
+	ModelToJSON modelToJSON = new ModelToJSON();
 	GamesFacade gamesFacade;
 	
 	public ListHandler(GamesFacade gamesFacade) {
@@ -22,12 +34,26 @@ public class ListHandler implements HttpHandler {
 
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
+	 * **NOTE** Does NOT check for authentication.
 	 */
 	@Override
-	public void handle(HttpExchange arg0) throws IOException {
+	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
 		logger = Logger.getLogger("Catan");
-
+		logger.info("Handling List");
+		try{
+			if (gamesFacade == null) logger.info("gamesFacade is null...");
+			List<ServerGame> games = gamesFacade.listGames();
+			JsonArray serverGamesObject = modelToJSON.generateServerGamesObject(games);
+			logger.info("Server Games Object: " + serverGamesObject.toString());
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, serverGamesObject.toString().length());
+			exchange.getResponseBody().write(serverGamesObject.toString().getBytes());
+			exchange.close();
+		}
+		catch( Exception e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			return;
+		}
 	}
-
 }

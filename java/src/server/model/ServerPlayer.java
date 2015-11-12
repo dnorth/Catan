@@ -7,12 +7,12 @@ public class ServerPlayer {
 	
 	private String color;
 	private String name;
-	private int id;
+	private ServerUser user;
 	
-	public ServerPlayer(String color, String name, int id) {
+	public ServerPlayer(String color, String name, ServerUser user) {
 		this.color = color;
 		this.name = name;
-		this.id = id;
+		this.user = user;
 	}
 	
 	/**
@@ -52,14 +52,14 @@ public class ServerPlayer {
 	 * @return id
 	 */
 	public int getId() {
-		return id;
+		return user.getPlayerID();
 	}
-	
-	/**
-	 * Set id.
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
+
+	public ServerUser getUser() {
+		return user;
+	}
+
+	public void setUser(ServerUser user) {
+		this.user = user;
 	}
 }

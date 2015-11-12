@@ -49,7 +49,7 @@ public class LoginHandler implements HttpHandler {
 			exchange.getResponseHeaders().set("Content-Type", "application/json");
 			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
 			int playerID = userFacade.loginUser(username, password);
-			if (playerID > 0) {
+			if (playerID != -1) {
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				Headers headers = exchange.getResponseHeaders();

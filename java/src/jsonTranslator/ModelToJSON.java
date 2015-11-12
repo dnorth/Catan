@@ -2,6 +2,7 @@ package jsonTranslator;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -14,6 +15,8 @@ import client.models.communication.MessageLine;
 import client.models.communication.MessageList;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.HexLocation;
+import server.model.ServerGame;
+import server.model.ServerPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 
@@ -401,6 +404,28 @@ public class ModelToJSON {
 		object.addProperty("password", password);
 		object.addProperty("playerID", playerID);
 		return object;
+	}
+
+	public JsonArray generateServerGamesObject(List<ServerGame> games) {
+		JsonObject returnObject = new JsonObject();
+		JsonArray gamesArray = new JsonArray();
+		for (ServerGame g : games) {
+			JsonObject gameObject = new JsonObject();
+			gameObject.addProperty("title", g.getTitle());
+			gameObject.addProperty("id", g.getId());
+			JsonArray playersArray = new JsonArray();
+			for (ServerPlayer p : g.getPlayers()) {
+				JsonObject playerObject = new JsonObject();
+				playerObject.addProperty("color", p.getColor());
+				playerObject.addProperty("name", p.getName());
+				playerObject.addProperty("id", p.getId());
+				playersArray.add(playerObject);
+			}
+			gameObject.add("players", playersArray);
+			gamesArray.add(gameObject);
+		}
+		returnObject.add("Response-body", gamesArray);
+		return gamesArray;
 	}
 		
 	

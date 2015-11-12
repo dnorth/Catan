@@ -1,5 +1,8 @@
 package server.facade;
 
+import java.util.List;
+
+import server.model.ServerGame;
 import client.data.GameInfo;
 
 // TODO: Auto-generated Javadoc
@@ -13,7 +16,7 @@ public interface iGamesFacade {
 	 *
 	 * @return the game info[]
 	 */
-	public GameInfo[] listGames();
+	public List<ServerGame> listGames();
 	
 	/**
 	 * Creates the game.
