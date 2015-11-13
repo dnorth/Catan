@@ -19,6 +19,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import server.exceptions.UsernameAlreadyTakenException;
 import server.facade.UserFacade;
 import shared.locations.VertexLocation;
 
@@ -54,16 +55,15 @@ public class RegisterHandler implements HttpHandler {
 			Headers headers = exchange.getResponseHeaders();
 			headers.add("Content-Type", "application/json");
 			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
-			int playerID = userFacade.registerUser(username, password);
-			if (playerID != -1) {
+			try {
+				int playerID = userFacade.registerUser(username, password);
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				String playerCookieHeader = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
 				logger.info("PLAYER COOKIE HEADER: " + playerCookieHeader);
 				headers.add("Set-cookie", playerCookieHeader);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
-			}
-			else  {
+			} catch (UsernameAlreadyTakenException e) {
 				response = "Failed to register - someone already has that username.";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 			}

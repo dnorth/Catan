@@ -1,6 +1,7 @@
 package server.commands.user;
 
 import server.commands.IUserCommand;
+import server.exceptions.InvalidLoginException;
 import server.model.ServerData;
 
 // TODO: Auto-generated Javadoc
@@ -23,8 +24,8 @@ public class LoginCommand implements IUserCommand {
 	 *  Logs in a user.
 	 */
 	@Override
-	public int execute() {
-		return serverData.getPlayerID(username, password);
+	public void execute() throws InvalidLoginException {
+		if (serverData.getPlayerID(username, password) == -1) throw new InvalidLoginException();
 	}
 
 }

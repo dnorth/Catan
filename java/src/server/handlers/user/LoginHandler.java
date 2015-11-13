@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
+import server.exceptions.InvalidLoginException;
 import server.facade.UserFacade;
 
 import com.google.gson.Gson;
@@ -48,8 +49,8 @@ public class LoginHandler implements HttpHandler {
 			String response = "";
 			exchange.getResponseHeaders().set("Content-Type", "application/json");
 			if (userFacade == null) logger.info("UUUHHHH OOOOHHH");
-			int playerID = userFacade.loginUser(username, password);
-			if (playerID != -1) {
+			try {
+				int playerID = userFacade.loginUser(username, password);
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				Headers headers = exchange.getResponseHeaders();
@@ -57,8 +58,7 @@ public class LoginHandler implements HttpHandler {
 				logger.info("HEADER: " + header);
 				headers.add("Set-cookie", header);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
-			}
-			else  {
+			} catch (InvalidLoginException e) {
 				response = "Failed to login - username or password incorrect.";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 			}

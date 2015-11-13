@@ -1,6 +1,7 @@
 package server.commands.user;
 
 import server.commands.IUserCommand;
+import server.exceptions.UsernameAlreadyTakenException;
 import server.model.ServerData;
 
 // TODO: Auto-generated Javadoc
@@ -24,8 +25,8 @@ public class RegisterCommand implements IUserCommand {
 	 */
 	
 	@Override
-	public int execute() {
-		return serverData.addUser(username, password);
+	public void execute() throws UsernameAlreadyTakenException {
+		if (serverData.addUser(username, password) == -1) throw new UsernameAlreadyTakenException();
 	}
 
 }
