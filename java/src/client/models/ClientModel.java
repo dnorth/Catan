@@ -160,7 +160,11 @@ public class ClientModel extends Observable
 	 * Adds player to list of players
 	 * @param newPlayer - new player info
 	 */
-	public void joinGame(ServerPlayer newPlayer){}
+	public void joinGame(ServerPlayer newPlayer)
+	{
+		Player p = new Player(newPlayer);
+		players[newPlayer.getId()] = p;
+	}
 	
 	
 	/**

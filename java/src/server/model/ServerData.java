@@ -25,7 +25,7 @@ public class ServerData {
 		this.nextUserID += 1;
 		return this.nextUserID-1;
 	}
-	
+
 	public ServerUser getUserByID(int id) {
 		for (ServerUser u : users) {
 			if (u.getPlayerID() == id) return u;
@@ -114,4 +114,25 @@ public class ServerData {
 		initGame2.addUser(getUserByID(11), "green");
 		this.games.add(initGame2);
 	}
+
+
+	public int getNextUserID() {
+		return nextUserID;
+	}
+
+
+	public int getNextGameID() {
+		return nextGameID;
+	}
+	
+	public void incNextUserID() {
+		nextUserID++;
+	}
+
+
+	public void incNextGameID() {
+		nextGameID++;
+	}
+	
+	
 }
