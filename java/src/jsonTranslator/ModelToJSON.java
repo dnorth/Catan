@@ -11,12 +11,17 @@ import client.data.GameInfo;
 import client.models.ClientModel;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.VertexObject;
 import client.models.communication.MessageLine;
 import client.models.communication.MessageList;
+import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
 import server.model.ServerGame;
 import server.model.ServerPlayer;
+import client.models.mapdata.Port;
+import client.models.mapdata.Road;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 
@@ -35,10 +40,10 @@ public class ModelToJSON {
 		JsonObject bank = this.translateBank(model.getBank());
 		newModel.add("bank", bank);
 		
-		JsonObject chat = this.translateChat(model.getChat());
+		JsonObject chat = this.translateMessageList(model.getChat());
 		newModel.add("chat", chat);
 		
-		JsonObject log = new JsonObject();
+		JsonObject log = this.translateMessageList(model.getLog());
 		newModel.add("log", log);
 		
 		JsonObject map = new JsonObject();
@@ -70,21 +75,72 @@ public class ModelToJSON {
 		return bank;
 	}
 	
-	private JsonObject translateChat(MessageList modelChat){
+	private JsonObject translateMessageList(MessageList modelChat){
 		JsonObject chat = new JsonObject();
 		JsonArray messages = new JsonArray();
 		//I NEED TO CHECK THIS!!!!
 		for(MessageLine message : modelChat.getLines()){
-			JsonObject m = new JsonObject();
-			m.addProperty("message", message.getMessage());
-			JsonObject source = new JsonObject();
-			source.addProperty("source", message.getSource());
-			messages.add(m);
-			messages.add(source);
+			JsonObject messageLine = new JsonObject();
+			messageLine.addProperty("message", message.getMessage());
+			messageLine.addProperty("source", message.getSource());
+			messages.add(messageLine);
 		}
 		chat.add("lines", messages);
 		return chat;
 	}
+	
+	private JsonObject translateMap(Board board) {
+		JsonObject map = new JsonObject();
+		
+		//translate hexes
+		JsonObject hexes = translateHexes(board.getHexes());
+		map.add("hexes", hexes);
+		
+		//translate ports
+		JsonObject ports = translatePorts(board.getPorts());
+		map.add("ports", ports);
+		
+		//translate roads
+		JsonObject roads = translateRoads(board.getRoads());
+		map.add("roads", roads);
+		
+		//translate settlements
+		JsonObject settlements = translateSettlements(board.getSettlements());
+		map.add("settlements", settlements);
+		
+		//translate cities
+		JsonObject cities = translateCities(board.getCities());
+		map.add("cities", cities);
+		
+		//add radius
+		
+		//add robber location
+		
+		return map;
+	}
+	
+	private JsonObject translateRoads(Road[] roads){
+		return null;
+	}
+	
+	private JsonObject translateHexes(Hex[] hexes){
+		return null;
+	}
+	
+	private JsonObject translateSettlements(VertexObject[] settlements){
+		return null;
+	}
+	
+	private JsonObject translateCities(VertexObject[] cities){
+		return null;
+	}
+	
+	private JsonObject translatePorts(Port[] ports){
+		return null;
+	}
+	
+	
+	//TRANSLATION OF COMMANDS
 	
 	public JsonObject createSendChatObject( int playerIndex, String message) {
 		JsonObject object = new JsonObject();
