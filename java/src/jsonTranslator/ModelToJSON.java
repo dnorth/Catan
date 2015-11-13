@@ -93,49 +93,93 @@ public class ModelToJSON {
 		JsonObject map = new JsonObject();
 		
 		//translate hexes
-		JsonObject hexes = translateHexes(board.getHexes());
+		JsonArray hexes = translateHexes(board.getHexes());
 		map.add("hexes", hexes);
 		
 		//translate ports
-		JsonObject ports = translatePorts(board.getPorts());
+		JsonArray ports = translatePorts(board.getPorts());
 		map.add("ports", ports);
 		
 		//translate roads
-		JsonObject roads = translateRoads(board.getRoads());
+		JsonArray roads = translateRoads(board.getRoads());
 		map.add("roads", roads);
 		
 		//translate settlements
-		JsonObject settlements = translateSettlements(board.getSettlements());
+		JsonArray settlements = translateVertexObjects(board.getSettlements());
 		map.add("settlements", settlements);
 		
 		//translate cities
-		JsonObject cities = translateCities(board.getCities());
+		JsonArray cities = translateVertexObjects(board.getCities());
 		map.add("cities", cities);
 		
 		//add radius
+		JsonObject radius = new JsonObject();
+		radius.addProperty("radius", 3);
 		
 		//add robber location
 		
 		return map;
 	}
 	
-	private JsonObject translateRoads(Road[] roads){
+	private JsonArray translateRoads(Road[] roads){
+		JsonArray roadsList = new JsonArray();
+		for (Road r : roads) {
+			JsonObject newRoad = new JsonObject();
+			newRoad.addProperty("owner", r.getOwner());
+			
+			JsonObject roadLocation = new JsonObject();
+			roadLocation.addProperty("x", r.getLocation().getXcoord());
+			roadLocation.addProperty("y", r.getLocation().getYcoord());
+			roadLocation.addProperty("direction", r.getLocation().getDirection());
+			
+			newRoad.add("location", roadLocation);
+			
+			roadsList.add(newRoad);
+		}
+		
+		return roadsList;
+	}
+	
+	private JsonArray translateHexes(Hex[] hexes){
+		JsonArray hexList = new JsonArray();
+		for (Hex h : hexes) {
+			JsonObject newHex = new JsonObject();
+			
+			JsonObject location = translateHexLocation(h.getLocation());
+			newHex.add("location", location);
+			
+			if (h.getResource() != null) {
+				JsonObject resource = new JsonObject();
+				resource.addProperty("resource", h.getResource());
+				newHex.add("resource", resource);
+				
+				newHex.add("location", location);
+				
+				JsonObject number = new JsonObject();
+				number.addProperty("number", h.getNumberToken());
+				newHex.add("number", number);
+			}
+			else newHex.add("location", location);
+			
+			hexList.add(newHex);
+		}
+		return hexList;
+	}
+	
+	private JsonObject translateHexLocation(HexLocation loc) {
+		JsonObject hexLoc = new JsonObject();
+		
+		hexLoc.addProperty("x", loc.getX());
+		hexLoc.addProperty("y", loc.getY());
+		return hexLoc;
+	}
+	
+	private JsonArray translateVertexObjects(VertexObject[] settlements) {
 		return null;
 	}
 	
-	private JsonObject translateHexes(Hex[] hexes){
-		return null;
-	}
-	
-	private JsonObject translateSettlements(VertexObject[] settlements){
-		return null;
-	}
-	
-	private JsonObject translateCities(VertexObject[] cities){
-		return null;
-	}
-	
-	private JsonObject translatePorts(Port[] ports){
+	private JsonArray translatePorts(Port[] ports) {
+		
 		return null;
 	}
 	
