@@ -304,4 +304,5 @@ public class ClientModel extends Observable
 	 */
 	public void discardCards(String type, int playerIndex, Resources discardedCards){}
 
+	
 }

@@ -1,5 +1,6 @@
 package server.commands.games;
 
+import client.models.mapdata.Board;
 import server.commands.IGamesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
@@ -35,7 +36,20 @@ int gameID;
 	 */
 	@Override
 	public void execute() {
+		ServerGame game = new ServerGame(name, gameID);
+		Board board = game.getClientModel().getBoard();
+		board.createDefaultBoard();
 		
+		if(randomTiles)
+		{board.CreateRandomTiles();}
+		
+		if(randomNumbers)
+		{board.CreateRandomNumbers();}
+		
+		if(randomPorts)
+		{board.CreateRandomPorts();}
+		
+		serverData.getGames().add(game);
 	}
 
 }
