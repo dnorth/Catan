@@ -9,6 +9,13 @@ public class MessageLine
 {
 	String message;
 	String source;
+	
+	
+	public MessageLine(String message, String source) {
+		super();
+		this.message = message;
+		this.source = source;
+	}
 	public String getMessage() {
 		return message;
 	}

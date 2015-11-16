@@ -1,4 +1,6 @@
 package client.models.communication;
+import java.util.List;
+
 import client.models.communication.MessageLine;
 
 /**
@@ -8,13 +10,13 @@ import client.models.communication.MessageLine;
 
 public class MessageList
 {
-	private MessageLine[] lines;
+	private List<MessageLine> lines;
 
-	public MessageLine[] getLines() {
+	public List<MessageLine> getLines() {
 		return lines;
 	}
 
-	public void setLines(MessageLine[] lines) {
+	public void setLines(List<MessageLine> lines) {
 		this.lines = lines;
 	}
 	
