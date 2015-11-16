@@ -338,7 +338,6 @@ public class Board {
 	
 	public void createDefaultBoard()
 	{
-
 		this.setHexes(new Hex[]
 				{
 						new Hex(new HexLocation(0,0),-1 ),

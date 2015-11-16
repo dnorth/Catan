@@ -31,6 +31,10 @@ public class ClientModel extends Observable
 	public ClientModel() {
 		super();
 		newCli = true;
+		
+		bank = new Resources(19,19,19,19,19);
+		deck = new DevCards(2,5,2,14,2);
+		
 	}
 	
 	public void update(ClientModel model) {

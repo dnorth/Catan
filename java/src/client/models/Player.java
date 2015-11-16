@@ -30,6 +30,9 @@ public class Player
 	name="";
 	resources = new Resources();
 	portTrade = new PortTrade();
+	cities = 4;
+	settlements = 5;
+	roads = 15;
 	}
 	
 	public Player(ServerPlayer p){
@@ -40,6 +43,9 @@ public class Player
 	playerIndex=p.getId();
 	resources = new Resources();
 	portTrade = new PortTrade();
+	cities = 4;
+	settlements = 5;
+	roads = 15;
 	}
 	
 	public int getCitiesNum() {
