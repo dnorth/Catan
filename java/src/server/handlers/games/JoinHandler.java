@@ -35,6 +35,7 @@ public class JoinHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		logger = Logger.getLogger("Catan");
 		JsonObject cookie;
+		String response = "";
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			logger.info(cookie.toString());
@@ -44,18 +45,32 @@ public class JoinHandler implements HttpHandler {
 				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 				String color = jsonToModel.getColor(jsonObject);
 				gamesFacade.joinGame(pID, gID, color);
+				logger.info("Valid Cookie!");
+				jsonToModel.exchangeToJson(exchange);
+			} else {
+				//Bad login information
+				logger.info("Invalid Cookie.");
 			}
 		} catch (MissingCookieException e) {
 			//Return a bad request message
 			//The catan.user HTTP cookie is missing.  You must login before calling this method.
 			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+		} catch (IllegalStateException e) {
+			//Not a valid JSON Object as post data
+			response = "Invalid Request";
+			logger.log(Level.SEVERE, e.getMessage());
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+
 		} catch (Exception e) {
+
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
 			return;
 		}
 		
+		exchange.getResponseBody().write(response.getBytes());
+		exchange.close();
 
 	}
 

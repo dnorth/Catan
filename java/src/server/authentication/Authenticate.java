@@ -37,4 +37,8 @@ public final class Authenticate {
 	public static String dressCookie(JsonObject fullCookie) throws UnsupportedEncodingException {
 		return "catan.user=" + URLEncoder.encode(fullCookie.toString(), "utf-8") + ";Path=/;";
 	}
+	
+	public static String getSpecificContext(String uri) {
+		return uri.substring(uri.lastIndexOf("/") + 1);
+	}
 }

@@ -111,9 +111,9 @@ public class Server {
 		
 		server.setExecutor(null); // user the default executor
 		
-		
-		server.createContext("/user/login", loginHandler);
-		server.createContext("/user/register", registerHandler);
+		server.createContext("/user", userHandler);
+		//server.createContext("/user/login", loginHandler);
+		//server.createContext("/user/register", registerHandler);
 		server.createContext("/games/list", listHandler);
 		server.createContext("/games/create", createHandler);
 		server.createContext("/games/join", joinHandler);
@@ -146,6 +146,7 @@ public class Server {
 	}
 	
 	
+	private HttpHandler userHandler = new UserHandler(userFacade);
 	/** The login handler. */
 	private HttpHandler loginHandler = new LoginHandler(userFacade);
 	
