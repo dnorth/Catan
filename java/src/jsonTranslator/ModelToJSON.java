@@ -1,7 +1,5 @@
 package jsonTranslator;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -9,8 +7,11 @@ import com.google.gson.JsonObject;
 
 import client.data.GameInfo;
 import client.models.ClientModel;
+import client.models.DevCards;
+import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.TurnTracker;
 import client.models.VertexObject;
 import client.models.communication.MessageLine;
 import client.models.communication.MessageList;
@@ -18,10 +19,10 @@ import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
-import server.model.ServerGame;
-import server.model.ServerPlayer;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
+import server.model.ServerGame;
+import server.model.ServerPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 
@@ -37,7 +38,7 @@ public class ModelToJSON {
 	 */
 	public JsonObject translateModel(ClientModel model) {
 		JsonObject newModel = new JsonObject();
-		JsonObject bank = this.translateBank(model.getBank());
+		JsonObject bank = this.translateResources(model.getBank());
 		newModel.add("bank", bank);
 		
 		JsonObject chat = this.translateMessageList(model.getChat());
@@ -46,26 +47,82 @@ public class ModelToJSON {
 		JsonObject log = this.translateMessageList(model.getLog());
 		newModel.add("log", log);
 		
-		JsonObject map = new JsonObject();
+		JsonObject map = this.translateMap(model.getBoard());
 		newModel.add("map", map);
 		
-		JsonObject players = new JsonObject();
+		JsonArray players = this.translatePlayers(model.getPlayers());
 		newModel.add("players", players);
 		
-		JsonObject tradeOffer = new JsonObject();
-		newModel.add("tradeOffer", tradeOffer);
+		if (model.getTradeOffer() != null) {
+			JsonObject tradeOffer = this.translateTradeOffer(model.getTradeOffer());
+			newModel.add("tradeOffer", tradeOffer);			
+		}
 		
-		JsonObject turnTracker = new JsonObject();
+		JsonObject turnTracker = this.translateTurnTracker(model.getTurnTracker());
 		newModel.add("turnTracker", turnTracker);
 		
 		//add version num
-		//add move (???)
+		newModel.addProperty("version", model.getVersion());
+		
 		//add winner index
+		newModel.addProperty("winner", model.getWinner());
 		
 		return newModel;
 	}
 	
-	private JsonObject translateBank(Resources modelBank){
+	private JsonObject translateTurnTracker(TurnTracker tracker) {
+		JsonObject turnTracker = new JsonObject();
+		turnTracker.addProperty("currentTurn", tracker.getCurrentTurn());
+		turnTracker.addProperty("status", tracker.getStatus());
+		turnTracker.addProperty("longestRoad", tracker.getLongestRoad());
+		turnTracker.addProperty("largestArmy", tracker.getLargestArmy());
+		return turnTracker;
+	}
+	
+	private JsonObject translateTradeOffer(TradeOffer offer) {
+		JsonObject trade = new JsonObject();
+		trade.addProperty("sender", offer.getSender());
+		trade.addProperty("receiver", offer.getReceiver());
+		trade.add("offer", this.translateResources(offer.getOffer()));
+		return trade;
+	}
+	
+	private JsonArray translatePlayers(Player[] players) {
+		JsonArray list = new JsonArray();
+		for (Player p : players) {
+			JsonObject player = new JsonObject();
+			player.addProperty("cities", p.getCities());
+			player.addProperty("color", p.getColor());
+			player.addProperty("discarded", p.isDiscarded());
+			player.addProperty("monuments", p.getMonuments());
+			player.addProperty("name", p.getName());
+			player.add("newDevCards", this.translateDevCards(p.getNewDevCards()));
+			player.add("oldDevCards", this.translateDevCards(p.getOldDevCards()));
+			player.addProperty("playerIndex", p.getPlayerIndex());
+			player.addProperty("playedDevCard", p.isPlayedDevCard());
+			player.addProperty("playerID", p.getPlayerID());
+			player.add("resources", this.translateResources(p.getResources()));
+			player.addProperty("roads", p.getRoads());
+			player.addProperty("settlements", p.getSettlements());
+			player.addProperty("soldiers", p.getSoldiers());
+			player.addProperty("victoryPoints", p.getVictoryPoints());
+			
+			list.add(player);
+		}
+		return list;
+	}
+	
+	private JsonObject translateDevCards(DevCards cards) {
+		JsonObject cardList = new JsonObject();
+		cardList.addProperty("monopoly", cards.getMonopolyCount());
+		cardList.addProperty("monument", cards.getMonumentCount());
+		cardList.addProperty("roadBuilding", cards.getRoadBuildingCount());
+		cardList.addProperty("soldier", cards.getSoldierCount());
+		cardList.addProperty("yearOfPlenty", cards.getYearOfPlentyCount());
+		return cardList;
+	}
+	
+	private JsonObject translateResources(Resources modelBank){
 		JsonObject bank = new JsonObject();
 		bank.addProperty("brick", modelBank.getBrickCount());
 		bank.addProperty("ore", modelBank.getOreCount());
@@ -117,6 +174,7 @@ public class ModelToJSON {
 		radius.addProperty("radius", 3);
 		
 		//add robber location
+		map.add("robber", this.translateHexLocation(board.getRobber()));
 		
 		return map;
 	}
@@ -174,13 +232,37 @@ public class ModelToJSON {
 		return hexLoc;
 	}
 	
-	private JsonArray translateVertexObjects(VertexObject[] settlements) {
-		return null;
+	private JsonArray translateVertexObjects(VertexObject[] vertObjects) {
+		JsonArray objs = new JsonArray();
+		for(VertexObject v : vertObjects) {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("owner", v.getOwner());
+			JsonObject edge = new JsonObject();
+			edge.addProperty("x", v.getLocation().getXcoord());
+			edge.addProperty("y", v.getLocation().getYcoord());
+			edge.addProperty("direction", v.getLocation().getDirection());
+			obj.add("location", edge);
+			
+			objs.add(obj);
+		}
+		return objs;
 	}
 	
 	private JsonArray translatePorts(Port[] ports) {
-		
-		return null;
+		JsonArray portList = new JsonArray();
+		for(Port p : ports) {
+			JsonObject port = new JsonObject();
+			if(p.getResource() != null) {
+				port.addProperty("resource", p.getResource());
+			}
+			
+			port.add("location", this.translateHexLocation(p.getLocation()));
+			port.addProperty("directions", p.getDirection());
+			port.addProperty("ratio", p.getRatio());
+			
+			portList.add(port);
+		}
+		return portList;
 	}
 	
 	
