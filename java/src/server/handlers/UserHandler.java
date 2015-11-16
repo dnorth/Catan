@@ -1,4 +1,4 @@
-package server.handlers.user;
+package server.handlers;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

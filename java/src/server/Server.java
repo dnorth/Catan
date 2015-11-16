@@ -10,8 +10,8 @@ import server.facade.MovesFacade;
 import server.facade.UserFacade;
 import server.facade.iGameFacade;
 import server.handlers.moves.*;
-import server.handlers.user.*;
 import server.handlers.games.*;
+import server.handlers.UserHandler;
 import server.handlers.game.*;
 import server.model.ServerData;
 
@@ -112,8 +112,6 @@ public class Server {
 		server.setExecutor(null); // user the default executor
 		
 		server.createContext("/user", userHandler);
-		//server.createContext("/user/login", loginHandler);
-		//server.createContext("/user/register", registerHandler);
 		server.createContext("/games/list", listHandler);
 		server.createContext("/games/create", createHandler);
 		server.createContext("/games/join", joinHandler);
@@ -145,14 +143,9 @@ public class Server {
 		
 	}
 	
-	
+	/** The User handler */
 	private HttpHandler userHandler = new UserHandler(userFacade);
-	/** The login handler. */
-	private HttpHandler loginHandler = new LoginHandler(userFacade);
-	
-	/** The register handler. */
-	private HttpHandler registerHandler = new RegisterHandler(userFacade);
-	
+
 	/** The list handler. */
 	private HttpHandler listHandler = new ListHandler(gamesFacade);
 	
