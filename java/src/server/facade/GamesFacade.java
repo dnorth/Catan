@@ -30,6 +30,7 @@ public class GamesFacade implements iGamesFacade {
 	 */
 	@Override
 	public List<ServerGame> listGames() {
+		
 		return serverData.getGames();
 	}
 

@@ -14,18 +14,17 @@ import shared.locations.VertexLocation;
  * The Class MovesFacade.
  */
 public class MovesFacade implements iMovesFacade {
-
-	private ServerData serverData;
 	
 	public MovesFacade() {
-		this.serverData = Server.getServerData();
 	}
 
 	/**
 	 * Facade for the command moves/sendChat
 	 */
 	@Override
-	public ClientModel sendChat(String type, int playerIndex, String content) {
+	public ClientModel sendChat(String type, int gameIndex, int playerIndex, String content) {
+		
+		
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,7 +33,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/rollNumber
 	 */
 	@Override
-	public ClientModel rollNumber(String type, int playerIndex, int number) {
+	public ClientModel rollNumber(String type, int gameIndex, int playerIndex, int number) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -43,7 +42,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/robPlayer
 	 */
 	@Override
-	public ClientModel robPlayer(String type, int playerIndex, int victimIndex, HexLocation location) {
+	public ClientModel robPlayer(String type, int gameIndex, int playerIndex, int victimIndex, HexLocation location) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,7 +51,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/finishTurn
 	 */
 	@Override
-	public ClientModel finishTurn(String type, int playerIndex) {
+	public ClientModel finishTurn(String type, int gameIndex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -61,7 +60,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/buyDevCard
 	 */
 	@Override
-	public ClientModel buyDevCard(String type, int playerIndex) {
+	public ClientModel buyDevCard(String type, int gameIndex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -70,7 +69,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/Year_of_Plenty
 	 */
 	@Override
-	public ClientModel playYearOfPlenty(String type, int playerIndex, ResourceType resource1, ResourceType resource2) {
+	public ClientModel playYearOfPlenty(String type, int gameID, int playerIndex, ResourceType resource1, ResourceType resource2) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,7 +78,7 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/Road_Building
 	 */
 	@Override
-	public ClientModel playRoadBuilding(String type, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+	public ClientModel playRoadBuilding(String type, int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

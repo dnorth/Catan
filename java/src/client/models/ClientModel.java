@@ -34,7 +34,7 @@ public class ClientModel extends Observable
 		
 		bank = new Resources(19,19,19,19,19);
 		deck = new DevCards(2,5,2,14,2);
-		
+		board = new Board();
 	}
 	
 	public void update(ClientModel model) {

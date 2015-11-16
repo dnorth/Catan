@@ -17,72 +17,79 @@ public interface iMovesFacade {
 	 * Send chat.
 	 *
 	 * @param type "sendChat"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index
 	 * @param content the content of the chat
 	 * @return the client model
 	 */
-	public ClientModel sendChat(String type, int playerIndex, String content);
+	public ClientModel sendChat(String type, int gameIndex, int playerIndex, String content);
 	
 	/**
 	 * Roll number.
 	 *
 	 * @param type "rollNumber"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of who's rolling
 	 * @param number the number rolled
 	 * @return the client model
 	 */
-	public ClientModel rollNumber(String type, int playerIndex, int number);
+	public ClientModel rollNumber(String type, int gameIndex, int playerIndex, int number);
 	
 	/**
 	 * Rob player.
 	 *
 	 * @param type "robPlayer"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of who is robbing
 	 * @param victimIndex the victim index
 	 * @param location the hex location of where the robber is going
 	 * @return the client model
 	 */
-	public ClientModel robPlayer(String type, int playerIndex, int victimIndex, HexLocation location);
+	public ClientModel robPlayer(String type, int gameIndex, int playerIndex, int victimIndex, HexLocation location);
 	
 	/**
 	 * Finish turn.
 	 *
 	 * @param type "finishTurn"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of whose turn is being finished
 	 * @return the client model
 	 */
-	public ClientModel finishTurn(String type, int playerIndex);
+	public ClientModel finishTurn(String type, int gameIndex, int playerIndex);
 	
 	/**
 	 * Buy dev card.
 	 *
 	 * @param type "buyDevCard"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of the person buying a dev card
 	 * @return the client model
 	 */
-	public ClientModel buyDevCard(String type, int playerIndex);
+	public ClientModel buyDevCard(String type, int gameIndex, int playerIndex);
 	
 	/**
 	 * Play year of plenty.
 	 *
 	 * @param type "Year_of_Plenty"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of the person playing the dev card
 	 * @param resource1 the first resource type
 	 * @param resource2 the second resource type
 	 * @return the client model
 	 */
-	public ClientModel playYearOfPlenty(String type, int playerIndex, ResourceType resource1, ResourceType resource2);
+	public ClientModel playYearOfPlenty(String type, int gameIndex, int playerIndex, ResourceType resource1, ResourceType resource2);
 	
 	/**
 	 * Play road building.
 	 *
 	 * @param type "Road_Building"
+	 * @param gameIndex TODO
 	 * @param playerIndex the player index of the person playing the dev card
 	 * @param spot1 the first edge location to build a road
 	 * @param spot2 the second edge location to build a road
 	 * @return the client model
 	 */
-	public ClientModel playRoadBuilding(String type, int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
+	public ClientModel playRoadBuilding(String type, int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 	
 	/**
 	 * Play soldier.
