@@ -36,22 +36,7 @@ public class BuyDevCardCommand implements IMovesCommand {
 		Random rand = new Random();
 		ClientModel model = game.getClientModel();
 		DevCards deck = model.getDeck();
-		List<DevCard> devCardTypes = new ArrayList<>();
-		
-		for(int i=0; i<deck.getMonopolyCount(); i++)
-		{devCardTypes.add(DevCard.MONOPOLY);}
-		
-		for(int i=0; i<deck.getMonopolyCount(); i++)
-		{devCardTypes.add(DevCard.MONOPOLY);}
-		
-		for(int i=0; i<deck.getMonopolyCount(); i++)
-		{devCardTypes.add(DevCard.MONOPOLY);}
-		
-		for(int i=0; i<deck.getMonopolyCount(); i++)
-		{devCardTypes.add(DevCard.MONOPOLY);}
-		
-		for(int i=0; i<deck.getMonopolyCount(); i++)
-		{devCardTypes.add(DevCard.MONOPOLY);}
+		List<DevCard> devCardTypes = deck.getDevCardTypes();
 		
 		DevCard selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
 		deck.addSpecifiedDevCard(selectedDevCard, -1);

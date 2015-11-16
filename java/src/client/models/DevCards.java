@@ -1,5 +1,8 @@
 package client.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.definitions.DevCard;
 import shared.definitions.DevCardType;
 
@@ -23,6 +26,25 @@ public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int
 	this.yearOfPlenty = yearOfPlentyCount;
 }
 
+public List<DevCard> getDevCardTypes(){
+	List<DevCard> devCardTypes = new ArrayList<>();
+	
+	for(int i=0; i<monopoly; i++)
+	{devCardTypes.add(DevCard.MONOPOLY);}
+	
+	for(int i=0; i<monument; i++)
+	{devCardTypes.add(DevCard.MONUMENT);}
+	
+	for(int i=0; i<roadBuilding; i++)
+	{devCardTypes.add(DevCard.ROADBUILDING);}
+	
+	for(int i=0; i<soldier; i++)
+	{devCardTypes.add(DevCard.SOLDIER);}
+	
+	for(int i=0; i<yearOfPlenty; i++)
+	{devCardTypes.add(DevCard.YEAROFPLENTY);}
+	return devCardTypes;
+}
 
 public int getSpecifiedDevCardCount(DevCardType type) {
 	switch (type) {
