@@ -8,6 +8,7 @@ import client.models.mapdata.Hex;
 import server.Server;
 import server.commands.moves.BuyDevCardCommand;
 import server.commands.moves.FinishTurnCommand;
+import server.commands.moves.RobPlayerCommand;
 import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
 import server.commands.moves.YearOfPlentyCommand;
@@ -61,6 +62,9 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel robPlayer(int gameIndex, int playerIndex, int victimIndex, HexLocation location) {
 		ServerGame game =data.getGameByID(gameIndex);
+		
+		RobPlayerCommand command = new RobPlayerCommand(game, playerIndex, victimIndex, location);
+		command.execute();
 		return game.getClientModel();
 	}
 

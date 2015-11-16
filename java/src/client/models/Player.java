@@ -173,6 +173,8 @@ public class Player
 	public boolean hasWheat(){return resources.getWheatCount()>0;}
 	public boolean hasWood(){return resources.getWoodCount()>0;}
 	
+	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}
+	
 	public boolean hasBrick(int count){return resources.getBrickCount()>=count;}
 	public boolean hasOre(int count){return resources.getOreCount()>=count;}
 	public boolean hasSheep(int count){return resources.getSheepCount()>=count;}

@@ -29,6 +29,27 @@ public class Resources{
 		this.ore = 0;
 	}
 	
+	public List<ResourceType> getResourceTypes()
+	{
+		List<ResourceType> types = new ArrayList<>();
+		
+		for(int i=0; i< wood; i++)
+		{types.add(ResourceType.WOOD);}
+		
+		for(int i=0; i< brick; i++)
+		{types.add(ResourceType.BRICK);}
+		
+		for(int i=0; i< sheep; i++)
+		{types.add(ResourceType.SHEEP);}
+		
+		for(int i=0; i< wheat; i++)
+		{types.add(ResourceType.WHEAT);}
+		
+		for(int i=0; i< ore; i++)
+		{types.add(ResourceType.ORE);}
+		
+		return types;
+	}
 	public List<ResourceType> getAvailableResourceTypes()
 	{
 		List<ResourceType> r = new ArrayList<ResourceType>();
@@ -48,6 +69,29 @@ public class Resources{
 		case WOOD: return this.wood;
 		default: return -1;
 		}
+	}
+	
+	public void addResource(ResourceType type, int amount){
+		switch(type) {
+		case BRICK:
+			this.brick+=amount;
+			break;
+		case ORE:
+			this.ore+=amount;
+			break;
+		case SHEEP:
+			this.sheep+=amount;
+			break;
+		case WHEAT:
+			this.wheat+=amount;
+			break;
+		case WOOD:
+			this.wood+=amount;
+			break;
+		default:
+			break;
+		}
+		
 	}
 	
 	public void addOne(ResourceType type) {
