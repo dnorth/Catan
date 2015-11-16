@@ -35,7 +35,7 @@ public class ChatController extends Controller implements IChatController {
 	}
 	
 	private void initFromModel() {	
-		List<MessageLine> messages = Arrays.asList(stateManager.getClientModel().getChat().getLines());
+		List<MessageLine> messages = stateManager.getClientModel().getChat().getLines();
 		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		for(MessageLine m : messages)
