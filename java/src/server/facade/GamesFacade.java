@@ -2,6 +2,7 @@ package server.facade;
 
 import java.util.List;
 
+import server.Server;
 import server.commands.games.CreateCommand;
 import server.commands.games.JoinCommand;
 import server.model.ServerData;
@@ -19,9 +20,9 @@ public class GamesFacade implements iGamesFacade {
 	
 	
 	
-	public GamesFacade(ServerData serverData) {
+	public GamesFacade() {
 		super();
-		this.serverData = serverData;
+		this.serverData = Server.getServerData();
 	}
 
 	/**

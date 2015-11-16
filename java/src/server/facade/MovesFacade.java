@@ -2,6 +2,7 @@ package server.facade;
 
 import client.models.ClientModel;
 import client.models.Resources;
+import server.Server;
 import server.model.ServerData;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -16,8 +17,8 @@ public class MovesFacade implements iMovesFacade {
 
 	private ServerData serverData;
 	
-	public MovesFacade(ServerData serverData) {
-		this.serverData = serverData;
+	public MovesFacade() {
+		this.serverData = Server.getServerData();
 	}
 
 	/**

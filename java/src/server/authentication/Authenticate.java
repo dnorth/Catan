@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import com.google.gson.JsonObject;
 
+import server.Server;
 import server.exceptions.MissingCookieException;
 import server.model.ServerData;
 
@@ -18,10 +19,8 @@ public final class Authenticate {
 			throw new MissingCookieException("The catan.game HTTP cookie is missing.  You must join a game before calling this method.");
 		}
 		
-		//Validate Player Information
-		/* Somehow need to access server data properly. 
-		ServerData serverData = new ServerData();
-		
+		ServerData serverData = Server.getServerData();
+				
 		int pID = serverData.getPlayerID(cookie.get("name").getAsString(), cookie.get("password").getAsString());
 		
 		if (pID == cookie.get("playerID").getAsInt()) {
@@ -31,7 +30,7 @@ public final class Authenticate {
 				return true;
 			}
 		}
-		*/
+		
 		return false;
 	}
 	

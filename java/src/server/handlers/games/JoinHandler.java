@@ -38,7 +38,7 @@ public class JoinHandler implements HttpHandler {
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			logger.info(cookie.toString());
-			if(Authenticate.isValidCookie(cookie, true)) {
+			if(Authenticate.isValidCookie(cookie, false)) {
 				jsonToModel.exchangeToJson(exchange);
 			}
 		} catch (MissingCookieException e) {

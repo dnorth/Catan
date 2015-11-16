@@ -1,5 +1,6 @@
 package server.facade;
 
+import server.Server;
 import server.model.ServerData;
 import client.models.ClientModel;
 
@@ -10,8 +11,8 @@ public class GameFacade implements iGameFacade {
 	
 	private ServerData serverData;
 
-	public GameFacade(ServerData serverData) {
-		this.serverData = serverData;
+	public GameFacade() {
+		this.serverData = Server.getServerData();
 	}
 
 	/**

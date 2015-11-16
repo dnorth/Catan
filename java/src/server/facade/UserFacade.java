@@ -1,5 +1,6 @@
 package server.facade;
 
+import server.Server;
 import server.commands.user.LoginCommand;
 import server.commands.user.RegisterCommand;
 import server.exceptions.InvalidLoginException;
@@ -14,8 +15,8 @@ public class UserFacade implements iUserFacade {
 
 	ServerData serverData;
 	
-	public UserFacade(ServerData serverData) {
-		this.serverData = serverData;
+	public UserFacade() {
+		this.serverData = Server.getServerData();
 	}
 
 	/**

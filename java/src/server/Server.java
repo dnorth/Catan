@@ -44,11 +44,11 @@ public class Server {
 		}
 	}
 	
-	private ServerData serverData = new ServerData();
-	private GamesFacade gamesFacade = new GamesFacade(serverData);
-	private GameFacade gameFacade = new GameFacade(serverData);
-	private UserFacade userFacade = new UserFacade(serverData);
-	private MovesFacade movesFacade = new MovesFacade(serverData);
+	private static ServerData serverData = new ServerData();
+	private GamesFacade gamesFacade = new GamesFacade();
+	private GameFacade gameFacade = new GameFacade();
+	private UserFacade userFacade = new UserFacade();
+	private MovesFacade movesFacade = new MovesFacade();
 	
 	/**
 	 * Inits the log.
@@ -235,5 +235,15 @@ public class Server {
 			throw new ServerException("Not a valid port number.");
 		}
 	}
+
+	public static ServerData getServerData() {
+		return serverData;
+	}
+
+	public static void setServerData(ServerData serverData) {
+		Server.serverData = serverData;
+	}
+	
+	
 	
 }
