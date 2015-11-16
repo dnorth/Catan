@@ -4,11 +4,13 @@ import client.models.ClientModel;
 import client.models.Resources;
 import client.models.TurnTracker;
 import client.models.communication.MessageLine;
+import client.models.mapdata.Hex;
 import server.Server;
 import server.commands.moves.BuyDevCardCommand;
 import server.commands.moves.FinishTurnCommand;
 import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
+import server.commands.moves.YearOfPlentyCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
 import shared.definitions.ResourceType;
@@ -59,8 +61,6 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel robPlayer(int gameIndex, int playerIndex, int victimIndex, HexLocation location) {
 		ServerGame game =data.getGameByID(gameIndex);
-		
-		
 		return game.getClientModel();
 	}
 
@@ -92,8 +92,9 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel playYearOfPlenty(int gameIndex, int playerIndex, ResourceType resource1, ResourceType resource2) {
 		ServerGame game =data.getGameByID(gameIndex);
+		YearOfPlentyCommand command = new YearOfPlentyCommand(game, playerIndex, resource1, resource2);
 		
-		
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -103,7 +104,7 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel playRoadBuilding(int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
 		ServerGame game =data.getGameByID(gameIndex);
-		
+
 		
 		return game.getClientModel();
 	}

@@ -49,7 +49,7 @@ public class RollNumberCommand implements IMovesCommand {
 
 	private void addResourcesToPlayers(Hex h, ClientModel model)
 	{
-		if(h.getHexType()== HexType.DESERT){
+		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){
 			return;
 		}
 		for(VertexObject v  : model.getBoard().getSettlements())

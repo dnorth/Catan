@@ -25,6 +25,9 @@ public class HexLocation {
 	public boolean Equals(shared.locations.HexLocation hexLocation)
 	{ return x==hexLocation.getX() && y==hexLocation.getY();}
 	
+	public boolean Equals(HexLocation hexLocation)
+	{ return x==hexLocation.getX() && y==hexLocation.getY();}
+	
 	public int getX() {
 		return x;
 	}
