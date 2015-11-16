@@ -38,8 +38,7 @@ public class UserHandler implements HttpHandler {
 		String response = "";
 
 		try{
-			URI address = exchange.getRequestURI();
-			String specificContext = Authenticate.getSpecificContext(address.toString());
+			String specificContext = Authenticate.getSpecificContextFromExchange(exchange);
 			logger = Logger.getLogger("Catan");
 			logger.info("Handling User");
 
@@ -74,10 +73,10 @@ public class UserHandler implements HttpHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			
 		} catch (UsernameAlreadyTakenException e) {
-			response = "Failed to register - someone already has that username.";
+			response = e.getMessage();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} catch (InvalidLoginException e) {
-			response = "Failed to login - username or password incorrect.";
+			response = e.getMessage();
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} catch (ContextNotFoundException e) {
 			response = e.getMessage();

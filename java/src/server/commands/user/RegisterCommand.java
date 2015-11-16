@@ -26,7 +26,7 @@ public class RegisterCommand implements IUserCommand {
 	
 	@Override
 	public void execute() throws UsernameAlreadyTakenException {
-		if (serverData.addUser(username, password) == -1) throw new UsernameAlreadyTakenException();
+		if (serverData.addUser(username, password) == -1) throw new UsernameAlreadyTakenException("Failed to register - someone already has that username.");
 	}
 
 }

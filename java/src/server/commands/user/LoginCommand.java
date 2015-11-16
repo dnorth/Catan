@@ -25,7 +25,7 @@ public class LoginCommand implements IUserCommand {
 	 */
 	@Override
 	public void execute() throws InvalidLoginException {
-		if (serverData.getPlayerID(username, password) == -1) throw new InvalidLoginException();
+		if (serverData.getPlayerID(username, password) == -1) throw new InvalidLoginException("Failed to login - username or password incorrect.");
 	}
 
 }

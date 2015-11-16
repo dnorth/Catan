@@ -1,9 +1,11 @@
 package server.authentication;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 
 import com.google.gson.JsonObject;
+import com.sun.net.httpserver.HttpExchange;
 
 import server.Server;
 import server.exceptions.MissingCookieException;
@@ -38,7 +40,8 @@ public final class Authenticate {
 		return "catan.user=" + URLEncoder.encode(fullCookie.toString(), "utf-8") + ";Path=/;";
 	}
 	
-	public static String getSpecificContext(String uri) {
+	public static String getSpecificContextFromExchange(HttpExchange exchange) {
+		String uri = exchange.getRequestURI().toString();
 		return uri.substring(uri.lastIndexOf("/") + 1);
 	}
 }
