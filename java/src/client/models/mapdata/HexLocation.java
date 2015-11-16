@@ -22,6 +22,9 @@ public class HexLocation {
 		this.y = hex.getY();
 	}
 	
+	public boolean Equals(shared.locations.HexLocation hexLocation)
+	{ return x==hexLocation.getX() && y==hexLocation.getY();}
+	
 	public int getX() {
 		return x;
 	}

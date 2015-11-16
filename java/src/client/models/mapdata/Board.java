@@ -27,11 +27,6 @@ public class Board {
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
-	private final int woodTiles=4;
-	private final int brickTiles=3;
-	private final int sheepTiles=4;
-	private final int wheatTiles=4;
-	private final int oreTiles=3;
 
 	public static Map<String, String> getOppDir() {
 		Map<String, String> oppDir = new HashMap<String, String>();

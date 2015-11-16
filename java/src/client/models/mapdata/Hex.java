@@ -2,6 +2,7 @@ package client.models.mapdata;
 
 
 import shared.definitions.HexType;
+import shared.definitions.ResourceType;
 import client.models.mapdata.HexLocation;
 
 /**
@@ -59,6 +60,24 @@ public class Hex {
 			return HexType.BRICK;
 		case "ore":
 			return HexType.ORE;
+		default:
+			return null;
+		}
+	}
+	
+	public ResourceType getResourceType() {
+		if (this.resource == null) return null;
+		switch(this.resource) {
+		case "wheat":
+			return ResourceType.WHEAT;
+		case "wood":
+			return ResourceType.WOOD;
+		case "sheep":
+			return ResourceType.SHEEP;
+		case "brick":
+			return ResourceType.BRICK;
+		case "ore":
+			return ResourceType.ORE;
 		default:
 			return null;
 		}

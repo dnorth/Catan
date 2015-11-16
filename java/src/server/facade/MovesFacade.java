@@ -4,6 +4,7 @@ import client.models.ClientModel;
 import client.models.Resources;
 import client.models.communication.MessageLine;
 import server.Server;
+import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
@@ -40,6 +41,9 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel rollNumber(int gameIndex, int playerIndex, int number) {
 		ServerGame game =data.getGameByID(gameIndex);
+		RollNumberCommand command = new RollNumberCommand(game, playerIndex, number);
+		
+		command.execute();
 		
 
 		
