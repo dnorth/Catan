@@ -33,6 +33,13 @@ public class ServerData {
 		return null;
 	}
 	
+	public ServerGame getGameByID(int id) {
+		for (ServerGame game : games) {
+			if (game.getId() == id) return game;
+		}
+		return null;
+	}
+	
 	/**
 	 * Get users.
 	 * @return list of users

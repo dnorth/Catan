@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
+import server.authentication.Authenticate;
 import server.exceptions.InvalidLoginException;
 import server.facade.UserFacade;
 
@@ -54,7 +55,7 @@ public class LoginHandler implements HttpHandler {
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 				Headers headers = exchange.getResponseHeaders();
-				String header = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
+				String header = Authenticate.dressCookie(playerCookie);
 				logger.info("HEADER: " + header);
 				headers.add("Set-cookie", header);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());

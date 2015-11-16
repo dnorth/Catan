@@ -2,10 +2,14 @@ package jsonTranslator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import shared.definitions.CatanColor;
 
@@ -13,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import client.data.GameInfo;
@@ -25,6 +30,7 @@ import client.models.TradeOffer;
 import client.models.TurnTracker;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
+import server.exceptions.MissingCookieException;
 
 /**
  * Translates JSON documentation to class structure used in model
@@ -241,11 +247,56 @@ public class JSONToModel {
 			return null;
 		}
 	}
-	// HERETO LIES THE SERVER JUNK
+	
+	// HERETO LIES THE SERVER METHODS
 	public JsonObject exchangeToJson(HttpExchange exchange) {
+		String exchangeData = getExchangeData(exchange.getRequestBody());
+		JsonObject registerObject = new JsonParser().parse(exchangeData).getAsJsonObject();
+		return registerObject;
+	}
+	
+	public JsonObject getCookieFromExchange(HttpExchange exchange) throws MissingCookieException, UnsupportedEncodingException {
+		Headers headers = exchange.getRequestHeaders();
+		if (headers.containsKey("Cookie")) {
+			String cookie = urlDecodeString(headers.get("Cookie").get(0));
+			
+			if(cookie.indexOf("catan.user=") == -1) {
+				throw new MissingCookieException("The catan.user HTTP cookie is missing.  You must login before calling this method.");
+			}
+			
+			String[] cookieList = seperateCookies(cookie);
+			
+			JsonObject cookieJson = new JsonParser().parse(cookieList[0]).getAsJsonObject();
+			
+			//This means we also have a game cookie
+			if( cookieList.length > 1) {
+				cookieJson.addProperty("game", cookieList[1]);
+			}
+			
+			return cookieJson;
+		} else {
+			throw new MissingCookieException("The catan.user HTTP cookie is missing.  You must login before calling this method.");
+		}
+	}
+	
+	public String[] seperateCookies(String fullCookie) {
+		String split1 = fullCookie.split("catan.user=")[1];
+		String[] finalSplit = split1.split("; catan.game=");
+		return finalSplit;
+
+	}
+	public String urlDecodeString(String data) throws UnsupportedEncodingException {
+		return URLDecoder.decode(data, "utf-8");
+	}
+	
+	public boolean hasHeader(Headers headers, String headerName) {
+		return headers.containsKey(headerName);
+	}
+	
+	public String getExchangeData(InputStream exchangeData) {
 		InputStreamReader isr = null;
 		try {
-			isr = new InputStreamReader(exchange.getRequestBody(),"utf-8");
+			isr = new InputStreamReader(exchangeData,"utf-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -259,8 +310,8 @@ public class JSONToModel {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		JsonObject registerObject = new JsonParser().parse(buf.toString()).getAsJsonObject();
-		return registerObject;
+		 
+		return buf.toString();
 	}
 	
 	public String getUsername(JsonObject object) {

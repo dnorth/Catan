@@ -19,6 +19,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import server.authentication.Authenticate;
 import server.exceptions.UsernameAlreadyTakenException;
 import server.facade.UserFacade;
 import shared.locations.VertexLocation;
@@ -59,7 +60,7 @@ public class RegisterHandler implements HttpHandler {
 				int playerID = userFacade.registerUser(username, password);
 				response = "Success";
 				JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
-				String playerCookieHeader = "catan.user=" + URLEncoder.encode(playerCookie.toString(), "utf-8") + ";Path=/;";
+				String playerCookieHeader = Authenticate.dressCookie(playerCookie);
 				logger.info("PLAYER COOKIE HEADER: " + playerCookieHeader);
 				headers.add("Set-cookie", playerCookieHeader);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
