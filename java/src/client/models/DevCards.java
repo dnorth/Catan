@@ -1,5 +1,6 @@
 package client.models;
 
+import shared.definitions.DevCard;
 import shared.definitions.DevCardType;
 
 
@@ -22,6 +23,7 @@ public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int
 	this.yearOfPlenty = yearOfPlentyCount;
 }
 
+
 public int getSpecifiedDevCardCount(DevCardType type) {
 	switch (type) {
 	case SOLDIER:
@@ -36,6 +38,21 @@ public int getSpecifiedDevCardCount(DevCardType type) {
 		return getMonumentCount();
 	}
 	return -99;
+}
+
+public void addSpecifiedDevCard(DevCard type, int amount) {
+	switch (type) {
+	case SOLDIER:
+		soldier+=amount; break;
+	case YEAROFPLENTY:
+		yearOfPlenty+=amount; break;
+	case MONOPOLY:
+		monopoly+=amount; break;
+	case ROADBUILDING:
+		roadBuilding+=amount; break;
+	case MONUMENT:
+		monument+=amount; break;
+	}
 }
 
 public int getMonopolyCount() {

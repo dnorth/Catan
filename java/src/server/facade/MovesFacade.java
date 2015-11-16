@@ -2,8 +2,11 @@ package server.facade;
 
 import client.models.ClientModel;
 import client.models.Resources;
+import client.models.TurnTracker;
 import client.models.communication.MessageLine;
 import server.Server;
+import server.commands.moves.BuyDevCardCommand;
+import server.commands.moves.FinishTurnCommand;
 import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
 import server.model.ServerData;
@@ -67,8 +70,8 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel finishTurn(int gameIndex, int playerIndex) {
 		ServerGame game =data.getGameByID(gameIndex);
-		
-		
+		FinishTurnCommand  command = new FinishTurnCommand(game, playerIndex);
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -78,8 +81,8 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel buyDevCard(int gameIndex, int playerIndex) {
 		ServerGame game =data.getGameByID(gameIndex);
-		
-		
+		BuyDevCardCommand command = new BuyDevCardCommand(game, playerIndex);
+		command.execute();
 		return game.getClientModel();
 	}
 
