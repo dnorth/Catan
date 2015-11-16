@@ -1,6 +1,7 @@
 package server.commands.moves;
 
 import server.commands.IMovesCommand;
+import server.model.ServerGame;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -8,13 +9,21 @@ import server.commands.IMovesCommand;
  */
 public class MonumentCommand implements IMovesCommand {
 
+	ServerGame game;
+	int playerIndex;
+
+	public MonumentCommand(ServerGame game, int playerIndex) {
+		super();
+		this.game = game;
+		this.playerIndex = playerIndex;
+	}
+
 	/**
 	 *  Plays a monument Card.
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		game.getClientModel().getPlayers()[playerIndex].incMonuments();
 	}
 
 }

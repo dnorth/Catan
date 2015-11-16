@@ -187,7 +187,7 @@ public class Player
 	public boolean hasSoldierCard(DevCards d){return d.getSoldierCount()>0;}
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 	
-	
+	public void incMonuments(){monuments++;}
 
 	@Override
 	public String toString() {

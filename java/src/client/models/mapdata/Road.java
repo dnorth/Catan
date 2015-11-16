@@ -9,6 +9,10 @@ public class Road {
 		this.owner = owner;
 		this.location = location;
 	}
+	public Road(int owner, shared.locations.EdgeLocation location) {
+		this.owner = owner;
+		this.location = new EdgeLocation(location);
+	}
 	public int getOwner() {
 		return owner;
 	}

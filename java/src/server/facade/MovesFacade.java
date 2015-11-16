@@ -6,11 +6,22 @@ import client.models.TurnTracker;
 import client.models.communication.MessageLine;
 import client.models.mapdata.Hex;
 import server.Server;
+import server.commands.moves.AcceptTradeCommand;
+import server.commands.moves.BuildCityCommand;
+import server.commands.moves.BuildRoadCommand;
+import server.commands.moves.BuildSettlementCommand;
 import server.commands.moves.BuyDevCardCommand;
+import server.commands.moves.DiscardCardsCommand;
 import server.commands.moves.FinishTurnCommand;
+import server.commands.moves.MaritimeTradeCommand;
+import server.commands.moves.MonopolyCommand;
+import server.commands.moves.MonumentCommand;
+import server.commands.moves.OfferTradeCommand;
+import server.commands.moves.RoadBuildingCommand;
 import server.commands.moves.RobPlayerCommand;
 import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
+import server.commands.moves.SoldierCommand;
 import server.commands.moves.YearOfPlentyCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
@@ -109,6 +120,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel playRoadBuilding(int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
 		ServerGame game =data.getGameByID(gameIndex);
 
+		RoadBuildingCommand command = new RoadBuildingCommand(game, playerIndex, spot1, spot2);
+		command.execute();
 		
 		return game.getClientModel();
 	}
@@ -120,7 +133,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel playSoldier(int gameIndex, int playerIndex, int victimIndex, HexLocation location) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		SoldierCommand command = new SoldierCommand(game, playerIndex, victimIndex, location);
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -131,7 +145,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel playMonopoly(ResourceType resource, int gameIndex, int playerIndex) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		MonopolyCommand command = new MonopolyCommand(game, resource, playerIndex);
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -142,7 +157,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel playMonument(int gameIndex, int playerIndex) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		MonumentCommand command = new MonumentCommand(game,playerIndex);
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -153,7 +169,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel buildRoad(int gameIndex, int playerIndex, EdgeLocation roadLocation, boolean free) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		BuildRoadCommand command = new BuildRoadCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 	/**
@@ -163,7 +180,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation vertexLocation) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		BuildCityCommand command = new BuildCityCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -174,7 +192,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel buildSettlement(int gameIndex, int playerIndex, VertexLocation vertexLocation, boolean free) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		BuildSettlementCommand command = new BuildSettlementCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -186,7 +205,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel offerTrade(int gameIndex, int playerIndex, Resources offer, int receiver) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		OfferTradeCommand command = new OfferTradeCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -197,7 +217,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel acceptTrade(int gameIndex, int playerIndex, boolean willAccept) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		AcceptTradeCommand command = new AcceptTradeCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -209,7 +230,8 @@ public class MovesFacade implements iMovesFacade {
 			String outputResource) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		MaritimeTradeCommand command = new MaritimeTradeCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
@@ -220,7 +242,8 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel discardCards(int gameIndex, int playerIndex, Resources discardedCards) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		
+		DiscardCardsCommand command = new DiscardCardsCommand();
+		command.execute();
 		return game.getClientModel();
 	}
 
