@@ -40,7 +40,6 @@ public class Player
 	oldDevCards = new DevCards();
 	name= p.getName();
 	color =p.getColor();
-	playerIndex=p.getId();
 	resources = new Resources();
 	portTrade = new PortTrade();
 	cities = 4;

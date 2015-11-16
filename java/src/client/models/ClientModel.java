@@ -35,6 +35,7 @@ public class ClientModel extends Observable
 		bank = new Resources(19,19,19,19,19);
 		deck = new DevCards(2,5,2,14,2);
 		board = new Board();
+		players = new Player[4];
 	}
 	
 	public void update(ClientModel model) {
@@ -164,10 +165,10 @@ public class ClientModel extends Observable
 	 * Adds player to list of players
 	 * @param newPlayer - new player info
 	 */
-	public void joinGame(ServerPlayer newPlayer)
+	public void addPlayer(int playerIndex, ServerPlayer newPlayer)
 	{
 		Player p = new Player(newPlayer);
-		players[newPlayer.getId()] = p;
+		players[playerIndex] = p;
 	}
 	
 	

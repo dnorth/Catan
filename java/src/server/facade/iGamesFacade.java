@@ -36,5 +36,5 @@ public interface iGamesFacade {
 	 * @param color the color of the player
 	 * @return "Success" or an error if failed
 	 */
-	public String joinGame(int id, String color);
+	public String joinGame(int pID, int gID, String color);
 }

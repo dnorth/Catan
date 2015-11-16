@@ -320,4 +320,7 @@ public class JSONToModel {
 	public String getPassword(JsonObject object) {
 		return object.get("password").getAsString();
 	}
+	public String getColor(JsonObject object) {
+		return object.get("color").getAsString();
+	}
 }

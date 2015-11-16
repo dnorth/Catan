@@ -39,7 +39,11 @@ public class JoinHandler implements HttpHandler {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			logger.info(cookie.toString());
 			if(Authenticate.isValidCookie(cookie, false)) {
-				jsonToModel.exchangeToJson(exchange);
+				int pID = gamesFacade.getServerData().getPlayerID(cookie.get("name").getAsString(), cookie.get("password").getAsString());
+				int gID = cookie.get("game").getAsInt();
+				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
+				String color = jsonToModel.getColor(jsonObject);
+				gamesFacade.joinGame(pID, gID, color);
 			}
 		} catch (MissingCookieException e) {
 			//Return a bad request message

@@ -24,7 +24,7 @@ public class AcceptTradeHandler implements HttpHandler {
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
 	 */
 	@Override
-	public void handle(HttpExchange arg0) throws IOException {
+	public void handle(HttpExchange exchange) throws IOException {
 		// TODO Auto-generated method stub
 		logger = Logger.getLogger("Catan");
 

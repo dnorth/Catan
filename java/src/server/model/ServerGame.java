@@ -40,7 +40,9 @@ public class ServerGame {
 					return true;
 				}
 			}
-			this.players.add(new ServerPlayer(color, user.getUsername(), user));
+			ServerPlayer player = new ServerPlayer(color, user.getUsername(), user);
+			this.clientModel.addPlayer(players.size(), player);
+			this.players.add(player);
 			return true;
 		}
 	}
@@ -66,6 +68,13 @@ public class ServerGame {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public boolean hasPlayerID(int playerID) {
+		for (ServerPlayer p : players) {
+			if (p.getId() == playerID) return true;
+		}
+		return false;
 	}
 	
 	/**
