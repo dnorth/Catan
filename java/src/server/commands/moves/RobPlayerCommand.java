@@ -44,7 +44,7 @@ public class RobPlayerCommand implements IMovesCommand {
 
 			Random rand = new Random();
 			ResourceType type = resourceTypes.get(rand.nextInt(resourceTypes.size()));
-			victimResources.addResource(type, -1);
+			victimResources.subtractResource(type, 1);
 
 			game.getClientModel().getPlayers()[playerIndex].getResources().addOne(type);
 		}

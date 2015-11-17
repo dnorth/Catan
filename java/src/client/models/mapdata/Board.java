@@ -22,8 +22,8 @@ public class Board {
 
 	private Hex[] hexes;
 	private Port[] ports;
-	private VertexObject[] settlements;
-	private VertexObject[] cities;
+	private List<VertexObject> settlements;
+	private List<VertexObject> cities;
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
@@ -60,7 +60,7 @@ public class Board {
 			if(h.getNumberToken() == number) {
 				hexesToReturn.add(h);
 			}
-		}
+		}// TODO Auto-generated method stub
 		return hexesToReturn;
 	}
 
@@ -113,19 +113,19 @@ public class Board {
 		this.ports = ports;
 	}
 
-	public VertexObject[] getSettlements() {
+	public List<VertexObject> getSettlements() {
 		return settlements;
 	}
 
-	public void setSettlements(VertexObject[] settlements) {
+	public void setSettlements(List<VertexObject> settlements) {
 		this.settlements = settlements;
 	}
 
-	public VertexObject[] getCities() {
+	public List<VertexObject> getCities() {
 		return cities;
 	}
 
-	public void setCities(VertexObject[] cities) {
+	public void setCities(List<VertexObject> cities) {
 		this.cities = cities;
 	}
 

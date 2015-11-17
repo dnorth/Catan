@@ -232,7 +232,7 @@ public class ModelToJSON {
 		return hexLoc;
 	}
 	
-	private JsonArray translateVertexObjects(VertexObject[] vertObjects) {
+	private JsonArray translateVertexObjects(List<VertexObject> vertObjects) {
 		JsonArray objs = new JsonArray();
 		for(VertexObject v : vertObjects) {
 			JsonObject obj = new JsonObject();

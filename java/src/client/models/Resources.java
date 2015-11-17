@@ -94,6 +94,29 @@ public class Resources{
 		
 	}
 	
+	public void subtractResource(ResourceType type, int amount){
+		switch(type) {
+		case BRICK:
+			this.brick-=amount;
+			break;
+		case ORE:
+			this.ore-=amount;
+			break;
+		case SHEEP:
+			this.sheep-=amount;
+			break;
+		case WHEAT:
+			this.wheat-=amount;
+			break;
+		case WOOD:
+			this.wood-=amount;
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
 	public void addOne(ResourceType type) {
 		switch(type) {
 		case BRICK:

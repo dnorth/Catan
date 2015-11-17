@@ -11,26 +11,7 @@ public class EdgeLocation {
 	int x;
 	int y;
 	String direction;
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EdgeLocation other = (EdgeLocation) obj;
-		if (direction == null) {
-			if (other.direction != null)
-				return false;
-		} else if (!direction.equals(other.direction))
-			return false;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
-		return true;
-	}
+
 	public EdgeLocation(int xcoord, int ycoord, String direction) {
 		this.x = xcoord;
 		this.y = ycoord;
@@ -68,6 +49,29 @@ public class EdgeLocation {
 	public String toString() {
 		return "EdgeLocation [x=" + x + ", y=" + y + ", direction=" + direction + "]";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EdgeLocation other = (EdgeLocation) obj;
+		if (direction == null) {
+			if (other.direction != null)
+				return false;
+		} else if (!direction.equals(other.direction))
+			return false;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
+	}
+	
+	
 	public shared.locations.EdgeLocation getSharedEdgeLocation() {
 		return new shared.locations.EdgeLocation(new shared.locations.HexLocation(this.x, this.y), EdgeDirection.getEdgeDirectionFromString(this.direction));
 	}

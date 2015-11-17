@@ -169,7 +169,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel buildRoad(int gameIndex, int playerIndex, EdgeLocation roadLocation, boolean free) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		BuildRoadCommand command = new BuildRoadCommand();
+		BuildRoadCommand command = new BuildRoadCommand(game, playerIndex, roadLocation, free);
 		command.execute();
 		return game.getClientModel();
 	}
@@ -177,10 +177,10 @@ public class MovesFacade implements iMovesFacade {
 	 * Facade for the command moves/buildCity
 	 */
 	@Override
-	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation vertexLocation) {
+	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation location) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		BuildCityCommand command = new BuildCityCommand();
+		BuildCityCommand command = new BuildCityCommand(game, playerIndex, location);
 		command.execute();
 		return game.getClientModel();
 	}
