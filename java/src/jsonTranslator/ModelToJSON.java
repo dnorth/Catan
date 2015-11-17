@@ -136,7 +136,8 @@ public class ModelToJSON {
 		JsonObject chat = new JsonObject();
 		JsonArray messages = new JsonArray();
 		//I NEED TO CHECK THIS!!!!
-		for(MessageLine message : modelChat.getLines()){
+		List<MessageLine> chatLines = modelChat.getLines();
+		for(MessageLine message : chatLines){
 			JsonObject messageLine = new JsonObject();
 			messageLine.addProperty("message", message.getMessage());
 			messageLine.addProperty("source", message.getSource());
@@ -171,7 +172,7 @@ public class ModelToJSON {
 		
 		//add radius
 		JsonObject radius = new JsonObject();
-		radius.addProperty("radius", 3);
+		map.addProperty("radius", 3);
 		
 		//add robber location
 		map.add("robber", this.translateHexLocation(board.getRobber()));
@@ -207,15 +208,11 @@ public class ModelToJSON {
 			newHex.add("location", location);
 			
 			if (h.getResource() != null) {
-				JsonObject resource = new JsonObject();
-				resource.addProperty("resource", h.getResource());
-				newHex.add("resource", resource);
+				newHex.addProperty("resource", h.getResource());
 				
 				newHex.add("location", location);
 				
-				JsonObject number = new JsonObject();
-				number.addProperty("number", h.getNumberToken());
-				newHex.add("number", number);
+				newHex.addProperty("number", h.getNumberToken());
 			}
 			else newHex.add("location", location);
 			
@@ -257,7 +254,7 @@ public class ModelToJSON {
 			}
 			
 			port.add("location", this.translateHexLocation(p.getLocation()));
-			port.addProperty("directions", p.getDirection());
+			port.addProperty("direction", p.getDirection());
 			port.addProperty("ratio", p.getRatio());
 			
 			portList.add(port);
