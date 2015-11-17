@@ -41,6 +41,9 @@ public class ModelToJSON {
 		JsonObject bank = this.translateResources(model.getBank());
 		newModel.add("bank", bank);
 		
+		JsonObject deck = this.translateDevCards(model.getDeck());
+		newModel.add("deck", deck);
+		
 		JsonObject chat = this.translateMessageList(model.getChat());
 		newModel.add("chat", chat);
 		

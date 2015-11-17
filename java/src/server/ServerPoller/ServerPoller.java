@@ -1,19 +1,21 @@
 package server.ServerPoller;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jsonTranslator.JSONToModel;
-import server.proxy.IProxy;
-import shared.definitions.CatanColor;
+import com.google.gson.JsonObject;
+
 import client.data.GameInfo;
 import client.models.Player;
 import client.state.JoinGameState;
 import client.state.LoginState;
 import client.state.StateManager;
-
-import com.google.gson.JsonObject;
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
+import server.proxy.IProxy;
+import shared.definitions.CatanColor;
 
 /**
  * Polls server periodically to check for changes in model, then receives update <br>
@@ -115,6 +117,19 @@ public class ServerPoller {
 			this.stateManager.updateStateManager();
 			this.stateManager.getClientModel().runUpdates();
 			if (this.forceUpdate) this.forceUpdate = false; 
+			/*try{
+				FileWriter out = new FileWriter("C:\\Users\\Dallin\\Desktop\\JSONcomps\\Theirs.txt");
+				out.write(cookies.toString());
+				out.close();
+			}
+			catch (Exception e){}
+			try{
+				ModelToJSON mj = new ModelToJSON();
+				FileWriter out = new FileWriter("C:\\Users\\Dallin\\Desktop\\JSONcomps\\Mine.txt");
+				out.write(mj.translateModel(this.stateManager.getClientModel()).toString());
+				out.close();
+			}
+			catch (Exception e){}*/
 		}
 	}
 	/**
