@@ -8,6 +8,7 @@ import client.models.VertexObject;
 import client.models.mapdata.Board;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 // TODO: Auto-generated Javadoc
@@ -59,6 +60,12 @@ public class BuildSettlementCommand implements IMovesCommand {
 		{
 			p.decSettlements();
 			settlements.add(settlement);
+			if (p.getSettlements() == 3) {
+				HexLocation[] neighborHexes = settlement.getHexes();
+				for (HexLocation h : neighborHexes){
+					game.getClientModel().addHexResourceToPlayer(h, playerIndex);
+				}
+			}
 		}
 		game.getClientModel().increaseVersion();
 	}

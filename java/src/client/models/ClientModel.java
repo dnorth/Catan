@@ -1,13 +1,15 @@
 package client.models;
 import java.util.Observable;
 
-import server.model.ServerPlayer;
-import shared.definitions.ResourceType;
-import shared.locations.VertexLocation;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
+import server.model.ServerPlayer;
+import shared.definitions.HexType;
+import shared.definitions.ResourceType;
+import shared.locations.VertexLocation;
 
 /**
  * Client model interacts with Client Communicator (Server Proxy), holds pointers to all necessary data
@@ -170,6 +172,13 @@ public class ClientModel extends Observable
 		}
 		
 		return sb.toString();
+	}
+	
+	public void addHexResourceToPlayer(shared.locations.HexLocation h, int playerIndex){
+		Hex hex = this.board.getHexFromCoords(h.getX(), h.getY());
+		if (hex == null || hex.getHexType() == HexType.DESERT)
+			return;
+		this.players[playerIndex].getResources().addResource(hex.getResourceType(), 1, this.bank);
 	}
 	
 	@Override

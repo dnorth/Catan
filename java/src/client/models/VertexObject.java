@@ -1,9 +1,9 @@
 package client.models;
 
+import client.models.mapdata.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import client.models.mapdata.EdgeLocation;
 /**
  * Each vertex on map, stores who owns vertex (has a settlement, city, or roads on corresponding edges)
  */
@@ -76,6 +76,39 @@ public class VertexObject{
 		if (owner != other.owner)
 			return false;
 		return true;
+	}
+	
+	public HexLocation[] getHexes() {
+		int x = location.getXcoord();
+		int y = location.getYcoord();
+		HexLocation hex1 = new HexLocation(x, y);
+		HexLocation hex2 = new HexLocation(x, y);
+		HexLocation hex3 = new HexLocation(x, y);
+		switch(location.getDirection()){
+		case "NW":
+			hex1 = new HexLocation(x-1, y);
+			hex2 = new HexLocation(x, y-1);
+		case "NE":
+			hex1 = new HexLocation(x, y-1);
+			hex2 = new HexLocation(x+1, y-1);
+		case "E":
+			hex1 = new HexLocation(x+1, y-1);
+			hex2 = new HexLocation(x+1, y);
+		case "SE":
+			hex1 = new HexLocation(x+1, y);
+			hex2 = new HexLocation(x, y+1);
+		case "SW":
+			hex1 = new HexLocation(x, y+1);
+			hex2 = new HexLocation(x-1, y+1);
+		case "W":
+			hex1 = new HexLocation(x-1, y+1);
+			hex2 = new HexLocation(x-1, y);
+		}
+		HexLocation[] hexes = new HexLocation[3];
+		hexes[0] = hex1;
+		hexes[1] = hex2;
+		hexes[2] = hex3;
+		return hexes;
 	}
 
 	
