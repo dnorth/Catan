@@ -24,14 +24,21 @@ public class FinishTurnCommand implements IMovesCommand {
 	public void execute() {
 		TurnTracker t = game.getClientModel().getTurnTracker();
 		game.getClientModel().getPlayers()[playerIndex].transferDevCards();
-		t.nextPlayerTurn();
 		if (t.getStatus().equals("FirstRound")) {
-			if (endOfRound(1)) t.setStatus("SecondRound");
+			if (endOfRound(1)) {
+				t.setStatus("SecondRound");
+				t.setCurrentTurn(3);
+			}
+			else t.nextPlayerTurn();
 		}
 		else if (t.getStatus().equals("SecondRound")) {
 			if (endOfRound(2)) t.setStatus("Rolling");
+			else t.previousPlayerTurn();
 		}
-		else t.setStatus("Rolling");
+		else {
+			t.nextPlayerTurn();
+			t.setStatus("Rolling");
+		}
 		game.getClientModel().increaseVersion();
 	}
 	private boolean endOfRound(int count) {
