@@ -37,7 +37,7 @@ public class CanDoTests {
 		Board board = new Board();
 		board.setHexes(new Hex[]
 				{
-						new Hex(new HexLocation(0,0),-1 ),
+						new Hex(new HexLocation(0,0)),
 						new Hex(new HexLocation(0,-1),"Brick",4 ),
 						new Hex(new HexLocation(0,-2),"wood",11 ),
 
