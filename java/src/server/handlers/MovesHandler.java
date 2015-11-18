@@ -48,27 +48,73 @@ public class MovesHandler implements HttpHandler{
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			if(Authenticate.isValidCookie(cookie, true)) {	
 				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
+				ClientModel jsonModel = null;
 				switch (specificContext){
+					case "sendChat":
+						
+						
+						break;
+					case "rollNumber":
+
+						break;
+					case "robPlayer":
+
+						break;
+					case "finishTurn":
+
+						break;
+					case "buyDevCard":
+
+						break;
+					case "Year_of_Plenty":
+
+						break;
+					case "Road_Building":
+
+						break;
+					case "Soldier":
+
+						break;
+					case "Monopoly":
+
+						break;
+					case "Monument":
+
+						break;
 					case "buildRoad":
-						ClientModel jsonModel = movesFacade.buildRoad(jsonToModel.getGameIndex(jsonObject), jsonToModel.getPlayerIndex(jsonObject), jsonToModel.getEdgeLocation(jsonObject, "roadLocation"), jsonToModel.getFree(jsonObject));
-						JsonObject gameInfoObject = modelToJSON.translateModel(jsonModel);
-						response = jsonModel.toString();
-						exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+						jsonModel = movesFacade.buildRoad(jsonToModel.getGameIndex(jsonObject), jsonToModel.getPlayerIndex(jsonObject), jsonToModel.getEdgeLocation(jsonObject, "roadLocation"), jsonToModel.getFree(jsonObject));
 						break;
-					case "join":
-						
-						
+					case "buildSettlement":
+
 						break;
-					case "create":
+					case "buildCity":
+
+						break;
+					case "offerTrade":
+
+						break;
+					case "acceptTrade":
+
+						break;
+					case "maritimeTrade":
+
+						break;
+					case "discardCards":
 
 						break;
 					default:
 						throw new ContextNotFoundException("404 Context Not Found.");
-			
 				}
+				
+				JsonObject gameInfoObject = modelToJSON.translateModel(jsonModel);
+				response = jsonModel.toString();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());			
+				
 			} else {
 				throw new MissingCookieException("Invalid Cookie. Trying to break our code, eh? Nice try.");
 			}
+
+
 		} catch (MissingCookieException e) {
 			//Return a bad request message
 			//The catan.user HTTP cookie is missing.  You must login before calling this method.
