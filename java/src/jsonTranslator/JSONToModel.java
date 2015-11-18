@@ -355,7 +355,10 @@ public class JSONToModel {
 		return object.get("receiver").getAsInt();
 	}
 	public EdgeLocation getEdgeLocation(JsonObject object, String name) {
-		return (EdgeLocation)g.fromJson(object.get(name), EdgeLocation.class);
+		client.models.mapdata.EdgeLocation loc = (client.models.mapdata.EdgeLocation) g
+				.fromJson(object.get(name),
+						client.models.mapdata.EdgeLocation.class);
+		return loc.getSharedEdgeLocation();
 	}
 	public ResourceType getResourceType(JsonObject object, String name) {
 		return (ResourceType)g.fromJson(object.get(name), ResourceType.class);

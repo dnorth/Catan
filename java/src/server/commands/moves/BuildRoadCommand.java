@@ -39,6 +39,7 @@ public class BuildRoadCommand implements IMovesCommand {
 	@Override
 	public void execute() {
 		System.out.println("IN ROAD COMMAND");
+		System.out.println("SPOT: " + spot.toString());
 		Board board = game.getClientModel().getBoard();
 		Player p = game.getClientModel().getPlayers()[playerIndex];
 		Resources bank = game.getClientModel().getBank();

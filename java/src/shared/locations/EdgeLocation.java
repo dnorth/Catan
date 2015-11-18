@@ -9,6 +9,11 @@ public class EdgeLocation
 	private HexLocation hexLoc;
 	private EdgeDirection dir;
 	
+	public EdgeLocation(int x, int y, String dir) {
+		setHexLoc(new HexLocation(x,y));
+		setDir(EdgeDirection.getEdgeDirectionFromString(dir));
+	}
+	
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection dir)
 	{
 		setHexLoc(hexLoc);
