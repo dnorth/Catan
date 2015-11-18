@@ -54,8 +54,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		}*/
 		
 		getView().setPlayers(playerList);
-		String[] AIChoices = state.getFacade().listAI();
-		getView().setAIChoices(AIChoices);
+		if (playerList.length != 4) {
+			String[] AIChoices = state.getFacade().listAI();
+			getView().setAIChoices(AIChoices);
+		}
 		getView().showModal();
 	}
 
