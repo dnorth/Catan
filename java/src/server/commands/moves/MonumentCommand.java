@@ -38,5 +38,6 @@ public class MonumentCommand implements IMovesCommand {
 				user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);	
 			}
 		}
+		game.getClientModel().increaseVersion();
 	}
 }

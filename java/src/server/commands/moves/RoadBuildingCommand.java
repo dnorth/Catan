@@ -42,6 +42,7 @@ public class RoadBuildingCommand implements IMovesCommand {
 		board.addRoad(new Road(playerIndex, spot2));
 		p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

@@ -25,6 +25,7 @@ public class FinishTurnCommand implements IMovesCommand {
 	public void execute() {
 		TurnTracker t = game.getClientModel().getTurnTracker();
 		t.setCurrentTurn(++playerIndex);
+		game.getClientModel().increaseVersion();
 	}
 
 }

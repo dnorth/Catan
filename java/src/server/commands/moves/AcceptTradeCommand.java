@@ -48,6 +48,7 @@ public class AcceptTradeCommand implements IMovesCommand {
 		else{
 			game.getClientModel().setTradeOffer(new TradeOffer());
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

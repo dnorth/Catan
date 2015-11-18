@@ -56,6 +56,7 @@ public class BuildCityCommand implements IMovesCommand {
 		cities.add(city);
 
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

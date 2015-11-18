@@ -42,7 +42,7 @@ public class MonopolyCommand implements IMovesCommand  {
 			}
 			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONOPOLY);
 		}
-
+		game.getClientModel().increaseVersion();
 	}
 
 }

@@ -66,7 +66,7 @@ public class DiscardCardsCommand implements IMovesCommand {
 		playerResources.subtractResource(ResourceType.SHEEP, discardedCards.getSheepCount(), bank);
 		playerResources.subtractResource(ResourceType.WHEAT, discardedCards.getWheatCount(), bank);
 		playerResources.subtractResource(ResourceType.WOOD, discardedCards.getWoodCount(), bank);
-		
+		game.getClientModel().increaseVersion();
 		
 	}
 

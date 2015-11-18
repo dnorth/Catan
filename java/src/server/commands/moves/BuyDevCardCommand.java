@@ -49,7 +49,7 @@ public class BuyDevCardCommand implements IMovesCommand {
 			p.payForDevCard(bank);
 			p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
 		}
-		
+		game.getClientModel().increaseVersion();
 		
 		
 	}

@@ -47,6 +47,7 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		
 		resources.subtractResource(inputResource, ratio, bank);  // player gives ratio # of inputResource to bank
 		resources.addResource(outputResource, 1, bank);          // player gets 1 outputResource from bank
+		game.getClientModel().increaseVersion();
 	}
 
 }

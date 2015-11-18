@@ -60,6 +60,7 @@ public class BuildSettlementCommand implements IMovesCommand {
 			p.decSettlements();
 			settlements.add(settlement);
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

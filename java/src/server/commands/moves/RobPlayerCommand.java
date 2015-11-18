@@ -48,6 +48,7 @@ public class RobPlayerCommand implements IMovesCommand {
 			victimResources.subtractResource(type, 1,takerResources);
 			game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

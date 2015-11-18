@@ -53,6 +53,7 @@ public class SoldierCommand implements IMovesCommand {
 			}
 
 		}
+		game.getClientModel().increaseVersion();
 
 	}
 

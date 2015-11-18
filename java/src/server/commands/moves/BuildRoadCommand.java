@@ -51,6 +51,7 @@ public class BuildRoadCommand implements IMovesCommand {
 		 			p.decRoads();
 		 			board.addRoad(new Road(playerIndex, spot));
 		 		}
+		 		game.getClientModel().increaseVersion();
 	}
 
 }

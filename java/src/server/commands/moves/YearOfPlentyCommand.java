@@ -43,6 +43,7 @@ public class YearOfPlentyCommand implements IMovesCommand{
 		p.getResources().addResource(resource2,1,bank);
 		p.getOldDevCards().decSpecifiedDevCard(DevCard.YEAROFPLENTY);
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 }

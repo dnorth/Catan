@@ -48,6 +48,7 @@ public class RollNumberCommand implements IMovesCommand {
 				addResourcesToPlayers(h, model);
 			}
 		}
+		game.getClientModel().increaseVersion();
 	}
 
 	private void addResourcesToPlayers(Hex h, ClientModel model)
