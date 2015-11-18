@@ -43,7 +43,7 @@ public class ClientModel extends Observable
 		log = new MessageList();
 		turnTracker = new TurnTracker();
 		tradeOffer = new TradeOffer();
-		version = -1;
+		version = 0;
 		winner = -1;
 	}
 	
@@ -71,7 +71,7 @@ public class ClientModel extends Observable
 		return version;
 	}
 	public void increaseVersion() {
-		setVersion(getVersion()+1);
+		setVersion(version+1);
 	}
 	public void setVersion(int version) {
 		if(this.version == version) {

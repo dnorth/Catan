@@ -12,6 +12,7 @@ import server.facade.iGameFacade;
 import server.handlers.moves.*;
 import server.handlers.GamesHandler;
 import server.handlers.GameHandler;
+import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
 import server.model.ServerData;
 
@@ -116,23 +117,23 @@ public class Server {
 		//server.createContext("/games/list", listHandler);
 		//server.createContext("/games/create", createHandler);
 		//server.createContext("/games/join", joinHandler);
-		server.createContext("/moves/SendChat", sendChatHandler);
-		server.createContext("/moves/rollNumber", rollNumberHandler);
-		server.createContext("/moves/robPlayer", robPlayerHandler);
-		server.createContext("/moves/finishTurn", finishTurnHandler);
-		server.createContext("/moves/buyDevCard", buyDevCardHandler);
-		server.createContext("/moves/Year_or_Plenty", yearOfPlentyHandler);
-		server.createContext("/moves/Road_Building", roadBuildingHandler);
-		server.createContext("/moves/Soldier", soldierHandler);
-		server.createContext("/moves/Monopoly", monopolyHandler);
-		server.createContext("/moves/Monument", monumentHandler);
-		server.createContext("/moves/buildRoad", buildRoadHandler);
-		server.createContext("/moves/buildSettlement", buildSettlementHandler);
-		server.createContext("/moves/buildCity", buildCityHandler);
-		server.createContext("/moves/offerTrade", offerTradeHandler);
-		server.createContext("/moves/acceptTrade", acceptTradeHandler);
-		server.createContext("/moves/maritimeTrade", maritimeTradeHandler);
-		server.createContext("/moves/discardCards", discardCardsHandler);
+		server.createContext("/moves/SendChat", movesHandler);
+		server.createContext("/moves/rollNumber", movesHandler);
+		server.createContext("/moves/robPlayer", movesHandler);
+		server.createContext("/moves/finishTurn", movesHandler);
+		server.createContext("/moves/buyDevCard", movesHandler);
+		server.createContext("/moves/Year_or_Plenty", movesHandler);
+		server.createContext("/moves/Road_Building", movesHandler);
+		server.createContext("/moves/Soldier", movesHandler);
+		server.createContext("/moves/Monopoly", movesHandler);
+		server.createContext("/moves/Monument", movesHandler);
+		server.createContext("/moves/buildRoad", movesHandler);
+		server.createContext("/moves/buildSettlement", movesHandler);
+		server.createContext("/moves/buildCity", movesHandler);
+		server.createContext("/moves/offerTrade", movesHandler);
+		server.createContext("/moves/acceptTrade", movesHandler);
+		server.createContext("/moves/maritimeTrade", movesHandler);
+		server.createContext("/moves/discardCards", movesHandler);
 		server.createContext("/game/model", modelHandler);
 
 
@@ -152,56 +153,58 @@ public class Server {
 	/** The model handler. */
 	private HttpHandler modelHandler = new GameHandler(gameFacade);
 	
-	/** The send chat handler. */
-	private HttpHandler sendChatHandler = new SendChatHandler(movesFacade);
-	
-	/** The roll number handler. */
-	private HttpHandler rollNumberHandler = new RollNumberHandler(movesFacade);
-	
-	/** The rob player handler. */
-	private HttpHandler robPlayerHandler = new RobPlayerHandler(movesFacade);
-	
-	/** The finish turn handler. */
-	private HttpHandler finishTurnHandler = new FinishTurnHandler(movesFacade);
-	
-	/** The buy dev card handler. */
-	private HttpHandler buyDevCardHandler = new BuyDevCardHandler(movesFacade);
-	
-	/** The year of plenty handler. */
-	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler(movesFacade);
-	
-	/** The road building handler. */
-	private HttpHandler roadBuildingHandler = new RoadBuildingHandler(movesFacade);
-	
-	/** The soldier handler. */
-	private HttpHandler soldierHandler = new SoldierHandler(movesFacade);
-	
-	/** The monopoly handler. */
-	private HttpHandler monopolyHandler = new MonopolyHandler(movesFacade);
-	
-	/** The monument handler. */
-	private HttpHandler monumentHandler = new MonumentHandler(movesFacade);
-	
-	/** The build road handler. */
-	private HttpHandler buildRoadHandler = new BuildRoadHandler(movesFacade);
-	
-	/** The build city handler. */
-	private HttpHandler buildCityHandler = new BuildCityHandler(movesFacade);
-	
-	/** The build settlement handler. */
-	private HttpHandler buildSettlementHandler = new BuildSettlementHandler(movesFacade);
-	
-	/** The offer trade handler. */
-	private HttpHandler offerTradeHandler = new OfferTradeHandler(movesFacade);
-	
-	/** The accept trade handler. */
-	private HttpHandler acceptTradeHandler = new AcceptTradeHandler(movesFacade);
-	
-	/** The maritime trade handler. */
-	private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler(movesFacade);
-	
+//	/** The send chat handler. */
+//	private HttpHandler sendChatHandler = new SendChatHandler(movesFacade);
+//	
+//	/** The roll number handler. */
+//	private HttpHandler rollNumberHandler = new RollNumberHandler(movesFacade);
+//	
+//	/** The rob player handler. */
+//	private HttpHandler robPlayerHandler = new RobPlayerHandler(movesFacade);
+//	
+//	/** The finish turn handler. */
+//	private HttpHandler finishTurnHandler = new FinishTurnHandler(movesFacade);
+//	
+//	/** The buy dev card handler. */
+//	private HttpHandler buyDevCardHandler = new BuyDevCardHandler(movesFacade);
+//	
+//	/** The year of plenty handler. */
+//	private HttpHandler yearOfPlentyHandler = new YearOfPlentyHandler(movesFacade);
+//	
+//	/** The road building handler. */
+//	private HttpHandler roadBuildingHandler = new RoadBuildingHandler(movesFacade);
+//	
+//	/** The soldier handler. */
+//	private HttpHandler soldierHandler = new SoldierHandler(movesFacade);
+//	
+//	/** The monopoly handler. */
+//	private HttpHandler monopolyHandler = new MonopolyHandler(movesFacade);
+//	
+//	/** The monument handler. */
+//	private HttpHandler monumentHandler = new MonumentHandler(movesFacade);
+//	
+//	/** The build road handler. */
+//	private HttpHandler buildRoadHandler = new BuildRoadHandler(movesFacade);
+//	
+//	/** The build city handler. */
+//	private HttpHandler buildCityHandler = new BuildCityHandler(movesFacade);
+//	
+//	/** The build settlement handler. */
+//	private HttpHandler buildSettlementHandler = new BuildSettlementHandler(movesFacade);
+//	
+//	/** The offer trade handler. */
+//	private HttpHandler offerTradeHandler = new OfferTradeHandler(movesFacade);
+//	
+//	/** The accept trade handler. */
+//	private HttpHandler acceptTradeHandler = new AcceptTradeHandler(movesFacade);
+//	
+//	/** The maritime trade handler. */
+//	private HttpHandler maritimeTradeHandler = new MaritimeTradeHandler(movesFacade);
+//	
+//	/** The discard cards handler. */
+//	private HttpHandler discardCardsHandler = new DiscardCardsHandler(movesFacade);
 	/** The discard cards handler. */
-	private HttpHandler discardCardsHandler = new DiscardCardsHandler(movesFacade);
+	private HttpHandler movesHandler = new MovesHandler(movesFacade);
 
 	
 	/**

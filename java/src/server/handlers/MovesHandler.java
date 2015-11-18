@@ -51,6 +51,7 @@ public class MovesHandler implements HttpHandler{
 				ClientModel jsonModel = null;
 				int gameIndex = jsonToModel.getGameIndex(cookie);
 				int playerIndex = jsonToModel.getPlayerIndex(object);
+				System.out.println("*********************************** THE SPECIFIC CONTEXT IS: " + specificContext);
 				switch (specificContext){
 					case "sendChat":
 						jsonModel = movesFacade.sendChat(gameIndex, playerIndex, jsonToModel.getContent(object));

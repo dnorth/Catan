@@ -38,20 +38,20 @@ public class BuildRoadCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() {
-		 		Board board =game.getClientModel().getBoard();
-		 		Player p = game.getClientModel().getPlayers()[playerIndex];
-		 		Resources bank = game.getClientModel().getBank();
-		 		
-		 		if(free==false && p.canBuyRoad()){
-		 		p.payForRoad(bank);
-		 		p.decRoads();
-				board.addRoad(new Road(playerIndex, spot));
-		 		}
-		 		else if(free==true){
-		 			p.decRoads();
-		 			board.addRoad(new Road(playerIndex, spot));
-		 		}
-		 		game.getClientModel().increaseVersion();
+		System.out.println("IN ROAD COMMAND");
+		Board board = game.getClientModel().getBoard();
+		Player p = game.getClientModel().getPlayers()[playerIndex];
+		Resources bank = game.getClientModel().getBank();
+
+		if (free == false && p.canBuyRoad()) {
+			p.payForRoad(bank);
+			p.decRoads();
+			board.addRoad(new Road(playerIndex, spot));
+		} else if (free == true) {
+			p.decRoads();
+			board.addRoad(new Road(playerIndex, spot));
+		}
+		game.getClientModel().increaseVersion();
 	}
 
 }
