@@ -23,6 +23,7 @@ import server.commands.moves.RollNumberCommand;
 import server.commands.moves.SendChatCommand;
 import server.commands.moves.SoldierCommand;
 import server.commands.moves.YearOfPlentyCommand;
+import server.exceptions.InvalidStatusException;
 import server.model.ServerData;
 import server.model.ServerGame;
 import shared.definitions.ResourceType;
@@ -243,7 +244,12 @@ public class MovesFacade implements iMovesFacade {
 		ServerGame game =data.getGameByID(gameIndex);
 		
 		DiscardCardsCommand command = new DiscardCardsCommand(game, playerIndex, discardedCards);
-		command.execute();
+		try {
+			command.execute();
+		} catch (InvalidStatusException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return game.getClientModel();
 	}
 
