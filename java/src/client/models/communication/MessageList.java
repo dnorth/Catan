@@ -1,4 +1,5 @@
 package client.models.communication;
+import java.util.ArrayList;
 import java.util.List;
 
 import client.models.communication.MessageLine;
@@ -10,8 +11,13 @@ import client.models.communication.MessageLine;
 
 public class MessageList
 {
+
 	private List<MessageLine> lines;
 
+	public MessageList() {
+		lines = new ArrayList<MessageLine>();
+	}
+	
 	public List<MessageLine> getLines() {
 		return lines;
 	}

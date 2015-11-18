@@ -29,6 +29,7 @@ public class ServerGame {
 		this.id = id;
 		this.players = new ArrayList<ServerPlayer>();
 		this.clientModel = new ClientModel();
+		this.clientModel.fillClientModel();
 	}	
 	
 	public boolean addUser(ServerUser user, String color) {

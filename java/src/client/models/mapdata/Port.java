@@ -17,8 +17,14 @@ public class Port {
 	
 	public Port(String resource, HexLocation location, String direction, int ratio) {
 		super();
+		this.resource = resource;
+		this.location = location;
+		this.direction = direction;
+		this.ratio = ratio;
+	}
+	public Port(HexLocation location, String direction, int ratio) {
+		super();
 		if (ratio == 3) this.resource = "three";
-		else this.resource = resource;
 		this.location = location;
 		this.direction = direction;
 		this.ratio = ratio;

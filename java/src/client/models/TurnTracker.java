@@ -23,6 +23,13 @@ public class TurnTracker{
 	 */
 	private int largestArmy;
 	
+	public TurnTracker() {
+		this.currentTurn = 0;
+		this.longestRoad = -1;
+		this.largestArmy = -1;
+		this.status = "FirstRound";
+	}
+	
 	public int getCurrentTurn() {
 		return currentTurn;
 	}
@@ -52,6 +59,4 @@ public class TurnTracker{
 		return "\tTurnTracker [currentTurn=" + currentTurn + ", status=" + status + ", longestRoad=" + longestRoad
 				+ ", largestArmy=" + largestArmy + "]";
 	}
-	
-	
 }

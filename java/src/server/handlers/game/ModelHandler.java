@@ -36,21 +36,18 @@ public class ModelHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		logger = Logger.getLogger("Catan");
+		logger.info("Catan Model");
 		JsonObject cookie;
 		String response = "";
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			logger.info(cookie.toString());
+			System.out.println("FAIL0");
 			if(Authenticate.isValidCookie(cookie, false)) {
 				int gID = cookie.get("game").getAsInt();
-				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
-				int version = jsonToModel.getVersionNumber(jsonObject);
 				ClientModel clientModel = gameFacade.getGameModel(gID);
-				if (version == clientModel.getVersion()) response = "true";
-				else {
-					JsonObject modelObject = modelToJSON.translateModel(clientModel);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, modelObject.toString().length());
-				}
+				response = modelToJSON.translateModel(clientModel).toString();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 				logger.info("Valid Cookie!");
 			} else {
 				//Bad login information
@@ -61,6 +58,11 @@ public class ModelHandler implements HttpHandler{
 			//The catan.user HTTP cookie is missing.  You must login before calling this method.
 			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+		} catch (IllegalStateException e) {
+			//Not a valid JSON Object as post data
+			response = "Invalid Request";
+			logger.log(Level.SEVERE, e.getMessage());
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} finally {
 			exchange.getResponseBody().write(response.getBytes());
 			exchange.close();

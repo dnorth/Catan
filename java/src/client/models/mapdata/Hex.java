@@ -12,16 +12,15 @@ import client.models.mapdata.HexLocation;
 
 public class Hex {
 	private HexLocation location;
-	private String resource = "none";
+	private String resource;
 	
 	public Hex(HexLocation location, String resource, int number) {
 		this.location = location;
 		this.resource = resource;
 		this.number = number;
 	}
-	public Hex(HexLocation location, int number) {
+	public Hex(HexLocation location) {
 		this.location = location;
-		this.number = number;
 	}
 	private int number;
 

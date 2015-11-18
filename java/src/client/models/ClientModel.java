@@ -22,7 +22,7 @@ public class ClientModel extends Observable
 	private Player[] players;
 	private TradeOffer tradeOffer; //I assumed that we are just using this for Domestic trade, not Maritime trade. If I'm wrong, verify that this doesn't explode.
 	private TurnTracker turnTracker;
-	private int version = -1;
+	private int version;
 	private int winner;
 	private DevCards deck;
 	boolean hasChanged = false;
@@ -41,6 +41,15 @@ public class ClientModel extends Observable
 		turnTracker = new TurnTracker();
 		
 		
+	}
+	
+	public void fillClientModel() {
+		chat = new MessageList();
+		log = new MessageList();
+		turnTracker = new TurnTracker();
+		tradeOffer = new TradeOffer();
+		version = -1;
+		winner = -1;
 	}
 	
 	public void update(ClientModel model) {
@@ -172,7 +181,7 @@ public class ClientModel extends Observable
 	 */
 	public void addPlayer(int playerIndex, ServerPlayer newPlayer)
 	{
-		Player p = new Player(newPlayer);
+		Player p = new Player(newPlayer, playerIndex);
 		players[playerIndex] = p;
 	}
 	

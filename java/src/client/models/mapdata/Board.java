@@ -27,6 +27,10 @@ public class Board {
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
+	
+	public Board() {
+		createDefaultBoard();
+	}
 
 	public static Map<String, String> getOppDir() {
 		Map<String, String> oppDir = new HashMap<String, String>();
@@ -333,45 +337,48 @@ public class Board {
 	
 	public void createDefaultBoard()
 	{
+		this.roads = new Road[0];
+		this.settlements = new ArrayList<VertexObject>();
+		this.cities = new ArrayList<VertexObject>();
 		this.setHexes(new Hex[]
 				{
-						new Hex(new HexLocation(0,0),-1 ),
-						new Hex(new HexLocation(0,-1),"Brick",4 ),
-						new Hex(new HexLocation(0,-2),"wood",11 ),
+						new Hex(new HexLocation(0,-2)),
+						new Hex(new HexLocation(1,-2),"brick",4 ),
+						new Hex(new HexLocation(2,-2),"wood",11 ),
 
-						new Hex(new HexLocation(1,0),"Wood",3 ),
-						new Hex(new HexLocation(1,-1),"Ore",6 ),
-						new Hex(new HexLocation(1,-2),"Sheep",12 ),
-						new Hex(new HexLocation(1,1),"Brick",8 ),
+						new Hex(new HexLocation(-1,-1),"brick",8 ),
+						new Hex(new HexLocation(0,-1),"wood",3 ),
+						new Hex(new HexLocation(1,-1),"ore",9 ),
+						new Hex(new HexLocation(2,-1),"sheep",12 ),
 
-						new Hex(new HexLocation(2,0),"Wheat",11 ),
-						new Hex(new HexLocation(2,-1),"Brick",5 ),
-						new Hex(new HexLocation(2,-2),"Wheat",9 ),
-						new Hex(new HexLocation(2,1),"Sheep",10 ),
-						new Hex(new HexLocation(2,2),"Ore",5 ),
+						new Hex(new HexLocation(-2,0),"ore",5 ),
+						new Hex(new HexLocation(-1,0),"sheep",10 ),
+						new Hex(new HexLocation(0,0),"wheat",11 ),
+						new Hex(new HexLocation(1,0),"brick",5 ),
+						new Hex(new HexLocation(2,0),"wheat",6 ),
 
-						new Hex(new HexLocation(3,0),"Wood",4 ),
-						new Hex(new HexLocation(3,-1),"Sheep",10 ),
-						new Hex(new HexLocation(3,1),"Sheep",9 ),
-						new Hex(new HexLocation(3,2),"Wheat",2 ),
+						new Hex(new HexLocation(-2,1),"wheat",2 ),
+						new Hex(new HexLocation(-1,1),"sheep",9 ),
+						new Hex(new HexLocation(0,1),"wood",4 ),
+						new Hex(new HexLocation(1,1),"sheep",10 ),
 
-						new Hex(new HexLocation(4,0),"Wheat",8 ),
-						new Hex(new HexLocation(4,1),"Ore",3 ),
-						new Hex(new HexLocation(4,2),"Wood",6 )
+						new Hex(new HexLocation(-2,2),"wood",6 ),
+						new Hex(new HexLocation(-1,2),"ore",3 ),
+						new Hex(new HexLocation(0,2),"wheat",8 )
 				});
 
 
 		this.setPorts(new Port[]
 				{
-						new Port("Ore",new HexLocation(2,-2), "NE",2),
-						new Port("All",new HexLocation(1,-2), "N",3),
-						new Port("Wheat",new HexLocation(-1,-1), "N",2),
-						new Port("Sheep",new HexLocation(-2,0), "NW",2),
-						new Port("All",new HexLocation(-2,2), "NW",3),
-						new Port("All",new HexLocation(-1,2), "SW",3),
-						new Port("Wood",new HexLocation(0,2), "S",2),
-						new Port("All",new HexLocation(1,1), "SE",3),
-						new Port("Brick",new HexLocation(2,-1), "SE",2)
+						new Port("brick",new HexLocation(-2,3), "NE", 2),
+						new Port(new HexLocation(-3,0), "SE", 3),
+						new Port("wood",new HexLocation(-3,2), "NE", 2),
+						new Port("sheep",new HexLocation(3,-1), "NW", 2),
+						new Port(new HexLocation(2,1), "NW", 3),
+						new Port(new HexLocation(3,-3), "SW", 3),
+						new Port("ore",new HexLocation(1,-3), "S", 2),
+						new Port("wheat",new HexLocation(-1,-2), "S", 2),
+						new Port(new HexLocation(0,3), "N", 3)
 				});
 		this.setRobber(this.getHexes()[0].getLocation());
 	}

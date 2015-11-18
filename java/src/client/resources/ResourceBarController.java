@@ -8,6 +8,7 @@ import client.models.Player;
 import client.models.Resources;
 import client.state.ActivePlayerState;
 import client.state.IStateBase;
+import client.state.JoinGameState;
 import client.state.StateManager;
 
 
@@ -133,6 +134,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (this.stateManager.getState() instanceof JoinGameState) return;
 		this.setResources();
 		IStateBase state = this.stateManager.getState();
 		if(state instanceof ActivePlayerState) {
