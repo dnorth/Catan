@@ -97,7 +97,7 @@ public class ServerPoller {
 	 * @param cookies
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
-		System.out.println("CLIENT MODEL: " + cookies.toString());
+		//System.out.println("CLIENT MODEL: " + cookies.toString());
 		CatanColor color = null;
 		try {
 			color = jsonToModelTranslator.getMyColor(cookies, this.stateManager.getFacade().getPlayerIndex());
