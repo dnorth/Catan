@@ -338,7 +338,7 @@ public class JSONToModel {
 		return object.get("randomPorts").getAsBoolean();
 	}
 	public int getGameIndex(JsonObject object) {
-		return object.get("gameIndex").getAsInt();
+		return object.get("game").getAsInt();
 	}
 	public EdgeLocation getEdgeLocation(JsonObject object, String name) {
 		return (EdgeLocation)g.fromJson(object.get(name), EdgeLocation.class);
@@ -370,8 +370,7 @@ public class JSONToModel {
 	public int getVictimIndex(JsonObject object) {
 		return object.get("victimIndex").getAsInt();
 	}
-	public HexLocation getHexLocation(JsonObject object) {
-		return (HexLocation)g.fromJson(object.get("HexLocation"), HexLocation.class);
-	}
+	
+	
 	
 }

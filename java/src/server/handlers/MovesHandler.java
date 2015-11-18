@@ -47,59 +47,72 @@ public class MovesHandler implements HttpHandler{
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			if(Authenticate.isValidCookie(cookie, true)) {	
-				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
+				JsonObject object = jsonToModel.exchangeToJson(exchange);
 				ClientModel jsonModel = null;
+				int gameIndex = jsonToModel.getGameIndex(cookie);
+				int playerIndex = jsonToModel.getPlayerIndex(object);
 				switch (specificContext){
 					case "sendChat":
-						
+						jsonModel = movesFacade.sendChat(gameIndex, playerIndex, jsonToModel.getContent(object));
 						
 						break;
 					case "rollNumber":
-
+						jsonModel = movesFacade.rollNumber(gameIndex, playerIndex, jsonToModel.getNumber(object));
 						break;
 					case "robPlayer":
-
+						jsonModel = movesFacade.robPlayer(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "HexLocation"));
 						break;
 					case "finishTurn":
-
+						jsonModel = movesFacade.finishTurn(gameIndex, playerIndex);
 						break;
 					case "buyDevCard":
-
+						jsonModel = movesFacade.buyDevCard(gameIndex, playerIndex);
 						break;
 					case "Year_of_Plenty":
+						//jsonModel = movesFacade.playYearOfPlenty(gameIndex, playerIndex, jsonToModel.get, resource2);
 
 						break;
 					case "Road_Building":
+						//jsonModel = movesFacade.playRoadBuilding(gameIndex, playerIndex, spot1, spot2);
 
 						break;
 					case "Soldier":
+						//jsonModel = movesFacade.playSoldier(gameIndex, playerIndex, victimIndex, location);
 
 						break;
 					case "Monopoly":
+						//jsonModel = movesFacade.playMonopoly(resource, gameIndex, playerIndex);
 
 						break;
 					case "Monument":
+						jsonModel = movesFacade.playMonument(gameIndex, playerIndex);
 
 						break;
 					case "buildRoad":
-						jsonModel = movesFacade.buildRoad(jsonToModel.getGameIndex(jsonObject), jsonToModel.getPlayerIndex(jsonObject), jsonToModel.getEdgeLocation(jsonObject, "roadLocation"), jsonToModel.getFree(jsonObject));
+						jsonModel = movesFacade.buildRoad(gameIndex, playerIndex, jsonToModel.getEdgeLocation(object, "roadLocation"), jsonToModel.getFree(object));
 						break;
 					case "buildSettlement":
+						//jsonModel = movesFacade.buildSettlement(gameIndex, playerIndex, vertexLocation, free);
 
 						break;
 					case "buildCity":
+						//jsonModel = movesFacade.buildCity(gameIndex, playerIndex, location);
 
 						break;
 					case "offerTrade":
+						//jsonModel = movesFacade.offerTrade(gameIndex, playerIndex, offer, receiver);
 
 						break;
 					case "acceptTrade":
+						//jsonModel = movesFacade.acceptTrade(gameIndex, playerIndex, willAccept);
 
 						break;
 					case "maritimeTrade":
+						//jsonModel = movesFacade.maritimeTrade(gameIndex, playerIndex, ratio, inputResource, outputResource);
 
 						break;
 					case "discardCards":
+						//jsonModel = movesFacade.discardCards(gameIndex, playerIndex, discardedCards);
 
 						break;
 					default:
