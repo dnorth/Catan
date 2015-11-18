@@ -8,6 +8,7 @@ import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import shared.definitions.HexType;
+import shared.definitions.ResourceType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,7 +39,7 @@ public class RollNumberCommand implements IMovesCommand {
 		if(number==7){
 			game.getClientModel().getTurnTracker().setStatus("Robbing");
 		}
-		
+
 		ClientModel model = game.getClientModel();
 		for(Hex h : model.getBoard().getHexes())
 		{
@@ -53,15 +54,19 @@ public class RollNumberCommand implements IMovesCommand {
 		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){
 			return;
 		}
-		
+
 		Resources bank = model.getBank();
-		
+		ResourceType type = h.getResourceType();
+
 		for(VertexObject v  : model.getBoard().getSettlements())
 		{
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
-				p.getResources().addResource(h.getResourceType(),1,bank);
+
+				if(bank.hasResource(type, 1)){
+					p.getResources().addResource(h.getResourceType(),1,bank);
+				}
 			}
 		}
 
@@ -70,7 +75,16 @@ public class RollNumberCommand implements IMovesCommand {
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
+				
+				if(bank.hasResource(type, 2)){
 				p.getResources().addResource(h.getResourceType(),2,bank);
+				}
+				else if(bank.hasResource(type, 1)){                  // if bank only has 1 resource of that type, give it to player
+				p.getResources().addResource(h.getResourceType(),1,bank);
+				}
+				
+				
+				
 			}
 		}
 

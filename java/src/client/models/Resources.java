@@ -207,6 +207,23 @@ public class Resources{
 		}
 	}
 
+	public boolean hasResource(ResourceType resource, int count){
+		switch (resource) {
+		case WOOD:
+			return getWoodCount()>=count;
+		case BRICK:
+			return getBrickCount()>=count;
+		case SHEEP:
+			return getSheepCount()>=count;
+		case WHEAT:
+			return getWheatCount()>=count;
+		case ORE:
+			return getOreCount()>=count;
+		default:
+			return false;
+		}
+		
+	}
 	public int getWoodCount() {
 		return wood;
 	}
