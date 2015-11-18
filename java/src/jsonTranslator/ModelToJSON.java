@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.models.ClientModel;
 import client.models.DevCards;
 import client.models.Player;
@@ -610,6 +611,22 @@ public class ModelToJSON {
 		return gamesArray;
 	}
 		
-	
+	public JsonObject generateGameInfoObject(GameInfo game) {
+		JsonObject returnObject = new JsonObject();
+		returnObject.addProperty("title", game.getTitle());
+		returnObject.addProperty("id", game.getId());
+		game.getPlayers();
+		JsonArray playersArray = new JsonArray();
+		for (PlayerInfo p : game.getPlayers()) {
+			JsonObject playerObject = new JsonObject();
+			playerObject.addProperty("color", p.getColor().toString().toLowerCase());
+			playerObject.addProperty("name", p.getName());
+			playerObject.addProperty("id", p.getId());
+			playersArray.add(playerObject);
+		}
+		returnObject.add("players", playersArray);
+		
+		return returnObject;
+	}
 	
 }

@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 import shared.definitions.CatanColor;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -322,6 +324,34 @@ public class JSONToModel {
 	}
 	public String getColor(JsonObject object) {
 		return object.get("color").getAsString();
+	}
+	public String getName(JsonObject object) {
+		return object.get("name").getAsString();
+	}
+	public boolean getRandomTiles(JsonObject object) {
+		return object.get("randomTiles").getAsBoolean();
+	}
+	public boolean getRandomNumbers(JsonObject object) {
+		return object.get("randomNumbers").getAsBoolean();
+	}
+	public boolean getRandomPorts(JsonObject object) {
+		return object.get("randomPorts").getAsBoolean();
+	}
+	public int getGameIndex(JsonObject object) {
+		return object.get("gameIndex").getAsInt();
+	}
+	public int getPlayerIndex(JsonObject object) {
+		return object.get("playerIndex").getAsInt();
+	}
+	public EdgeLocation getEdgeLocation(JsonObject object, String name) {
+		return (EdgeLocation)g.fromJson(object.get(name), EdgeLocation.class);
+	}
+	public HexLocation getHexLocation(JsonObject object, String name) {
+		return (HexLocation)g.fromJson(object.get(name), HexLocation.class);
+		}
+	
+	public boolean getFree(JsonObject object) {
+		return object.get("free").getAsBoolean();
 	}
 	public int getVersionNumber(JsonObject object) {
 		if (object.get("version") == null) {
