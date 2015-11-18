@@ -36,11 +36,6 @@ public class ClientModel extends Observable
 		deck = new DevCards(2,5,2,14,2);
 		board = new Board();
 		players = new Player[4];
-		chat = new MessageList();
-		log = new MessageList();
-		turnTracker = new TurnTracker();
-		
-		
 	}
 	
 	public void fillClientModel() {
