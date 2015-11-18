@@ -286,17 +286,19 @@ public class Facade {
 	 */
 	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
 		
-		//System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
+		System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
 		Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, null);
+		System.out.println("Should have finished communication by now");
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
 			game = jsonToModel.translateGameInfo(returnedJson);
-			//System.out.println("GAME: " + game);
+			System.out.println("GAME: " + game);
 			return true;
-		}		
+		}
+		System.out.println("Create game error.");
 		return false;
 	}
 	

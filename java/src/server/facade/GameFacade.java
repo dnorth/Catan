@@ -19,9 +19,12 @@ public class GameFacade implements iGameFacade {
 	 *  Facade for the command game/model
 	 */
 	@Override
-	public ClientModel getGameModel() {
-		// TODO Auto-generated method stub
-		return null;
+	public ClientModel getGameModel(int gameID) {
+		return serverData.getGameByID(gameID).getClientModel();
+	}
+
+	public ServerData getServerData() {
+		return serverData;
 	}
 	
 }

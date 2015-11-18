@@ -323,4 +323,12 @@ public class JSONToModel {
 	public String getColor(JsonObject object) {
 		return object.get("color").getAsString();
 	}
+	public int getVersionNumber(JsonObject object) {
+		if (object.get("version") == null) {
+			return -1;
+		}
+		else {
+			return object.get("version").getAsInt();
+		}
+	}
 }

@@ -38,19 +38,23 @@ public class ListHandler implements HttpHandler {
 		// TODO Auto-generated method stub
 		logger = Logger.getLogger("Catan");
 		logger.info("Handling List");
+		String response = "";
 		try{
 			if (gamesFacade == null) logger.info("gamesFacade is null...");
 			List<ServerGame> games = gamesFacade.listGames();
 			JsonArray serverGamesObject = modelToJSON.generateServerGamesObject(games);
-			logger.info("Server Games Object: " + serverGamesObject.toString());
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, serverGamesObject.toString().length());
-			exchange.getResponseBody().write(serverGamesObject.toString().getBytes());
-			exchange.close();
+//			logger.info("Server Games Object: " + serverGamesObject.toString());
+			response = serverGamesObject.toString();
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 		}
 		catch( Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
+			response = "Error listing games";
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, response.length());
 			return;
+		} finally {
+			exchange.getResponseBody().write(response.getBytes());
+			exchange.close();
 		}
 	}
 }

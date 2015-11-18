@@ -13,5 +13,5 @@ public interface iGameFacade {
 	 *
 	 * @return the game model
 	 */
-	public ClientModel getGameModel();
+	public ClientModel getGameModel(int gameID);
 }

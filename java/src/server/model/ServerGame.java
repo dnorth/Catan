@@ -29,7 +29,7 @@ public class ServerGame {
 		this.id = id;
 		this.players = new ArrayList<ServerPlayer>();
 		this.clientModel = new ClientModel();
-	}
+	}	
 	
 	public boolean addUser(ServerUser user, String color) {
 		if (players.size() > 3) return false;

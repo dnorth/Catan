@@ -46,7 +46,6 @@ public class JoinHandler implements HttpHandler {
 				String color = jsonToModel.getColor(jsonObject);
 				gamesFacade.joinGame(pID, gID, color);
 				logger.info("Valid Cookie!");
-				jsonToModel.exchangeToJson(exchange);
 			} else {
 				//Bad login information
 				logger.info("Invalid Cookie.");
