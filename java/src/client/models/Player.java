@@ -24,30 +24,30 @@ public class Player
 	private int soldiers;
 	private int victoryPoints;
 	private PortTrade portTrade;
-	
+
 	public Player(){
-	newDevCards = new DevCards();
-	oldDevCards = new DevCards();
-	name="";
-	resources = new Resources();
-	portTrade = new PortTrade();
-	cities = 4;
-	settlements = 5;
-	roads = 15;
+		newDevCards = new DevCards();
+		oldDevCards = new DevCards();
+		name="";
+		resources = new Resources();
+		portTrade = new PortTrade();
+		cities = 4;
+		settlements = 5;
+		roads = 15;
 	}
-	
+
 	public Player(ServerPlayer p){
-	newDevCards = new DevCards();
-	oldDevCards = new DevCards();
-	name= p.getName();
-	color =p.getColor();
-	resources = new Resources();
-	portTrade = new PortTrade();
-	cities = 4;
-	settlements = 5;
-	roads = 15;
+		newDevCards = new DevCards();
+		oldDevCards = new DevCards();
+		name= p.getName();
+		color =p.getColor();
+		resources = new Resources();
+		portTrade = new PortTrade();
+		cities = 4;
+		settlements = 5;
+		roads = 15;
 	}
-	
+
 	public int getCitiesNum() {
 		return cities;
 	}
@@ -161,55 +161,64 @@ public class Player
 	public void setPortTrade(PortTrade portTrade) {
 		this.portTrade = portTrade;
 	}
-	
+
 	public int numResources() {
 		return this.resources.getTotalCount();
 	}
 
-	
-	
+
+
 	public boolean hasBrick(){return resources.getBrickCount()>0;}
 	public boolean hasOre(){return resources.getOreCount()>0;}
 	public boolean hasSheep(){return resources.getSheepCount()>0;}
 	public boolean hasWheat(){return resources.getWheatCount()>0;}
 	public boolean hasWood(){return resources.getWoodCount()>0;}
-	
+
 	public boolean canBuyRoad(){
 		return hasBrick() && hasWood() && roads > 0;
 	}
-	
+
 	public boolean canBuySettlement(){
 		return hasBrick() && hasWheat() && hasSheep() && hasWood() && settlements > 0;
 	}
-	
+
 	public boolean canBuyDevCard(){
 		return hasSheep() && hasWheat() && hasOre();
 	}
-	
+
 	public boolean canBuildCity(){
 		return hasWheat(2) && hasOre(3) && cities > 0;
 	}
-	
+
 	public boolean canAcceptTrade(TradeOffer tradeOffer){	
 		return hasSpecifiedResources(tradeOffer);
 	}
-	
+
 	public boolean hasSpecifiedResources(TradeOffer tradeOffer){	
-		
+
 		Resources offer = tradeOffer.getOffer();
-		
+
 		return hasBrick(offer.getBrickCount()*-1) && 
-			   hasOre(offer.getOreCount()*-1)     && 
-			   hasSheep(offer.getSheepCount()*-1) && 
-			   hasWheat(offer.getWheatCount()*-1) &&
-			   hasWood(offer.getWoodCount()*-1);
+				hasOre(offer.getOreCount()*-1)     && 
+				hasSheep(offer.getSheepCount()*-1) && 
+				hasWheat(offer.getWheatCount()*-1) &&
+				hasWood(offer.getWoodCount()*-1);
 	}
-	
+
+	public boolean needsToDiscard(){
+		if(resources.getTotalCount()>7){
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
 	public void payForRoad(Resources bank){
-	resources.subtractResource(ResourceType.BRICK, 1, bank);
-	resources.subtractResource(ResourceType.WOOD, 1, bank);
+		resources.subtractResource(ResourceType.BRICK, 1, bank);
+		resources.subtractResource(ResourceType.WOOD, 1, bank);
 	}
-	
+
 	public void payForSettlement(Resources bank){
 		resources.subtractResource(ResourceType.BRICK, 1, bank);
 		resources.subtractResource(ResourceType.WHEAT, 1, bank);
@@ -222,26 +231,26 @@ public class Player
 		resources.subtractResource(ResourceType.WHEAT, 1, bank);
 		resources.subtractResource(ResourceType.ORE, 1, bank);
 	}
-	
+
 	public void payForCity(Resources bank){
 		resources.subtractResource(ResourceType.WHEAT, 2,bank);
 		resources.subtractResource(ResourceType.ORE, 3,bank);
 	}
-	
+
 	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}
-	
+
 	public boolean hasBrick(int count){return resources.getBrickCount()>=count;}
 	public boolean hasOre(int count){return resources.getOreCount()>=count;}
 	public boolean hasSheep(int count){return resources.getSheepCount()>=count;}
 	public boolean hasWheat(int count){return resources.getWheatCount()>=count;}
 	public boolean hasWood(int count){return resources.getWoodCount()>=count;}
-	
+
 	public boolean hasMonopolyCard(DevCards d){return d.getMonopolyCount()>0;}
 	public boolean hasMonumentCard(DevCards d){return d.getMonumentCount()>0;}
 	public boolean hasRoadBuildingCard(DevCards d){return d.getRoadBuildingCount()>0;}
 	public boolean hasSoldierCard(DevCards d){return d.getSoldierCount()>0;}
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
-	
+
 	public void incMonuments(){monuments++;}
 	public void decSettlements(){settlements--;}
 	public void decCities(){cities--;}
@@ -255,7 +264,7 @@ public class Player
 				+ resources + ", roads=" + roads + ", settlements=" + settlements + ", soldiers=" + soldiers
 				+ ", victoryPoints=" + victoryPoints + "]";
 	}
-	
-	
+
+
 
 }

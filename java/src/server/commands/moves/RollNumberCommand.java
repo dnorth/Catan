@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.TurnTracker;
 import client.models.VertexObject;
 import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
@@ -51,8 +52,26 @@ public class RollNumberCommand implements IMovesCommand {
 
 	private void addResourcesToPlayers(Hex h, ClientModel model)
 	{
-		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){
+		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){ // throw exception
 			return;
+		}
+
+		TurnTracker turnTracker = game.getClientModel().getTurnTracker();
+		if(number<2 || number > 12) // throw exception
+		{return;}
+
+		if(turnTracker.getStatus().equals("Rolling")==false){ // throw exception
+			return;
+		}
+
+		if(number==7){
+			for(Player p : game.getClientModel().getPlayers()){
+				if(p.needsToDiscard()){
+					turnTracker.setStatus("Discard");
+				}
+			}
+			// continue work here
+			
 		}
 
 		Resources bank = model.getBank();
@@ -75,16 +94,16 @@ public class RollNumberCommand implements IMovesCommand {
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
-				
+
 				if(bank.hasResource(type, 2)){
-				p.getResources().addResource(h.getResourceType(),2,bank);
+					p.getResources().addResource(h.getResourceType(),2,bank);
 				}
 				else if(bank.hasResource(type, 1)){                  // if bank only has 1 resource of that type, give it to player
-				p.getResources().addResource(h.getResourceType(),1,bank);
+					p.getResources().addResource(h.getResourceType(),1,bank);
 				}
-				
-				
-				
+
+
+
 			}
 		}
 
