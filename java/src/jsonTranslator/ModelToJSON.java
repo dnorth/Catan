@@ -41,19 +41,19 @@ public class ModelToJSON {
 		JsonObject newModel = new JsonObject();
 		JsonObject bank = this.translateResources(model.getBank());
 		newModel.add("bank", bank);
-		
+
 		JsonObject deck = this.translateDevCards(model.getDeck());
 		newModel.add("deck", deck);
-		
+
 		JsonObject chat = this.translateMessageList(model.getChat());
 		newModel.add("chat", chat);
-		
+
 		JsonObject log = this.translateMessageList(model.getLog());
 		newModel.add("log", log);
-		
+
 		JsonObject map = this.translateMap(model.getBoard());
 		newModel.add("map", map);
-		
+
 		JsonArray players = this.translatePlayers(model.getPlayers());
 		newModel.add("players", players);
 		
@@ -94,24 +94,32 @@ public class ModelToJSON {
 	private JsonArray translatePlayers(Player[] players) {
 		JsonArray list = new JsonArray();
 		for (Player p : players) {
-			JsonObject player = new JsonObject();
-			player.addProperty("cities", p.getCities());
-			player.addProperty("color", p.getColor());
-			player.addProperty("discarded", p.isDiscarded());
-			player.addProperty("monuments", p.getMonuments());
-			player.addProperty("name", p.getName());
-			player.add("newDevCards", this.translateDevCards(p.getNewDevCards()));
-			player.add("oldDevCards", this.translateDevCards(p.getOldDevCards()));
-			player.addProperty("playerIndex", p.getPlayerIndex());
-			player.addProperty("playedDevCard", p.isPlayedDevCard());
-			player.addProperty("playerID", p.getPlayerID());
-			player.add("resources", this.translateResources(p.getResources()));
-			player.addProperty("roads", p.getRoads());
-			player.addProperty("settlements", p.getSettlements());
-			player.addProperty("soldiers", p.getSoldiers());
-			player.addProperty("victoryPoints", p.getVictoryPoints());
+
+			if (p != null){
+				JsonObject player = new JsonObject();
+
+				player.addProperty("cities", p.getCities());
+				player.addProperty("color", p.getColor());
+				player.addProperty("discarded", p.isDiscarded());
+				player.addProperty("monuments", p.getMonuments());
+				player.addProperty("name", p.getName());
+				player.add("newDevCards", this.translateDevCards(p.getNewDevCards()));
+				player.add("oldDevCards", this.translateDevCards(p.getOldDevCards()));
+				player.addProperty("playerIndex", p.getPlayerIndex());
+				player.addProperty("playedDevCard", p.isPlayedDevCard());
+				player.addProperty("playerID", p.getPlayerID());
+				player.add("resources", this.translateResources(p.getResources()));
+				player.addProperty("roads", p.getRoads());
+				player.addProperty("settlements", p.getSettlements());
+				player.addProperty("soldiers", p.getSoldiers());
+				player.addProperty("victoryPoints", p.getVictoryPoints());
+
+				list.add(player);
+			}
+			else{
+				list.add(null);
+			}
 			
-			list.add(player);
 		}
 		return list;
 	}

@@ -37,6 +37,8 @@ public class JoinCommand implements IGamesCommand {
 		else {
 			game.addUser(serverData.getUserByID(playerID), color);
 		}
+		
+		game.getClientModel().increaseVersion();
 	}
 
 }
