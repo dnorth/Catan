@@ -1,9 +1,11 @@
 package server.commands.moves;
 
+import client.models.Player;
 import client.models.mapdata.Board;
 import client.models.mapdata.Road;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
+import shared.definitions.DevCard;
 import shared.locations.EdgeLocation;
 
 // TODO: Auto-generated Javadoc
@@ -32,9 +34,14 @@ public class RoadBuildingCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() {
+		Player p = game.getClientModel().getPlayers()[playerIndex];
+		
+		if(p.getOldDevCards().hasRoadBuilding()){
 		Board board =game.getClientModel().getBoard();
 		board.addRoad(new Road(playerIndex, spot1));
 		board.addRoad(new Road(playerIndex, spot2));
+		p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
+		}
 	}
 
 }

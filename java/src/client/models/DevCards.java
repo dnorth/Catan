@@ -77,6 +77,27 @@ public void addSpecifiedDevCard(DevCard type, int amount) {
 	}
 }
 
+public void decSpecifiedDevCard(DevCard type) {
+	switch (type) {
+	case SOLDIER:
+		soldier--; break;
+	case YEAROFPLENTY:
+		yearOfPlenty--; break;
+	case MONOPOLY:
+		monopoly--; break;
+	case ROADBUILDING:
+		roadBuilding--; break;
+	case MONUMENT:
+		monument--; break;
+	}
+}
+
+public boolean hasMonopoly(){return monopoly>0;}
+public boolean hasMonument(){return monument>0;}
+public boolean hasRoadBuilding(){return roadBuilding>0;}
+public boolean hasSoldier(){return soldier>0;}
+public boolean hasYearOfPlenty(){return yearOfPlenty>0;}
+
 public int getMonopolyCount() {
 	return monopoly;
 }

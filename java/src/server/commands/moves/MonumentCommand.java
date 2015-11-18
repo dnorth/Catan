@@ -1,7 +1,9 @@
 package server.commands.moves;
 
+import client.models.Player;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
+import shared.definitions.DevCard;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,7 +25,18 @@ public class MonumentCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() {
-		game.getClientModel().getPlayers()[playerIndex].incMonuments();
-	}
 
+		Player user = game.getClientModel().getPlayers()[playerIndex];
+		if(user.getOldDevCards().hasMonument() || user.getNewDevCards().hasMonument()){
+			user.incMonuments();
+
+			if(user.getNewDevCards().hasMonument()){
+				user.getNewDevCards().decSpecifiedDevCard(DevCard.MONUMENT);	
+			}
+
+			else{
+				user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);	
+			}
+		}
+	}
 }
