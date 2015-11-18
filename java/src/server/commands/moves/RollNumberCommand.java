@@ -7,6 +7,9 @@ import client.models.TurnTracker;
 import client.models.VertexObject;
 import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
+import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidRollException;
+import server.exceptions.InvalidStatusException;
 import server.model.ServerGame;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
@@ -34,18 +37,32 @@ public class RollNumberCommand implements IMovesCommand {
 
 	/**
 	 *  Rolls the "dice". 
+	 * @throws InvalidRollException 
+	 * @throws InvalidStatusException 
+	 * @throws InsufficientResourcesException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws InvalidRollException, InvalidStatusException, InsufficientResourcesException {
+		
+		if(number<2 || number > 12) // throw exception
+		{throw new InvalidRollException();}
+		
+
+		TurnTracker turnTracker = game.getClientModel().getTurnTracker();
+
 		if(number==7){
 			//check if players need to discard
 			if(game.getClientModel().needToDiscard()){
-				game.getClientModel().setTurnTrackerStatus("Discarding");
+				turnTracker.setStatus("Discarding");
+				return;
 			}
 			else{
-				game.getClientModel().setTurnTrackerStatus("Robbing");
+				turnTracker.setStatus("Robbing");
+				return;
 			}
 		}
+		
+		turnTracker.setStatus("Rolling");
 
 		ClientModel model = game.getClientModel();
 		for(Hex h : model.getBoard().getHexes())
@@ -57,29 +74,13 @@ public class RollNumberCommand implements IMovesCommand {
 		game.getClientModel().increaseVersion();
 	}
 
-	private void addResourcesToPlayers(Hex h, ClientModel model)
+	private void addResourcesToPlayers(Hex h, ClientModel model) throws InvalidStatusException, InsufficientResourcesException
 	{
 		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){ // throw exception
 			return;
 		}
 
-		TurnTracker turnTracker = game.getClientModel().getTurnTracker();
-		if(number<2 || number > 12) // throw exception
-		{return;}
-
-		if(turnTracker.getStatus().equals("Rolling")==false){ // throw exception
-			return;
-		}
-
-		if(number==7){
-			for(Player p : game.getClientModel().getPlayers()){
-				if(p.needsToDiscard()){
-					turnTracker.setStatus("Discard");
-				}
-			}
-			// continue work here
-			
-		}
+		model.checkStatus("Rolling");
 
 		Resources bank = model.getBank();
 		ResourceType type = h.getResourceType();
@@ -89,10 +90,7 @@ public class RollNumberCommand implements IMovesCommand {
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
-
-				if(bank.hasResource(type, 1)){
 					p.getResources().addResource(h.getResourceType(),1,bank);
-				}
 			}
 		}
 
@@ -105,12 +103,9 @@ public class RollNumberCommand implements IMovesCommand {
 				if(bank.hasResource(type, 2)){
 					p.getResources().addResource(h.getResourceType(),2,bank);
 				}
-				else if(bank.hasResource(type, 1)){                  // if bank only has 1 resource of that type, give it to player
+				else {                  // if bank only has 1 resource of that type, give it to player
 					p.getResources().addResource(h.getResourceType(),1,bank);
 				}
-
-
-
 			}
 		}
 

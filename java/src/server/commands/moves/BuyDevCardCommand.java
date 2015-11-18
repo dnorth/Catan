@@ -9,6 +9,7 @@ import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
+import server.exceptions.InsufficientResourcesException;
 import server.model.ServerGame;
 import shared.definitions.DevCard;
 
@@ -31,9 +32,10 @@ public class BuyDevCardCommand implements IMovesCommand {
 
 	/**
 	 *  Buys a DevCard.
+	 * @throws InsufficientResourcesException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws InsufficientResourcesException {
 		Random rand = new Random();
 		ClientModel model = game.getClientModel();
 		DevCards deck = model.getDeck();
@@ -47,8 +49,17 @@ public class BuyDevCardCommand implements IMovesCommand {
 		
 		if(p.canBuyDevCard()){
 			p.payForDevCard(bank);
+			
+			if(selectedDevCard==DevCard.MONUMENT)
+			{
+				p.getOldDevCards().addSpecifiedDevCard(selectedDevCard, 1);	
+			}
+			else{
 			p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
+			}
+			deck.decSpecifiedDevCard(selectedDevCard);
 		}
+		
 		game.getClientModel().increaseVersion();
 		
 		

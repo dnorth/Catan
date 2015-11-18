@@ -1,15 +1,19 @@
 package client.models;
 import java.util.Observable;
 
+import server.exceptions.CantBuildThereException;
+import server.exceptions.InvalidMaritimeTradeException;
+import server.exceptions.InvalidStatusException;
+import server.exceptions.NotYourTurnException;
+import server.model.ServerPlayer;
+import shared.definitions.ResourceType;
+import shared.locations.VertexLocation;
+import client.facade.CanDoManager;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
-import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
-import server.model.ServerPlayer;
-import shared.definitions.HexType;
-import shared.definitions.ResourceType;
-import shared.locations.VertexLocation;
+import client.models.mapdata.Road;
 
 /**
  * Client model interacts with Client Communicator (Server Proxy), holds pointers to all necessary data
@@ -44,6 +48,7 @@ public class ClientModel extends Observable
 		chat = new MessageList();
 		log = new MessageList();
 		turnTracker = new TurnTracker();
+		tradeOffer = new TradeOffer();
 		version = 0;
 		winner = -1;
 	}
@@ -163,7 +168,7 @@ public class ClientModel extends Observable
 		}
 		return false;
 	}
-	
+
 	public String playersToString() {
 		StringBuilder sb = new StringBuilder();
 		
@@ -172,13 +177,6 @@ public class ClientModel extends Observable
 		}
 		
 		return sb.toString();
-	}
-	
-	public void addHexResourceToPlayer(shared.locations.HexLocation h, int playerIndex){
-		Hex hex = this.board.getHexFromCoords(h.getX(), h.getY());
-		if (hex == null || hex.getHexType() == HexType.DESERT)
-			return;
-		this.players[playerIndex].getResources().addResource(hex.getResourceType(), 1, this.bank);
 	}
 	
 	@Override
@@ -343,4 +341,109 @@ public class ClientModel extends Observable
 	public void discardCards(String type, int playerIndex, Resources discardedCards){}
 
 	
+	
+	public void checkStatus(String status) throws InvalidStatusException{
+		if(getTurnTrackerStatus().equals(status)==false){
+			throw new InvalidStatusException();
+		}
+	}
+	public void checkTurn(int playerIndex) throws NotYourTurnException{
+		if(this.getTurnTracker().getCurrentTurn()!=playerIndex){
+			throw new NotYourTurnException();
+		}
+	}
+	
+	public void checkRoad(Road road) throws CantBuildThereException
+	{
+		CanDoManager cd = new CanDoManager(this);
+		if(cd.canPlaceRoadAtLocation(road.getOwner(), road.getLocation())==false){
+			throw new CantBuildThereException();
+		}
+	}
+	
+	public void checkInitialRoad(Road road) throws CantBuildThereException
+	{
+		CanDoManager cd = new CanDoManager(this);
+		if(cd.canPlaceInitialRoad(road.getOwner(), road.getLocation())==false){
+			throw new CantBuildThereException();
+		}
+	}
+	
+	public void checkSettlement(int playerIndex, EdgeLocation edge) throws CantBuildThereException
+	{
+		CanDoManager cd = new CanDoManager(this);
+		if(cd.canPlaceSettlementAtLocation(playerIndex, edge)==false){
+			throw new CantBuildThereException();
+		}
+	}
+	
+	public void checkCity(int playerIndex, EdgeLocation edge) throws CantBuildThereException
+	{
+		CanDoManager cd = new CanDoManager(this);
+		if(cd.canUpgradeSettlementAtLocation(playerIndex, edge)==false){
+			throw new CantBuildThereException();
+		}
+	}
+	
+	public void checkMaritimeTrade(int playerIndex, ResourceType type, int ratio) throws InvalidMaritimeTradeException{
+		if(ratio==4) {
+			return;
+			}
+		Player p = players[playerIndex];
+		if(p.getPortTrade().getCost(type)!=ratio){
+			throw new InvalidMaritimeTradeException();
+		}
+	}
+	
+	public void updateMaritimeTradeCosts(int playerIndex){
+	CanDoManager canDo = new CanDoManager(this);
+		
+		canDo.getBoardManager().updatePlayerMaritimeTradeCosts(players[playerIndex], board);
+	}
+	public boolean playerHasLongestRoad(Player p){
+		int roadsPlayed = 15-p.getRoads();
+		for(Player player : players){
+			int playerRoadsPlayed = 15-player.getRoads();
+			if(playerRoadsPlayed>roadsPlayed){
+				return false;
+			}
+		}
+		return roadsPlayed>=5;
+	}
+	
+	public void awardLongestRoad(Player p){
+		int longestRoadIndex = turnTracker.getLongestRoad();
+		if(longestRoadIndex==p.getPlayerIndex()){return;}
+		
+		else if(longestRoadIndex!=-1){
+		Player loser = players[longestRoadIndex];	
+		loser.setVictoryPoints(loser.getVictoryPoints()-2);
+			
+		}	
+			p.setVictoryPoints(p.getVictoryPoints()+2);
+			turnTracker.setLongestRoad(p.getPlayerIndex());
+	}
+	
+	public void awardLargestArmy(Player p){
+		int largestArmyIndex = turnTracker.getLargestArmy();
+		if(largestArmyIndex==p.getPlayerIndex()){return;}
+		
+		else if(largestArmyIndex!=-1){
+		Player loser = players[largestArmyIndex];	
+		loser.setVictoryPoints(loser.getVictoryPoints()-2);
+			
+		}	
+			p.setVictoryPoints(p.getVictoryPoints()+2);
+			turnTracker.setLargestArmy(p.getPlayerIndex());
+	}
+	
+	public boolean isInitializingPhase()
+	{
+		if (turnTracker.getStatus().equals("FirstRound")|| turnTracker.getStatus().equals("SecondRound")) {
+		return true;
+		}
+		else{
+			return false;
+		}
+	}
 }

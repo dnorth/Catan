@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
+import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidStatusException;
 import server.model.ServerGame;
 import shared.definitions.ResourceType;
@@ -29,16 +30,25 @@ public class DiscardCardsCommand implements IMovesCommand {
 
 	/**
 	 * Discards Cards.
+	 * @throws InsufficientResourcesException 
 	 */
 	@Override
-	public void execute() throws InvalidStatusException {
+	public void execute() throws InvalidStatusException, InsufficientResourcesException {
+		
+		if(game.getClientModel().getTurnTracker().getStatus().equals("Discarding")==false)
+		{throw new InvalidStatusException();}
+		
 		
 		Player player = game.getClientModel().getPlayers()[playerIndex];
 		Resources playerResources = game.getClientModel().getPlayers()[playerIndex].getResources();
 		
 		
-		if(player.needsToDiscard())
-		{return;}
+		if(player.needsToDiscard()==false)
+		{throw new InvalidStatusException();}
+		
+		if(player.getResources().hasSpecifiedResources(discardedCards)==false){
+			throw new InsufficientResourcesException();
+		}
 		
 		boolean lastDiscard=true;
 		for(Player p : game.getClientModel().getPlayers()){
@@ -56,8 +66,7 @@ public class DiscardCardsCommand implements IMovesCommand {
 			game.getClientModel().getTurnTracker().setStatus("Robbing");
 		}
 		
-		if(!game.getClientModel().getTurnTracker().getStatus().equals("Discarding"))
-		{throw new InvalidStatusException();}
+
 			
 		Resources bank = game.getClientModel().getBank();
 		

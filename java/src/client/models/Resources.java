@@ -230,8 +230,22 @@ public class Resources{
 		default:
 			return false;
 		}
-		
 	}
+	
+	public boolean hasSpecifiedResources(Resources resources){	
+		return hasBrick(resources.getBrickCount()) && 
+				hasOre(resources.getOreCount())     && 
+				hasSheep(resources.getSheepCount()) && 
+				hasWheat(resources.getWheatCount()) &&
+				hasWood(resources.getWoodCount());
+	}
+	
+	public boolean hasBrick(int count){return brick>=count;}
+	public boolean hasOre(int count){return ore>=count;}
+	public boolean hasSheep(int count){return sheep>=count;}
+	public boolean hasWheat(int count){return wheat>=count;}
+	public boolean hasWood(int count){return wood>=count;}
+	
 	public int getWoodCount() {
 		return wood;
 	}

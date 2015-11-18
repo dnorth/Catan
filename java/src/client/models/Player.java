@@ -1,5 +1,7 @@
 package client.models;
 
+import server.exceptions.InsufficientResourcesException;
+import server.exceptions.OutOfPiecesException;
 import server.model.ServerPlayer;
 import shared.definitions.ResourceType;
 import client.models.mapdata.PortTrade;
@@ -59,18 +61,16 @@ public class Player
 //	}
 	
 	public Player(ServerPlayer p, int playerIndex){
-//		System.out.println("COLOR COLOR COLOR: " + p.getColor());
-		playerID = p.getId();
-		newDevCards = new DevCards();
-		oldDevCards = new DevCards();
-		name= p.getName();
-		color =p.getColor();
-		this.playerIndex = playerIndex;
-		resources = new Resources();
-		portTrade = new PortTrade();
-		cities = 4;
-		settlements = 5;
-		roads = 15;
+	newDevCards = new DevCards();
+	oldDevCards = new DevCards();
+	name= p.getName();
+	color =p.getColor();
+	this.playerIndex = playerIndex;
+	resources = new Resources();
+	portTrade = new PortTrade();
+	cities = 4;
+	settlements = 5;
+	roads = 15;
 	}
 	
 	public int getCitiesNum() {
@@ -239,27 +239,44 @@ public class Player
 		}
 
 	}
-	public void payForRoad(Resources bank){
+	public void payForRoad(Resources bank) throws InsufficientResourcesException{
+		if(hasBrick() && hasWood())
+		{
 		resources.subtractResource(ResourceType.BRICK, 1, bank);
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
+		}
+		else
+		{throw new InsufficientResourcesException();}
 	}
 
-	public void payForSettlement(Resources bank){
+	public void payForSettlement(Resources bank) throws InsufficientResourcesException{
+		if(hasBrick() && hasWheat() && hasSheep() && hasWood()){
 		resources.subtractResource(ResourceType.BRICK, 1, bank);
 		resources.subtractResource(ResourceType.WHEAT, 1, bank);
 		resources.subtractResource(ResourceType.SHEEP, 1, bank);
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
+		}
+		else
+		{throw new InsufficientResourcesException();}
 	}
 
-	public void payForDevCard(Resources bank){
+	public void payForDevCard(Resources bank) throws InsufficientResourcesException{
+		if(hasSheep() && hasWheat() && hasOre()){
 		resources.subtractResource(ResourceType.SHEEP, 1, bank);
 		resources.subtractResource(ResourceType.WHEAT, 1, bank);
 		resources.subtractResource(ResourceType.ORE, 1, bank);
+		}
+		else
+		{throw new InsufficientResourcesException();}
 	}
 
-	public void payForCity(Resources bank){
+	public void payForCity(Resources bank) throws InsufficientResourcesException{
+		if(hasWheat(2) && hasOre(3)){
 		resources.subtractResource(ResourceType.WHEAT, 2,bank);
 		resources.subtractResource(ResourceType.ORE, 3,bank);
+		}
+		else
+		{throw new InsufficientResourcesException();}
 	}
 
 	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}
@@ -277,9 +294,26 @@ public class Player
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 
 	public void incMonuments(){monuments++;}
-	public void decSettlements(){settlements--;}
-	public void decCities(){cities--;}
-	public void decRoads(){roads--;}
+	public void decSettlements() throws OutOfPiecesException{
+		if(settlements>0)
+		settlements--;
+		else{
+			throw new OutOfPiecesException();
+		}}
+	public void decCities() throws OutOfPiecesException{
+		if(cities>0){
+		cities--;
+		settlements++;
+		}
+		else{
+			throw new OutOfPiecesException();
+		}}
+	public void decRoads() throws OutOfPiecesException{
+		if(roads>0)
+		roads--;
+		else{
+			throw new OutOfPiecesException();
+		}}
 
 	@Override
 	public String toString() {
