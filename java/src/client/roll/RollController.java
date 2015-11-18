@@ -79,7 +79,7 @@ public class RollController extends Controller implements IRollController {
 			this.getRollView().showModal();
 			//set timer to roll in 5 seconds
 			timer = new Timer();
-			timer.schedule(new AutomaticRoll(), 5000, 5000);
+			timer.schedule(new AutomaticRoll(), 5000);
 		}
 		//System.out.println("ROLL-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 	}
