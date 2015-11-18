@@ -50,10 +50,10 @@ public class BuildSettlementCommand implements IMovesCommand {
 		
 
 		
-		if(free==false && p.canBuySettlement())
-		{p.payForSettlement(bank);
-		p.decSettlements();
-		settlements.add(settlement);
+		if(free==false && p.canBuySettlement()) {
+			p.payForSettlement(bank);
+			p.decSettlements();
+			settlements.add(settlement);
 		}
 		else if(free==true)
 		{

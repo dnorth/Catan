@@ -288,6 +288,11 @@ public class Player
 				+ ", victoryPoints=" + victoryPoints + "]";
 	}
 
+	public void transferDevCards() {
+		this.oldDevCards.addDevCards(newDevCards);
+		this.newDevCards = new DevCards();
+	}
+
 
 
 }

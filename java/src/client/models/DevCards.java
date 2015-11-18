@@ -17,7 +17,13 @@ private int roadBuilding;
 private int soldier;
 private int yearOfPlenty;
 
-public DevCards(){}
+public DevCards() {
+	this.monopoly = 0;
+	this.monument = 0;
+	this.roadBuilding = 0;
+	this.soldier = 0;
+	this.yearOfPlenty = 0;
+}
 public DevCards(int monopolyCount, int monumentCount, int roadBuildingCount, int soldierCount, int yearOfPlentyCount) {
 	this.monopoly = monopolyCount;
 	this.monument = monumentCount;
@@ -60,6 +66,14 @@ public int getSpecifiedDevCardCount(DevCardType type) {
 		return getMonumentCount();
 	}
 	return -99;
+}
+
+public void addDevCards(DevCards devCards) {
+	this.monopoly += devCards.monopoly;
+	this.monument += devCards.monument;
+	this.roadBuilding += devCards.roadBuilding;
+	this.soldier += devCards.soldier;
+	this.yearOfPlenty += devCards.yearOfPlenty;
 }
 
 public void addSpecifiedDevCard(DevCard type, int amount) {

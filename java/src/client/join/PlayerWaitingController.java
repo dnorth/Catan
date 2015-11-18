@@ -88,6 +88,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				
 				//Set the local player so that he has the real player index
 				for(PlayerInfo p : playerList) {
+					System.out.println("PLAYER INDEX: " + String.valueOf(p.getPlayerIndex()));
 					if(p.getId() == stateManager.getFacade().getLocalPlayer().getId()) {
 						p.setUserCookie(userCookie);
 						stateManager.getFacade().setLocalPlayer(p);
