@@ -56,7 +56,7 @@ public class GamesHandler implements HttpHandler{
 				if(Authenticate.isValidCookie(cookie, false)) {	
 					
 					int pID = gamesFacade.getServerData().getPlayerID(jsonToModel.getName(cookie), jsonToModel.getPassword(cookie));
-					int gID = cookie.get("game").getAsInt();
+					int gID = jsonToModel.getGameIndex(cookie);
 					JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 					String color = jsonToModel.getColor(jsonObject);
 					gamesFacade.joinGame(pID, gID, color);
