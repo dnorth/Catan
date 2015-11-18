@@ -15,6 +15,11 @@ public class HexLocation
 		setY(y);
 	}
 	
+	public HexLocation(client.models.mapdata.HexLocation location) {
+		x=location.getX();
+		y=location.getY();
+	}
+
 	public int getX()
 	{
 		return x;

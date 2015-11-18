@@ -190,6 +190,21 @@ public class Player
 		return hasWheat(2) && hasOre(3) && cities > 0;
 	}
 	
+	public boolean canAcceptTrade(TradeOffer tradeOffer){	
+		return hasSpecifiedResources(tradeOffer);
+	}
+	
+	public boolean hasSpecifiedResources(TradeOffer tradeOffer){	
+		
+		Resources offer = tradeOffer.getOffer();
+		
+		return hasBrick(offer.getBrickCount()*-1) && 
+			   hasOre(offer.getOreCount()*-1)     && 
+			   hasSheep(offer.getSheepCount()*-1) && 
+			   hasWheat(offer.getWheatCount()*-1) &&
+			   hasWood(offer.getWoodCount()*-1);
+	}
+	
 	public void payForRoad(Resources bank){
 	resources.subtractResource(ResourceType.BRICK, 1, bank);
 	resources.subtractResource(ResourceType.WOOD, 1, bank);

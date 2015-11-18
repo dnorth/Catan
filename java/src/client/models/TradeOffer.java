@@ -31,10 +31,28 @@ public class TradeOffer {
 		this.offer = offer;
 	}
 
+	public TradeOffer() {offer = new Resources();}
+
+	public TradeOffer(TradeOffer tradeOffer) {
+		sender = tradeOffer.sender;
+		receiver = tradeOffer.receiver;
+		offer = new Resources(tradeOffer.offer);
+	}
+
 	public int getSender() {
 		return sender;
 	}
 
+	public TradeOffer reverseOffer(){
+		TradeOffer offer = new TradeOffer(this);
+	offer.getOffer().setBrick(offer.getBrickCount()*-1);
+	offer.getOffer().setOre(offer.getOreCount()*-1);
+	offer.getOffer().setSheep(offer.getSheepCount()*-1);
+	offer.getOffer().setWheat(offer.getWheatCount()*-1);
+	offer.getOffer().setWood(offer.getWoodCount()*-1);
+	return this;
+	}
+	
 	public void setSender(int sender) {
 		this.sender = sender;
 	}

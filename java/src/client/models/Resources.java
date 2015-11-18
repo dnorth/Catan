@@ -29,6 +29,14 @@ public class Resources{
 		this.ore = 0;
 	}
 
+	public Resources(Resources offer) {
+		wood = offer.wood;
+		brick = offer.brick;
+		sheep = offer.sheep;
+		wheat = offer.wheat;
+		ore = offer.ore;
+	}
+
 	public List<ResourceType> getResourceTypes()
 	{
 		List<ResourceType> types = new ArrayList<>();

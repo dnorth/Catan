@@ -205,7 +205,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel offerTrade(int gameIndex, int playerIndex, Resources offer, int receiver) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		OfferTradeCommand command = new OfferTradeCommand();
+		OfferTradeCommand command = new OfferTradeCommand(game, playerIndex, offer, receiver);
 		command.execute();
 		return game.getClientModel();
 	}
@@ -217,7 +217,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel acceptTrade(int gameIndex, int playerIndex, boolean willAccept) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		AcceptTradeCommand command = new AcceptTradeCommand();
+		AcceptTradeCommand command = new AcceptTradeCommand(game, playerIndex, willAccept);
 		command.execute();
 		return game.getClientModel();
 	}
