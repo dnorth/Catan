@@ -12,8 +12,10 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -328,6 +330,9 @@ public class JSONToModel {
 	public String getName(JsonObject object) {
 		return object.get("name").getAsString();
 	}
+	public String getResource(JsonObject object, String name) {
+		return object.get(name).getAsString();
+	}
 	public boolean getRandomTiles(JsonObject object) {
 		return object.get("randomTiles").getAsBoolean();
 	}
@@ -337,16 +342,33 @@ public class JSONToModel {
 	public boolean getRandomPorts(JsonObject object) {
 		return object.get("randomPorts").getAsBoolean();
 	}
+	public boolean getWillAccept(JsonObject object) {
+		return object.get("willAccept").getAsBoolean();
+	}
 	public int getGameIndex(JsonObject object) {
 		return object.get("game").getAsInt();
+	}
+	public int getRatio(JsonObject object) {
+		return object.get("ratio").getAsInt();
+	}
+	public int getReceiver(JsonObject object) {
+		return object.get("receiver").getAsInt();
 	}
 	public EdgeLocation getEdgeLocation(JsonObject object, String name) {
 		return (EdgeLocation)g.fromJson(object.get(name), EdgeLocation.class);
 	}
+	public ResourceType getResourceType(JsonObject object, String name) {
+		return (ResourceType)g.fromJson(object.get(name), ResourceType.class);
+	}
 	public HexLocation getHexLocation(JsonObject object, String name) {
 		return (HexLocation)g.fromJson(object.get(name), HexLocation.class);
-		}
-	
+	}
+	public VertexLocation getVertexLocation(JsonObject object, String name) {
+		return (VertexLocation)g.fromJson(object.get(name), VertexLocation.class);
+	}
+	public Resources getResourceList(JsonObject object, String name) {
+		return (Resources)g.fromJson(object.get(name), Resources.class);
+	}
 	public boolean getFree(JsonObject object) {
 		return object.get("free").getAsBoolean();
 	}

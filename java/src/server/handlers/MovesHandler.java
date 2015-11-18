@@ -70,51 +70,41 @@ public class MovesHandler implements HttpHandler{
 						jsonModel = movesFacade.buyDevCard(gameIndex, playerIndex);
 						break;
 					case "Year_of_Plenty":
-						//jsonModel = movesFacade.playYearOfPlenty(gameIndex, playerIndex, jsonToModel.get, resource2);
-
+						jsonModel = movesFacade.playYearOfPlenty(gameIndex, playerIndex, jsonToModel.getResourceType(object, "resource1"), jsonToModel.getResourceType(object, "resource2"));
 						break;
 					case "Road_Building":
-						//jsonModel = movesFacade.playRoadBuilding(gameIndex, playerIndex, spot1, spot2);
-
+						jsonModel = movesFacade.playRoadBuilding(gameIndex, playerIndex, jsonToModel.getEdgeLocation(object, "spot1"), jsonToModel.getEdgeLocation(object, "spot2"));
 						break;
 					case "Soldier":
-						//jsonModel = movesFacade.playSoldier(gameIndex, playerIndex, victimIndex, location);
-
+						jsonModel = movesFacade.playSoldier(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "HexLocation"));
 						break;
 					case "Monopoly":
-						//jsonModel = movesFacade.playMonopoly(resource, gameIndex, playerIndex);
-
+						jsonModel = movesFacade.playMonopoly(jsonToModel.getResourceType(object, "resource"), gameIndex, playerIndex);
 						break;
 					case "Monument":
 						jsonModel = movesFacade.playMonument(gameIndex, playerIndex);
-
 						break;
 					case "buildRoad":
 						jsonModel = movesFacade.buildRoad(gameIndex, playerIndex, jsonToModel.getEdgeLocation(object, "roadLocation"), jsonToModel.getFree(object));
 						break;
 					case "buildSettlement":
-						//jsonModel = movesFacade.buildSettlement(gameIndex, playerIndex, vertexLocation, free);
-
+						jsonModel = movesFacade.buildSettlement(gameIndex, playerIndex, jsonToModel.getVertexLocation(object, "vertexLocation"), jsonToModel.getFree(object));
 						break;
 					case "buildCity":
-						//jsonModel = movesFacade.buildCity(gameIndex, playerIndex, location);
-
+						jsonModel = movesFacade.buildCity(gameIndex, playerIndex, jsonToModel.getVertexLocation(object, "vertexLocation"));
 						break;
 					case "offerTrade":
-						//jsonModel = movesFacade.offerTrade(gameIndex, playerIndex, offer, receiver);
-
+						jsonModel = movesFacade.offerTrade(gameIndex, playerIndex, jsonToModel.getResourceList(object, "offer"), jsonToModel.getReceiver(object));
 						break;
 					case "acceptTrade":
-						//jsonModel = movesFacade.acceptTrade(gameIndex, playerIndex, willAccept);
-
+						jsonModel = movesFacade.acceptTrade(gameIndex, playerIndex, jsonToModel.getWillAccept(object));
 						break;
 					case "maritimeTrade":
-						//jsonModel = movesFacade.maritimeTrade(gameIndex, playerIndex, ratio, inputResource, outputResource);
-
+						//TODO - ratio, input and output resource is optional. Have to handle that
+						jsonModel = movesFacade.maritimeTrade(gameIndex, playerIndex, jsonToModel.getRatio(object), jsonToModel.getResource(object, "inputResource"), jsonToModel.getResource(object, "outputResource"));
 						break;
 					case "discardCards":
-						//jsonModel = movesFacade.discardCards(gameIndex, playerIndex, discardedCards);
-
+						jsonModel = movesFacade.discardCards(gameIndex, playerIndex, jsonToModel.getResourceList(object, "discardedCards"));
 						break;
 					default:
 						throw new ContextNotFoundException("404 Context Not Found.");
