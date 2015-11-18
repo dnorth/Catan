@@ -1,6 +1,7 @@
 package client.models.mapdata;
 
 import shared.locations.EdgeDirection;
+import shared.locations.VertexDirection;
 
 /**
  * Holds x and y coordinates of edge, along with direction
@@ -71,7 +72,9 @@ public class EdgeLocation {
 		return true;
 	}
 	
-	
+	public shared.locations.VertexLocation getSharedVertexLocation() {
+		return new shared.locations.VertexLocation(new shared.locations.HexLocation(this.x, this.y), VertexDirection.getVertexDirectionFromString(this.direction));
+	}
 	public shared.locations.EdgeLocation getSharedEdgeLocation() {
 		return new shared.locations.EdgeLocation(new shared.locations.HexLocation(this.x, this.y), EdgeDirection.getEdgeDirectionFromString(this.direction));
 	}

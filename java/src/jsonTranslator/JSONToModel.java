@@ -361,13 +361,16 @@ public class JSONToModel {
 		return loc.getSharedEdgeLocation();
 	}
 	public ResourceType getResourceType(JsonObject object, String name) {
-		return (ResourceType)g.fromJson(object.get(name), ResourceType.class);
+		return ResourceType.getResourceType(object.get(name).getAsString());
 	}
 	public HexLocation getHexLocation(JsonObject object, String name) {
 		return (HexLocation)g.fromJson(object.get(name), HexLocation.class);
 	}
 	public VertexLocation getVertexLocation(JsonObject object, String name) {
-		return (VertexLocation)g.fromJson(object.get(name), VertexLocation.class);
+		client.models.mapdata.EdgeLocation loc = (client.models.mapdata.EdgeLocation) g
+				.fromJson(object.get(name),
+						client.models.mapdata.EdgeLocation.class);
+		return loc.getSharedVertexLocation();
 	}
 	public Resources getResourceList(JsonObject object, String name) {
 		return (Resources)g.fromJson(object.get(name), Resources.class);
