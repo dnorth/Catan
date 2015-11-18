@@ -136,6 +136,12 @@ public class ClientModel extends Observable
 	public void setTurnTracker(TurnTracker turnTracker) {
 		this.turnTracker = turnTracker;
 	}
+	public String getTurnTrackerStatus() {
+		return this.turnTracker.getStatus();
+	}
+	public void setTurnTrackerStatus(String status) {
+		this.turnTracker.setStatus(status);
+	}
 	public int getVersionIndex() {
 		return version;
 	}
@@ -147,6 +153,14 @@ public class ClientModel extends Observable
 	}
 	public void setWinnerIndex(int winnerIndex) {
 		this.winner = winnerIndex;
+	}
+	
+	public boolean needToDiscard(){
+		for (Player p : players) {
+			if (p.getResources().getTotalCount() > 7)
+				return true;
+		}
+		return false;
 	}
 	
 	public String playersToString() {

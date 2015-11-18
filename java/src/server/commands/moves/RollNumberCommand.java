@@ -38,7 +38,13 @@ public class RollNumberCommand implements IMovesCommand {
 	@Override
 	public void execute() {
 		if(number==7){
-			game.getClientModel().getTurnTracker().setStatus("Robbing");
+			//check if players need to discard
+			if(game.getClientModel().needToDiscard()){
+				game.getClientModel().setTurnTrackerStatus("Discarding");
+			}
+			else{
+				game.getClientModel().setTurnTrackerStatus("Robbing");
+			}
 		}
 
 		ClientModel model = game.getClientModel();

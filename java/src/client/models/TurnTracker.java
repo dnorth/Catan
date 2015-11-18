@@ -36,6 +36,18 @@ public class TurnTracker{
 	public void setCurrentTurn(int currentTurn) {
 		this.currentTurn = currentTurn;
 	}
+	public void nextPlayerTurn() {
+		this.currentTurn++;
+		if(this.currentTurn == 4) {
+			this.currentTurn = 0;
+		}
+	}
+	public void previousPlayerTurn() { //for use with setup stage 2
+		this.currentTurn--;
+		if(this.currentTurn == -1) {
+			this.currentTurn = 0;
+		}
+	}
 	public String getStatus() {
 		return status;
 	}

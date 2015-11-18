@@ -1,6 +1,5 @@
 package server.commands.moves;
 
-import client.models.ClientModel;
 import client.models.TurnTracker;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
@@ -24,7 +23,8 @@ public class FinishTurnCommand implements IMovesCommand {
 	@Override
 	public void execute() {
 		TurnTracker t = game.getClientModel().getTurnTracker();
-		t.setCurrentTurn(++playerIndex);
+		t.nextPlayerTurn();
+		t.setStatus("Rolling");
 		game.getClientModel().increaseVersion();
 	}
 
