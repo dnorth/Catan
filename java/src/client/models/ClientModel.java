@@ -70,7 +70,9 @@ public class ClientModel extends Observable
 	public int getVersion() {
 		return version;
 	}
-	
+	public void increaseVersion() {
+		setVersion(getVersion()+1);
+	}
 	public void setVersion(int version) {
 		if(this.version == version) {
 			hasChanged = false;
