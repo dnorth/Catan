@@ -46,6 +46,7 @@ public class MovesHandler implements HttpHandler{
 		String response = "";
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
+			exchange.getResponseHeaders().set("Content-Type", "application/json");
 			if(Authenticate.isValidCookie(cookie, true)) {	
 				JsonObject object = jsonToModel.exchangeToJson(exchange);
 				ClientModel jsonModel = null;

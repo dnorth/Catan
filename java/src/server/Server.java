@@ -12,6 +12,7 @@ import server.facade.iGameFacade;
 import server.handlers.GamesHandler;
 import server.handlers.GameHandler;
 import server.handlers.MovesHandler;
+import server.handlers.SwaggerHandlers;
 import server.handlers.UserHandler;
 import server.model.ServerData;
 
@@ -115,7 +116,8 @@ public class Server {
 		server.createContext("/games", gamesHandler);
 		server.createContext("/moves", movesHandler);
 		server.createContext("/game", gameHandler);
-
+		server.createContext("/docs/api/data", new SwaggerHandlers.JSONAppender(""));
+		server.createContext("/docs/api/view", new SwaggerHandlers.BasicFile(""));
 
 		
 		//The other contexts as well

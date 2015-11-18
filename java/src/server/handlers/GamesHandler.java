@@ -42,7 +42,7 @@ public class GamesHandler implements HttpHandler{
 		JsonObject cookie;
 		String response = "";
 		try {
-			
+			exchange.getResponseHeaders().set("Content-Type", "application/json");
 			switch (specificContext){
 			case "list":
 				List<ServerGame> games = gamesFacade.listGames();
