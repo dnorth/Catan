@@ -59,16 +59,18 @@ public class Player
 //	}
 	
 	public Player(ServerPlayer p, int playerIndex){
-	newDevCards = new DevCards();
-	oldDevCards = new DevCards();
-	name= p.getName();
-	color =p.getColor();
-	this.playerIndex = playerIndex;
-	resources = new Resources();
-	portTrade = new PortTrade();
-	cities = 4;
-	settlements = 5;
-	roads = 15;
+//		System.out.println("COLOR COLOR COLOR: " + p.getColor());
+		playerID = p.getId();
+		newDevCards = new DevCards();
+		oldDevCards = new DevCards();
+		name= p.getName();
+		color =p.getColor();
+		this.playerIndex = playerIndex;
+		resources = new Resources();
+		portTrade = new PortTrade();
+		cities = 4;
+		settlements = 5;
+		roads = 15;
 	}
 	
 	public int getCitiesNum() {

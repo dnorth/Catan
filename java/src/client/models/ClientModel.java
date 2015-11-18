@@ -42,7 +42,6 @@ public class ClientModel extends Observable
 		chat = new MessageList();
 		log = new MessageList();
 		turnTracker = new TurnTracker();
-		tradeOffer = new TradeOffer();
 		version = 0;
 		winner = -1;
 	}

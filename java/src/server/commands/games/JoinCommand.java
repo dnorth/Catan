@@ -29,7 +29,7 @@ public class JoinCommand implements IGamesCommand {
 	public void execute() throws GameFullException {
 		ServerGame game = serverData.getGameByID(gameID);
 		if (game.hasPlayerID(playerID)) {
-			return;
+			game.changeUserColor(serverData.getUserByID(playerID), color);
 		}
 		else if (game.getPlayers().size() > 3) {
 			throw new GameFullException();

@@ -47,6 +47,21 @@ public class ServerGame {
 			return true;
 		}
 	}
+	
+	public void changeUserColor(ServerUser user, String color) {
+		for (ServerPlayer p : players) {
+			if (p.getUser().getPlayerID() == user.getPlayerID()) {
+				p.setColor(color);
+				break;
+			}
+		}
+		for (Player p : this.clientModel.getPlayers()) {
+			if (p.getPlayerID() == user.getPlayerID()) {
+				p.setColor(color);
+				break;
+			}
+		}
+	}
 
 	/**
 	 * Set title.
