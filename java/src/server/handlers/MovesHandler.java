@@ -55,7 +55,6 @@ public class MovesHandler implements HttpHandler{
 				switch (specificContext){
 					case "sendChat":
 						jsonModel = movesFacade.sendChat(gameIndex, playerIndex, jsonToModel.getContent(object));
-						
 						break;
 					case "rollNumber":
 						jsonModel = movesFacade.rollNumber(gameIndex, playerIndex, jsonToModel.getNumber(object));

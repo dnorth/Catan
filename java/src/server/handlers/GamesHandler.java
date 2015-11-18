@@ -51,13 +51,13 @@ public class GamesHandler implements HttpHandler{
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 				break;
 			case "join":
-				cookie = jsonToModel.getCookieFromExchange(exchange);				
-				
+				cookie = jsonToModel.getCookieFromExchange(exchange);
 				if(Authenticate.isValidCookie(cookie, false)) {	
-					JsonObject object = jsonToModel.exchangeToJson(exchange);
-					int pID = gamesFacade.getServerData().getPlayerID(jsonToModel.getName(cookie), jsonToModel.getPassword(cookie));
-					int gID = jsonToModel.getGameID(object);
 					JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
+					int pID = gamesFacade.getServerData().getPlayerID(jsonToModel.getName(cookie), jsonToModel.getPassword(cookie));
+					int gID = jsonToModel.getGameID(jsonObject);
+//					int gID = jsonToModel.getGameIndex(cookie);
+//					JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 					String color = jsonToModel.getColor(jsonObject);
 					gamesFacade.joinGame(pID, gID, color);
 					Headers headers = exchange.getResponseHeaders();
