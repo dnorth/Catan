@@ -39,10 +39,12 @@ public class MaritimeTradeCommand implements IMovesCommand {
 	public void execute() {
 		Player p = game.getClientModel().getPlayers()[playerIndex];
 		Resources resources = p.getResources();
-		if(resources.getAmountOfSpecificResource(inputResource)< ratio) // if player doesn't have enough resources to trade, return
+		Resources bank = game.getClientModel().getBank();
+		
+		if(resources.hasResource(inputResource, ratio)== false || bank.hasResource(outputResource, 1) == false) // if player doesn't have enough resources to trade, return
 		{return;}
 		
-		Resources bank = game.getClientModel().getBank();
+		
 		resources.subtractResource(inputResource, ratio, bank);  // player gives ratio # of inputResource to bank
 		resources.addResource(outputResource, 1, bank);          // player gets 1 outputResource from bank
 	}
