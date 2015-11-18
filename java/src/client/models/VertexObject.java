@@ -23,7 +23,20 @@ public class VertexObject{
 		this.owner = i;
 		this.location = edgeLocation;
 	}
+	
+	public VertexObject(VertexObject v) {
+		this.owner = v.getOwner();
+		this.location = v.getLocation();
+	}
 
+	public VertexObject(int i, VertexLocation vertexLocation) {
+		this.owner = i;
+		
+		HexLocation hexLoc = vertexLocation.getHexLoc();
+		EdgeLocation edge = new EdgeLocation(hexLoc.getX(),hexLoc.getY(), vertexLocation.getDir().toString());
+		this.location = edge;
+	}
+	
 	public int getOwner() {
 		return owner;
 	}

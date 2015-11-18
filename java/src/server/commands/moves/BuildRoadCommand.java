@@ -1,5 +1,6 @@
 package server.commands.moves;
 
+import client.models.Player;
 import client.models.Resources;
 import client.models.mapdata.Board;
 import client.models.mapdata.Road;
@@ -38,14 +39,18 @@ public class BuildRoadCommand implements IMovesCommand {
 	@Override
 	public void execute() {
 		 		Board board =game.getClientModel().getBoard();
-		 		if(!free){
-		 		Resources resources =game.getClientModel().getPlayers()[playerIndex].getResources();
-		 		resources.subtractOne(ResourceType.WOOD);
-		 		resources.subtractOne(ResourceType.BRICK);
-		 		}
+		 		Player p = game.getClientModel().getPlayers()[playerIndex];
+		 		Resources bank = game.getClientModel().getBank();
 		 		
-		board.addRoad(new Road(playerIndex, spot));
-
+		 		if(free==false && p.canBuyRoad()){
+		 		p.payForRoad(bank);
+		 		p.decRoads();
+				board.addRoad(new Road(playerIndex, spot));
+		 		}
+		 		else if(free==true){
+		 			p.decRoads();
+		 			board.addRoad(new Road(playerIndex, spot));
+		 		}
 	}
 
 }

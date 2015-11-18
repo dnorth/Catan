@@ -33,8 +33,8 @@ public class MonopolyCommand implements IMovesCommand  {
 		for(Player p : players){
 		Resources resources = p.getResources();
 		int count = resources.getAmountOfSpecificResource(type);
-		resources.subtractResource(type, count);
-		userResources.addResource(type, count);
+		
+		resources.subtractResource(type, count, userResources);
 		}
 		
 		

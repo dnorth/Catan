@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import shared.definitions.ResourceType;
 
 public class Resources{
-	
+
 	private int wood;
 	private int brick;
 	private int sheep;
 	private int wheat;
 	private int ore;
-	
+
 	public Resources(int wood, int brick, int sheep, int wheat, int ore) {
 		this.wood = wood;
 		this.brick = brick;
@@ -20,7 +20,7 @@ public class Resources{
 		this.wheat = wheat;
 		this.ore = ore;
 	}
-	
+
 	public Resources(){
 		this.wood = 0;
 		this.brick = 0;
@@ -28,26 +28,26 @@ public class Resources{
 		this.wheat = 0;
 		this.ore = 0;
 	}
-	
+
 	public List<ResourceType> getResourceTypes()
 	{
 		List<ResourceType> types = new ArrayList<>();
-		
+
 		for(int i=0; i< wood; i++)
 		{types.add(ResourceType.WOOD);}
-		
+
 		for(int i=0; i< brick; i++)
 		{types.add(ResourceType.BRICK);}
-		
+
 		for(int i=0; i< sheep; i++)
 		{types.add(ResourceType.SHEEP);}
-		
+
 		for(int i=0; i< wheat; i++)
 		{types.add(ResourceType.WHEAT);}
-		
+
 		for(int i=0; i< ore; i++)
 		{types.add(ResourceType.ORE);}
-		
+
 		return types;
 	}
 	public List<ResourceType> getAvailableResourceTypes()
@@ -70,61 +70,14 @@ public class Resources{
 		default: return -1;
 		}
 	}
-	
-	public void addResource(ResourceType type, int amount){
-		switch(type) {
-		case BRICK:
-			this.brick+=amount;
-			break;
-		case ORE:
-			this.ore+=amount;
-			break;
-		case SHEEP:
-			this.sheep+=amount;
-			break;
-		case WHEAT:
-			this.wheat+=amount;
-			break;
-		case WOOD:
-			this.wood+=amount;
-			break;
-		default:
-			break;
-		}
-		
-	}
-	
-	public void subtractResource(ResourceType type, int amount){
-		switch(type) {
-		case BRICK:
-			this.brick-=amount;
-			break;
-		case ORE:
-			this.ore-=amount;
-			break;
-		case SHEEP:
-			this.sheep-=amount;
-			break;
-		case WHEAT:
-			this.wheat-=amount;
-			break;
-		case WOOD:
-			this.wood-=amount;
-			break;
-		default:
-			break;
-		}
-		
-	}
-	
-	public void addOne(ResourceType type) {
+
+	public void addOne(ResourceType type){
 		switch(type) {
 		case BRICK:
 			this.brick++;
 			break;
 		case ORE:
 			this.ore++;
-			break;
 		case SHEEP:
 			this.sheep++;
 			break;
@@ -138,15 +91,14 @@ public class Resources{
 			break;
 		}
 	}
-	
-	public void subtractOne(ResourceType type) {
+
+	public void subtractOne(ResourceType type){
 		switch(type) {
 		case BRICK:
 			this.brick--;
 			break;
 		case ORE:
 			this.ore--;
-			break;
 		case SHEEP:
 			this.sheep--;
 			break;
@@ -157,10 +109,65 @@ public class Resources{
 			this.wood--;
 			break;
 		default:
-			break;	
+			break;
 		}
 	}
-	
+
+	public void addResource(ResourceType type, int amount, Resources takeFrom){
+		switch(type) {
+		case BRICK:
+			this.brick+=amount;
+			takeFrom.brick-=amount;
+			break;
+		case ORE:
+			this.ore+=amount;
+			takeFrom.ore-=amount;
+			break;
+		case SHEEP:
+			this.sheep+=amount;
+			takeFrom.sheep-=amount;
+			break;
+		case WHEAT:
+			this.wheat+=amount;
+			takeFrom.wheat-=amount;
+			break;
+		case WOOD:
+			this.wood+=amount;
+			takeFrom.wood-=amount;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void subtractResource(ResourceType type, int amount, Resources giveTo){
+		switch(type) {
+		case BRICK:
+			this.brick-=amount;
+			giveTo.brick+=amount;
+			break;
+		case ORE:
+			this.ore-=amount;
+			giveTo.ore+=amount;
+			break;
+		case SHEEP:
+			this.sheep-=amount;
+			giveTo.sheep+=amount;
+			break;
+		case WHEAT:
+			this.wheat-=amount;
+			giveTo.wheat+=amount;
+			break;
+		case WOOD:
+			this.wood-=amount;
+			giveTo.wood+=amount;
+			break;
+		default:
+			break;
+		}
+	}
+
+
 	public void unsetResource(ResourceType type) {
 		switch(type) {
 		case BRICK:
@@ -182,7 +189,7 @@ public class Resources{
 			break;	
 		}
 	}
-	
+
 	public int getResourceCount(ResourceType resource) {
 		switch (resource) {
 		case WOOD:
@@ -256,7 +263,7 @@ public class Resources{
 		if(count>0)
 		{sb.append(count + " "+ type +", ");}
 	}
-	
+
 	public void invert() {
 		this.wood *= -1;
 		this.brick *= -1;
@@ -264,5 +271,5 @@ public class Resources{
 		this.wheat *= -1;
 		this.ore *= -1;
 	}
-	
+
 }

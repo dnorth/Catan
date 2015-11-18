@@ -192,7 +192,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel buildSettlement(int gameIndex, int playerIndex, VertexLocation vertexLocation, boolean free) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		BuildSettlementCommand command = new BuildSettlementCommand();
+		BuildSettlementCommand command = new BuildSettlementCommand(game, playerIndex, vertexLocation, free);
 		command.execute();
 		return game.getClientModel();
 	}
@@ -230,7 +230,7 @@ public class MovesFacade implements iMovesFacade {
 			String outputResource) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		MaritimeTradeCommand command = new MaritimeTradeCommand();
+		MaritimeTradeCommand command = new MaritimeTradeCommand(game, playerIndex, ratio, inputResource, outputResource);
 		command.execute();
 		return game.getClientModel();
 	}
@@ -242,7 +242,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel discardCards(int gameIndex, int playerIndex, Resources discardedCards) {
 		ServerGame game =data.getGameByID(gameIndex);
 		
-		DiscardCardsCommand command = new DiscardCardsCommand();
+		DiscardCardsCommand command = new DiscardCardsCommand(game, playerIndex, discardedCards);
 		command.execute();
 		return game.getClientModel();
 	}

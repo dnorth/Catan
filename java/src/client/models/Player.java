@@ -1,6 +1,7 @@
 package client.models;
 
 import server.model.ServerPlayer;
+import shared.definitions.ResourceType;
 import client.models.mapdata.PortTrade;
 
 
@@ -173,6 +174,45 @@ public class Player
 	public boolean hasWheat(){return resources.getWheatCount()>0;}
 	public boolean hasWood(){return resources.getWoodCount()>0;}
 	
+	public boolean canBuyRoad(){
+		return hasBrick() && hasWood() && roads > 0;
+	}
+	
+	public boolean canBuySettlement(){
+		return hasBrick() && hasWheat() && hasSheep() && hasWood() && settlements > 0;
+	}
+	
+	public boolean canBuyDevCard(){
+		return hasSheep() && hasWheat() && hasOre();
+	}
+	
+	public boolean canBuildCity(){
+		return hasWheat(2) && hasOre(3) && cities > 0;
+	}
+	
+	public void payForRoad(Resources bank){
+	resources.subtractResource(ResourceType.BRICK, 1, bank);
+	resources.subtractResource(ResourceType.WOOD, 1, bank);
+	}
+	
+	public void payForSettlement(Resources bank){
+		resources.subtractResource(ResourceType.BRICK, 1, bank);
+		resources.subtractResource(ResourceType.WHEAT, 1, bank);
+		resources.subtractResource(ResourceType.SHEEP, 1, bank);
+		resources.subtractResource(ResourceType.WOOD, 1, bank);
+	}
+
+	public void payForDevCard(Resources bank){
+		resources.subtractResource(ResourceType.SHEEP, 1, bank);
+		resources.subtractResource(ResourceType.WHEAT, 1, bank);
+		resources.subtractResource(ResourceType.ORE, 1, bank);
+	}
+	
+	public void payForCity(Resources bank){
+		resources.subtractResource(ResourceType.WHEAT, 2,bank);
+		resources.subtractResource(ResourceType.ORE, 3,bank);
+	}
+	
 	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}
 	
 	public boolean hasBrick(int count){return resources.getBrickCount()>=count;}
@@ -188,6 +228,9 @@ public class Player
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 	
 	public void incMonuments(){monuments++;}
+	public void decSettlements(){settlements--;}
+	public void decCities(){cities--;}
+	public void decRoads(){roads--;}
 
 	@Override
 	public String toString() {

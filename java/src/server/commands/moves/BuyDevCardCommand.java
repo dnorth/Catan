@@ -7,6 +7,7 @@ import java.util.Random;
 import client.models.ClientModel;
 import client.models.DevCards;
 import client.models.Player;
+import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import shared.definitions.DevCard;
@@ -41,8 +42,16 @@ public class BuyDevCardCommand implements IMovesCommand {
 		DevCard selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
 		deck.addSpecifiedDevCard(selectedDevCard, -1);
 		
+		Resources bank = game.getClientModel().getBank();
 		Player p = model.getPlayers()[playerIndex];
-		p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
+		
+		if(p.canBuyDevCard()){
+			p.payForDevCard(bank);
+			p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
+		}
+		
+		
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package server.commands.moves;
 
 import client.models.Player;
+import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import shared.definitions.ResourceType;
@@ -35,8 +36,9 @@ public class YearOfPlentyCommand implements IMovesCommand{
 	@Override
 	public void execute() {
 		Player p = game.getClientModel().getPlayers()[playerIndex];
-		p.getResources().addOne(resource1);
-		p.getResources().addOne(resource2);
+		Resources bank = game.getClientModel().getBank();
+		p.getResources().addResource(resource1,1,bank);
+		p.getResources().addResource(resource2,1,bank);
 	}
 
 }

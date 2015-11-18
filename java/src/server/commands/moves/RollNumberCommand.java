@@ -2,6 +2,7 @@ package server.commands.moves;
 
 import client.models.ClientModel;
 import client.models.Player;
+import client.models.Resources;
 import client.models.VertexObject;
 import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
@@ -52,12 +53,15 @@ public class RollNumberCommand implements IMovesCommand {
 		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){
 			return;
 		}
+		
+		Resources bank = model.getBank();
+		
 		for(VertexObject v  : model.getBoard().getSettlements())
 		{
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
-				p.getResources().addOne(h.getResourceType());
+				p.getResources().addResource(h.getResourceType(),1,bank);
 			}
 		}
 
@@ -66,8 +70,7 @@ public class RollNumberCommand implements IMovesCommand {
 			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
-				p.getResources().addOne(h.getResourceType());
-				p.getResources().addOne(h.getResourceType());
+				p.getResources().addResource(h.getResourceType(),2,bank);
 			}
 		}
 
