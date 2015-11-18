@@ -1,4 +1,4 @@
-package server.handlers.game;
+package server.handlers;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -20,13 +20,13 @@ import com.sun.net.httpserver.HttpHandler;
 /**
  * The Class ModelHandler.
  */
-public class ModelHandler implements HttpHandler{
+public class GameHandler implements HttpHandler{
 	Logger logger;
 	GameFacade gameFacade;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
 
-	public ModelHandler(GameFacade gameFacade) {
+	public GameHandler(GameFacade gameFacade) {
 		this.gameFacade = gameFacade;
 	}
 

@@ -10,9 +10,9 @@ import server.facade.MovesFacade;
 import server.facade.UserFacade;
 import server.facade.iGameFacade;
 import server.handlers.moves.*;
-import server.handlers.games.*;
+import server.handlers.GamesHandler;
+import server.handlers.GameHandler;
 import server.handlers.UserHandler;
-import server.handlers.game.*;
 import server.model.ServerData;
 
 import com.sun.net.httpserver.*;
@@ -112,9 +112,10 @@ public class Server {
 		server.setExecutor(null); // user the default executor
 		
 		server.createContext("/user", userHandler);
-		server.createContext("/games/list", listHandler);
-		server.createContext("/games/create", createHandler);
-		server.createContext("/games/join", joinHandler);
+		server.createContext("/games", gamesHandler);
+		//server.createContext("/games/list", listHandler);
+		//server.createContext("/games/create", createHandler);
+		//server.createContext("/games/join", joinHandler);
 		server.createContext("/moves/SendChat", sendChatHandler);
 		server.createContext("/moves/rollNumber", rollNumberHandler);
 		server.createContext("/moves/robPlayer", robPlayerHandler);
@@ -146,17 +147,10 @@ public class Server {
 	/** The User handler */
 	private HttpHandler userHandler = new UserHandler(userFacade);
 
-	/** The list handler. */
-	private HttpHandler listHandler = new ListHandler(gamesFacade);
-	
-	/** The create handler. */
-	private HttpHandler createHandler = new CreateHandler(gamesFacade);
-	
-	/** The join handler. */
-	private HttpHandler joinHandler = new JoinHandler(gamesFacade);
+	private HttpHandler gamesHandler = new GamesHandler(gamesFacade);
 	
 	/** The model handler. */
-	private HttpHandler modelHandler = new ModelHandler(gameFacade);
+	private HttpHandler modelHandler = new GameHandler(gameFacade);
 	
 	/** The send chat handler. */
 	private HttpHandler sendChatHandler = new SendChatHandler(movesFacade);

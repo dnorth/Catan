@@ -1,5 +1,6 @@
 package client.map;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
@@ -101,7 +102,8 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		// Place Settlements
-		for (VertexObject s : board.getSettlements()) {
+		List<VertexObject> settlements = board.getSettlements();
+		for (VertexObject s : settlements) {
 			CatanColor color = null;
 			try {
 				color = CatanColor.getCatanColor(clientModel.getPlayers()[s.getOwner()].getColor());
