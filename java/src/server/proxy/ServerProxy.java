@@ -62,8 +62,8 @@ abstract class ServerProxy {
                     sb.append(line+"\n");
                 }
                 br.close();
-               // System.out.print("What is returned: ");
-               // System.out.println(sb.toString());
+//                System.out.print("What is returned: ");
+//                System.out.println(sb.toString());
                 sb.setLength(sb.length() - 1);
                 String responseBody = sb.toString();
                 

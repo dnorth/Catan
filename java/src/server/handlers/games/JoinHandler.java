@@ -10,6 +10,7 @@ import server.exceptions.MissingCookieException;
 import server.facade.GamesFacade;
 
 import com.google.gson.JsonObject;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -45,7 +46,13 @@ public class JoinHandler implements HttpHandler {
 				JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);
 				String color = jsonToModel.getColor(jsonObject);
 				gamesFacade.joinGame(pID, gID, color);
+				Headers headers = exchange.getResponseHeaders();
+				String header = "catan.game=" + String.valueOf(gID) + ";Path=/;";
+				response = "Success";
 				logger.info("Valid Cookie!");
+				logger.info("HEADER: " + header);
+				headers.add("Set-cookie", header);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			} else {
 				//Bad login information
 				logger.info("Invalid Cookie.");
