@@ -476,11 +476,11 @@ public class Board {
 			portInfos.add(new PortInfo(3,"all"));
 		}
 
-		portInfos.add(new PortInfo(2,"Ore"));
-		portInfos.add(new PortInfo(2,"Wheat"));
-		portInfos.add(new PortInfo(2,"Sheep"));
-		portInfos.add(new PortInfo(2,"Wood"));
-		portInfos.add(new PortInfo(2,"Brick"));
+		portInfos.add(new PortInfo(2,"ore"));
+		portInfos.add(new PortInfo(2,"wheat"));
+		portInfos.add(new PortInfo(2,"sheep"));
+		portInfos.add(new PortInfo(2,"wood"));
+		portInfos.add(new PortInfo(2,"brick"));
 
 		Random rand = new Random();
 		for(Port p : ports)
@@ -489,6 +489,8 @@ public class Board {
 			PortInfo info = portInfos.remove(index);
 			p.setRatio(info.ratio);
 			p.setResource(info.resource);
+			
 		}
+		
 	}
 }
