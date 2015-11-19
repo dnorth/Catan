@@ -95,6 +95,7 @@ public class RollNumberCommand implements IMovesCommand {
 
 	private void addResourcesToPlayers(Hex h, ClientModel model) throws InvalidStatusException, InsufficientResourcesException
 	{
+		if(h.getResource()==null){return;}
 		if(h.getHexType() == HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){ // throw exception
 			return;
 		}
