@@ -31,8 +31,6 @@ public class TradeOffer {
 		this.offer = offer;
 	}
 
-	public TradeOffer() {offer = new Resources();}
-
 	public TradeOffer(TradeOffer tradeOffer) {
 		sender = tradeOffer.sender;
 		receiver = tradeOffer.receiver;

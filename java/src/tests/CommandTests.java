@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import client.models.Player;
+import client.models.Resources;
+import client.models.TradeOffer;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 import server.Server;
@@ -26,9 +29,9 @@ import server.exceptions.NoTradeOfferedException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
 import server.exceptions.RobberIsAlreadyThereException;
+import server.facade.MovesFacade;
 import server.model.ServerData;
 import server.model.ServerGame;
-import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -377,6 +380,8 @@ public class CommandTests {
 
 	}
 	
+	
+	
 	@Test
 	public void rollNumberTurnTrackerTest() {
 		ServerData serverData = new ServerData();
@@ -413,6 +418,51 @@ public class CommandTests {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
+	}
+	
+	public void SetPlayerResources(ServerGame game){
+		
+		Resources resources = new Resources(10,10,10,10,10);
+		for(Player p: game.getClientModel().getPlayers()){
+			p.setResources(resources);
+		}
+	}
+	@Test
+	public void testDomesticTrade(){
+		ServerData data = new ServerData();
+		
+		this.preGameRoadPlacement(data);
+		ServerGame game = data.getGameByID(0);
+		this.SetPlayerResources(game);
+		MovesFacade facade = new MovesFacade();
+		
+		try{
+			TradeOffer offer = new TradeOffer(0, 1, new Resources(50,1,2,3,4));
+			game.getClientModel().getTurnTracker().setStatus("Playing");
+		facade.offerTrade(0, 0, offer.getOffer(),1);
+		assertTrue(false);
+		}
+		catch ( InvalidStatusException
+				| NotYourTurnException 
+				| InvalidPlayerIndexException e) {}
+		
+//		
+//		try{
+//			TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
+//			game.getClientModel().getTurnTracker().setStatus("Playing");
+//		facade.offerTrade(0, 0, offer.getOffer(),1);
+//		facade.acceptTrade(0, 1, true);
+//		
+//		
+//		}
+//		catch ( InvalidStatusException
+//				| NotYourTurnException 
+//				| InvalidPlayerIndexException e) {}
+//		
+//		
+		
+		
+		
 	}
 
 }
