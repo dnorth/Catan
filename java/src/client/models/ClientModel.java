@@ -353,7 +353,7 @@ public class ClientModel extends Observable
 		}
 	}
 	public void checkStatus(String status) throws InvalidStatusException{
-		if(getTurnTrackerStatus().equals(status)==false){
+		if(getTurnTrackerStatus().equals(status)==false && !getTurnTrackerStatus().equals("FirstRound") && !getTurnTrackerStatus().equals("SecondRound")){
 			throw new InvalidStatusException();
 		}
 	}

@@ -26,15 +26,9 @@ public class BuildRoadCommand implements IMovesCommand {
 	int playerIndex;
 	EdgeLocation spot;
 	boolean free;
-//<<<<<<< Updated upstream
-
-	public BuildRoadCommand(ServerGame game, int playerIndex,
-			EdgeLocation spot, boolean free) {
-//=======
-//	
-//	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free) {
-//>>>>>>> Stashed changes
-//		super();
+	
+	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free) {
+		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.spot = spot;
@@ -60,7 +54,9 @@ public class BuildRoadCommand implements IMovesCommand {
 		System.out.println("SPOT: " + spot.toString());
 
 		ClientModel model = game.getClientModel();
-		model.checkStatus("Playing");
+		if(!free) {
+			model.checkStatus("Playing");			
+		}
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
 

@@ -39,7 +39,12 @@ public class TurnTracker{
 	public void nextPlayerTurn() {
 		this.currentTurn++;
 		if(this.currentTurn == 4) {
-			this.currentTurn = 0;
+			if(this.status.equals("FirstRound")) {
+				this.currentTurn = 3;
+			}
+			else {
+				this.currentTurn = 0;
+			}
 		}
 	}
 	public void previousPlayerTurn() { //for use with setup stage 2

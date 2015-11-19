@@ -54,7 +54,9 @@ public class BuildSettlementCommand implements IMovesCommand {
 		List<VertexObject> settlements = board.getSettlements();
 		
 		ClientModel model = game.getClientModel();
-		model.checkStatus("Playing");
+		if(!free) {
+			model.checkStatus("Playing");
+		}
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
 		
@@ -67,11 +69,11 @@ public class BuildSettlementCommand implements IMovesCommand {
 		
 
 		
-		if(free==false) {
+		if(!free) {
 			p.payForSettlement(bank);
 		}
-			p.decSettlements();
-			settlements.add(settlement);
+		p.decSettlements();
+		settlements.add(settlement);
 		game.getClientModel().increaseVersion();
 	}
 
