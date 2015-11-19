@@ -1,6 +1,7 @@
 package server.commands.games;
 
 import client.models.mapdata.Board;
+import client.models.mapdata.Hex;
 import server.Server;
 import server.commands.IGamesCommand;
 import server.model.ServerData;
@@ -50,6 +51,11 @@ public class CreateCommand implements IGamesCommand {
 			board.CreateRandomPorts();
 		}
 		Server.getServerData().getGames().add(game);
+		
+		
+		for(Hex h: board.getHexes()){
+			System.out.println("Hex Type: "+h.getHexType() + " Hex Number: "+h.getNumberToken()+ " Hex ResourceType: " +h.getResourceType());
+		}
 	}
 
 }

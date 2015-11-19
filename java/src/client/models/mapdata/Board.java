@@ -27,7 +27,7 @@ public class Board {
 	private Road[] roads;
 	private int radius;
 	private HexLocation robber;
-	
+
 	public Board() {
 		createDefaultBoard();
 	}
@@ -57,7 +57,7 @@ public class Board {
 		adjVertices = Collections.unmodifiableMap(adjVertices);
 		return adjVertices;
 	}
-	
+
 	public ArrayList<Hex> getHexesFromNumber(int number) {
 		ArrayList<Hex> hexesToReturn = new ArrayList<Hex>();
 		for(Hex h : this.hexes) {
@@ -74,7 +74,7 @@ public class Board {
 		}
 		return null;
 	}
-	
+
 	public int numRoadsOwnedByPlayer(int playerIndex) {
 		int i = 0;
 		for (Road r : this.roads) {
@@ -82,7 +82,7 @@ public class Board {
 		}
 		return i;
 	}
-	
+
 	public int numSettlementsOwnedByPlayer(int playerIndex) {
 		int i = 0;
 		for (VertexObject s : this.settlements) {
@@ -90,7 +90,7 @@ public class Board {
 		}
 		return i;
 	}
-	
+
 	public void removeLocalOnlyRoad() {
 		Road[] newRoads = new Road[roads.length-1];
 		int i = 0;
@@ -100,7 +100,7 @@ public class Board {
 		}
 		setRoads(newRoads);
 	}
-	
+
 	public Hex[] getHexes() {
 		return hexes;
 	}
@@ -140,7 +140,7 @@ public class Board {
 	public void setRoads(Road[] roads) {
 		this.roads = roads;
 	}
-	
+
 	public void addRoad(Road road) {
 		Road[] newRoads = new Road[roads.length+1];
 		int i = 0;
@@ -277,7 +277,7 @@ public class Board {
 				EdgeLocation checkLoc = s.getLocation();
 				//System.out.println(s.toString());
 				//if (checkLoc == null)
-					///System.out.println("OH MY EFFING GOSH");
+				///System.out.println("OH MY EFFING GOSH");
 				if (checkLoc.equals(edgeLocation) || checkLoc.equals(altLoc1)
 						|| checkLoc.equals(altLoc2)) {
 					return s.getOwner();
@@ -333,8 +333,8 @@ public class Board {
 
 		return sb.toString();
 	}
-	
-	
+
+
 	private void createDefaultBoard()
 	{
 		this.roads = new Road[0];
@@ -342,50 +342,50 @@ public class Board {
 		this.cities = new ArrayList<VertexObject>();
 		this.setHexes(new Hex[]
 				{
-						new Hex(new HexLocation(0,-2)),
-						new Hex(new HexLocation(1,-2),"brick",4 ),
-						new Hex(new HexLocation(2,-2),"wood",11 ),
+				new Hex(new HexLocation(0,-2)),
+				new Hex(new HexLocation(1,-2),"brick",4 ),
+				new Hex(new HexLocation(2,-2),"wood",11 ),
 
-						new Hex(new HexLocation(-1,-1),"brick",8 ),
-						new Hex(new HexLocation(0,-1),"wood",3 ),
-						new Hex(new HexLocation(1,-1),"ore",9 ),
-						new Hex(new HexLocation(2,-1),"sheep",12 ),
+				new Hex(new HexLocation(-1,-1),"brick",8 ),
+				new Hex(new HexLocation(0,-1),"wood",3 ),
+				new Hex(new HexLocation(1,-1),"ore",9 ),
+				new Hex(new HexLocation(2,-1),"sheep",12 ),
 
-						new Hex(new HexLocation(-2,0),"ore",5 ),
-						new Hex(new HexLocation(-1,0),"sheep",10 ),
-						new Hex(new HexLocation(0,0),"wheat",11 ),
-						new Hex(new HexLocation(1,0),"brick",5 ),
-						new Hex(new HexLocation(2,0),"wheat",6 ),
+				new Hex(new HexLocation(-2,0),"ore",5 ),
+				new Hex(new HexLocation(-1,0),"sheep",10 ),
+				new Hex(new HexLocation(0,0),"wheat",11 ),
+				new Hex(new HexLocation(1,0),"brick",5 ),
+				new Hex(new HexLocation(2,0),"wheat",6 ),
 
-						new Hex(new HexLocation(-2,1),"wheat",2 ),
-						new Hex(new HexLocation(-1,1),"sheep",9 ),
-						new Hex(new HexLocation(0,1),"wood",4 ),
-						new Hex(new HexLocation(1,1),"sheep",10 ),
+				new Hex(new HexLocation(-2,1),"wheat",2 ),
+				new Hex(new HexLocation(-1,1),"sheep",9 ),
+				new Hex(new HexLocation(0,1),"wood",4 ),
+				new Hex(new HexLocation(1,1),"sheep",10 ),
 
-						new Hex(new HexLocation(-2,2),"wood",6 ),
-						new Hex(new HexLocation(-1,2),"ore",3 ),
-						new Hex(new HexLocation(0,2),"wheat",8 )
+				new Hex(new HexLocation(-2,2),"wood",6 ),
+				new Hex(new HexLocation(-1,2),"ore",3 ),
+				new Hex(new HexLocation(0,2),"wheat",8 )
 				});
 
 
 		this.setPorts(new Port[]
 				{
-						new Port("brick",new HexLocation(-2,3), "NE", 2),
-						new Port(new HexLocation(-3,0), "SE", 3),
-						new Port("wood",new HexLocation(-3,2), "NE", 2),
-						new Port("sheep",new HexLocation(3,-1), "NW", 2),
-						new Port(new HexLocation(2,1), "NW", 3),
-						new Port(new HexLocation(3,-3), "SW", 3),
-						new Port("ore",new HexLocation(1,-3), "S", 2),
-						new Port("wheat",new HexLocation(-1,-2), "S", 2),
-						new Port(new HexLocation(0,3), "N", 3)
+				new Port("brick",new HexLocation(-2,3), "NE", 2),
+				new Port(new HexLocation(-3,0), "SE", 3),
+				new Port("wood",new HexLocation(-3,2), "NE", 2),
+				new Port("sheep",new HexLocation(3,-1), "NW", 2),
+				new Port(new HexLocation(2,1), "NW", 3),
+				new Port(new HexLocation(3,-3), "SW", 3),
+				new Port("ore",new HexLocation(1,-3), "S", 2),
+				new Port("wheat",new HexLocation(-1,-2), "S", 2),
+				new Port(new HexLocation(0,3), "N", 3)
 				});
 		this.setRobber(this.getHexes()[0].getLocation());
 	}
-	
+
 	public void CreateRandomTiles(){
 		List<String> tileTypes = new ArrayList<String>();
-		
+
 		for(int i=0; i<4; i++)
 		{
 			tileTypes.add("wood");
@@ -398,82 +398,84 @@ public class Board {
 			tileTypes.add("ore");
 		}
 		tileTypes.add(null);
-		
+
 		Random rand = new Random();
-		
+
 		for(Hex h : hexes)
 		{
-			
+
 			int index = rand.nextInt(tileTypes.size());
 			String tileType = tileTypes.remove(index);
+
 			h.setResource(tileType);
+			
 			if(h.getHexType()==HexType.DESERT){
-				this.robber=h.getLocation();
+				this.setRobber(h.getLocation());
 			}
 		}
-		
+
 	}
-	
+
 	public void CreateRandomNumbers(){
 		List<Integer> numbers = new ArrayList<>();
 		numbers.add(11);
 		numbers.add(12);
 		numbers.add(9);
-		
+
 		numbers.add(4);
 		numbers.add(6);
 		numbers.add(5);
 		numbers.add(10);
-		
+
 		numbers.add(3);
 		numbers.add(11);
 		numbers.add(4);
 		numbers.add(8);
-		
+
 		numbers.add(8);
 		numbers.add(10);
 		numbers.add(9);
 		numbers.add(3);
-		
+
 		numbers.add(5);
 		numbers.add(2);
 		numbers.add(6);
-		
+
 		Random rand = new Random();
-		
+
 		for(Hex h : hexes)
 		{
 			if(h.getHexType()==HexType.DESERT){
 				continue;
 			}
-			
+
 			int index = rand.nextInt(numbers.size());
 
 			h.setNumberToken( numbers.remove(index));
 		}
 	}
-	
+
 	public void CreateRandomPorts()
 	{
 		class PortInfo
 		{
 			public int ratio;
 			public String resource;
-			
+
 			public PortInfo(int ratio, String resource)
 			{
 				this.ratio = ratio;
 				this.resource=resource;
 			}
 		}
-		
+
 		List<PortInfo> portInfos = new ArrayList<>();
-		
+
 		for(int i=0; i<4; i++)
 		{
 			portInfos.add(new PortInfo(3,"all"));
 		}
-		
+
 		portInfos.add(new PortInfo(2,"Ore"));
 		portInfos.add(new PortInfo(2,"Wheat"));
 		portInfos.add(new PortInfo(2,"Sheep"));

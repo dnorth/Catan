@@ -35,7 +35,6 @@ public class SendChatCommand implements IMovesCommand {
 	public void execute() throws InvalidPlayerIndexException {
 		
 		game.getClientModel().checkPlayerIndex(playerIndex);
-		
 		String playerName = game.getClientModel().getPlayers()[playerIndex].getName();
 		game.getClientModel().getChat().getLines().add(new MessageLine(content,playerName ));
 		game.getClientModel().increaseVersion();
