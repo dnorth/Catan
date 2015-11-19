@@ -37,7 +37,6 @@ public class CreateCommand implements IGamesCommand {
 	public void execute() {
 		ServerGame game = new ServerGame(name, gameID);
 		Board board = game.getClientModel().getBoard();
-		board.createDefaultBoard();
 
 		if(randomTiles){
 			board.CreateRandomTiles();

@@ -335,7 +335,7 @@ public class Board {
 	}
 	
 	
-	public void createDefaultBoard()
+	private void createDefaultBoard()
 	{
 		this.roads = new Road[0];
 		this.settlements = new ArrayList<VertexObject>();
@@ -384,7 +384,7 @@ public class Board {
 	}
 	
 	public void CreateRandomTiles(){
-		List<String> tileTypes = new ArrayList<>();
+		List<String> tileTypes = new ArrayList<String>();
 		
 		for(int i=0; i<4; i++)
 		{
@@ -397,13 +397,14 @@ public class Board {
 			tileTypes.add("brick");
 			tileTypes.add("ore");
 		}
-		tileTypes.add("none");
+		tileTypes.add(null);
 		
 		Random rand = new Random();
 		
 		for(Hex h : hexes)
 		{
-			int index = rand.nextInt()% tileTypes.size();
+			
+			int index = rand.nextInt(tileTypes.size());
 			String tileType = tileTypes.remove(index);
 			h.setResource(tileType);
 		}
@@ -439,10 +440,11 @@ public class Board {
 		
 		for(Hex h : hexes)
 		{
-			if(h.getHexType()==HexType.DESERT)
-			{continue;}
-			int index = rand.nextInt()%numbers.size();
+			if(h.getHexType()==HexType.DESERT){
+				continue;
+			}
 			
+			int index = rand.nextInt(numbers.size());
 
 			h.setNumberToken( numbers.remove(index));
 		}
@@ -478,7 +480,7 @@ public class Board {
 		Random rand = new Random();
 		for(Port p : ports)
 		{
-			int index= rand.nextInt() % portInfos.size();
+			int index= rand.nextInt(portInfos.size());
 			PortInfo info = portInfos.remove(index);
 			p.setRatio(info.ratio);
 			p.setResource(info.resource);

@@ -34,8 +34,9 @@ public class Hex {
 		return resource;
 	}
 	public void setResource(String resource) {
-		if (resource == "none") resource = null;
-		else this.resource = resource;
+		this.resource = resource;
+		/*if (resource == "none") resource = null;
+		else this.resource = resource;*/
 	}
 	public int getNumberToken() {
 		return number;
@@ -61,7 +62,7 @@ public class Hex {
 		case "ore":
 			return HexType.ORE;
 		default:
-			return null;
+			return HexType.DESERT;
 		}
 	}
 	

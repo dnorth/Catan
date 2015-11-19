@@ -42,7 +42,7 @@ public class ClientModel extends Observable
 		super();
 		newCli = true;
 		
-		bank = new Resources(19,19,19,19,19);
+		bank = new Resources(24,24,24,24,24);
 		deck = new DevCards(2,5,2,14,2);
 		board = new Board();
 		players = new Player[4];

@@ -61,8 +61,14 @@ public class RollNumberCommand implements IMovesCommand {
 				return;
 			}
 		}
+<<<<<<< Updated upstream
 		
 		turnTracker.setStatus("Rolling");
+=======
+		else {
+			game.getClientModel().setTurnTrackerStatus("Playing");
+		}
+>>>>>>> Stashed changes
 
 		ClientModel model = game.getClientModel();
 		for(Hex h : model.getBoard().getHexes())

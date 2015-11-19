@@ -11,7 +11,9 @@ public class RunAllTests {
 		String[] testClasses = new String[] {
 				"tests.CanDoTests",
 				"tests.ServerPollerTests",
-				"tests.ServerProxyTests"
+				"tests.ServerProxyTests",
+				"tests.CommandTests",
+				"tests.Phase3ModelTests"
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);

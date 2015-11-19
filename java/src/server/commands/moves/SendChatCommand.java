@@ -17,8 +17,7 @@ public class SendChatCommand implements IMovesCommand {
 	
 
 	
-	public SendChatCommand(ServerGame game, int playerIndex,
-			String content) {
+	public SendChatCommand(ServerGame game, int playerIndex, String content) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
@@ -32,7 +31,7 @@ public class SendChatCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() {
-		String playerName =game.getClientModel().getPlayers()[playerIndex].getName();
+		String playerName = game.getClientModel().getPlayers()[playerIndex].getName();
 		game.getClientModel().getChat().getLines().add(new MessageLine(content,playerName ));
 		game.getClientModel().increaseVersion();
 	}
