@@ -19,6 +19,7 @@ import server.exceptions.GameFullException;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidMaritimeTradeException;
 import server.exceptions.InvalidPlayerException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidRollException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NoTradeOfferedException;
@@ -126,7 +127,8 @@ public class CommandTests {
 				| NoTradeOfferedException | InvalidPlayerException
 				| InvalidMaritimeTradeException
 				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException e) {
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException  e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
@@ -160,7 +162,8 @@ public class CommandTests {
 				| NoTradeOfferedException | InvalidPlayerException
 				| InvalidMaritimeTradeException
 				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException e) {
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException  e) {
 			e.printStackTrace();
 			assertTrue(false);
 		} catch (InvalidStatusException e) {
@@ -289,7 +292,8 @@ public class CommandTests {
 				| NoTradeOfferedException | InvalidPlayerException
 				| InvalidMaritimeTradeException
 				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException e) {
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException  e) {
 			e.printStackTrace();
 			assertTrue(false);
 		} catch (InvalidStatusException e) {
@@ -330,7 +334,6 @@ public class CommandTests {
 			command = new FinishTurnCommand(game, 3);
 			command.execute();
 			
-			//THIS IS A PROBLEM. WE NEED TO MAKE SURE THAT OUR SERVER TURNTRACKER REVERSES THE ORDER FOR THE SECOND SETUP ROUND
 			command = new BuildRoadCommand(game, 3, new EdgeLocation(-1,0, "NW"), true);
 			command.execute();
 			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true);
@@ -363,7 +366,8 @@ public class CommandTests {
 				| NoTradeOfferedException | InvalidPlayerException
 				| InvalidMaritimeTradeException
 				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException e) {
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException  e) {
 			e.printStackTrace();
 			assertTrue(false);
 		} catch(InvalidStatusException e) {
@@ -401,7 +405,8 @@ public class CommandTests {
 				| NoTradeOfferedException | InvalidPlayerException
 				| InvalidMaritimeTradeException
 				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException e) {
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
 			e.printStackTrace();
 			assertTrue(false);
 		} catch (InvalidStatusException e) {
