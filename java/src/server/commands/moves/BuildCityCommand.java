@@ -11,6 +11,7 @@ import client.models.mapdata.EdgeLocation;
 import server.commands.IMovesCommand;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
@@ -37,8 +38,6 @@ public class BuildCityCommand implements IMovesCommand {
 		this.location = location;
 	}
 
-
-
 	/**
 	 *  Builds a city.
 	 * @throws InsufficientResourcesException 
@@ -46,16 +45,19 @@ public class BuildCityCommand implements IMovesCommand {
 	 * @throws InvalidStatusException 
 	 * @throws OutOfPiecesException 
 	 * @throws CantBuildThereException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InsufficientResourcesException, NotYourTurnException, InvalidStatusException, OutOfPiecesException, CantBuildThereException {
+	public void execute() throws InsufficientResourcesException, NotYourTurnException, InvalidStatusException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException {
 		Board board = game.getClientModel().getBoard();
 		List<VertexObject> cities = board.getCities();
 		List<VertexObject> settlements = board.getSettlements();
 		
 		ClientModel model = game.getClientModel();
+		model.checkPlayerIndex(playerIndex);
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
+		
 		
 		VertexObject city = new VertexObject(playerIndex, location);
 		

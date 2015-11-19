@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.TurnTracker;
 import server.commands.IMovesCommand;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
@@ -24,12 +25,14 @@ public class FinishTurnCommand implements IMovesCommand {
 	 *  Finishes a turn.
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InvalidStatusException, NotYourTurnException {
+	public void execute() throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
 
 		model.setPlayedDevCard(false);
 		

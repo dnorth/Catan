@@ -8,6 +8,7 @@ import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.DontHaveDevCardException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
@@ -44,14 +45,16 @@ public class RoadBuildingCommand implements IMovesCommand {
 	 * @throws DontHaveDevCardException 
 	 * @throws OutOfPiecesException 
 	 * @throws CantBuildThereException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException {
+	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException {
 
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkDevCard(playerIndex, DevCard.ROADBUILDING);
+		model.checkPlayerIndex(playerIndex);
 
 
 		Player p = game.getClientModel().getPlayers()[playerIndex];

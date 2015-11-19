@@ -6,6 +6,7 @@ import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidMaritimeTradeException;
 import server.exceptions.InvalidPlayerException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidRollException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NoTradeOfferedException;
@@ -33,6 +34,7 @@ public interface IMovesCommand {
 	 * @throws InvalidRollException 
 	 * @throws AlreadyPlayedDevCardException 
 	 * @throws DontHaveDevCardException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public void execute() throws InvalidStatusException, InsufficientResourcesException, CantBuildThereException, NotYourTurnException, OutOfPiecesException, NoTradeOfferedException, InvalidPlayerException, InvalidMaritimeTradeException, RobberIsAlreadyThereException, InvalidRollException, DontHaveDevCardException, AlreadyPlayedDevCardException;
+	public void execute() throws InvalidStatusException, InsufficientResourcesException, CantBuildThereException, NotYourTurnException, OutOfPiecesException, NoTradeOfferedException, InvalidPlayerException, InvalidMaritimeTradeException, RobberIsAlreadyThereException, InvalidRollException, DontHaveDevCardException, AlreadyPlayedDevCardException, InvalidPlayerIndexException;
 }

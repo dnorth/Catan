@@ -8,6 +8,7 @@ import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.RobberIsAlreadyThereException;
@@ -43,14 +44,16 @@ public class RobPlayerCommand implements IMovesCommand {
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
 	 * @throws RobberIsAlreadyThereException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException {
+	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException {
 		Player p =game.getClientModel().getPlayers()[victimIndex];
 		
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Robbing");
 		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
 		
 		
 		if(model.getBoard().getRobber().Equals(location)){

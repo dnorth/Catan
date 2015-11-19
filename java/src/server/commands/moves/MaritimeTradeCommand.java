@@ -6,6 +6,7 @@ import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidMaritimeTradeException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
@@ -43,9 +44,10 @@ public class MaritimeTradeCommand implements IMovesCommand {
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
 	 * @throws InvalidMaritimeTradeException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidMaritimeTradeException {
+	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidMaritimeTradeException, InvalidPlayerIndexException {
 		Player p = game.getClientModel().getPlayers()[playerIndex];
 		Resources resources = p.getResources();
 		Resources bank = game.getClientModel().getBank();
@@ -54,6 +56,9 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkMaritimeTrade(playerIndex, inputResource, ratio);
+		model.checkPlayerIndex(playerIndex);
+		
+		
 		if(resources.hasResource(inputResource, ratio)== false || bank.hasResource(outputResource, 1) == false) // if player doesn't have enough resources to trade, return
 		{throw new InsufficientResourcesException();}
 		

@@ -5,6 +5,7 @@ import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InvalidMaritimeTradeException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerPlayer;
@@ -202,6 +203,7 @@ public class ClientModel extends Observable
 	 */
 	public void addPlayer(int playerIndex, ServerPlayer newPlayer)
 	{
+		System.out.println("PlayerIndex in join game is: "+ Integer.toString(playerIndex));
 		Player p = new Player(newPlayer, playerIndex);
 		players[playerIndex] = p;
 	}
@@ -345,7 +347,11 @@ public class ClientModel extends Observable
 	public void discardCards(String type, int playerIndex, Resources discardedCards){}
 
 	
-	
+	public void checkPlayerIndex(int playerIndex) throws InvalidPlayerIndexException{
+		if(playerIndex<0 || playerIndex>3){
+			throw new InvalidPlayerIndexException();
+		}
+	}
 	public void checkStatus(String status) throws InvalidStatusException{
 		if(getTurnTrackerStatus().equals(status)==false){
 			throw new InvalidStatusException();

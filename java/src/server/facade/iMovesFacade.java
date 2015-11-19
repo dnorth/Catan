@@ -8,6 +8,7 @@ import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidMaritimeTradeException;
 import server.exceptions.InvalidPlayerException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidRollException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NoTradeOfferedException;
@@ -32,8 +33,9 @@ public interface iMovesFacade {
 	 * @param content the content of the chat
 	 *
 	 * @return the client model
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel sendChat(int gameIndex, int playerIndex, String content);
+	public ClientModel sendChat(int gameIndex, int playerIndex, String content) throws InvalidPlayerIndexException;
 	
 	/**
 	 * Roll number.
@@ -45,8 +47,10 @@ public interface iMovesFacade {
 	 * @throws InsufficientResourcesException 
 	 * @throws InvalidStatusException 
 	 * @throws InvalidRollException 
+	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel rollNumber(int gameIndex, int playerIndex, int number) throws InvalidRollException, InvalidStatusException, InsufficientResourcesException;
+	public ClientModel rollNumber(int gameIndex, int playerIndex, int number) throws InvalidRollException, InvalidStatusException, InsufficientResourcesException, NotYourTurnException, InvalidPlayerIndexException;
 	
 	/**
 	 * Rob player.
@@ -60,8 +64,9 @@ public interface iMovesFacade {
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel robPlayer(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException;
+	public ClientModel robPlayer(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException;
 	
 	/**
 	 * Finish turn.
@@ -71,8 +76,9 @@ public interface iMovesFacade {
 	 * @return the client model
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel finishTurn(int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException;
+	public ClientModel finishTurn(int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException;
 	
 	/**
 	 * Buy dev card.
@@ -81,8 +87,11 @@ public interface iMovesFacade {
 	 *
 	 * @return the client model
 	 * @throws InsufficientResourcesException 
+	 * @throws NotYourTurnException 
+	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel buyDevCard(int gameIndex, int playerIndex) throws InsufficientResourcesException;
+	public ClientModel buyDevCard(int gameIndex, int playerIndex) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException;
 	
 	/**
 	 * Play year of plenty.
@@ -97,8 +106,9 @@ public interface iMovesFacade {
 	 * @throws DontHaveDevCardException 
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel playYearOfPlenty(int gameIndex, int playerIndex, ResourceType resource1, ResourceType resource2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException;
+	public ClientModel playYearOfPlenty(int gameIndex, int playerIndex, ResourceType resource1, ResourceType resource2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Play road building.
@@ -114,8 +124,9 @@ public interface iMovesFacade {
 	 * @throws DontHaveDevCardException 
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel playRoadBuilding(int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException;
+	public ClientModel playRoadBuilding(int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException;
 	
 	/**
 	 * Play soldier.
@@ -131,8 +142,9 @@ public interface iMovesFacade {
 	 * @throws DontHaveDevCardException 
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel playSoldier(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException;
+	public ClientModel playSoldier(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Play monopoly.
@@ -146,8 +158,9 @@ public interface iMovesFacade {
 	 * @throws DontHaveDevCardException 
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel playMonopoly(ResourceType resource, int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException;
+	public ClientModel playMonopoly(ResourceType resource, int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Play monument.
@@ -159,8 +172,9 @@ public interface iMovesFacade {
 	 * @throws DontHaveDevCardException 
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel playMonument(int gameIndex, int playerIndex) throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException;
+	public ClientModel playMonument(int gameIndex, int playerIndex) throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException, InvalidPlayerIndexException;
 	
 	/**
 	 * Builds the road.
@@ -175,8 +189,9 @@ public interface iMovesFacade {
 	 * @throws CantBuildThereException 
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel buildRoad(int gameIndex, int playerIndex, EdgeLocation roadLocation, boolean free) throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException;
+	public ClientModel buildRoad(int gameIndex, int playerIndex, EdgeLocation roadLocation, boolean free) throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Builds the settlement.
@@ -191,8 +206,9 @@ public interface iMovesFacade {
 	 * @throws InvalidStatusException 
 	 * @throws CantBuildThereException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel buildSettlement(int gameIndex, int playerIndex, VertexLocation vertexLocation, boolean free) throws InsufficientResourcesException, CantBuildThereException, InvalidStatusException, NotYourTurnException, OutOfPiecesException;
+	public ClientModel buildSettlement(int gameIndex, int playerIndex, VertexLocation vertexLocation, boolean free) throws InsufficientResourcesException, CantBuildThereException, InvalidStatusException, NotYourTurnException, OutOfPiecesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Builds the city.
@@ -206,8 +222,9 @@ public interface iMovesFacade {
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation vertexLocation) throws InsufficientResourcesException, NotYourTurnException, InvalidStatusException, OutOfPiecesException, CantBuildThereException;
+	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation vertexLocation) throws InsufficientResourcesException, NotYourTurnException, InvalidStatusException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException;
 	
 	/**
 	 * Offer trade.
@@ -219,8 +236,9 @@ public interface iMovesFacade {
 	 * @return the client model
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel offerTrade(int gameIndex, int playerIndex, Resources offer, int receiver) throws InvalidStatusException, NotYourTurnException;
+	public ClientModel offerTrade(int gameIndex, int playerIndex, Resources offer, int receiver) throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException;
 	
 	/**
 	 * Accept trade.
@@ -232,8 +250,9 @@ public interface iMovesFacade {
 	 * @throws InsufficientResourcesException 
 	 * @throws InvalidPlayerException 
 	 * @throws NoTradeOfferedException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel acceptTrade(int gameIndex, int playerIndex, boolean willAccept) throws NoTradeOfferedException, InvalidPlayerException, InsufficientResourcesException;
+	public ClientModel acceptTrade(int gameIndex, int playerIndex, boolean willAccept) throws NoTradeOfferedException, InvalidPlayerException, InsufficientResourcesException, InvalidPlayerIndexException;
 	
 	/**
 	 * Maritime trade.
@@ -248,8 +267,9 @@ public interface iMovesFacade {
 	 * @throws NotYourTurnException 
 	 * @throws InvalidStatusException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel maritimeTrade(int gameIndex, int playerIndex, int ratio, String inputResource, String outputResource) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidMaritimeTradeException;
+	public ClientModel maritimeTrade(int gameIndex, int playerIndex, int ratio, String inputResource, String outputResource) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidMaritimeTradeException, InvalidPlayerIndexException;
 	
 	/**
 	 * Discard cards.
@@ -260,6 +280,7 @@ public interface iMovesFacade {
 	 * @return the client model
 	 * @throws InsufficientResourcesException 
 	 * @throws InvalidStatusException 
+	 * @throws InvalidPlayerIndexException 
 	 */
-	public ClientModel discardCards(int gameIndex, int playerIndex, Resources discardedCards) throws InsufficientResourcesException, InvalidStatusException;
+	public ClientModel discardCards(int gameIndex, int playerIndex, Resources discardedCards) throws InsufficientResourcesException, InvalidStatusException, InvalidPlayerIndexException;
 }

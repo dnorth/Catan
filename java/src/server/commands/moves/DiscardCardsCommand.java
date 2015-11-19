@@ -4,6 +4,7 @@ import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.model.ServerGame;
 import shared.definitions.ResourceType;
@@ -31,9 +32,11 @@ public class DiscardCardsCommand implements IMovesCommand {
 	/**
 	 * Discards Cards.
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InvalidStatusException, InsufficientResourcesException {
+	public void execute() throws InvalidStatusException, InsufficientResourcesException, InvalidPlayerIndexException {
+		game.getClientModel().checkPlayerIndex(playerIndex);
 		
 		if(game.getClientModel().getTurnTracker().getStatus().equals("Discarding")==false)
 		{throw new InvalidStatusException();}

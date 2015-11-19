@@ -11,6 +11,7 @@ import client.models.mapdata.EdgeLocation;
 import server.commands.IMovesCommand;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
@@ -45,15 +46,17 @@ public class BuildSettlementCommand implements IMovesCommand {
 	 * @throws InvalidStatusException 
 	 * @throws NotYourTurnException 
 	 * @throws OutOfPiecesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InsufficientResourcesException, CantBuildThereException, InvalidStatusException, NotYourTurnException, OutOfPiecesException {
+	public void execute() throws InsufficientResourcesException, CantBuildThereException, InvalidStatusException, NotYourTurnException, OutOfPiecesException, InvalidPlayerIndexException {
 		Board board = game.getClientModel().getBoard();
 		List<VertexObject> settlements = board.getSettlements();
 		
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
 		
 		
 		VertexObject settlement = new VertexObject(playerIndex, location);

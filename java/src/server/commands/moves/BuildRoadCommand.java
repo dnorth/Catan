@@ -8,6 +8,7 @@ import client.models.mapdata.Road;
 import server.commands.IMovesCommand;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
@@ -51,15 +52,17 @@ public class BuildRoadCommand implements IMovesCommand {
 	 * @throws CantBuildThereException 
 	 * @throws InsufficientResourcesException 
 	 * @throws OutOfPiecesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException {
+	public void execute() throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException, InvalidPlayerIndexException {
 		System.out.println("IN ROAD COMMAND");
 		System.out.println("SPOT: " + spot.toString());
 
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
 
 		if(model.isInitializingPhase()){
 			model.checkInitialRoad(new Road(playerIndex, spot));

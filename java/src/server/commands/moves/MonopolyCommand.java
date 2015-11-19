@@ -7,6 +7,7 @@ import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
@@ -35,10 +36,11 @@ public class MonopolyCommand implements IMovesCommand  {
 	 * @throws AlreadyPlayedDevCardException 
 	 * @throws DontHaveDevCardException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 
 	@Override
-	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException {
+	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException, InvalidPlayerIndexException {
 		Player[] players = game.getClientModel().getPlayers();
 		Player user = game.getClientModel().getPlayers()[playerIndex];
 
@@ -46,6 +48,7 @@ public class MonopolyCommand implements IMovesCommand  {
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkDevCard(playerIndex, DevCard.MONOPOLY);
+		model.checkPlayerIndex(playerIndex);
 
 
 		Resources userResources = players[playerIndex].getResources();

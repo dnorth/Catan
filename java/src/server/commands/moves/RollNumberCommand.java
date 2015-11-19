@@ -8,8 +8,10 @@ import client.models.VertexObject;
 import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidRollException;
 import server.exceptions.InvalidStatusException;
+import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
@@ -40,16 +42,24 @@ public class RollNumberCommand implements IMovesCommand {
 	 * @throws InvalidRollException 
 	 * @throws InvalidStatusException 
 	 * @throws InsufficientResourcesException 
+	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InvalidRollException, InvalidStatusException, InsufficientResourcesException {
+	public void execute() throws InvalidRollException, InvalidStatusException, InsufficientResourcesException, NotYourTurnException, InvalidPlayerIndexException {
 		
 		if(number<2 || number > 12) // throw exception
 		{throw new InvalidRollException();}
 		
-
+		
 		TurnTracker turnTracker = game.getClientModel().getTurnTracker();
 
+		ClientModel model = game.getClientModel();
+		model.checkStatus("Rolling");
+		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
+		
+		
 		if(number==7){
 			//check if players need to discard
 			if(game.getClientModel().needToDiscard()){
@@ -70,7 +80,6 @@ public class RollNumberCommand implements IMovesCommand {
 //		}
 //>>>>>>> Stashed changes
 
-		ClientModel model = game.getClientModel();
 		for(Hex h : model.getBoard().getHexes())
 		{
 			if(h.getNumberToken()==number){

@@ -5,6 +5,7 @@ import client.models.Resources;
 import client.models.TradeOffer;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.NoTradeOfferedException;
 import server.exceptions.InvalidPlayerException;
 import server.model.ServerGame;
@@ -34,11 +35,12 @@ public class AcceptTradeCommand implements IMovesCommand {
 	 * Accepts a trade.
 	 * @throws InvalidPlayerException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws NoTradeOfferedException, InvalidPlayerException, InsufficientResourcesException {
+	public void execute() throws NoTradeOfferedException, InvalidPlayerException, InsufficientResourcesException, InvalidPlayerIndexException {
 
-		
+		game.getClientModel().checkPlayerIndex(playerIndex);
 		if(playerIndex!= game.getClientModel().getTradeOffer().getReceiver()){
 			throw new InvalidPlayerException();
 		}

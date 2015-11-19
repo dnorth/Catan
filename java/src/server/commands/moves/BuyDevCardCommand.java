@@ -10,6 +10,9 @@ import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
+import server.exceptions.InvalidStatusException;
+import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
 import shared.definitions.DevCard;
 
@@ -33,11 +36,18 @@ public class BuyDevCardCommand implements IMovesCommand {
 	/**
 	 *  Buys a DevCard.
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidStatusException 
+	 * @throws NotYourTurnException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InsufficientResourcesException {
+	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
 		Random rand = new Random();
 		ClientModel model = game.getClientModel();
+		model.checkStatus("Playing");
+		model.checkTurn(playerIndex);
+		model.checkPlayerIndex(playerIndex);
+		
 		DevCards deck = model.getDeck();
 		List<DevCard> devCardTypes = deck.getDevCardTypes();
 		

@@ -10,6 +10,7 @@ import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.RobberIsAlreadyThereException;
@@ -46,9 +47,10 @@ public class SoldierCommand implements IMovesCommand {
 	 * @throws DontHaveDevCardException 
 	 * @throws RobberIsAlreadyThereException 
 	 * @throws InsufficientResourcesException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException {
+	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException, InvalidPlayerIndexException {
 
 		ClientModel model = game.getClientModel();
 		Player victim = model.getPlayers()[victimIndex];
@@ -57,6 +59,7 @@ public class SoldierCommand implements IMovesCommand {
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkDevCard(playerIndex, DevCard.SOLDIER);
+		model.checkPlayerIndex(playerIndex);
 		
 		if(model.getBoard().getRobber().Equals(location)){
 			throw new RobberIsAlreadyThereException();

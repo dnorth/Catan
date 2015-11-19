@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.communication.MessageLine;
 import server.Server;
 import server.commands.IMovesCommand;
+import server.exceptions.InvalidPlayerIndexException;
 import server.model.ServerData;
 import server.model.ServerGame;
 
@@ -28,9 +29,13 @@ public class SendChatCommand implements IMovesCommand {
 
 	/**
 	 *  Sends a chat.
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws InvalidPlayerIndexException {
+		
+		game.getClientModel().checkPlayerIndex(playerIndex);
+		
 		String playerName = game.getClientModel().getPlayers()[playerIndex].getName();
 		game.getClientModel().getChat().getLines().add(new MessageLine(content,playerName ));
 		game.getClientModel().increaseVersion();

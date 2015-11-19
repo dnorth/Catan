@@ -5,6 +5,7 @@ import client.models.Player;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
+import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
@@ -31,9 +32,10 @@ public class MonumentCommand implements IMovesCommand {
 	 * @throws InvalidStatusException 
 	 * @throws AlreadyPlayedDevCardException 
 	 * @throws DontHaveDevCardException 
+	 * @throws InvalidPlayerIndexException 
 	 */
 	@Override
-	public void execute() throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException {
+	public void execute() throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException, InvalidPlayerIndexException {
 
 		Player user = game.getClientModel().getPlayers()[playerIndex];
 		
@@ -41,6 +43,7 @@ public class MonumentCommand implements IMovesCommand {
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkDevCard(playerIndex, DevCard.MONUMENT);
+		model.checkPlayerIndex(playerIndex);
 		
 		
 		for(int i=0; i<user.getOldDevCards().getMonumentCount(); i++)
