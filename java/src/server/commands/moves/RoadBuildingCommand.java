@@ -2,6 +2,7 @@ package server.commands.moves;
 
 import client.models.ClientModel;
 import client.models.Player;
+import client.models.communication.MessageLine;
 import client.models.mapdata.Board;
 import client.models.mapdata.Road;
 import server.commands.IMovesCommand;
@@ -59,26 +60,27 @@ public class RoadBuildingCommand implements IMovesCommand {
 
 		Player p = game.getClientModel().getPlayers()[playerIndex];
 
+		Board board =game.getClientModel().getBoard();
 
-			Board board =game.getClientModel().getBoard();
+		Road road1 = new Road(playerIndex, spot1);
+		Road road2 = new Road(playerIndex, spot2);
 
-			Road road1 = new Road(playerIndex, spot1);
-			Road road2 = new Road(playerIndex, spot2);
+		model.checkRoad(road1);
+		p.decRoads();
+		board.addRoad(road1);
 
-			model.checkRoad(road1);
-			p.decRoads();
-			board.addRoad(road1);
+		model.checkRoad(road2);
+		p.decRoads();
+		board.addRoad(road2);
 
-			model.checkRoad(road2);
-			p.decRoads();
-			board.addRoad(road2);
+		if(model.playerHasLongestRoad(p)){
+			model.awardLongestRoad(p);
+		}
 
-			if(model.playerHasLongestRoad(p)){
-				model.awardLongestRoad(p);
-			}
-
-			p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
-			model.setPlayedDevCard(true);
+		p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
+		model.setPlayedDevCard(true);
+		
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a road", p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

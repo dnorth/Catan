@@ -6,6 +6,7 @@ import java.util.Random;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
@@ -67,7 +68,7 @@ public class SoldierCommand implements IMovesCommand {
 		}
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
 		
-		if(victimIndex==-1)
+		if(victimIndex == -1)
 		{return;}
 		
 		if(victim.hasResource()){
@@ -87,6 +88,8 @@ public class SoldierCommand implements IMovesCommand {
 		
 		user.getOldDevCards().decSpecifiedDevCard(DevCard.SOLDIER);
 		model.setPlayedDevCard(true);
+		Player p = game.getClientModel().getPlayers()[playerIndex];
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " played a soldier card", p.getName()));
 		game.getClientModel().increaseVersion();
 
 	}

@@ -427,11 +427,11 @@ public class CommandTests {
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command = new FinishTurnCommand(game, 0);
 			command.execute();
-			assertNotEquals(game.getClientModel().getBank().getBrickCount(), 21);
-			assertNotEquals(game.getClientModel().getBank().getWoodCount(), 22);
-			assertNotEquals(game.getClientModel().getBank().getOreCount(), 20);
-			assertNotEquals(game.getClientModel().getBank().getWheatCount(), 24);
-			assertNotEquals(game.getClientModel().getBank().getSheepCount(), 22);
+			assertEquals(game.getClientModel().getBank().getBrickCount(), 21);
+			assertEquals(game.getClientModel().getBank().getWoodCount(), 22);
+			assertEquals(game.getClientModel().getBank().getOreCount(), 20);
+			assertEquals(game.getClientModel().getBank().getWheatCount(), 24);
+			assertEquals(game.getClientModel().getBank().getSheepCount(), 22);
 
 			//Add checks for resources here based on initialized game
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 1);
@@ -457,6 +457,7 @@ public class CommandTests {
 			p.setResources(resources);
 		}
 	}
+	
 	@Test
 	public void testDomesticTrade(){
 		ServerData data = new ServerData();

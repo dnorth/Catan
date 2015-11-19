@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
@@ -62,6 +63,7 @@ public class YearOfPlentyCommand implements IMovesCommand{
 		p.getResources().addResource(resource2,1,bank);
 		p.getOldDevCards().decSpecifiedDevCard(DevCard.YEAROFPLENTY);
 		model.setPlayedDevCard(true);
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " played a year of plenty card", p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
@@ -62,6 +63,7 @@ public class MonopolyCommand implements IMovesCommand  {
 		user.getOldDevCards().decSpecifiedDevCard(DevCard.MONOPOLY);
 		model.setPlayedDevCard(true);
 		
+		game.getClientModel().getLog().getLines().add(new MessageLine(user.getName() + " played a monopoly card", user.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

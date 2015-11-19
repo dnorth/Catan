@@ -2,6 +2,7 @@ package server.commands.moves;
 
 import client.models.ClientModel;
 import client.models.Player;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.DontHaveDevCardException;
@@ -52,7 +53,7 @@ public class MonumentCommand implements IMovesCommand {
 			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 			}
 			
-		
+		game.getClientModel().getLog().getLines().add(new MessageLine(user.getName() + " played a monument card", user.getName()));
 		game.getClientModel().increaseVersion();
 	}
 }

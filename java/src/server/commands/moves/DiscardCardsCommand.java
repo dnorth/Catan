@@ -2,6 +2,7 @@ package server.commands.moves;
 
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidPlayerIndexException;
@@ -55,12 +56,13 @@ public class DiscardCardsCommand implements IMovesCommand {
 		
 		boolean lastDiscard=true;
 		for(Player p : game.getClientModel().getPlayers()){
-			if(p.getPlayerIndex()==playerIndex)
+			if(p.getPlayerIndex() == playerIndex)
 			{
 				continue;
 			}
 			else if (p.getResources().getTotalCount()>7){
-				lastDiscard=false;
+				lastDiscard = false;
+				game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " is discarding", p.getName()));
 			}
 			
 		}
@@ -79,6 +81,7 @@ public class DiscardCardsCommand implements IMovesCommand {
 		playerResources.subtractResource(ResourceType.WHEAT, discardedCards.getWheatCount(), bank);
 		playerResources.subtractResource(ResourceType.WOOD, discardedCards.getWoodCount(), bank);
 		game.getClientModel().increaseVersion();
+
 		
 	}
 

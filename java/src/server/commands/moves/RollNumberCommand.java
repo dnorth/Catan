@@ -5,6 +5,7 @@ import client.models.Player;
 import client.models.Resources;
 import client.models.TurnTracker;
 import client.models.VertexObject;
+import client.models.communication.MessageLine;
 import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
@@ -59,6 +60,7 @@ public class RollNumberCommand implements IMovesCommand {
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
 		
+		Player p = game.getClientModel().getPlayers()[playerIndex];
 		
 		if(number == 7) {
 			//check if players need to discard
@@ -86,6 +88,7 @@ public class RollNumberCommand implements IMovesCommand {
 			game.getClientModel().setTurnTrackerStatus("Playing");
 		}
 		
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " rolled a " + number, p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 
