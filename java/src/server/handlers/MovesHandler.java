@@ -60,7 +60,7 @@ public class MovesHandler implements HttpHandler{
 						jsonModel = movesFacade.rollNumber(gameIndex, playerIndex, jsonToModel.getNumber(object));
 						break;
 					case "robPlayer":
-						jsonModel = movesFacade.robPlayer(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "HexLocation"));
+						jsonModel = movesFacade.robPlayer(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "location"));
 						break;
 					case "finishTurn":
 						jsonModel = movesFacade.finishTurn(gameIndex, playerIndex);
