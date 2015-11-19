@@ -269,7 +269,7 @@ public class JSONToModel {
 			}
 			
 			String[] cookieList = seperateCookies(cookie);
-			for (String s : cookieList) System.out.println("SEPARATE COOKIE: " + s);
+//			for (String s : cookieList) System.out.println("SEPARATE COOKIE: " + s);
 			
 			JsonObject cookieJson = new JsonParser().parse(cookieList[0]).getAsJsonObject();
 			
@@ -285,7 +285,7 @@ public class JSONToModel {
 	}
 	
 	public String[] seperateCookies(String fullCookie) {
-		System.out.println("FULL COOKIE: " + fullCookie);
+//		System.out.println("FULL COOKIE: " + fullCookie);
 		String split1 = fullCookie.split("catan.user=")[1];
 		String[] finalSplit = split1.split("; catan.game=");
 		return finalSplit;
