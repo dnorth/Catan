@@ -64,10 +64,12 @@ public class RollNumberCommand implements IMovesCommand {
 			//check if players need to discard
 			if(game.getClientModel().needToDiscard()){
 				turnTracker.setStatus("Discarding");
+				game.getClientModel().increaseVersion();
 				return;
 			}
 			else{
 				turnTracker.setStatus("Robbing");
+				game.getClientModel().increaseVersion();
 				return;
 			}
 		}

@@ -30,6 +30,7 @@ public class FinishTurnCommand implements IMovesCommand {
 	@Override
 	public void execute() throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
 		ClientModel model = game.getClientModel();
+		System.out.println("CURRENT STATUS IS: " + model.getTurnTrackerStatus());
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);

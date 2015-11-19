@@ -62,6 +62,8 @@ public class RobPlayerCommand implements IMovesCommand {
 		
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
 		
+		System.out.println("DA VICTIM INDEX IS: " + String.valueOf(victimIndex));
+		
 		if(victimIndex==-1)
 		{return;}
 		
@@ -75,6 +77,7 @@ public class RobPlayerCommand implements IMovesCommand {
 			victimResources.subtractResource(type, 1,takerResources);
 
 		}
+		game.getClientModel().getTurnTracker().setStatus("Playing");
 		game.getClientModel().increaseVersion();
 	}
 
