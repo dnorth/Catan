@@ -149,7 +149,7 @@ public class Player
 		this.soldiers = soldiers;
 	}
 	public int getVictoryPoints() {
-		return victoryPoints;
+		return victoryPoints + monuments;
 	}
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
@@ -284,29 +284,40 @@ public class Player
 	public boolean hasSoldierCard(DevCards d){return d.getSoldierCount()>0;}
 	public boolean hasYearOfPlentyCard(DevCards d){return d.getYearOfPlentyCount()>0;}
 
-	public void incMonuments(){monuments++;}
-	public void decSettlements() throws OutOfPiecesException{
+	public void incMonuments(){
+		monuments++;
+	}
+	
+	public void incSettlements() {
+		settlements++;
+	}
+	public void decSettlements() throws OutOfPiecesException {
 		if(settlements>0)
 		settlements--;
 		else{
 			throw new OutOfPiecesException();
-		}}
-	public void decCities() throws OutOfPiecesException{
+		}
+	}
+	public void decCities() throws OutOfPiecesException {
 		if(cities>0){
 		cities--;
 		settlements++;
 		}
 		else{
 			throw new OutOfPiecesException();
-		}}
+		}
+	}
 	public void decRoads() throws OutOfPiecesException{
 		if(roads>0)
 		roads--;
 		else{
 			throw new OutOfPiecesException();
-		}}
+		}
+	}
 	
-	public void incSoldiers(){soldiers++;}
+	public void incSoldiers(){
+		soldiers++;
+	}
 
 	@Override
 	public String toString() {
@@ -320,6 +331,10 @@ public class Player
 	public void transferDevCards() {
 		this.oldDevCards.addDevCards(newDevCards);
 		this.newDevCards = new DevCards();
+	}
+	
+	public void incrementVictoryPoints() {
+		this.victoryPoints++;
 	}
 
 
