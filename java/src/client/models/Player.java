@@ -49,16 +49,6 @@ public class Player
 		settlements = 5;
 		roads = 15;
 	}
-
-//	newDevCards = new DevCards();
-//	oldDevCards = new DevCards();
-//	name="";
-//	resources = new Resources();
-//	portTrade = new PortTrade();
-//	cities = 4;
-//	settlements = 5;
-//	roads = 15;
-//	}
 	
 	public Player(ServerPlayer p, int playerIndex){
 	newDevCards = new DevCards();
@@ -66,6 +56,7 @@ public class Player
 	name= p.getName();
 	color =p.getColor();
 	this.playerIndex = playerIndex;
+	this.playerID = p.getId();
 	resources = new Resources();
 	portTrade = new PortTrade();
 	cities = 4;
