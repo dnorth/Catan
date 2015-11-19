@@ -71,8 +71,10 @@ public class BuildCityCommand implements IMovesCommand {
 			Resources bank = game.getClientModel().getBank();
 			p.payForCity(bank);
 			p.decCities();
+			p.incSettlements();
 			settlements.remove(city);
 			cities.add(city);
+			p.incrementVictoryPoints();
 			game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a city", p.getName()));
 		}
 		game.getClientModel().increaseVersion();

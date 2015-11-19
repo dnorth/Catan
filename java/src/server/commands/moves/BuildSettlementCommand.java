@@ -79,6 +79,7 @@ public class BuildSettlementCommand implements IMovesCommand {
 		}
 		p.decSettlements();
 		settlements.add(settlement);
+		p.incrementVictoryPoints();
 		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a settlement", p.getName()));
 		if(game.getClientModel().getTurnTrackerStatus().equals("SecondRound")) {
 			HexLocation[] hexLocations = settlement.getHexes();

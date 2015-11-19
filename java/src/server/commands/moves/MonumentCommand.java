@@ -49,8 +49,8 @@ public class MonumentCommand implements IMovesCommand {
 		
 		for(int i=0; i<user.getOldDevCards().getMonumentCount(); i++)
 			{
-			user.incMonuments();
-			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
+				user.incMonuments();
+				user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 			}
 			
 		game.getClientModel().getLog().getLines().add(new MessageLine(user.getName() + " played a monument card", user.getName()));

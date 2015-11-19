@@ -59,7 +59,7 @@ public class FinishTurnCommand implements IMovesCommand {
 		else {
 			t.setStatus("Rolling");
 		}
-		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " is finished his turn", p.getName()));
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " done finished his turn", p.getName()));
 
 		game.getClientModel().increaseVersion();
 	}
