@@ -60,7 +60,7 @@ public class RollNumberCommand implements IMovesCommand {
 		model.checkPlayerIndex(playerIndex);
 		
 		
-		if(number==7){
+		if(number == 7) {
 			//check if players need to discard
 			if(game.getClientModel().needToDiscard()){
 				turnTracker.setStatus("Discarding");
@@ -71,23 +71,25 @@ public class RollNumberCommand implements IMovesCommand {
 				return;
 			}
 		}
-		else {
-			game.getClientModel().setTurnTrackerStatus("Playing");
-		}
 
 
 		for(Hex h : model.getBoard().getHexes())
 		{
-			if(h.getNumberToken()==number){
+			if(h.getNumberToken() == number){
 				addResourcesToPlayers(h, model);
 			}
 		}
+		
+		if(number != 7) {
+			game.getClientModel().setTurnTrackerStatus("Playing");
+		}
+		
 		game.getClientModel().increaseVersion();
 	}
 
 	private void addResourcesToPlayers(Hex h, ClientModel model) throws InvalidStatusException, InsufficientResourcesException
 	{
-		if(h.getHexType()== HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){ // throw exception
+		if(h.getHexType() == HexType.DESERT || h.getLocation().Equals(model.getBoard().getRobber())){ // throw exception
 			return;
 		}
 

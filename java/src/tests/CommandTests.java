@@ -337,33 +337,63 @@ public class CommandTests {
 			command = new FinishTurnCommand(game, 3);
 			command.execute();
 			
-			command = new BuildRoadCommand(game, 3, new EdgeLocation(-1,0, "NW"), true);
+			command = new BuildRoadCommand(game, 3, new EdgeLocation(1,-1, "NW"), true);
 			command.execute();
-			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true);
 			command.execute();
 			command = new FinishTurnCommand(game, 3);
 			command.execute();
 			
-			command = new BuildRoadCommand(game, 2, new EdgeLocation(-2,0, "NW"), true);
+			command = new BuildRoadCommand(game, 2, new EdgeLocation(2,-1, "NW"), true);
 			command.execute();
-			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true);
 			command.execute();
 			command = new FinishTurnCommand(game, 2);
 			command.execute();
 
-			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 1, new EdgeLocation(-2,0, "NW"), true);
 			command.execute();
-			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true);
 			command.execute();
 			command = new FinishTurnCommand(game, 1);
 			command.execute();
 	
-			command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 0, new EdgeLocation(-1,0, "NW"), true);
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true);
 			command.execute();
 			command = new FinishTurnCommand(game, 0);
 			command.execute();
+			
+			assertEquals(game.getClientModel().getBank().getBrickCount(), 22);
+			assertEquals(game.getClientModel().getBank().getWoodCount(), 22);
+			assertEquals(game.getClientModel().getBank().getOreCount(), 20);
+			assertEquals(game.getClientModel().getBank().getWheatCount(), 24);
+			assertEquals(game.getClientModel().getBank().getSheepCount(), 22);
+			
+			assertEquals(game.getClientModel().getPlayers()[0].getResources().getBrickCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources().getWoodCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources().getOreCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources().getWheatCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources().getSheepCount(), 1);
+			
+			assertEquals(game.getClientModel().getPlayers()[1].getResources().getBrickCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[1].getResources().getWoodCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[1].getResources().getOreCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[1].getResources().getWheatCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[1].getResources().getSheepCount(), 0);
+			
+			assertEquals(game.getClientModel().getPlayers()[2].getResources().getBrickCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[2].getResources().getWoodCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[2].getResources().getOreCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[2].getResources().getWheatCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[2].getResources().getSheepCount(), 1);
+			
+			assertEquals(game.getClientModel().getPlayers()[3].getResources().getBrickCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[3].getResources().getWoodCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[3].getResources().getOreCount(), 1);
+			assertEquals(game.getClientModel().getPlayers()[3].getResources().getWheatCount(), 0);
+			assertEquals(game.getClientModel().getPlayers()[3].getResources().getSheepCount(), 0);
 		} catch (InsufficientResourcesException | CantBuildThereException
 				| NotYourTurnException | OutOfPiecesException
 				| NoTradeOfferedException | InvalidPlayerException
@@ -397,11 +427,11 @@ public class CommandTests {
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command = new FinishTurnCommand(game, 0);
 			command.execute();
-			assertNotEquals(game.getClientModel().getBank().getBrickCount(), 24);
-			assertNotEquals(game.getClientModel().getBank().getOreCount(), 24);
+			assertNotEquals(game.getClientModel().getBank().getBrickCount(), 21);
+			assertNotEquals(game.getClientModel().getBank().getWoodCount(), 22);
+			assertNotEquals(game.getClientModel().getBank().getOreCount(), 20);
 			assertNotEquals(game.getClientModel().getBank().getWheatCount(), 24);
-			assertNotEquals(game.getClientModel().getBank().getWoodCount(), 24);
-			assertNotEquals(game.getClientModel().getBank().getSheepCount(), 24);
+			assertNotEquals(game.getClientModel().getBank().getSheepCount(), 22);
 
 			//Add checks for resources here based on initialized game
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 1);

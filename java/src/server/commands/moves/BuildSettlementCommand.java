@@ -1,5 +1,6 @@
 package server.commands.moves;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.models.ClientModel;
@@ -8,6 +9,7 @@ import client.models.Resources;
 import client.models.VertexObject;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
+import client.models.mapdata.Hex;
 import server.commands.IMovesCommand;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.InsufficientResourcesException;
@@ -16,6 +18,8 @@ import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
 import server.model.ServerGame;
+import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 // TODO: Auto-generated Javadoc
@@ -74,6 +78,17 @@ public class BuildSettlementCommand implements IMovesCommand {
 		}
 		p.decSettlements();
 		settlements.add(settlement);
+		if(game.getClientModel().getTurnTrackerStatus().equals("SecondRound")) {
+			HexLocation[] hexLocations = settlement.getHexes();
+			ArrayList<Hex> hexes = new ArrayList<Hex>();
+			hexes.add(game.getClientModel().getBoard().getHexFromCoords(hexLocations[0].getX(), hexLocations[0].getY()));
+			hexes.add(game.getClientModel().getBoard().getHexFromCoords(hexLocations[1].getX(), hexLocations[1].getY()));
+			hexes.add(game.getClientModel().getBoard().getHexFromCoords(hexLocations[2].getX(), hexLocations[2].getY()));
+			for(Hex h : hexes) {
+				p.getResources().addResource(h.getResourceType(),1,bank);
+			}
+
+		}
 		game.getClientModel().increaseVersion();
 	}
 
