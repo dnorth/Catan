@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidMaritimeTradeException;
@@ -65,6 +66,7 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		
 		resources.subtractResource(inputResource, ratio, bank);  // player gives ratio # of inputResource to bank
 		resources.addResource(outputResource, 1, bank);          // player gets 1 outputResource from bank
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " maritime traded", p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

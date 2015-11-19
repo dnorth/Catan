@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import client.models.mapdata.Board;
 import client.models.mapdata.Road;
 import server.commands.IMovesCommand;
@@ -77,6 +78,8 @@ public class BuildRoadCommand implements IMovesCommand {
 		p.decRoads();
 		board.addRoad(new Road(playerIndex, spot));
 
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a road", p.getName()));
+		
 		if(model.playerHasLongestRoad(p)){
 			model.awardLongestRoad(p);
 		}

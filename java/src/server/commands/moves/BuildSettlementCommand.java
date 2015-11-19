@@ -7,6 +7,7 @@ import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
 import client.models.VertexObject;
+import client.models.communication.MessageLine;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.Hex;
@@ -78,6 +79,7 @@ public class BuildSettlementCommand implements IMovesCommand {
 		}
 		p.decSettlements();
 		settlements.add(settlement);
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a settlement", p.getName()));
 		if(game.getClientModel().getTurnTrackerStatus().equals("SecondRound")) {
 			HexLocation[] hexLocations = settlement.getHexes();
 			ArrayList<Hex> hexes = new ArrayList<Hex>();

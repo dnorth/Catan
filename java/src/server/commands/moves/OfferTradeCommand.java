@@ -4,6 +4,7 @@ import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
@@ -53,6 +54,7 @@ public class OfferTradeCommand implements IMovesCommand {
 		if(offerer.hasSpecifiedResources(tradeOffer.reverseOffer())){
 			game.getClientModel().setTradeOffer(tradeOffer);
 		}
+		game.getClientModel().getLog().getLines().add(new MessageLine(offerer.getName() + " offered a trade", offerer.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

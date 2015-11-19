@@ -3,6 +3,7 @@ package server.commands.moves;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidPlayerIndexException;
@@ -61,6 +62,7 @@ public class AcceptTradeCommand implements IMovesCommand {
 				offerer.getResources().addResource(ResourceType.WHEAT, offer.getWheatCount(), receiver.getResources());
 				offerer.getResources().addResource(ResourceType.WOOD, offer.getWoodCount(), receiver.getResources());
 				game.getClientModel().setTradeOffer(null);
+				game.getClientModel().getLog().getLines().add(new MessageLine(receiver.getName() + " accepted a trade from " + offerer.getName(), receiver.getName()));
 			}
 			else{
 				throw new InsufficientResourcesException();

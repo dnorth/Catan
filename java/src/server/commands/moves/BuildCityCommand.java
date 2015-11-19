@@ -6,6 +6,7 @@ import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
 import client.models.VertexObject;
+import client.models.communication.MessageLine;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
 import server.commands.IMovesCommand;
@@ -70,9 +71,9 @@ public class BuildCityCommand implements IMovesCommand {
 			Resources bank = game.getClientModel().getBank();
 			p.payForCity(bank);
 			p.decCities();
-		settlements.remove(city);
-		cities.add(city);
-
+			settlements.remove(city);
+			cities.add(city);
+			game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a city", p.getName()));
 		}
 		game.getClientModel().increaseVersion();
 	}

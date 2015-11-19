@@ -6,6 +6,7 @@ import java.util.Random;
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidPlayerIndexException;
@@ -48,7 +49,8 @@ public class RobPlayerCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException {
-		Player p =game.getClientModel().getPlayers()[victimIndex];
+		Player p = game.getClientModel().getPlayers()[victimIndex];
+		Player p2 = game.getClientModel().getPlayers()[playerIndex];
 		
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Robbing");
@@ -62,12 +64,16 @@ public class RobPlayerCommand implements IMovesCommand {
 		
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
 		
+<<<<<<< Updated upstream
 		System.out.println("DA VICTIM INDEX IS: " + String.valueOf(victimIndex));
 		
 		if(victimIndex==-1)
+=======
+		if(victimIndex == -1)
+>>>>>>> Stashed changes
 		{return;}
 		
-		if(p.hasResource()){
+		if(p.hasResource()) {
 			Resources victimResources = p.getResources();
 			Resources takerResources = game.getClientModel().getPlayers()[playerIndex].getResources();
 			List<ResourceType> resourceTypes = victimResources.getResourceTypes();
@@ -77,7 +83,11 @@ public class RobPlayerCommand implements IMovesCommand {
 			victimResources.subtractResource(type, 1,takerResources);
 
 		}
+<<<<<<< Updated upstream
 		game.getClientModel().getTurnTracker().setStatus("Playing");
+=======
+		game.getClientModel().getLog().getLines().add(new MessageLine(p2.getName() + " robbed " + p.getName(), p2.getName()));
+>>>>>>> Stashed changes
 		game.getClientModel().increaseVersion();
 	}
 

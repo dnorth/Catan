@@ -1,5 +1,6 @@
 package server.commands.moves;
 
+import client.models.Player;
 import client.models.communication.MessageLine;
 import server.Server;
 import server.commands.IMovesCommand;
@@ -34,9 +35,12 @@ public class SendChatCommand implements IMovesCommand {
 	@Override
 	public void execute() throws InvalidPlayerIndexException {
 		
+		Player p =game.getClientModel().getPlayers()[playerIndex];
+
 		game.getClientModel().checkPlayerIndex(playerIndex);
 		String playerName = game.getClientModel().getPlayers()[playerIndex].getName();
 		game.getClientModel().getChat().getLines().add(new MessageLine(content,playerName ));
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " sent a chat", p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

@@ -8,6 +8,7 @@ import client.models.ClientModel;
 import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidPlayerIndexException;
@@ -59,7 +60,8 @@ public class BuyDevCardCommand implements IMovesCommand {
 		
 		if(p.canBuyDevCard()){
 			p.payForDevCard(bank);
-			
+			game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " bought a devcard", p.getName()));
+
 			if(selectedDevCard==DevCard.MONUMENT)
 			{
 				p.getOldDevCards().addSpecifiedDevCard(selectedDevCard, 1);	

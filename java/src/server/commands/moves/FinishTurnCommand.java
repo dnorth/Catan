@@ -1,7 +1,9 @@
 package server.commands.moves;
 
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.TurnTracker;
+import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InvalidPlayerIndexException;
 import server.exceptions.InvalidStatusException;
@@ -38,20 +40,27 @@ public class FinishTurnCommand implements IMovesCommand {
 		model.setPlayedDevCard(false);
 		
 		TurnTracker t = game.getClientModel().getTurnTracker();
-		game.getClientModel().getPlayers()[playerIndex].transferDevCards();
+		Player p = game.getClientModel().getPlayers()[playerIndex];
+		p.transferDevCards();
+		
 		if(t.getStatus().equals("SecondRound")) {
 			t.previousPlayerTurn();
 		}
 		else {
 			t.nextPlayerTurn();
 		}
+		
 		if (t.getStatus().equals("FirstRound")) {
 			if (endOfRound(1)) t.setStatus("SecondRound");
 		}
 		else if (t.getStatus().equals("SecondRound")) {
 			if (endOfRound(2)) t.setStatus("Rolling");
 		}
-		else t.setStatus("Rolling");
+		else {
+			t.setStatus("Rolling");
+		}
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " is finished his turn", p.getName()));
+
 		game.getClientModel().increaseVersion();
 	}
 	private boolean endOfRound(int count) {
