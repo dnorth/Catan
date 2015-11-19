@@ -217,7 +217,20 @@ public class ClientModel extends Observable
 	public void sendChat(int sendPlayerIndex, int receivePlayerIndex, String message) {}
 	
 	/**
-	 * Updates dice rolled, gives players necessary resources
+	 * Updates dice rolled, gives players nece//		
+//		try{
+//			TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
+//			game.getClientModel().getTurnTracker().setStatus("Playing");
+//		facade.offerTrade(0, 0, offer.getOffer(),1);
+//		facade.acceptTrade(0, 1, true);
+//		
+//		
+//		}
+//		catch ( InvalidStatusException
+//				| NotYourTurnException 
+//				| InvalidPlayerIndexException e) {}
+//		
+//		ssary resources
 	 * @param numRolled - number rolled - between 2-12
 	 * @param playerIndex - player that rolled dice
 	 */
@@ -408,7 +421,20 @@ public class ClientModel extends Observable
 		Player p = players[playerIndex];
 		if(p.getOldDevCards().hasCard(type)==false){
 			throw new DontHaveDevCardException();
-		}
+		}//		
+//		try{
+//		TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
+//		game.getClientModel().getTurnTracker().setStatus("Playing");
+//	facade.offerTrade(0, 0, offer.getOffer(),1);
+//	facade.acceptTrade(0, 1, true);
+//	
+//	
+//	}
+//	catch ( InvalidStatusException
+//			| NotYourTurnException 
+//			| InvalidPlayerIndexException e) {}
+//	
+//	
 		
 		if(playedDevCard==true){
 			throw new AlreadyPlayedDevCardException();
@@ -468,7 +494,20 @@ public class ClientModel extends Observable
 			turnTracker.setLargestArmy(p.getPlayerIndex());
 	}
 	
-	public boolean isInitializingPhase()
+	public boolean isInitializingPhase()//		
+//	try{
+//	TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
+//	game.getClientModel().getTurnTracker().setStatus("Playing");
+//facade.offerTrade(0, 0, offer.getOffer(),1);
+//facade.acceptTrade(0, 1, true);
+//
+//
+//}
+//catch ( InvalidStatusException
+//		| NotYourTurnException 
+//		| InvalidPlayerIndexException e) {}
+//
+//
 	{
 		if (turnTracker.getStatus().equals("FirstRound")|| turnTracker.getStatus().equals("SecondRound")) {
 		return true;

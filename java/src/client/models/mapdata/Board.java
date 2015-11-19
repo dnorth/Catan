@@ -407,6 +407,9 @@ public class Board {
 			int index = rand.nextInt(tileTypes.size());
 			String tileType = tileTypes.remove(index);
 			h.setResource(tileType);
+			if(h.getHexType()==HexType.DESERT){
+				this.robber=h.getLocation();
+			}
 		}
 		
 	}
