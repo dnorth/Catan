@@ -85,7 +85,9 @@ public class BuildSettlementCommand implements IMovesCommand {
 			hexes.add(game.getClientModel().getBoard().getHexFromCoords(hexLocations[1].getX(), hexLocations[1].getY()));
 			hexes.add(game.getClientModel().getBoard().getHexFromCoords(hexLocations[2].getX(), hexLocations[2].getY()));
 			for(Hex h : hexes) {
-				p.getResources().addResource(h.getResourceType(),1,bank);
+				if(h != null) {
+					p.getResources().addResource(h.getResourceType(),1,bank);
+				}
 			}
 
 		}

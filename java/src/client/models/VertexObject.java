@@ -88,21 +88,27 @@ public class VertexObject{
 		case "NW":
 			hex1 = new HexLocation(x-1, y);
 			hex2 = new HexLocation(x, y-1);
+			break;
 		case "NE":
 			hex1 = new HexLocation(x, y-1);
 			hex2 = new HexLocation(x+1, y-1);
+			break;
 		case "E":
 			hex1 = new HexLocation(x+1, y-1);
 			hex2 = new HexLocation(x+1, y);
+			break;
 		case "SE":
 			hex1 = new HexLocation(x+1, y);
 			hex2 = new HexLocation(x, y+1);
+			break;
 		case "SW":
 			hex1 = new HexLocation(x, y+1);
 			hex2 = new HexLocation(x-1, y+1);
+			break;
 		case "W":
 			hex1 = new HexLocation(x-1, y+1);
 			hex2 = new HexLocation(x-1, y);
+			break;
 		}
 		HexLocation[] hexes = new HexLocation[3];
 		hexes[0] = hex1;
