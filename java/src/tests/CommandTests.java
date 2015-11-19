@@ -465,6 +465,8 @@ public class CommandTests {
 		ServerGame game = data.getGameByID(0);
 		this.SetPlayerResources(game);
 		MovesFacade facade = new MovesFacade();
+		Player p1 = game.getClientModel().getPlayers()[0];
+		Player p2 = game.getClientModel().getPlayers()[1];
 		
 		try{
 			TradeOffer offer = new TradeOffer(0, 1, new Resources(50,1,2,3,4));
@@ -483,13 +485,22 @@ public class CommandTests {
 //		facade.offerTrade(0, 0, offer.getOffer(),1);
 //		facade.acceptTrade(0, 1, true);
 //		
-//		
+//		System.out.println(x);
 //		}
 //		catch ( InvalidStatusException
 //				| NotYourTurnException 
-//				| InvalidPlayerIndexException e) {}
+//				| InvalidPlayerIndexException e) {} catch (NoTradeOfferedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InvalidPlayerException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InsufficientResourcesException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		
-//		
+		
 		
 		
 		
