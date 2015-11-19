@@ -64,13 +64,9 @@ public class RobPlayerCommand implements IMovesCommand {
 		
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
 		
-<<<<<<< Updated upstream
 		System.out.println("DA VICTIM INDEX IS: " + String.valueOf(victimIndex));
 		
-		if(victimIndex==-1)
-=======
 		if(victimIndex == -1)
->>>>>>> Stashed changes
 		{return;}
 		
 		if(p.hasResource()) {
@@ -83,11 +79,8 @@ public class RobPlayerCommand implements IMovesCommand {
 			victimResources.subtractResource(type, 1,takerResources);
 
 		}
-<<<<<<< Updated upstream
 		game.getClientModel().getTurnTracker().setStatus("Playing");
-=======
 		game.getClientModel().getLog().getLines().add(new MessageLine(p2.getName() + " robbed " + p.getName(), p2.getName()));
->>>>>>> Stashed changes
 		game.getClientModel().increaseVersion();
 	}
 
