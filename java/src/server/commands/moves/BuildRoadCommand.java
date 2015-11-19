@@ -25,15 +25,15 @@ public class BuildRoadCommand implements IMovesCommand {
 	int playerIndex;
 	EdgeLocation spot;
 	boolean free;
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
 	public BuildRoadCommand(ServerGame game, int playerIndex,
 			EdgeLocation spot, boolean free) {
-=======
-	
-	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free) {
->>>>>>> Stashed changes
-		super();
+//=======
+//	
+//	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free) {
+//>>>>>>> Stashed changes
+//		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.spot = spot;
