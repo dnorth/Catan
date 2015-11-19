@@ -54,6 +54,7 @@ public class OfferTradeCommand implements IMovesCommand {
 		if(offerer.hasSpecifiedResources(tradeOffer.reverseOffer())){
 			game.getClientModel().setTradeOffer(tradeOffer);
 		}
+		
 		game.getClientModel().getLog().getLines().add(new MessageLine(offerer.getName() + " offered a trade", offerer.getName()));
 		game.getClientModel().increaseVersion();
 	}

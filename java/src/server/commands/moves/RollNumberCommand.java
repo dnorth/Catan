@@ -16,6 +16,7 @@ import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -105,11 +106,18 @@ public class RollNumberCommand implements IMovesCommand {
 
 		for(VertexObject v  : model.getBoard().getSettlements())
 		{
-			if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
+			HexLocation[] hexes = v.getHexes();
+			for (HexLocation hex : hexes){
+				if (h.getLocation().getX() == hex.getX() && h.getLocation().getY() == hex.getY()) {
+					Player p = model.getPlayers()[v.getOwner()];
+					p.getResources().addResource(h.getResourceType(), 1, bank);
+				}
+			}
+			/*if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
 			{
 				Player p = model.getPlayers()[v.getOwner()];
 					p.getResources().addResource(h.getResourceType(),1,bank);
-			}
+			}*/
 		}
 
 		for(VertexObject v  : model.getBoard().getCities())
