@@ -54,10 +54,10 @@ public class CreateCommand implements IGamesCommand {
 		
 		
 		for(Hex h: board.getHexes()){
-			System.out.println("Hex Type: "+h.getHexType() + " Hex Number: "+h.getNumberToken()+ " Hex ResourceType: " +h.getResourceType() + " HexLocation: "+h.getLocation());
+//			System.out.println("Hex Type: "+h.getHexType() + " Hex Number: "+h.getNumberToken()+ " Hex ResourceType: " +h.getResourceType() + " HexLocation: "+h.getLocation());
 		}
 		
-		System.out.println("Robber is at: "+board.getRobber());
+//		System.out.println("Robber is at: "+board.getRobber());
 	}
 
 }

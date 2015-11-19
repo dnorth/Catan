@@ -51,8 +51,6 @@ public class BuildRoadCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException, InvalidPlayerIndexException {
-		System.out.println("IN ROAD COMMAND");
-		System.out.println("SPOT: " + spot.toString());
 
 		ClientModel model = game.getClientModel();
 		if(!free) {
