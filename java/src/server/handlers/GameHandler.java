@@ -44,7 +44,6 @@ public class GameHandler implements HttpHandler{
 			exchange.getResponseHeaders().set("Content-Type", "application/json");
 
 			logger.info(cookie.toString());
-//			System.out.println("FAIL0");
 			if(Authenticate.isValidCookie(cookie, false)) {
 				int gID = cookie.get("game").getAsInt();
 				ClientModel clientModel = gameFacade.getGameModel(gID);
