@@ -1,9 +1,16 @@
 package server.commands.moves;
 
+import client.models.ClientModel;
 import client.models.Player;
 import client.models.mapdata.Board;
 import client.models.mapdata.Road;
 import server.commands.IMovesCommand;
+import server.exceptions.AlreadyPlayedDevCardException;
+import server.exceptions.CantBuildThereException;
+import server.exceptions.DontHaveDevCardException;
+import server.exceptions.InvalidStatusException;
+import server.exceptions.NotYourTurnException;
+import server.exceptions.OutOfPiecesException;
 import server.model.ServerGame;
 import shared.definitions.DevCard;
 import shared.locations.EdgeLocation;
@@ -18,8 +25,8 @@ public class RoadBuildingCommand implements IMovesCommand {
 	int playerIndex;
 	EdgeLocation spot1;
 	EdgeLocation spot2;
-	
-	
+
+
 	public RoadBuildingCommand(ServerGame game, int playerIndex,
 			EdgeLocation spot1, EdgeLocation spot2) {
 		super();
@@ -31,17 +38,44 @@ public class RoadBuildingCommand implements IMovesCommand {
 
 	/**
 	 *  Plays RoadBuilding Card.
+	 * @throws InvalidStatusException 
+	 * @throws NotYourTurnException 
+	 * @throws AlreadyPlayedDevCardException 
+	 * @throws DontHaveDevCardException 
+	 * @throws OutOfPiecesException 
+	 * @throws CantBuildThereException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException {
+
+		ClientModel model = game.getClientModel();
+		model.checkStatus("Playing");
+		model.checkTurn(playerIndex);
+		model.checkDevCard(playerIndex, DevCard.ROADBUILDING);
+
+
 		Player p = game.getClientModel().getPlayers()[playerIndex];
-		
-		if(p.getOldDevCards().hasRoadBuilding()){
-		Board board =game.getClientModel().getBoard();
-		board.addRoad(new Road(playerIndex, spot1));
-		board.addRoad(new Road(playerIndex, spot2));
-		p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
-		}
+
+
+			Board board =game.getClientModel().getBoard();
+
+			Road road1 = new Road(playerIndex, spot1);
+			Road road2 = new Road(playerIndex, spot2);
+
+			model.checkRoad(road1);
+			p.decRoads();
+			board.addRoad(road1);
+
+			model.checkRoad(road2);
+			p.decRoads();
+			board.addRoad(road2);
+
+			if(model.playerHasLongestRoad(p)){
+				model.awardLongestRoad(p);
+			}
+
+			p.getOldDevCards().decSpecifiedDevCard(DevCard.ROADBUILDING);
+			model.setPlayedDevCard(true);
 		game.getClientModel().increaseVersion();
 	}
 

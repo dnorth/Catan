@@ -1,7 +1,12 @@
 package server.commands.moves;
 
+import client.models.ClientModel;
 import client.models.Player;
 import server.commands.IMovesCommand;
+import server.exceptions.AlreadyPlayedDevCardException;
+import server.exceptions.DontHaveDevCardException;
+import server.exceptions.InvalidStatusException;
+import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
 import shared.definitions.DevCard;
 
@@ -22,22 +27,29 @@ public class MonumentCommand implements IMovesCommand {
 
 	/**
 	 *  Plays a monument Card.
+	 * @throws NotYourTurnException 
+	 * @throws InvalidStatusException 
+	 * @throws AlreadyPlayedDevCardException 
+	 * @throws DontHaveDevCardException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException {
 
 		Player user = game.getClientModel().getPlayers()[playerIndex];
-		if(user.getOldDevCards().hasMonument() || user.getNewDevCards().hasMonument()){
+		
+		ClientModel model = game.getClientModel();
+		model.checkStatus("Playing");
+		model.checkTurn(playerIndex);
+		model.checkDevCard(playerIndex, DevCard.MONUMENT);
+		
+		
+		for(int i=0; i<user.getOldDevCards().getMonumentCount(); i++)
+			{
 			user.incMonuments();
-
-			if(user.getNewDevCards().hasMonument()){
-				user.getNewDevCards().decSpecifiedDevCard(DevCard.MONUMENT);	
+			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 			}
-
-			else{
-				user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);	
-			}
-		}
+			
+		
 		game.getClientModel().increaseVersion();
 	}
 }

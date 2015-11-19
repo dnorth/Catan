@@ -51,11 +51,16 @@ public class RobPlayerCommand implements IMovesCommand {
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Robbing");
 		model.checkTurn(playerIndex);
+		
+		
 		if(model.getBoard().getRobber().Equals(location)){
-			throw new RobberIsAlreadyThereException();
-			
+			throw new RobberIsAlreadyThereException();	
 		}
+		
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
+		
+		if(victimIndex==-1)
+		{return;}
 		
 		if(p.hasResource()){
 			Resources victimResources = p.getResources();

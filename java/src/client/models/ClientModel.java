@@ -1,11 +1,14 @@
 package client.models;
 import java.util.Observable;
 
+import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.CantBuildThereException;
+import server.exceptions.DontHaveDevCardException;
 import server.exceptions.InvalidMaritimeTradeException;
 import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerPlayer;
+import shared.definitions.DevCard;
 import shared.definitions.ResourceType;
 import shared.locations.VertexLocation;
 import client.facade.CanDoManager;
@@ -33,6 +36,7 @@ public class ClientModel extends Observable
 	private DevCards deck;
 	boolean hasChanged = false;
 	private boolean newCli;
+	boolean playedDevCard=false;
 	
 	public ClientModel() {
 		super();
@@ -395,6 +399,17 @@ public class ClientModel extends Observable
 		}
 	}
 	
+	public void checkDevCard(int playerIndex, DevCard type) throws DontHaveDevCardException, AlreadyPlayedDevCardException{
+		Player p = players[playerIndex];
+		if(p.getOldDevCards().hasCard(type)==false){
+			throw new DontHaveDevCardException();
+		}
+		
+		if(playedDevCard==true){
+			throw new AlreadyPlayedDevCardException();
+		}
+	}
+	
 	public void updateMaritimeTradeCosts(int playerIndex){
 	CanDoManager canDo = new CanDoManager(this);
 		
@@ -424,6 +439,17 @@ public class ClientModel extends Observable
 			turnTracker.setLongestRoad(p.getPlayerIndex());
 	}
 	
+	public boolean playerHasLargestArmy(Player p){
+		int soldiersPlayed = p.getSoldiers();
+		for(Player player : players){
+			int playerSoldiersPlayed = player.getSoldiers();
+			if(playerSoldiersPlayed>soldiersPlayed){
+				return false;
+			}
+		}
+		return soldiersPlayed>=3;
+	}
+	
 	public void awardLargestArmy(Player p){
 		int largestArmyIndex = turnTracker.getLargestArmy();
 		if(largestArmyIndex==p.getPlayerIndex()){return;}
@@ -446,4 +472,14 @@ public class ClientModel extends Observable
 			return false;
 		}
 	}
+
+	public boolean havePlayedDevCard() {
+		return playedDevCard;
+	}
+
+	public void setPlayedDevCard(boolean playedDevCard) {
+		this.playedDevCard = playedDevCard;
+	}
+	
+	
 }

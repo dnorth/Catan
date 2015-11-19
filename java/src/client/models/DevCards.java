@@ -152,6 +152,22 @@ public void setYearOfPlentyCount(int yearOfPlentyCount) {
 	this.yearOfPlenty = yearOfPlentyCount;
 }
 
+public boolean hasCard(DevCard type){
+	switch (type) {
+	case SOLDIER:
+		return hasSoldier();
+	case YEAROFPLENTY:
+		return hasYearOfPlenty();
+	case MONOPOLY:
+		return hasMonopoly();
+	case ROADBUILDING:
+		return hasRoadBuilding();
+	case MONUMENT:
+		return hasMonument();
+	}
+	return false;
+}
+
 public int getTotalCount()
 {
 	return monopoly + monument + roadBuilding + soldier + yearOfPlenty;	

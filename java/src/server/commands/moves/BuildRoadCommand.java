@@ -57,15 +57,15 @@ public class BuildRoadCommand implements IMovesCommand {
 		model.checkTurn(playerIndex);
 
 		if(model.isInitializingPhase()){
-			game.getClientModel().checkInitialRoad(new Road(playerIndex, spot));
+			model.checkInitialRoad(new Road(playerIndex, spot));
 		}
 		else{
-			game.getClientModel().checkRoad(new Road(playerIndex, spot));
+			model.checkRoad(new Road(playerIndex, spot));
 		}
 
-		Board board = game.getClientModel().getBoard();
-		Player p = game.getClientModel().getPlayers()[playerIndex];
-		Resources bank = game.getClientModel().getBank();
+		Board board = model.getBoard();
+		Player p = model.getPlayers()[playerIndex];
+		Resources bank = model.getBank();
 
 		if (free == false) {
 			p.payForRoad(bank);
@@ -73,10 +73,10 @@ public class BuildRoadCommand implements IMovesCommand {
 		p.decRoads();
 		board.addRoad(new Road(playerIndex, spot));
 
-		if(game.getClientModel().playerHasLongestRoad(p)){
-			game.getClientModel().awardLongestRoad(p);
+		if(model.playerHasLongestRoad(p)){
+			model.awardLongestRoad(p);
 		}
-		game.getClientModel().increaseVersion();
+		model.increaseVersion();
 	}
 
 }

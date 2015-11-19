@@ -314,6 +314,8 @@ public class Player
 		else{
 			throw new OutOfPiecesException();
 		}}
+	
+	public void incSoldiers(){soldiers++;}
 
 	@Override
 	public String toString() {

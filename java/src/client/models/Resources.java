@@ -3,6 +3,7 @@ package client.models;
 import java.util.List;
 import java.util.ArrayList;
 
+import server.exceptions.InsufficientResourcesException;
 import shared.definitions.ResourceType;
 
 public class Resources{
@@ -121,7 +122,10 @@ public class Resources{
 		}
 	}
 
-	public void addResource(ResourceType type, int amount, Resources takeFrom){
+	public void addResource(ResourceType type, int amount, Resources takeFrom) throws InsufficientResourcesException{
+		if(amount>takeFrom.getAmountOfSpecificResource(type))
+		{throw new InsufficientResourcesException();}
+		
 		switch(type) {
 		case BRICK:
 			this.brick+=amount;
@@ -148,7 +152,10 @@ public class Resources{
 		}
 	}
 
-	public void subtractResource(ResourceType type, int amount, Resources giveTo){
+	public void subtractResource(ResourceType type, int amount, Resources giveTo) throws InsufficientResourcesException{
+		if(amount>this.getAmountOfSpecificResource(type))
+		{throw new InsufficientResourcesException();}
+		
 		switch(type) {
 		case BRICK:
 			this.brick-=amount;

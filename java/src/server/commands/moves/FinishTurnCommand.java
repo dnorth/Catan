@@ -31,6 +31,8 @@ public class FinishTurnCommand implements IMovesCommand {
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 
+		model.setPlayedDevCard(false);
+		
 		TurnTracker t = game.getClientModel().getTurnTracker();
 		game.getClientModel().getPlayers()[playerIndex].transferDevCards();
 		t.nextPlayerTurn();
