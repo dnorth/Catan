@@ -38,10 +38,7 @@ public class DiscardCardsCommand implements IMovesCommand {
 	@Override
 	public void execute() throws InvalidStatusException, InsufficientResourcesException, InvalidPlayerIndexException {
 		game.getClientModel().checkPlayerIndex(playerIndex);
-		
-		if(game.getClientModel().getTurnTracker().getStatus().equals("Discarding")==false)
-		{throw new InvalidStatusException();}
-		
+		game.getClientModel().checkStatus("Discarding");
 		
 		Player player = game.getClientModel().getPlayers()[playerIndex];
 		Resources playerResources = game.getClientModel().getPlayers()[playerIndex].getResources();
