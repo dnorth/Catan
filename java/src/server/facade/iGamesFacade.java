@@ -2,6 +2,7 @@ package server.facade;
 
 import java.util.List;
 
+import server.model.ServerData;
 import server.model.ServerGame;
 import client.data.GameInfo;
 
@@ -37,4 +38,6 @@ public interface iGamesFacade {
 	 * @return "Success" or an error if failed
 	 */
 	public String joinGame(int pID, int gID, String color);
+	
+	public ServerData getServerData();
 }

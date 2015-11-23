@@ -10,6 +10,7 @@ import jsonTranslator.ModelToJSON;
 import server.authentication.Authenticate;
 import server.exceptions.MissingCookieException;
 import server.facade.GameFacade;
+import server.facade.iGameFacade;
 import client.models.ClientModel;
 
 import com.google.gson.JsonObject;
@@ -22,11 +23,11 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class GameHandler implements HttpHandler{
 	Logger logger;
-	GameFacade gameFacade;
+	iGameFacade gameFacade;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
 
-	public GameHandler(GameFacade gameFacade) {
+	public GameHandler(iGameFacade gameFacade) {
 		this.gameFacade = gameFacade;
 	}
 
