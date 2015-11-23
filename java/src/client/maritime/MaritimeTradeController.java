@@ -50,19 +50,18 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void startTrade() {	
-	getTradeOverlay().setTradeEnabled(false);	
-	getTradeOverlay().hideGetOptions();
-	getTradeOverlay().hideGiveOptions();
+		getTradeOverlay().setTradeEnabled(false);	
+		getTradeOverlay().hideGetOptions();
+		getTradeOverlay().hideGiveOptions();
 	
-	List<ResourceType> resourcesToTrade= stateManager.getState().startMaritimeTrade();
+		List<ResourceType> resourcesToTrade= stateManager.getState().startMaritimeTrade();
 
-	this.canGiveResourceTypes = resourcesToTrade.toArray(new ResourceType[resourcesToTrade.size()]);
-	getTradeOverlay().showGiveOptions(canGiveResourceTypes);
+		this.canGiveResourceTypes = resourcesToTrade.toArray(new ResourceType[resourcesToTrade.size()]);
+		getTradeOverlay().showGiveOptions(canGiveResourceTypes);
 	
-	List<ResourceType> banksAvailableResources =stateManager.getClientModel().getBank().getAvailableResourceTypes();
-	this.canGetResourceTypes= banksAvailableResources.toArray(new ResourceType[banksAvailableResources.size()]);
-	getTradeOverlay().showModal();
-	
+		List<ResourceType> banksAvailableResources =stateManager.getClientModel().getBank().getAvailableResourceTypes();
+		this.canGetResourceTypes= banksAvailableResources.toArray(new ResourceType[banksAvailableResources.size()]);
+		getTradeOverlay().showModal();
 	}
 
 	@Override

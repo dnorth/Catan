@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import client.models.Player;
 import client.models.VertexObject;
 import shared.definitions.HexType;
+import shared.locations.VertexLocation;
 
 /**
  * Holds pointers to important map data: <br>
@@ -492,5 +494,21 @@ public class Board {
 			
 		}
 		
+	}
+	
+	public void updatePlayerMaritimeTradeCosts(Player p)
+	{
+		Port[] ports = getPorts();
+	
+		for(Port port : ports)
+		{
+			EdgeLocation portLocation = port.getEdgeLocation();
+			String[] adjVertexDirs = Board.getAdjVertices().get(portLocation.getDirection());
+			EdgeLocation adj1 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[0]);
+			EdgeLocation adj2 = new EdgeLocation(portLocation.getXcoord(), portLocation.getYcoord(), adjVertexDirs[1]);
+			
+			if (getVertexOwner(adj1) == p.getPlayerIndex()) {p.getPortTrade().setTradeCosts(port);}
+			if (getVertexOwner(adj2) == p.getPlayerIndex()) {p.getPortTrade().setTradeCosts(port);}
+		}
 	}
 }

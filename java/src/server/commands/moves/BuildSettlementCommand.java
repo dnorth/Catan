@@ -11,6 +11,7 @@ import client.models.communication.MessageLine;
 import client.models.mapdata.Board;
 import client.models.mapdata.EdgeLocation;
 import client.models.mapdata.Hex;
+import client.models.mapdata.PortTrade;
 import server.commands.IMovesCommand;
 import server.exceptions.CantBuildThereException;
 import server.exceptions.InsufficientResourcesException;
@@ -72,8 +73,6 @@ public class BuildSettlementCommand implements IMovesCommand {
 		Player p = game.getClientModel().getPlayers()[playerIndex];
 		Resources bank = game.getClientModel().getBank();
 		
-
-		
 		if(!free) {
 			p.payForSettlement(bank);
 		}
@@ -96,6 +95,7 @@ public class BuildSettlementCommand implements IMovesCommand {
 			}
 
 		}
+		board.updatePlayerMaritimeTradeCosts(p);
 		game.getClientModel().increaseVersion();
 	}
 
