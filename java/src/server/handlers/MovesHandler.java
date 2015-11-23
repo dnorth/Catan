@@ -22,16 +22,17 @@ import server.exceptions.MissingCookieException;
 import server.facade.GameFacade;
 import server.facade.GamesFacade;
 import server.facade.MovesFacade;
+import server.facade.iMovesFacade;
 import server.model.ServerGame;
 
 public class MovesHandler implements HttpHandler{
 
 	Logger logger;
-	MovesFacade movesFacade;
+	iMovesFacade movesFacade;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
 
-	public MovesHandler(MovesFacade movesFacade) {
+	public MovesHandler(iMovesFacade movesFacade) {
 		this.movesFacade = movesFacade;
 	}
 

@@ -19,6 +19,7 @@ import server.exceptions.ContextNotFoundException;
 import server.exceptions.InvalidLoginException;
 import server.exceptions.UsernameAlreadyTakenException;
 import server.facade.UserFacade;
+import server.facade.iUserFacade;
 
 public class UserHandler implements HttpHandler {
 
@@ -26,9 +27,9 @@ public class UserHandler implements HttpHandler {
 	Gson gson;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
-	UserFacade userFacade;
+	iUserFacade userFacade;
 	
-	public UserHandler(UserFacade userFacade) {
+	public UserHandler(iUserFacade userFacade) {
 		this.userFacade = userFacade;
 	}
 	

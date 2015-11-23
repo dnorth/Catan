@@ -19,16 +19,17 @@ import server.authentication.Authenticate;
 import server.exceptions.ContextNotFoundException;
 import server.exceptions.MissingCookieException;
 import server.facade.GamesFacade;
+import server.facade.iGamesFacade;
 import server.model.ServerGame;
 
 public class GamesHandler implements HttpHandler{
 
 	Logger logger;
-	GamesFacade gamesFacade;
+	iGamesFacade gamesFacade;
 	JSONToModel jsonToModel = new JSONToModel();
 	ModelToJSON modelToJSON = new ModelToJSON();
 
-	public GamesHandler(GamesFacade gamesFacade) {
+	public GamesHandler(iGamesFacade gamesFacade) {
 		this.gamesFacade = gamesFacade;
 	}
 

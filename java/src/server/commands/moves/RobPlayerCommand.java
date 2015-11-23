@@ -49,7 +49,6 @@ public class RobPlayerCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException {
-		Player p = game.getClientModel().getPlayers()[victimIndex];
 		Player p2 = game.getClientModel().getPlayers()[playerIndex];
 		
 		ClientModel model = game.getClientModel();
@@ -67,7 +66,13 @@ public class RobPlayerCommand implements IMovesCommand {
 		System.out.println("DA VICTIM INDEX IS: " + String.valueOf(victimIndex));
 		
 		if(victimIndex == -1)
-		{return;}
+		{
+			game.getClientModel().getTurnTracker().setStatus("Playing");
+			game.getClientModel().getLog().getLines().add(new MessageLine(p2.getName() + " placed the robber, but couldn't rob anyone", p2.getName()));
+			game.getClientModel().increaseVersion();
+			return;
+		}
+		Player p = game.getClientModel().getPlayers()[victimIndex];
 		
 		if(p.hasResource()) {
 			Resources victimResources = p.getResources();

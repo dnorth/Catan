@@ -1,11 +1,15 @@
 package server.facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.models.ClientModel;
 import client.models.Resources;
 import client.models.TurnTracker;
 import client.models.communication.MessageLine;
 import client.models.mapdata.Hex;
 import server.Server;
+import server.commands.IMovesCommand;
 import server.commands.moves.AcceptTradeCommand;
 import server.commands.moves.BuildCityCommand;
 import server.commands.moves.BuildRoadCommand;
@@ -78,6 +82,7 @@ public class MovesFacade implements iMovesFacade {
 	public ClientModel rollNumber(int gameIndex, int playerIndex, int number) throws InvalidRollException, InvalidStatusException, InsufficientResourcesException, NotYourTurnException, InvalidPlayerIndexException {
 		ServerGame game =data.getGameByID(gameIndex);
 		RollNumberCommand command = new RollNumberCommand(game, playerIndex, number);
+		
 		command.execute();
 		return game.getClientModel();
 	}
