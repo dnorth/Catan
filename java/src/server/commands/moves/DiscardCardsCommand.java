@@ -2,7 +2,6 @@ package server.commands.moves;
 
 import client.models.Player;
 import client.models.Resources;
-import client.models.communication.MessageLine;
 import server.commands.IMovesCommand;
 import server.exceptions.InsufficientResourcesException;
 import server.exceptions.InvalidPlayerIndexException;
