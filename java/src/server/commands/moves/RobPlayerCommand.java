@@ -67,6 +67,8 @@ public class RobPlayerCommand implements IMovesCommand {
 		
 		if(victimIndex == -1)
 		{
+			game.getClientModel().getTurnTracker().setStatus("Playing");
+			game.getClientModel().getLog().getLines().add(new MessageLine(p2.getName() + " placed the robber, but couldn't rob anyone", p2.getName()));
 			game.getClientModel().increaseVersion();
 			return;
 		}
