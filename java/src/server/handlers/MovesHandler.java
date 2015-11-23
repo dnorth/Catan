@@ -76,7 +76,7 @@ public class MovesHandler implements HttpHandler{
 						jsonModel = movesFacade.playRoadBuilding(gameIndex, playerIndex, jsonToModel.getEdgeLocation(object, "spot1"), jsonToModel.getEdgeLocation(object, "spot2"));
 						break;
 					case "Soldier":
-						jsonModel = movesFacade.playSoldier(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "HexLocation"));
+						jsonModel = movesFacade.playSoldier(gameIndex, playerIndex, jsonToModel.getVictimIndex(object), jsonToModel.getHexLocation(object, "location"));
 						break;
 					case "Monopoly":
 						jsonModel = movesFacade.playMonopoly(jsonToModel.getResourceType(object, "resource"), gameIndex, playerIndex);
@@ -129,7 +129,6 @@ public class MovesHandler implements HttpHandler{
 			response = "Invalid Request";
 			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
-
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);

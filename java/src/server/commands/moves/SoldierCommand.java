@@ -52,7 +52,7 @@ public class SoldierCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException, InvalidPlayerIndexException {
-
+		
 		ClientModel model = game.getClientModel();
 		Player victim = model.getPlayers()[victimIndex];
 		Player user = model.getPlayers()[playerIndex];

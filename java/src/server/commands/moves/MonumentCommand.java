@@ -49,7 +49,7 @@ public class MonumentCommand implements IMovesCommand {
 		if (user.getNewDevCards().hasMonument()) {
 			user.getNewDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 		}
-		else if (user.getNewDevCards().hasMonument()) {
+		else if (user.getOldDevCards().hasMonument()) {
 			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 		}
 		else throw new DontHaveDevCardException();
