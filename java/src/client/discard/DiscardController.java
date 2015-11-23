@@ -256,16 +256,17 @@ public class DiscardController extends Controller implements IDiscardController 
 			p = this.stateManager.getClientModel().getPlayers()[playerIndex];
 			int totalPlayerResources = p.getResources().getTotalCount();
 			int currTurn = stateManager.getClientModel().getTurnTracker().getCurrentTurn();
+			while(stateManager.rollResultShowing()){
+				try{
+					TimeUnit.MILLISECONDS.sleep(250);
+				}
+				catch(Exception e) {}
+			}
 			if (!alreadyDiscarding && this.currTurnIndex != currTurn && totalPlayerResources > 7) {
 				this.currTurnIndex = currTurn;
 				alreadyDiscarding = true;
 				initialize();
-				while(stateManager.rollResultShowing()){
-					try{
-						TimeUnit.MILLISECONDS.sleep(250);
-					}
-					catch(Exception e) {}
-				}
+				
 				this.getDiscardView().showModal();				
 			}
 			else if (waiting) {
