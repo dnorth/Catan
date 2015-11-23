@@ -111,7 +111,7 @@ public class MovesHandler implements HttpHandler{
 				}
 				
 				JsonObject gameInfoObject = modelToJSON.translateModel(jsonModel);
-				response = jsonModel.toString();
+				response = gameInfoObject.toString();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());			
 				
 			} else {

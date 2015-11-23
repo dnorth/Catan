@@ -98,22 +98,21 @@ public class ModelToJSON {
 			if (p != null){
 				JsonObject player = new JsonObject();
 
-				player.addProperty("cities", p.getCities());
-				player.addProperty("color", p.getColor());
-				player.addProperty("discarded", p.isDiscarded());
-				player.addProperty("monuments", p.getMonuments());
-				player.addProperty("name", p.getName());
-				player.add("newDevCards", this.translateDevCards(p.getNewDevCards()));
-				player.add("oldDevCards", this.translateDevCards(p.getOldDevCards()));
-				player.addProperty("playerIndex", p.getPlayerIndex());
-				player.addProperty("playedDevCard", p.isPlayedDevCard());
-				player.addProperty("playerID", p.getPlayerID());
 				player.add("resources", this.translateResources(p.getResources()));
+				player.add("oldDevCards", this.translateDevCards(p.getOldDevCards()));
+				player.add("newDevCards", this.translateDevCards(p.getNewDevCards()));
 				player.addProperty("roads", p.getRoads());
+				player.addProperty("cities", p.getCities());
 				player.addProperty("settlements", p.getSettlements());
 				player.addProperty("soldiers", p.getSoldiers());
 				player.addProperty("victoryPoints", p.getVictoryPoints());
-
+				player.addProperty("monuments", p.getMonuments());
+				player.addProperty("playedDevCard", p.isPlayedDevCard());
+				player.addProperty("discarded", p.isDiscarded());
+				player.addProperty("playerID", p.getPlayerID());
+				player.addProperty("playerIndex", p.getPlayerIndex());
+				player.addProperty("name", p.getName());
+				player.addProperty("color", p.getColor());
 				list.add(player);
 			}
 			else{
@@ -126,21 +125,21 @@ public class ModelToJSON {
 	
 	private JsonObject translateDevCards(DevCards cards) {
 		JsonObject cardList = new JsonObject();
-		cardList.addProperty("monopoly", cards.getMonopolyCount());
-		cardList.addProperty("monument", cards.getMonumentCount());
-		cardList.addProperty("roadBuilding", cards.getRoadBuildingCount());
-		cardList.addProperty("soldier", cards.getSoldierCount());
 		cardList.addProperty("yearOfPlenty", cards.getYearOfPlentyCount());
+		cardList.addProperty("monopoly", cards.getMonopolyCount());
+		cardList.addProperty("soldier", cards.getSoldierCount());
+		cardList.addProperty("roadBuilding", cards.getRoadBuildingCount());
+		cardList.addProperty("monument", cards.getMonumentCount());
 		return cardList;
 	}
 	
 	private JsonObject translateResources(Resources modelBank){
 		JsonObject bank = new JsonObject();
 		bank.addProperty("brick", modelBank.getBrickCount());
-		bank.addProperty("ore", modelBank.getOreCount());
+		bank.addProperty("wood", modelBank.getWoodCount());
 		bank.addProperty("sheep", modelBank.getSheepCount());
 		bank.addProperty("wheat", modelBank.getWheatCount());
-		bank.addProperty("wood", modelBank.getWoodCount());
+		bank.addProperty("ore", modelBank.getOreCount());
 		return bank;
 	}
 	
@@ -261,7 +260,7 @@ public class ModelToJSON {
 		JsonArray portList = new JsonArray();
 		for(Port p : ports) {
 			JsonObject port = new JsonObject();
-			if(p.getResource() != null) {
+			if(p.getResource() != null && !p.getResource().equals("all")) {
 				port.addProperty("resource", p.getResource());
 			}
 			

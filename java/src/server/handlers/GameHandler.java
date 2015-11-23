@@ -49,6 +49,7 @@ public class GameHandler implements HttpHandler{
 				int gID = cookie.get("game").getAsInt();
 				ClientModel clientModel = gameFacade.getGameModel(gID);
 				response = modelToJSON.translateModel(clientModel).toString();
+//				System.out.println(response);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 				logger.info("Valid Cookie!");
 			} else {
