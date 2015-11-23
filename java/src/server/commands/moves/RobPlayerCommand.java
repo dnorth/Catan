@@ -49,7 +49,6 @@ public class RobPlayerCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException {
-		Player p = game.getClientModel().getPlayers()[victimIndex];
 		Player p2 = game.getClientModel().getPlayers()[playerIndex];
 		
 		ClientModel model = game.getClientModel();
@@ -71,6 +70,7 @@ public class RobPlayerCommand implements IMovesCommand {
 			game.getClientModel().increaseVersion();
 			return;
 		}
+		Player p = game.getClientModel().getPlayers()[victimIndex];
 		
 		if(p.hasResource()) {
 			Resources victimResources = p.getResources();
