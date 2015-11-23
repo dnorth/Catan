@@ -206,7 +206,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	

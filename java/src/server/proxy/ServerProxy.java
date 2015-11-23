@@ -35,12 +35,7 @@ abstract class ServerProxy {
     }    
     
     protected JsonObject doGet(String urlPath, JsonObject optionalCookies) throws ClientException { // Do we want to return a String, or a JSON object? Because some of the methods have multiple model types that get returned in one single call.
-        System.out.println("doGet_urlPath: " + urlPath);
-        try {
-    		System.out.println("doGet_optionalCookies: " + optionalCookies.toString());
-    	} catch (NullPointerException e) {
-    		
-    	}
+
     	try {
     		JsonObject jsonReturnObject = new JsonObject();
     		JsonParser jsonParser = new JsonParser();

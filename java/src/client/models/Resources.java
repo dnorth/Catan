@@ -87,6 +87,7 @@ public class Resources{
 			break;
 		case ORE:
 			this.ore++;
+			break;
 		case SHEEP:
 			this.sheep++;
 			break;
@@ -108,6 +109,7 @@ public class Resources{
 			break;
 		case ORE:
 			this.ore--;
+			break;
 		case SHEEP:
 			this.sheep--;
 			break;
