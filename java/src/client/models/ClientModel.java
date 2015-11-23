@@ -38,6 +38,7 @@ public class ClientModel extends Observable
 	boolean hasChanged = false;
 	private boolean newCli;
 	boolean playedDevCard=false;
+	int playersToDiscard;
 	
 	public ClientModel() {
 		super();
@@ -55,6 +56,7 @@ public class ClientModel extends Observable
 		turnTracker = new TurnTracker();
 		version = 0;
 		winner = -1;
+		playersToDiscard = 0;
 	}
 	
 	public void update(ClientModel model) {
@@ -171,6 +173,23 @@ public class ClientModel extends Observable
 				return true;
 		}
 		return false;
+	}
+	
+	public int getNumToDiscard(){
+		return this.playersToDiscard;
+	}
+	
+	public void decNumToDiscard(){
+		this.playersToDiscard--;
+	}
+	
+	public void setNumToDiscard(){
+		this.playersToDiscard = 0;
+		for (Player p : players) {
+			if (p.getResources().getTotalCount() > 7){
+				this.playersToDiscard++;
+			}
+		}
 	}
 
 	public String playersToString() {

@@ -62,10 +62,12 @@ public class RollNumberCommand implements IMovesCommand {
 		model.checkPlayerIndex(playerIndex);
 		
 		Player p = game.getClientModel().getPlayers()[playerIndex];
+		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " rolled a " + number, p.getName()));
 		
 		if(number == 7) {
 			//check if players need to discard
 			if(game.getClientModel().needToDiscard()){
+				game.getClientModel().setNumToDiscard();
 				turnTracker.setStatus("Discarding");
 				game.getClientModel().increaseVersion();
 				return;
@@ -89,7 +91,6 @@ public class RollNumberCommand implements IMovesCommand {
 			game.getClientModel().setTurnTrackerStatus("Playing");
 		}
 		
-		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " rolled a " + number, p.getName()));
 		game.getClientModel().increaseVersion();
 	}
 

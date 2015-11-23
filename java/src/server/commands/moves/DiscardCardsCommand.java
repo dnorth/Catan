@@ -47,14 +47,15 @@ public class DiscardCardsCommand implements IMovesCommand {
 		Resources playerResources = game.getClientModel().getPlayers()[playerIndex].getResources();
 		
 		
-		if(player.needsToDiscard()==false)
-		{throw new InvalidStatusException();}
+		if(player.needsToDiscard()==false || game.getClientModel().getNumToDiscard() < 1) {
+			throw new InvalidStatusException();
+		}
 		
 		if(player.getResources().hasSpecifiedResources(discardedCards)==false){
 			throw new InsufficientResourcesException();
 		}
 		
-		boolean lastDiscard=true;
+		/*boolean lastDiscard=true;
 		for(Player p : game.getClientModel().getPlayers()){
 			if(p.getPlayerIndex() == playerIndex)
 			{
@@ -65,11 +66,8 @@ public class DiscardCardsCommand implements IMovesCommand {
 				game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " is discarding", p.getName()));
 			}
 			
-		}
+		}*/
 		
-		if(lastDiscard){
-			game.getClientModel().getTurnTracker().setStatus("Robbing");
-		}
 		
 
 			
@@ -80,8 +78,14 @@ public class DiscardCardsCommand implements IMovesCommand {
 		playerResources.subtractResource(ResourceType.SHEEP, discardedCards.getSheepCount(), bank);
 		playerResources.subtractResource(ResourceType.WHEAT, discardedCards.getWheatCount(), bank);
 		playerResources.subtractResource(ResourceType.WOOD, discardedCards.getWoodCount(), bank);
-		game.getClientModel().increaseVersion();
+		
+		game.getClientModel().decNumToDiscard();
 
+		if(game.getClientModel().getNumToDiscard() == 0){
+			game.getClientModel().getTurnTracker().setStatus("Robbing");
+		}
+		
+		game.getClientModel().increaseVersion();
 		
 	}
 
