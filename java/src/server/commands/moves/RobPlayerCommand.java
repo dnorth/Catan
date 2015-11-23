@@ -67,7 +67,10 @@ public class RobPlayerCommand implements IMovesCommand {
 		System.out.println("DA VICTIM INDEX IS: " + String.valueOf(victimIndex));
 		
 		if(victimIndex == -1)
-		{return;}
+		{
+			game.getClientModel().increaseVersion();
+			return;
+		}
 		
 		if(p.hasResource()) {
 			Resources victimResources = p.getResources();
