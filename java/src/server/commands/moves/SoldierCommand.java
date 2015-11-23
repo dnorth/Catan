@@ -67,13 +67,16 @@ public class SoldierCommand implements IMovesCommand {
 			
 		}
 		game.getClientModel().getBoard().setRobber(new client.models.mapdata.HexLocation(location));
-		
+		Player p = game.getClientModel().getPlayers()[playerIndex];
 		if(victimIndex == -1)
 		{
 			user.incSoldiers();
 			if(model.playerHasLargestArmy(user)){
 				model.awardLargestArmy(user);
 			}
+			game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " played a soldier card", p.getName()));
+			
+			game.getClientModel().increaseVersion();
 			return;
 		}
 		
@@ -94,7 +97,7 @@ public class SoldierCommand implements IMovesCommand {
 		
 		user.getOldDevCards().decSpecifiedDevCard(DevCard.SOLDIER);
 		model.setPlayedDevCard(true);
-		Player p = game.getClientModel().getPlayers()[playerIndex];
+		
 		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " played a soldier card", p.getName()));
 		
 		game.getClientModel().increaseVersion();
