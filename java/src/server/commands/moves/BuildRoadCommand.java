@@ -79,6 +79,7 @@ public class BuildRoadCommand implements IMovesCommand {
 		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a road", p.getName()));
 		
 		if(model.playerHasLongestRoad(p)){
+			
 			model.awardLongestRoad(p);
 		}
 		model.increaseVersion();

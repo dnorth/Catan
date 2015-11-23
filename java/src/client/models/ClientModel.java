@@ -30,7 +30,7 @@ public class ClientModel extends Observable
 	private MessageList log;
 	private Board board;
 	private Player[] players;
-	private TradeOffer tradeOffer; //I assumed that we are just using this for Domestic trade, not Maritime trade. If I'm wrong, verify that this doesn't explode.
+	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
 	private int version;
 	private int winner;
@@ -438,23 +438,14 @@ public class ClientModel extends Observable
 	
 	public void checkDevCard(int playerIndex, DevCard type) throws DontHaveDevCardException, AlreadyPlayedDevCardException{
 		Player p = players[playerIndex];
-		if(p.getOldDevCards().hasCard(type)==false){
+		if (type == DevCard.MONUMENT) {
+			if (!p.getNewDevCards().hasCard(type) && !p.getOldDevCards().hasCard(type)) {
+				throw new DontHaveDevCardException();
+			}
+		}
+		else if(!p.getOldDevCards().hasCard(type)){
 			throw new DontHaveDevCardException();
-		}//		
-//		try{
-//		TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
-//		game.getClientModel().getTurnTracker().setStatus("Playing");
-//	facade.offerTrade(0, 0, offer.getOffer(),1);
-//	facade.acceptTrade(0, 1, true);
-//	
-//	
-//	}
-//	catch ( InvalidStatusException
-//			| NotYourTurnException 
-//			| InvalidPlayerIndexException e) {}
-//	
-//	
-		
+		}
 		if(playedDevCard==true){
 			throw new AlreadyPlayedDevCardException();
 		}
@@ -513,20 +504,7 @@ public class ClientModel extends Observable
 			turnTracker.setLargestArmy(p.getPlayerIndex());
 	}
 	
-	public boolean isInitializingPhase()//		
-//	try{
-//	TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
-//	game.getClientModel().getTurnTracker().setStatus("Playing");
-//facade.offerTrade(0, 0, offer.getOffer(),1);
-//facade.acceptTrade(0, 1, true);
-//
-//
-//}
-//catch ( InvalidStatusException
-//		| NotYourTurnException 
-//		| InvalidPlayerIndexException e) {}
-//
-//
+	public boolean isInitializingPhase()
 	{
 		if (turnTracker.getStatus().equals("FirstRound")|| turnTracker.getStatus().equals("SecondRound")) {
 		return true;

@@ -46,12 +46,14 @@ public class MonumentCommand implements IMovesCommand {
 		model.checkDevCard(playerIndex, DevCard.MONUMENT);
 		model.checkPlayerIndex(playerIndex);
 		
-		
-		for(int i=0; i<user.getOldDevCards().getMonumentCount(); i++)
-			{
-				user.incMonuments();
-				user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
-			}
+		if (user.getNewDevCards().hasMonument()) {
+			user.getNewDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
+		}
+		else if (user.getNewDevCards().hasMonument()) {
+			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
+		}
+		else throw new DontHaveDevCardException();
+		user.incMonuments();
 			
 		game.getClientModel().getLog().getLines().add(new MessageLine(user.getName() + " played a monument card", user.getName()));
 		game.getClientModel().increaseVersion();
