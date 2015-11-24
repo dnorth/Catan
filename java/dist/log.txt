@@ -1,0 +1,20 @@
+Nov 23, 2015 10:03:11 PM server.Server run
+INFO: Initializing Model
+Nov 23, 2015 10:03:11 PM server.Server run
+INFO: Initializing HTTP Server on port 8081
+Nov 23, 2015 10:03:11 PM server.Server run
+INFO: Starting HTTP Server.
+Nov 23, 2015 10:03:34 PM server.handlers.UserHandler handle
+INFO: Handling User
+Nov 23, 2015 10:03:34 PM server.handlers.UserHandler handle
+INFO: login
+Nov 23, 2015 10:03:34 PM server.handlers.UserHandler handle
+INFO: HEADER: catan.user=%7B%22authentication%22%3A%22-1669576507%22%2C%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;
+Nov 23, 2015 10:04:05 PM server.handlers.GameHandler handle
+INFO: Catan Model
+Nov 23, 2015 10:04:05 PM server.handlers.GameHandler handle
+INFO: {"authentication":"-1669576507","name":"Sam","password":"sam","playerID":0,"game":"0"}
+Nov 23, 2015 10:04:05 PM server.handlers.GameHandler handle
+INFO: Valid Cookie!
+Nov 23, 2015 10:05:38 PM server.handlers.GamesHandler handle
+SEVERE: The catan.user HTTP cookie is missing.  You must login before calling this method.

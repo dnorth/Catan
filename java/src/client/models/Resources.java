@@ -126,7 +126,7 @@ public class Resources{
 
 	public void addResource(ResourceType type, int amount, Resources takeFrom) throws InsufficientResourcesException{
 		if(amount>takeFrom.getAmountOfSpecificResource(type))
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 		
 		switch(type) {
 		case BRICK:
@@ -156,7 +156,7 @@ public class Resources{
 
 	public void subtractResource(ResourceType type, int amount, Resources giveTo) throws InsufficientResourcesException{
 		if(amount>this.getAmountOfSpecificResource(type))
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 		
 		switch(type) {
 		case BRICK:

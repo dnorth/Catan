@@ -152,10 +152,8 @@ public class Player
 		this.soldiers = soldiers;
 	}
 	public int getVictoryPoints() {
-		return victoryPoints + monuments;
+		return victoryPoints;
 	}
-	
-
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
@@ -242,7 +240,7 @@ public class Player
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForSettlement(Resources bank) throws InsufficientResourcesException{
@@ -253,7 +251,7 @@ public class Player
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForDevCard(Resources bank) throws InsufficientResourcesException{
@@ -263,7 +261,7 @@ public class Player
 		resources.subtractResource(ResourceType.ORE, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForCity(Resources bank) throws InsufficientResourcesException{
@@ -272,7 +270,7 @@ public class Player
 		resources.subtractResource(ResourceType.ORE, 3,bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}

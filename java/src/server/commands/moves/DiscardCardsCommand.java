@@ -48,7 +48,7 @@ public class DiscardCardsCommand implements IMovesCommand {
 		}
 		
 		if(player.getResources().hasSpecifiedResources(discardedCards)==false){
-			throw new InsufficientResourcesException();
+			throw new InsufficientResourcesException("Insufficient Resources.");
 		}
 		
 		/*boolean lastDiscard=true;

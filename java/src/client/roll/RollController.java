@@ -28,7 +28,6 @@ public class RollController extends Controller implements IRollController {
 		this.stateManager.getClientModel().addObserver(this);
 		setResultView(resultView);
 		timer = new Timer();
-		//stateManager.setRollController(this);
 	}
 	
 	public boolean resultShowing(){
@@ -56,9 +55,6 @@ public class RollController extends Controller implements IRollController {
 		if(this.getRollView().isModalShowing()) {
 			this.getRollView().closeModal();
 		}
-		else {
-			System.out.println("ROLL CONTROLLER SHOULD NEVER GET HERE. LINE 47");
-		}
 		int rollNumber = stateManager.getFacade().rollDice();
 		getResultView().setRollValue(rollNumber);
 		getResultView().showModal();
@@ -68,20 +64,13 @@ public class RollController extends Controller implements IRollController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println("ROLL-CONTROLLER");
-		//System.out.println("\tROLL-VIEW: " + this.getRollView().isModalShowing());
-		//System.out.println("\tRESULT-VIEW: " + this.getResultView().isModalShowing());
-		//System.out.println("ROLL-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 		if (this.stateManager.getState() instanceof RollingDiceState) {
-			//System.out.println("HOORAY WE GOT TO THE ROLLING DICE STATE!");
 			stateManager.setPlayedDevCard(false);
 			stateManager.setRollShowing(true);
 			this.getRollView().showModal();
-			//set timer to roll in 5 seconds
 			timer = new Timer();
 			timer.schedule(new AutomaticRoll(), 5000);
 		}
-		//System.out.println("ROLL-CONTROLLER EXIT-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
 	}
 	
 	private class AutomaticRoll extends TimerTask

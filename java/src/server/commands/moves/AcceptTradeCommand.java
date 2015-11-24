@@ -46,30 +46,35 @@ public class AcceptTradeCommand implements IMovesCommand {
 			throw new InvalidPlayerException();
 		}
 
-		else if(game.getClientModel().getTradeOffer()==null)
-		{throw new NoTradeOfferedException();}
+		if(game.getClientModel().getTradeOffer()==null)
+		{
+			throw new NoTradeOfferedException();
+		}
 
-		else if(willAccept){
-			TradeOffer offer = game.getClientModel().getTradeOffer();
+		TradeOffer offer = game.getClientModel().getTradeOffer();
 
-			Player offerer = game.getClientModel().getPlayers()[offer.getSender()];
-			Player receiver = game.getClientModel().getPlayers()[offer.getReceiver()];
+		Player offerer = game.getClientModel().getPlayers()[offer.getSender()];
+		Player receiver = game.getClientModel().getPlayers()[offer.getReceiver()];
+		
+		if(willAccept){
+
 
 			if(receiver.hasSpecifiedResources(offer)){
-				offerer.getResources().addResource(ResourceType.BRICK, offer.getBrickCount(), receiver.getResources());
-				offerer.getResources().addResource(ResourceType.ORE, offer.getOreCount(), receiver.getResources());
-				offerer.getResources().addResource(ResourceType.SHEEP, offer.getSheepCount(), receiver.getResources());
-				offerer.getResources().addResource(ResourceType.WHEAT, offer.getWheatCount(), receiver.getResources());
-				offerer.getResources().addResource(ResourceType.WOOD, offer.getWoodCount(), receiver.getResources());
+				offerer.getResources().subtractResource(ResourceType.BRICK, offer.getBrickCount(), receiver.getResources());
+				offerer.getResources().subtractResource(ResourceType.ORE, offer.getOreCount(), receiver.getResources());
+				offerer.getResources().subtractResource(ResourceType.SHEEP, offer.getSheepCount(), receiver.getResources());
+				offerer.getResources().subtractResource(ResourceType.WHEAT, offer.getWheatCount(), receiver.getResources());
+				offerer.getResources().subtractResource(ResourceType.WOOD, offer.getWoodCount(), receiver.getResources());
 				game.getClientModel().setTradeOffer(null);
 				game.getClientModel().getLog().getLines().add(new MessageLine(receiver.getName() + " accepted a trade from " + offerer.getName(), receiver.getName()));
 			}
 			else{
-				throw new InsufficientResourcesException();
+				throw new InsufficientResourcesException("Insufficient Resources.");
 			}
 		}
 		else{
 			game.getClientModel().setTradeOffer(null);
+			game.getClientModel().getLog().getLines().add(new MessageLine(receiver.getName() + " declined a trade from " + offerer.getName(), receiver.getName()));
 		}
 		game.getClientModel().increaseVersion();
 

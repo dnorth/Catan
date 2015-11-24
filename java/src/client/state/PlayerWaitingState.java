@@ -186,7 +186,6 @@ public class PlayerWaitingState implements IStateBase {
 
 	@Override
 	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
-		System.out.println("IN JOIN GAME STATE, CREATE NEW GAME FUNCTION");
 		return facade.createNewGame(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 	}
 

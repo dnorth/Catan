@@ -129,7 +129,6 @@ public class MapController extends Controller implements IMapController {
 		}
 		
 		// Place Roads
-		System.out.println("ROAD COUNT: " + String.valueOf(board.getRoads().length));
 		for (Road r : board.getRoads()) {
 			CatanColor color = null;
 			try {
@@ -146,7 +145,6 @@ public class MapController extends Controller implements IMapController {
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-//		System.out.println("Trying to place road: " + stateManager.getState().canPlaceRoadAtLocation(edgeLoc));
 		return stateManager.getState().canPlaceRoadAtLocation(edgeLoc);
 	}
 
@@ -265,20 +263,14 @@ public class MapController extends Controller implements IMapController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("MAP-CONTROLLER");
-		//System.out.println("\tROB-VIEW: " + this.getRobView().isModalShowing());
-		//System.out.println("MAP-CONTROLLER ENTRANCE-STATE: \t\t" + stateManager.getState().getClass().getSimpleName());
-
 		if(stateManager.getState() instanceof SetupOneActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				System.out.println("PLACE1");
 				if (!stateManager.isPlacing()) {
 					startMove(PieceType.ROAD, true, true);
 					stateManager.setPlacing(true);
 				}
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 1) {
-				System.out.println("PLACE2");
 				if (!stateManager.isPlacing()) {
 					startMove(PieceType.SETTLEMENT, true, true);
 					stateManager.setPlacing(true);
@@ -294,14 +286,12 @@ public class MapController extends Controller implements IMapController {
 		}
 		else if(stateManager.getState() instanceof SetupTwoActivePlayerState) {
 			if (stateManager.getClientModel().getBoard().numRoadsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				System.out.println("PLACE3");
 				if (!stateManager.isPlacing()) {
 					startMove(PieceType.ROAD, true, true);
 					stateManager.setPlacing(true);
 				}
 			}
 			else if (stateManager.getClientModel().getBoard().numSettlementsOwnedByPlayer(stateManager.getFacade().getPlayerIndex()) < 2) {
-				System.out.println("PLACE4");
 				if (!stateManager.isPlacing()) {
 					startMove(PieceType.SETTLEMENT, true, true);
 					stateManager.setPlacing(true);
@@ -350,7 +340,6 @@ public class MapController extends Controller implements IMapController {
 		if(!stateManager.getClientModel().newCli()) { //Don't want to do this if the client is new...
 			this.initFromModel();
 		}
-		//System.out.println("MAP-CONTROLLER EXIT-STATE: \t\t\t" + stateManager.getState().getClass().getSimpleName());
 	}	
 }
 

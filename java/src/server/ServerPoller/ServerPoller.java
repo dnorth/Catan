@@ -22,7 +22,7 @@ import shared.definitions.CatanColor;
  */
 public class ServerPoller {
 	
-	private IProxy server; //IServer can be real server or mock proxy
+	private IProxy server;
 	private StateManager stateManager;
 	private JSONToModel jsonToModelTranslator;
 	private Timer timer;
@@ -47,19 +47,18 @@ public class ServerPoller {
 		initialize();
 	}
 	
-	public void forcePollServer() { //I feel like we need a function like this, but I can't seem to get it to work.
+	public void forcePollServer() {
 		this.forceUpdate = true;
 	}
 	
 	private class PollEvent extends TimerTask {		
 		public void run() {
 			try {
-//				System.out.println("CURRENT STATE: " + stateManager.getState().getClass().getName());
 				if(stateManager.getState() instanceof JoinGameState) {
 					setFacadeGameList();
 				}
 				else if(!(stateManager.getState() instanceof LoginState)) {
-					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie())); //cookies?
+					updateCurrentModel(server.getGameModel(stateManager.getFacade().getUserAndGameCookie()));
 				}
 			} catch (NullPointerException e) {
 			}
@@ -97,14 +96,12 @@ public class ServerPoller {
 	 * @param cookies
 	 */
 	public void updateCurrentModel(JsonObject cookies) {
-//		System.out.println("CLIENT MODEL: " + cookies.toString());
 		CatanColor color = null;
 		try {
 			color = jsonToModelTranslator.getMyColor(cookies, this.stateManager.getFacade().getPlayerIndex());
 		} catch (Exception e) {
 			System.out.println("Couldn't find color.");
 		}
-		//System.out.println("SERVER PROXY TURN: " + String.valueOf(JSONToModel.translateTurnTracker(cookies).getCurrentTurn()));
 		boolean isNewVersion = newVersion(JSONToModel.translateVersion(cookies),
 				JSONToModel.translateNumberOfPlayers(cookies),
 				JSONToModel.translateTurnTracker(cookies).getCurrentTurn(),
@@ -112,24 +109,10 @@ public class ServerPoller {
 				color);
 		
 		if(isNewVersion) {
-			//System.out.println("NEW MODEL: " + cookies.toString());
 			this.stateManager.getClientModel().update(jsonToModelTranslator.translateClientModel(cookies));
 			this.stateManager.updateStateManager();
 			this.stateManager.getClientModel().runUpdates();
 			if (this.forceUpdate) this.forceUpdate = false; 
-			/*try{
-				FileWriter out = new FileWriter("C:\\Users\\Dallin\\Desktop\\JSONcomps\\Theirs.txt");
-				out.write(cookies.toString());
-				out.close();
-			}
-			catch (Exception e){}
-			try{
-				ModelToJSON mj = new ModelToJSON();
-				FileWriter out = new FileWriter("C:\\Users\\Dallin\\Desktop\\JSONcomps\\Mine.txt");
-				out.write(mj.translateModel(this.stateManager.getClientModel()).toString());
-				out.close();
-			}
-			catch (Exception e){}*/
 		}
 	}
 	/**
@@ -151,7 +134,6 @@ public class ServerPoller {
 			newnew = true;
 		}
 		if (turn != currTurn) {
-			//System.out.println("NEW BEACUSE NEW TURN");
 			currTurn = turn;
 			newnew = true;
 		}

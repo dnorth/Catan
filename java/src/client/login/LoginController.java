@@ -90,7 +90,6 @@ public class LoginController extends Controller implements ILoginController {
 		
 		String username = this.getLoginView().getLoginUsername();
 		String password = this.getLoginView().getLoginPassword();
-		System.out.println("Trying to login with username: " + username + " and password: " + password);
 		boolean loggedIn;
 		String errorMessage = "";
 		try {
@@ -104,7 +103,6 @@ public class LoginController extends Controller implements ILoginController {
 		if( loggedIn ) {
 			login(state, stateManager);
 		} else {
-			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
 			this.messageView.setTitle("Login Failed.");
 			this.messageView.showModal();
@@ -124,7 +122,6 @@ public class LoginController extends Controller implements ILoginController {
 		String password = this.getLoginView().getRegisterPassword();
 		String validatedPassword = this.getLoginView().getRegisterPasswordRepeat();
 	
-		System.out.println("Trying to register with username: " + username + " and password: " + password);
 		boolean registered;
 		String errorMessage = "";
 		if (!password.equals(validatedPassword)) registered = false;
@@ -139,7 +136,6 @@ public class LoginController extends Controller implements ILoginController {
 		if( registered ) {
 			login(state, stateManager);
 		} else {
-			System.out.println("FAILED TO LOGIN");
 			this.messageView.setMessage(errorMessage);
 			this.messageView.setTitle("Register Failed.");
 			this.messageView.showModal();
@@ -154,11 +150,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		/*System.out.println("LOGIN-CONTROLLER:");
-		System.out.println("\tLOGIN-VIEW: " + this.getLoginView().isModalShowing());
-		System.out.println("\tMESSAGE-VIEW: " + this.getMessageView().isModalShowing());*/
 
-		
 	}
 
 }
