@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.Resources;
 import client.models.TurnTracker;
 import client.models.communication.MessageLine;
@@ -343,5 +344,6 @@ public class MovesFacade implements iMovesFacade {
 
 		return game.getClientModel();
 	}
-
+	
+	
 }

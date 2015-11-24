@@ -1,6 +1,7 @@
 package server.facade.mock;
 
 import client.models.ClientModel;
+import client.models.Player;
 import client.models.Resources;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.CantBuildThereException;
@@ -26,7 +27,7 @@ public class MockMovesFacade implements iMovesFacade{
 	@Override
 	public ClientModel sendChat(int gameIndex, int playerIndex, String content)
 			throws InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InvalidRollException, InvalidStatusException,
 			InsufficientResourcesException, NotYourTurnException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -43,21 +44,21 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InsufficientResourcesException, InvalidStatusException,
 			NotYourTurnException, RobberIsAlreadyThereException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
 	public ClientModel finishTurn(int gameIndex, int playerIndex)
 			throws InvalidStatusException, NotYourTurnException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
 	public ClientModel buyDevCard(int gameIndex, int playerIndex)
 			throws InsufficientResourcesException, InvalidStatusException,
 			NotYourTurnException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InvalidStatusException, NotYourTurnException,
 			DontHaveDevCardException, AlreadyPlayedDevCardException,
 			InsufficientResourcesException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class MockMovesFacade implements iMovesFacade{
 			DontHaveDevCardException, AlreadyPlayedDevCardException,
 			OutOfPiecesException, CantBuildThereException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class MockMovesFacade implements iMovesFacade{
 			DontHaveDevCardException, AlreadyPlayedDevCardException,
 			RobberIsAlreadyThereException, InsufficientResourcesException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class MockMovesFacade implements iMovesFacade{
 			NotYourTurnException, DontHaveDevCardException,
 			AlreadyPlayedDevCardException, InsufficientResourcesException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -103,7 +104,7 @@ public class MockMovesFacade implements iMovesFacade{
 			throws NotYourTurnException, InvalidStatusException,
 			DontHaveDevCardException, AlreadyPlayedDevCardException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -112,7 +113,7 @@ public class MockMovesFacade implements iMovesFacade{
 			throws NotYourTurnException, InvalidStatusException,
 			CantBuildThereException, InsufficientResourcesException,
 			OutOfPiecesException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -121,7 +122,7 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InsufficientResourcesException, CantBuildThereException,
 			InvalidStatusException, NotYourTurnException, OutOfPiecesException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -130,14 +131,14 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InsufficientResourcesException, NotYourTurnException,
 			InvalidStatusException, OutOfPiecesException,
 			CantBuildThereException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
 	public ClientModel offerTrade(int gameIndex, int playerIndex,
 			Resources offer, int receiver) throws InvalidStatusException,
 			NotYourTurnException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -145,7 +146,7 @@ public class MockMovesFacade implements iMovesFacade{
 			boolean willAccept) throws NoTradeOfferedException,
 			InvalidPlayerException, InsufficientResourcesException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
@@ -154,13 +155,30 @@ public class MockMovesFacade implements iMovesFacade{
 			throws InsufficientResourcesException, InvalidStatusException,
 			NotYourTurnException, InvalidMaritimeTradeException,
 			InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
 
 	@Override
 	public ClientModel discardCards(int gameIndex, int playerIndex,
 			Resources discardedCards) throws InsufficientResourcesException,
 			InvalidStatusException, InvalidPlayerIndexException {
-		return new ClientModel();
+		return initializeClientModel();
 	}
+	
+
+	
+	private ClientModel initializeClientModel(){
+		ClientModel clientModel = new ClientModel();
+		
+		Player[] players = new Player[4];
+		
+		players[0] = new Player();
+		players[1] = new Player();
+		players[2] = new Player();
+		players[3] = new Player();
+		clientModel.setPlayers(players);
+		return clientModel;
+	}
+	
+	
 }
