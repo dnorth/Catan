@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import client.models.DevCards;
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
@@ -450,7 +451,37 @@ public class CommandTests {
 		}	
 	}
 	
-	public void SetPlayerResources(ServerGame game){
+	@Test
+	public void useMonumentTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,3,0,0,0));
+		IMovesCommand command = new MonumentCommand(game, 0);
+		IMovesCommand command2 = new RollNumberCommand(game, 0, 4);
+		try {
+			command2.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 3);
+			command.execute();
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 5);
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+		
+	}
+	
+	private void SetPlayerResources(ServerGame game){
 		
 		Resources resources = new Resources(10,10,10,10,10);
 		for(Player p: game.getClientModel().getPlayers()){
@@ -458,10 +489,12 @@ public class CommandTests {
 		}
 	}
 	
+	
+	
 	@Test
-	public void testDomesticTrade(){
+	public void testDomesticTrade() {
 		ServerData data = new ServerData();
-		
+		Server.setServerData(data);
 		this.preGameRoadPlacement(data);
 		ServerGame game = data.getGameByID(0);
 		this.SetPlayerResources(game);

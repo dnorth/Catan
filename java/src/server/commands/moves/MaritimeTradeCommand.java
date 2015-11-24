@@ -61,7 +61,7 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		
 		
 		if(resources.hasResource(inputResource, ratio)== false || bank.hasResource(outputResource, 1) == false) // if player doesn't have enough resources to trade, return
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 		
 		
 		resources.subtractResource(inputResource, ratio, bank);  // player gives ratio # of inputResource to bank

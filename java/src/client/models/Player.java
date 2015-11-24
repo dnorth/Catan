@@ -36,6 +36,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 
 	public Player(ServerPlayer p){
@@ -48,6 +49,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 	
 	public Player(ServerPlayer p, int playerIndex){
@@ -62,6 +64,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 	
 	public int getCitiesNum() {
@@ -151,6 +154,8 @@ public class Player
 	public int getVictoryPoints() {
 		return victoryPoints;
 	}
+	
+
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
@@ -237,7 +242,7 @@ public class Player
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForSettlement(Resources bank) throws InsufficientResourcesException{
@@ -248,7 +253,7 @@ public class Player
 		resources.subtractResource(ResourceType.WOOD, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForDevCard(Resources bank) throws InsufficientResourcesException{
@@ -258,7 +263,7 @@ public class Player
 		resources.subtractResource(ResourceType.ORE, 1, bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public void payForCity(Resources bank) throws InsufficientResourcesException{
@@ -267,7 +272,7 @@ public class Player
 		resources.subtractResource(ResourceType.ORE, 3,bank);
 		}
 		else
-		{throw new InsufficientResourcesException();}
+		{throw new InsufficientResourcesException("Insufficient Resources.");}
 	}
 
 	public boolean hasResource(){return hasBrick() || hasOre() || hasSheep() || hasWheat() || hasWood();}
@@ -309,7 +314,7 @@ public class Player
 	}
 	public void decRoads() throws OutOfPiecesException{
 		if(roads>0)
-		roads--;
+			roads--;
 		else{
 			throw new OutOfPiecesException();
 		}
