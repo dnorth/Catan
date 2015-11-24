@@ -7,4 +7,8 @@ package server.exceptions;
  */
 public class InvalidJsonException extends Exception  {
 
+	public InvalidJsonException() {
+		super("The given JSON is invalid.");
+	}
+	
 }

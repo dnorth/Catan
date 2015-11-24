@@ -5,4 +5,8 @@ package server.exceptions;
  */
 public class InvalidClientModelException extends Exception  {
 
+	public InvalidClientModelException() {
+		super("Client Model is invalid.");
+	}
+	
 }

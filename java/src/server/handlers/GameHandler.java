@@ -50,25 +50,18 @@ public class GameHandler implements HttpHandler{
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			} else {
 				//Bad login information
-				logger.info("Invalid Cookie.");
+				throw new MissingCookieException("Invalid Cookie. Trying to break our code, eh? Nice try.");
 			}
-		} catch (MissingCookieException e) {
-			//Return a bad request message
-			//The catan.user HTTP cookie is missing.  You must login before calling this method.
+		} catch(NullPointerException e) {
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
-			logger.log(Level.SEVERE, e.getMessage());
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
-		} catch (IllegalStateException e) {
-			//Not a valid JSON Object as post data
-			exchange.getResponseHeaders().set("Content-Type", "text/html");
-			response = "Invalid Request";
-			logger.log(Level.SEVERE, e.getMessage());
+			logger.log(Level.SEVERE, "Null Pointer Exception.");
+			response = "Invalid Keys for the requested operation.";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} catch (Exception e) {
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			logger.log(Level.SEVERE, e.getMessage());//, e);
-			response = "Invalid Request";
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, response.length());
+			response = e.getMessage();
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 			return;
 		} finally {
 			exchange.getResponseBody().write(response.getBytes());

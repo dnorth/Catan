@@ -43,7 +43,7 @@ public class AcceptTradeCommand implements IMovesCommand {
 
 		game.getClientModel().checkPlayerIndex(playerIndex);
 		if(playerIndex!= game.getClientModel().getTradeOffer().getReceiver()){
-			throw new InvalidPlayerException();
+			throw new InvalidPlayerException("Invalid player to trade with.");
 		}
 
 		if(game.getClientModel().getTradeOffer()==null)

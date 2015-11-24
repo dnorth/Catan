@@ -72,19 +72,15 @@ public class UserHandler implements HttpHandler {
 			headers.add("Set-cookie", header);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			
-		} catch (UsernameAlreadyTakenException e) {
-			response = e.getMessage();
+		} catch(NullPointerException e) {
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
+			logger.log(Level.SEVERE, "Null Pointer Exception.");
+			response = "Invalid Keys for the requested operation.";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
-		} catch (InvalidLoginException e) {
+		} catch (Exception e) {
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
+			logger.log(Level.SEVERE, e.getMessage(), e);
 			response = e.getMessage();
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
-		} catch (ContextNotFoundException e) {
-			response = e.getMessage();
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, response.length());
-		} catch (IllegalStateException e) {
-			//Not a valid JSON Object as post data
-			response = "Invalid Request";
-			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} finally {
 			exchange.getResponseBody().write(response.getBytes());
