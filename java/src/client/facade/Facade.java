@@ -64,28 +64,11 @@ public class Facade {
 		playerWithLargestArmy = -1;
 	}
 	
-	//FREEEEEEEAK I THINK THE SERVER DOES THIS ALL FOR US!!!! CRAP BUCKETS!! OKAY.....DONT DELETE THIS CODE. WE CAN USE IT WHEN WE WRITE THE SERVER SIDE.....
-/*	public void distributeResourcesByRollNumber(int rollNumber) {
-		ArrayList<Hex> hexes = this.client.getBoard().getHexesFromNumber(rollNumber);
-		for(Hex h : hexes) {
-			ResourceType resourceType = ResourceType.getResourceType(h.getResource());
-			Integer[] owners = this.canDo.getBoardManager().getOwnersOnHex(h.getLocation());
-			for(int owner : owners) {
-				if(owner != -1) {
-					clientCommunicator. ///////THIS IS WHERE I REALIZED HOW STUPID I AM :)
-				}
-			}
-		}
-		
-	}
-	*/
-	
-	public void setTradeOffer(TradeOffer tradeOffer) { //THIS FUNCTION SHOULD ONLY EVER GET CALLED BY THE OFFERINGTRADESTATE STUFF
+	public void setTradeOffer(TradeOffer tradeOffer) {
 		this.client.setTradeOffer(tradeOffer);
 	}
 	
 	public int getPlayerIndex() {
-		//TODO! Don't just attach this to the user's ID. This needs to be connected to the playerIndex for the game they joined.
 		return localPlayer.getPlayerIndex();
 	}
 	
@@ -286,19 +269,15 @@ public class Facade {
 	 */
 	public boolean createNewGame(String title, boolean useRandomHexes, boolean useRandomNumbers, boolean useRandomPorts) {
 		
-		System.out.println("IN CLIENTCOMMUNICATOR CREATENEWGAME FUNCTION: " + title);
 		Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
 		if (p.matcher(title).find() || title.length() < 1) return false;
 		JsonObject inputGame = this.modelToJSON.createGameObject(title, useRandomHexes, useRandomNumbers, useRandomPorts);
 		JsonObject returnedJson = this.clientCommunicator.createGame(inputGame, null);
-		System.out.println("Should have finished communication by now");
 		//TODO is this really a good way to determine if this was changed? What if it fails?
 		if(returnedJson.get("Response-body").getAsJsonObject().get("title").getAsString().equals(title)) {
 			game = jsonToModel.translateGameInfo(returnedJson);
-			System.out.println("GAME: " + game);
 			return true;
 		}
-		System.out.println("Create game error.");
 		return false;
 	}
 	
@@ -326,10 +305,7 @@ public class Facade {
 		JsonObject returned = clientCommunicator.joinGame(joinGameObject, getFullCookie());
 		String responseBody = returned.get("Response-body").getAsString();
 		if(!responseBody.equals("Success")) {
-			//System.out.println("FAILED FAILED FAILED JoinGame() in the Facade. What should I do?????");
-		}
-		//System.out.println("JOIN GAME OBJECT: " + returned);
-		
+		}		
 	}
 	
 	
@@ -339,7 +315,7 @@ public class Facade {
 	/**
 	 * Displays the player waiting view
 	 */
-	public boolean canStartPlayerWaitingView() { //changed from start()
+	public boolean canStartPlayerWaitingView() {
 		return false;
 	}
 	
@@ -351,7 +327,6 @@ public class Facade {
 		object.addProperty("User-cookie", localPlayer.getUserCookie());
 		object.addProperty("Game-cookie", game.getId());
 		object.addProperty("AIType", AIType);
-		//System.out.println(object.toString());
 		clientCommunicator.addAI(object, getFullCookie());
 	}
 	
@@ -364,14 +339,6 @@ public class Facade {
 		AI[0] = "LARGEST_ARMY";
 		return AI;
 	}
-	
-//	// LOGIN CONTROLLER
-//	/**
-//	 * Displays the login view
-//	 */
-//	public boolean canLogin() { //changed from start()
-//		return false;
-//	}
 	
 	/**
 	 * Called when the user clicks the "Sign in" button in the login view
@@ -504,10 +471,7 @@ public class Facade {
 		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
 		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true);
 		JsonObject cookie = this.getFullCookie();
-		//System.out.println("COMMAND: " + roadCommand);
-		//System.out.println("COOKIE: " + cookie);
 		clientCommunicator.buildRoad(roadCommand, cookie);
-//		this.poller.setForceUpdate(true);
 	}
 	
 	/**
@@ -559,7 +523,6 @@ public class Facade {
 	 */
 	public RobPlayerInfo[] placeRobber(HexLocation hexLoc) {
 		client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(hexLoc);
-		//temporarily sets new robber location until command is sent in robPlayer
 		newRobberLocation = hexLoc;
 		ArrayList<Integer> candidates = canDo.whoCanIRob(this.getPlayerIndex(), hex);
 		
@@ -588,7 +551,6 @@ public class Facade {
 	 *            true only during initial setup.
 	 */
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-		// TODO IT APPEARS THAT WE BYPASSED THIS METHOD AND JUST HARD-CODED STUFF. ARE WE OKAY WITH THAT??
 	}
 	
 	/**
@@ -707,20 +669,11 @@ public class Facade {
 	
 	// RESOURCE BAR CONTROLLER
 
-	/**
-	 * Called by the view then the user requests to build a road
-	 */
-	public void buildRoad(/*data*/) {  //THIS APPEARS TO HAVE BEEN REPLACED BY THE PLACEROAD AND PLACEFREEROAD FUNCTIONS
-		/*jsonData = modelToJSON.placeroad(modelData)
-		serverjsonData = clientCommunicator.buildRoad(jsonData)
-		client.update(JSONToModel.updateModel(serverjsonData))
-		*/
-	}
 	
 	/**
 	 * Called by the view then the user requests to build a settlement
 	 */
-	public void buildSettlement() { //THIS APPEARS TO HAVE BEEN REPLACED BY PLACESETTLEMENT AND PLACEFREESETTLEMENT
+	public void buildSettlement() {
 	}
 	
 	/**
@@ -758,9 +711,6 @@ public class Facade {
 		int  die2 = rand.nextInt(6) + 1;
 		clientCommunicator.rollNumber(this.modelToJSON.createRollNumberObject(this.getPlayerIndex(), die1+die2), this.getFullCookie());
 		return die1+die2;
-		//uncomment to debug robber
-		//clientCommunicator.rollNumber(this.modelToJSON.createRollNumberObject(this.getPlayerIndex(), 7), this.getFullCookie());
-		//return 7;
 	}
 	
 	// TURN TRACKER CONTROLLER

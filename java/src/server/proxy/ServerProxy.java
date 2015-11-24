@@ -57,8 +57,6 @@ abstract class ServerProxy {
                     sb.append(line+"\n");
                 }
                 br.close();
-//                System.out.print("What is returned: ");
-//                System.out.println(sb.toString());
                 sb.setLength(sb.length() - 1);
                 String responseBody = sb.toString();
                 
@@ -88,7 +86,6 @@ abstract class ServerProxy {
                 }
             	es.close();
             	System.out.println("ClientException error message: " + errorMessage);
-            	//System.out.println("Here's the cookie: " + optionalCookies.toString());
                 throw new ClientException(String.format("doGet failed: %s (http code %d)",
                                             urlPath, connection.getResponseCode()));
             }
@@ -98,25 +95,16 @@ abstract class ServerProxy {
         }
     }
     
-    protected JsonObject doPost(String urlPath, JsonObject postData, JsonObject optionalCookies) throws ClientException { //Return a JSON Object
-    	System.out.println("doPost_urlPath: " + urlPath);
+    protected JsonObject doPost(String urlPath, JsonObject postData, JsonObject optionalCookies) throws ClientException {
     	try {
-    		System.out.println("doPost_optionalCookies: " + optionalCookies.toString());
-    	} catch (NullPointerException e) {
-    		
-    	}
-    	try {
-        	//System.out.println(postData.toString());
             URL url = new URL(URL_PREFIX + urlPath);
-            //System.out.println("Test1");
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            if(optionalCookies != null) { //TODO add duplicity for catan.game cookie https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf
+            if(optionalCookies != null) {
             	String userCookie = null;
             	String gameCookie = null;
             	userCookie = optionalCookies.get("User-cookie").getAsString();
-//            	System.out.println(postData.toString());
             	if(optionalCookies.has("Game-cookie")) {
             		gameCookie = optionalCookies.get("Game-cookie").getAsString();
             	}
@@ -138,7 +126,6 @@ abstract class ServerProxy {
             		if(connection.getHeaderField("Set-cookie") != null) {
             			String cookieHeader = connection.getHeaderField("Set-cookie");
             			String cookie = StripCookie(cookieHeader);
-            			//System.out.println(cookie);
             			String cookieJsonString = URLDecoder.decode(cookie);
             			
             			//If the ClassCastException gets caught, that means we are recieving a game cookie
@@ -197,7 +184,6 @@ abstract class ServerProxy {
     }
     
     private String StripCookie(String cookieHeader) {
-    	System.out.println("COOKIE:" + cookieHeader);
     	int startingIndex = cookieHeader.indexOf('=') + 1;
     	int endingIndex = cookieHeader.indexOf(";Path=/;");
     	String cookie = cookieHeader.substring(startingIndex, endingIndex);

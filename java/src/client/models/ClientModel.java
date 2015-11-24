@@ -71,7 +71,6 @@ public class ClientModel extends Observable
 		this.setVersion(model.getVersion());
 		this.setWinner(model.getWinner());
 		this.setDeck(model.getDeck());
-		System.out.println("ClientModel.update()");
 	}
 
 	public void runUpdates() {
@@ -221,7 +220,6 @@ public class ClientModel extends Observable
 	 */
 	public void addPlayer(int playerIndex, ServerPlayer newPlayer)
 	{
-		System.out.println("PlayerIndex in join game is: "+ Integer.toString(playerIndex));
 		Player p = new Player(newPlayer, playerIndex);
 		players[playerIndex] = p;
 	}

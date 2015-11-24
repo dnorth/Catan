@@ -154,8 +154,6 @@ public class Player
 	public int getVictoryPoints() {
 		return victoryPoints;
 	}
-	
-
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}

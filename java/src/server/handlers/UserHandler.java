@@ -69,7 +69,6 @@ public class UserHandler implements HttpHandler {
 			JsonObject playerCookie = modelToJSON.generatePlayerCookie(username, password, playerID);
 			Headers headers = exchange.getResponseHeaders();
 			String header = Authenticate.dressCookie(playerCookie);
-			logger.info("HEADER: " + header);
 			headers.add("Set-cookie", header);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			

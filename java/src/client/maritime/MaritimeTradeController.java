@@ -32,7 +32,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		setTradeOverlay(tradeOverlay);
 		this.stateManager= stateManager;
 		this.stateManager.addObserver(this);
-		System.out.println("Disabled maritime");
 		this.getTradeView().enableMaritimeTrade(false);
 	}
 
