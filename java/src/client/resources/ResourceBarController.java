@@ -49,12 +49,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	public void setResources()
 		{
-		System.out.println("MY PLAYER INDEX: " + String.valueOf(this.stateManager.getFacade().getPlayerIndex()));
 		if (this.stateManager.getFacade().getPlayerIndex() == -1) return;
 		Player p = stateManager.getClientModel().getPlayers()[this.stateManager.getFacade().getPlayerIndex()];
 		Resources r = p.getResources();
 		DevCards d = p.getNewDevCards(); 
-		System.out.println();
 		getView().setElementAmount(ResourceBarElement.WOOD, r.getWoodCount());
 		getView().setElementAmount(ResourceBarElement.BRICK, r.getBrickCount());
 		getView().setElementAmount(ResourceBarElement.SHEEP, r.getSheepCount());

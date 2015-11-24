@@ -92,7 +92,6 @@ public class LoginState implements IStateBase {
 
 	@Override
 	public boolean login(String username, String password) throws ClientException {
-		System.out.println("In login state");
 		return facade.signIn(username, password);
 	}
 

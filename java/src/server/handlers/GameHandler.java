@@ -37,21 +37,17 @@ public class GameHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		logger = Logger.getLogger("Catan");
-		logger.info("Catan Model");
 		JsonObject cookie;
 		String response = "";
 		try {
 			cookie = jsonToModel.getCookieFromExchange(exchange);
 			exchange.getResponseHeaders().set("Content-Type", "application/json");
 
-			logger.info(cookie.toString());
 			if(Authenticate.isValidCookie(cookie, false)) {
 				int gID = cookie.get("game").getAsInt();
 				ClientModel clientModel = gameFacade.getGameModel(gID);
 				response = modelToJSON.translateModel(clientModel).toString();
-//				System.out.println(response);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
-				logger.info("Valid Cookie!");
 			} else {
 				//Bad login information
 				logger.info("Invalid Cookie.");

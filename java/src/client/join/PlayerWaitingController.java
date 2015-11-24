@@ -46,12 +46,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void start() {
 		IStateBase state = stateManager.getState();
 		GameInfo game = stateManager.getFacade().getGame();
-		//System.out.println(game.toString());
 		PlayerInfo[] playerList= game.getPlayers().toArray(new PlayerInfo[game.getPlayers().size()]);
-		
-		/*for(PlayerInfo p : playerList) {
-			System.out.println("Player Name: " + p.getName());
-		}*/
 		
 		getView().setPlayers(playerList);
 		if (playerList.length != 4) {
@@ -77,9 +72,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("PLAYER-WAITING-CONTROLLER");
-		System.out.println();
-		//System.out.println("PLAYER-WAITING-CONTROLLER ENTRANCE-STATE: \t" + stateManager.getState().getClass().getSimpleName());
 		if(getView().isModalShowing()) {			
 			if (this.stateManager.getState() instanceof PlayerWaitingState) {
 				getView().closeModal();
@@ -91,7 +83,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				
 				//Set the local player so that he has the real player index
 				for(PlayerInfo p : playerList) {
-					System.out.println("PLAYER INDEX: " + String.valueOf(p.getPlayerIndex()));
 					if(p.getId() == stateManager.getFacade().getLocalPlayer().getId()) {
 						p.setUserCookie(userCookie);
 						stateManager.getFacade().setLocalPlayer(p);
@@ -104,22 +95,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 						stateManager.setState(new InactivePlayerState(this.stateManager.getFacade()));
 					}
 					getView().closeModal();
-//					System.out.println("I SHOULD ONLY GET HERE IF THE 4TH PLAYER HAS JUST BEEN ADDED");
-//					if(stateManager.getState() instanceof PlayerWaitingState) {
-//						System.out.println("Current Turn: " + stateManager.getClientModel().getTurnTracker().getCurrentTurn());
-//						System.out.println("Current Player Index: " + stateManager.getFacade().getLocalPlayer().getPlayerIndex());
-//						if( stateManager.getClientModel().getTurnTracker().getCurrentTurn() == stateManager.getFacade().getLocalPlayer().getPlayerIndex()) {
-//							System.out.println("Active Player Setup -- CHANGE STATE");
-//							//stateManager.setState(new SetupOneActivePlayerState(stateManager.getFacade()));
-//						} else {
-//							System.out.println("Inactive Player Setup -- CHANGE STATE");
-//							//stateManager.setState(new InactivePlayer(stateManager.getFacade()));
-//						}
-//					}
 				}
 			}
 		}
-		//System.out.println("PLAYER-WAITING-CONTROLLER EXIT-STATE: \t" + stateManager.getState().getClass().getSimpleName());	
 	}
 
 }
