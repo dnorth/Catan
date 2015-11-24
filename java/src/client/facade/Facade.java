@@ -1,17 +1,23 @@
 package client.facade;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Observer;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import jsonTranslator.JSONToModel;
-import jsonTranslator.ModelToJSON;
-
 import com.google.gson.JsonObject;
 
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
+import client.models.ClientModel;
+import client.models.Player;
+import client.models.Resources;
+import client.models.TradeOffer;
+import client.models.mapdata.Road;
+import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
 import server.ServerPoller.ServerPoller;
 import server.proxy.ClientCommunicator;
 import server.proxy.ClientException;
@@ -21,19 +27,6 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.data.GameInfo;
-import client.data.PlayerInfo;
-import client.data.RobPlayerInfo;
-import client.models.ClientModel;
-import client.models.Player;
-import client.models.Resources;
-import client.models.TradeOffer;
-import client.models.mapdata.Board;
-import client.models.mapdata.Hex;
-import client.models.mapdata.Port;
-import client.models.mapdata.Road;
-
-import com.google.gson.JsonObject;
 
 /**
  * Facade class interfaces from GUI to Client Communicator
