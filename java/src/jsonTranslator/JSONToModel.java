@@ -336,7 +336,9 @@ public class JSONToModel {
 		return object.get(name).getAsString();
 	}
 	public boolean getRandomTiles(JsonObject object) {
-		return object.get("randomTiles").getAsBoolean();
+		boolean l = object.get("randomTiles").getAsBoolean();
+		System.out.println("Random Tiles: " + l);
+		return l;
 	}
 	public boolean getRandomNumbers(JsonObject object) {
 		return object.get("randomNumbers").getAsBoolean();

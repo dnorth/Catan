@@ -55,13 +55,21 @@ public class GameHandler implements HttpHandler{
 		} catch (MissingCookieException e) {
 			//Return a bad request message
 			//The catan.user HTTP cookie is missing.  You must login before calling this method.
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
 		} catch (IllegalStateException e) {
 			//Not a valid JSON Object as post data
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			response = "Invalid Request";
 			logger.log(Level.SEVERE, e.getMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+		} catch (Exception e) {
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
+			logger.log(Level.SEVERE, e.getMessage());//, e);
+			response = "Invalid Request";
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, response.length());
+			return;
 		} finally {
 			exchange.getResponseBody().write(response.getBytes());
 			exchange.close();
