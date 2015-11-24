@@ -115,6 +115,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	@Override
 	public void updatePlayer(int playerIndex, int points, boolean highlight,
 			boolean largestArmy, boolean longestRoad) {
+		
 		playerArmy[playerIndex].setVisible(largestArmy);
 		playerRoad[playerIndex].setVisible(longestRoad);
 		playerPoints[playerIndex].setText(String.format("%d", points));
@@ -131,6 +132,20 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	public void updateGameState(String stateMessage, boolean enable) {
 
 		gameStatePanel.updateGameState(stateMessage, enable);
+	}
+	
+	public void resetPlayerPanel() {
+		this.removeAll();
+		this.revalidate();
+		this.repaint();
+		playerPanel = new JPanel[NUM_PLAYERS];
+		for(int i = 0; i < NUM_PLAYERS; i++)
+		{
+			playerPanel[i] = new JPanel();
+			this.add(playerPanel[i]);
+		}
+		this.revalidate();
+		this.repaint();
 	}
 	
 }

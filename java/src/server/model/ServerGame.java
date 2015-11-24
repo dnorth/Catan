@@ -58,6 +58,7 @@ public class ServerGame {
 		for (Player p : this.clientModel.getPlayers()) {
 			if (p.getPlayerID() == user.getPlayerID()) {
 				p.setColor(color);
+				clientModel.increaseVersion();
 				break;
 			}
 		}

@@ -63,12 +63,18 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		int largestArmy = tt.getLargestArmy();
 		int longestRoad = tt.getLongestRoad();
 		Player[] players = this.stateManager.getClientModel().getPlayers();
+		getView().resetPlayerPanel();
+		initializeAllPlayers();
 		for(Player p : players) {
 			int playerIndex = p.getPlayerIndex();
 			boolean myTurn = playerIndex == currentTurn;
 			boolean myArmy = playerIndex == largestArmy;
 			boolean myRoad = playerIndex == longestRoad;
-			this.getView().updatePlayer(playerIndex, p.getVictoryPoints(), myTurn, myArmy, myRoad);
+			try {
+				this.getView().updatePlayer(playerIndex, p.getVictoryPoints(), myTurn, myArmy, myRoad);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -100,10 +106,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			return;
 		}
 		
-		if(!initialized) {
-			this.initializeAllPlayers();
-		}
-		if(initialized) {updatePlayers();}
+		if (!initialized) initializeAllPlayers();
+		if (initialized) {updatePlayers();}
 		
 		if(!stateManager.getClientModel().newCli()) {
 			if (!this.stateManager.clientTurn()) {
