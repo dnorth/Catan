@@ -149,7 +149,7 @@ public class Player
 		this.soldiers = soldiers;
 	}
 	public int getVictoryPoints() {
-		return victoryPoints + monuments;
+		return victoryPoints;
 	}
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
