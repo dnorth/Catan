@@ -466,7 +466,7 @@ public class ClientModel extends Observable
 		}
 	}
 
-	public int getMostRoads(int playerIndexToIgnore)
+	private int getMostRoads(int playerIndexToIgnore)
 	{
 		int roads=0;
 		for(Player p: players){
@@ -504,7 +504,7 @@ public class ClientModel extends Observable
 		}
 	}
 
-	public int getMostSoldiers(int playerIndexToIgnore)
+	private int getMostSoldiers(int playerIndexToIgnore)
 	{
 		int soldierss=0;
 		for(Player p: players){
