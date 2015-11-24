@@ -30,7 +30,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	
 	private void initFromModel() {
-		
+		getView().setEntries(new ArrayList<LogEntry>());
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		if(stateManager.getClientModel().getLog() != null) {
 			List<MessageLine> messages = stateManager.getClientModel().getLog().getLines();
