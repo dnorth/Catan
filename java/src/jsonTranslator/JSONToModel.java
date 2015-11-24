@@ -34,6 +34,7 @@ import client.models.TradeOffer;
 import client.models.TurnTracker;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
+import server.exceptions.InvalidJsonException;
 import server.exceptions.MissingCookieException;
 
 /**
@@ -335,15 +336,21 @@ public class JSONToModel {
 	public String getResource(JsonObject object, String name) {
 		return object.get(name).getAsString();
 	}
-	public boolean getRandomTiles(JsonObject object) {
+	public boolean getRandomTiles(JsonObject object) throws InvalidJsonException {
+		String r = object.get("randomTiles").getAsString();
+		if (!r.equals("true") && !r.equals("false")) throw new InvalidJsonException("Invalid boolean");
 		boolean l = object.get("randomTiles").getAsBoolean();
 		System.out.println("Random Tiles: " + l);
 		return l;
 	}
-	public boolean getRandomNumbers(JsonObject object) {
+	public boolean getRandomNumbers(JsonObject object) throws InvalidJsonException {
+		String r = object.get("randomNumbers").getAsString();
+		if (!r.equals("true") && !r.equals("false")) throw new InvalidJsonException("Invalid boolean");
 		return object.get("randomNumbers").getAsBoolean();
 	}
-	public boolean getRandomPorts(JsonObject object) {
+	public boolean getRandomPorts(JsonObject object) throws InvalidJsonException {
+		String r = object.get("randomPorts").getAsString();
+		if (!r.equals("true") && !r.equals("false")) throw new InvalidJsonException("Invalid boolean");
 		return object.get("randomPorts").getAsBoolean();
 	}
 	public boolean getWillAccept(JsonObject object) {
