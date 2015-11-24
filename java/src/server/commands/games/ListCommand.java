@@ -13,7 +13,6 @@ public class ListCommand implements IGamesCommand {
 	 */
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 
 	}
 

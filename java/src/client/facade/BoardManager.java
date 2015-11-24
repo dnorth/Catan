@@ -178,7 +178,7 @@ public class BoardManager {
 			break;
 		case "SW":
 			edge1 = new EdgeLocation(x, y, "S");
-			edge2 = new EdgeLocation(x, y, "W");
+			edge2 = new EdgeLocation(x, y, "SW");
 			edge3 = new EdgeLocation(x-1, y+1, "SE");
 			break;
 		case "W":

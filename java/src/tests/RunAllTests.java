@@ -12,8 +12,7 @@ public class RunAllTests {
 				"tests.CanDoTests",
 				"tests.ServerPollerTests",
 				"tests.ServerProxyTests",
-				"tests.CommandTests",
-				"tests.Phase3ModelTests"
+				"tests.CommandAndModelTests",
 		};
 
 		org.junit.runner.JUnitCore.main(testClasses);

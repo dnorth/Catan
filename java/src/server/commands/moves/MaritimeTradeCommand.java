@@ -56,7 +56,7 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
-		model.checkMaritimeTrade(playerIndex, inputResource, ratio);
+//		model.checkMaritimeTrade(playerIndex, inputResource, ratio);
 		model.checkPlayerIndex(playerIndex);
 		
 		

@@ -45,8 +45,8 @@ public class MonumentCommand implements IMovesCommand {
 		model.checkTurn(playerIndex);
 		model.checkDevCard(playerIndex, DevCard.MONUMENT);
 		model.checkPlayerIndex(playerIndex);
-		
-		for(int i=0; i<user.getOldDevCards().getMonumentCount(); i++){
+		int numberOfMonumentCards = user.getOldDevCards().getMonumentCount();
+		for(int i=0; i < numberOfMonumentCards; i++){
 			user.getOldDevCards().decSpecifiedDevCard(DevCard.MONUMENT);
 			user.incMonuments();	
 		}

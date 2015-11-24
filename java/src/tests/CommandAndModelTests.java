@@ -22,6 +22,7 @@ import server.exceptions.CantBuildThereException;
 import server.exceptions.DontHaveDevCardException;
 import server.exceptions.GameFullException;
 import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidLoginException;
 import server.exceptions.InvalidMaritimeTradeException;
 import server.exceptions.InvalidPlayerException;
 import server.exceptions.InvalidPlayerIndexException;
@@ -31,16 +32,19 @@ import server.exceptions.NoTradeOfferedException;
 import server.exceptions.NotYourTurnException;
 import server.exceptions.OutOfPiecesException;
 import server.exceptions.RobberIsAlreadyThereException;
+import server.exceptions.UsernameAlreadyTakenException;
 import server.facade.MovesFacade;
 import server.model.ServerData;
 import server.model.ServerGame;
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class CommandTests {
+public class CommandAndModelTests {
 
 	@Test
 	public void createGameTest1AllTrue() {
@@ -109,6 +113,97 @@ public class CommandTests {
 	}
 	
 	@Test
+	public void registerTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		IUserCommand command = new RegisterCommand(serverData, "Tommy", "Williams");
+		try {
+			command.execute();
+			assertEquals(serverData.getNextUserID(), 13);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+		} catch (UsernameAlreadyTakenException | InvalidLoginException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void loginTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		IUserCommand command = new RegisterCommand(serverData, "Tommy", "Williams");
+		try {
+			command.execute();
+			command = new LoginCommand(serverData, "Tommy", "Williams");
+			command.execute();
+			assertEquals(serverData.getNextUserID(), 13);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+		} catch (UsernameAlreadyTakenException | InvalidLoginException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void joinTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
+		IGamesCommand createGameCommand = new CreateCommand(serverData, false, false, false, "CreateUnitTest2", 3);
+		IGamesCommand joinCommand = new JoinCommand(serverData, 12, 3, "orange");
+		try {
+			registerCommand.execute();
+			createGameCommand.execute();
+			joinCommand.execute();
+			assertEquals(serverData.getNextUserID(), 13);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getGameByID(3).getClientModel().getPlayers()[0].getColor(), "orange");
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void getModelTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
+		IGamesCommand createGameCommand = new CreateCommand(serverData, false, false, false, "CreateUnitTest2", 3);
+		IGamesCommand joinCommand = new JoinCommand(serverData, 12, 3, "orange");
+		IGameCommand modelCommand = new ModelCommand();
+		try {
+			registerCommand.execute();
+			createGameCommand.execute();
+			joinCommand.execute();
+			modelCommand.execute();
+			assertEquals(serverData.getNextUserID(), 13);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getGameByID(3).getClientModel().getPlayers()[0].getColor(), "orange");
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void listGamesTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
+		IGamesCommand listGamesCommand = new ListCommand();
+		try {
+			registerCommand.execute();
+			listGamesCommand.execute();
+			assertEquals(serverData.getNextUserID(), 13);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+	}
+	
+	@Test
 	public void sendChatTestCheckMessages() {
 		ServerData serverData = new ServerData();
 		Server.setServerData(serverData);
@@ -128,17 +223,7 @@ public class CommandTests {
 			assertEquals(messageList.getLines().get(1).getMessage(), "This is a chat from player 1");
 			assertEquals(messageList.getLines().get(2).getMessage(), "This is a chat from player 2");
 			assertEquals(messageList.getLines().get(3).getMessage(), "This is a chat from player 3");
-		} catch (InsufficientResourcesException | CantBuildThereException
-				| NotYourTurnException | OutOfPiecesException
-				| NoTradeOfferedException | InvalidPlayerException
-				| InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException  e) {
-			e.printStackTrace();
-			assertTrue(false);
-		}
-		catch (InvalidStatusException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
@@ -163,16 +248,7 @@ public class CommandTests {
 			assertEquals(messageList.getLines().get(1).getSource(), "Quinn");
 			assertEquals(messageList.getLines().get(2).getSource(), "Scott");
 			assertEquals(messageList.getLines().get(3).getSource(), "Hannah");
-		} catch (InsufficientResourcesException | CantBuildThereException
-				| NotYourTurnException | OutOfPiecesException
-				| NoTradeOfferedException | InvalidPlayerException
-				| InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException  e) {
-			e.printStackTrace();
-			assertTrue(false);
-		} catch (InvalidStatusException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
@@ -293,16 +369,7 @@ public class CommandTests {
 			
 			
 
-		} catch (InsufficientResourcesException | CantBuildThereException
-				| NotYourTurnException | OutOfPiecesException
-				| NoTradeOfferedException | InvalidPlayerException
-				| InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException  e) {
-			e.printStackTrace();
-			assertTrue(false);
-		} catch (InvalidStatusException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
@@ -397,16 +464,7 @@ public class CommandTests {
 			assertEquals(game.getClientModel().getPlayers()[3].getResources().getOreCount(), 1);
 			assertEquals(game.getClientModel().getPlayers()[3].getResources().getWheatCount(), 0);
 			assertEquals(game.getClientModel().getPlayers()[3].getResources().getSheepCount(), 0);
-		} catch (InsufficientResourcesException | CantBuildThereException
-				| NotYourTurnException | OutOfPiecesException
-				| NoTradeOfferedException | InvalidPlayerException
-				| InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException  e) {
-			e.printStackTrace();
-			assertTrue(false);
-		} catch(InvalidStatusException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
@@ -438,16 +496,7 @@ public class CommandTests {
 
 			//Add checks for resources here based on initialized game
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 1);
-		} catch (InsufficientResourcesException | CantBuildThereException
-				| NotYourTurnException | OutOfPiecesException
-				| NoTradeOfferedException | InvalidPlayerException
-				| InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
-			e.printStackTrace();
-			assertTrue(false);
-		} catch (InvalidStatusException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -466,17 +515,9 @@ public class CommandTests {
 			command2.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 3);
-			command.execute();
-			command.execute();
-			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 5);
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			assertEquals(game.getClientModel().getPlayers()[0].getMonuments(), 3);
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -499,13 +540,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,4,1,0,1);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -528,13 +563,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(2,2,1,0,1);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -557,13 +586,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,2,1,0,3);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -586,13 +609,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,2,1,2,1);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -615,13 +632,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,2,3,0,1);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -644,13 +655,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,3,1,0,2);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -673,13 +678,7 @@ public class CommandTests {
 			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,2,2,1,1);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -703,13 +702,7 @@ public class CommandTests {
 			Resources toCompare = new Resources(0,1,1,0,2);
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
 			assertEquals(game.getClientModel().getPlayers()[0].getSoldiers(), 1);
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -736,13 +729,7 @@ public class CommandTests {
 			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
 			assertEquals(game.getClientModel().getPlayers()[0].getSoldiers(), 3);
 			assertEquals(game.getClientModel().getTurnTracker().getLargestArmy(), 0);
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
@@ -764,46 +751,319 @@ public class CommandTests {
 			client.models.mapdata.HexLocation hex = game.getClientModel().getBoard().getRobber();
 			assertEquals(hex, new client.models.mapdata.HexLocation(-2,0));
 
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}
 	}
 	
 	@Test
-	public void offerTradeTest() {
+	public void offerAndAcceptTradeTest() {
 		ServerData serverData = new ServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
 		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0));
+		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
-			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
-			Resources toCompare = new Resources(0,2,1,0,2);
-			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
-		} catch (InvalidStatusException | InsufficientResourcesException
-				| CantBuildThereException | NotYourTurnException
-				| OutOfPiecesException | NoTradeOfferedException
-				| InvalidPlayerException | InvalidMaritimeTradeException
-				| RobberIsAlreadyThereException | InvalidRollException
-				| DontHaveDevCardException | AlreadyPlayedDevCardException
-				| InvalidPlayerIndexException e) {
+			command = new AcceptTradeCommand(game, 1, true);
+			command.execute();
+			Resources player0Resources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,0,1,0,2);
+			assertEquals(player0Resources, toCompare); //wood, brick, sheep, wheat, ore
+			Resources player1Resources = game.getClientModel().getPlayers()[1].getResources();
+			Resources toCompare2 = new Resources(0,3,0,0,0);
+			assertEquals(player1Resources, toCompare2);
+		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
 		}	
 	}
+	
+	@Test
+	public void offerAndDontAcceptTradeTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			command = new AcceptTradeCommand(game, 1, false);
+			command.execute();
+			Resources player0Resources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,1,0,1);
+			assertEquals(player0Resources, toCompare); //wood, brick, sheep, wheat, ore
+			Resources player1Resources = game.getClientModel().getPlayers()[1].getResources();
+			Resources toCompare2 = new Resources(0,1,0,0,1);
+			assertEquals(player1Resources, toCompare2);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void buildCityWithNoResourcesTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getCities(), 4);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void buildCityWithNoSettlementTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthEast));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertTrue(false);
+		} catch (CantBuildThereException e) {
+			assertEquals(game.getClientModel().getPlayers()[0].getCities(), 4);		
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertFalse(true);
+		}	
+	}
+	
+	@Test
+	public void validBuildCityTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getCities(), 3);
+			assertEquals(game.getClientModel().getPlayers()[0].getSettlements(), 4);
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 3);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(5,6, 5, 3, 2));
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertFalse(true);
+		}	
+	}
+	
+	@Test
+	public void buildRoadTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(1, -2), EdgeDirection.North), false);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getBoard().getRoads().length, 9);
+			assertEquals(game.getClientModel().getPlayers()[0].getRoads(), 12);
+			assertEquals(game.getClientModel().getBoard().getRoads()[8].getOwner(), 0);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(4,5,5,5,5));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void buildSettlementTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.SouthWest), false);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.SouthWest), false);
+			command.execute();
+
+			assertEquals(game.getClientModel().getBoard().getSettlements().size(), 9);
+			assertEquals(game.getClientModel().getBoard().getRoads().length, 9);
+			assertEquals(game.getClientModel().getPlayers()[0].getRoads(), 12);
+			assertEquals(game.getClientModel().getPlayers()[0].getSettlements(), 2);
+			assertEquals(game.getClientModel().getBoard().getRoads()[8].getOwner(), 0);
+			assertEquals(game.getClientModel().getBoard().getSettlements().get(8).getOwner(), 0);
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(3,4,4,4,5));
+			} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void buyDevCardTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new BuyDevCardCommand(game, 0);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getDeck().getTotalCount(), 23);
+			Player p = game.getClientModel().getPlayers()[0];
+			assertEquals(p.getOldDevCards().getTotalCount() + p.getNewDevCards().getTotalCount(), 1); 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void discardCardsTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(4,4,4,4,4));
+		game.getClientModel().getPlayers()[1].setResources(new Resources(10,8,6,4,2));
+		game.getClientModel().getPlayers()[2].setResources(new Resources(0,0,0,0,0));
+
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7);
+		IMovesCommand command = new DiscardCardsCommand(game, 0, new Resources(2,2,2,2,2));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Discarding");
+			command.execute();
+			command = new DiscardCardsCommand(game, 1, new Resources(5,4,3,2,1));
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(2,2,2,2,2));
+			assertEquals(game.getClientModel().getPlayers()[1].getResources(), new Resources(5,4,3,2,1));
+			assertEquals(game.getClientModel().getPlayers()[2].getResources(), new Resources(0,0,0,0,0));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void finishTurnTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new FinishTurnCommand(game, 0);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Rolling");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void maritimeTradeTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setResources(new Resources(4,4,4,4,4));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new MaritimeTradeCommand(game, 0, 4, "wood", "brick");
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,6,4,4,4));  //wood brick sheep wheat ore
+			command = new MaritimeTradeCommand(game, 0, 3, "brick", "sheep");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,5,4,4));
+			command = new MaritimeTradeCommand(game, 0, 2, "sheep", "wheat");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,3,5,4));
+			command = new MaritimeTradeCommand(game, 0, 2, "wheat", "ore");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,3,3,5));
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void roadBuildingTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,1,0,0));
+
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		EdgeLocation e1 = new EdgeLocation(new HexLocation(-1,0), EdgeDirection.SouthWest);
+		EdgeLocation e2 = new EdgeLocation(new HexLocation(-1,0), EdgeDirection.South);
+		IMovesCommand command = new RoadBuildingCommand(game, 0, e1, e2);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getBoard().getRoads().length, 10);
+			assertEquals(game.getClientModel().getPlayers()[0].getRoads(), 11);
+			assertEquals(game.getClientModel().getPlayers()[0].getOldDevCards().getRoadBuildingCount(), 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	
 	
 	private void SetPlayerResources(ServerGame game){
 		
@@ -812,56 +1072,4 @@ public class CommandTests {
 			p.setResources(resources);
 		}
 	}
-	
-	
-	
-	@Test
-	public void testDomesticTrade() {
-		ServerData data = new ServerData();
-		Server.setServerData(data);
-		this.preGameRoadPlacement(data);
-		ServerGame game = data.getGameByID(0);
-		this.SetPlayerResources(game);
-		MovesFacade facade = new MovesFacade();
-		Player p1 = game.getClientModel().getPlayers()[0];
-		Player p2 = game.getClientModel().getPlayers()[1];
-		
-		try{
-			TradeOffer offer = new TradeOffer(0, 1, new Resources(50,1,2,3,4));
-			game.getClientModel().getTurnTracker().setStatus("Playing");
-		facade.offerTrade(0, 0, offer.getOffer(),1);
-		assertTrue(false);
-		}
-		catch ( InvalidStatusException
-				| NotYourTurnException 
-				| InvalidPlayerIndexException e) {}
-		
-//		
-//		try{
-//			TradeOffer offer = new TradeOffer(0, 1, new Resources(0,1,2,3,4));
-//			game.getClientModel().getTurnTracker().setStatus("Playing");
-//		facade.offerTrade(0, 0, offer.getOffer(),1);
-//		facade.acceptTrade(0, 1, true);
-//		
-//		System.out.println(x);
-//		}
-//		catch ( InvalidStatusException
-//				| NotYourTurnException 
-//				| InvalidPlayerIndexException e) {} catch (NoTradeOfferedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InvalidPlayerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InsufficientResourcesException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-		
-		
-		
-		
-	}
-
 }
