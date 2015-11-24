@@ -185,6 +185,7 @@ public class MapController extends Controller implements IMapController {
 
 	public void placeRobber(HexLocation hexLoc) {
 		RobPlayerInfo[] candidateVictims = this.stateManager.getState().placeRobber(hexLoc);
+		this.getRobView().setPlayers(candidateVictims);
 		if (candidateVictims != null) {
 			if(candidateVictims.length == 0) {
 				RobPlayerInfo emptyPlayer = new RobPlayerInfo();
@@ -197,7 +198,6 @@ public class MapController extends Controller implements IMapController {
 				stateManager.getState().robPlayer(emptyPlayer);
 			}
 			if(candidateVictims.length == 0) stateManager.setCurrentlyRobbing(false);
-			this.getRobView().setPlayers(candidateVictims);
 		}
 		this.robView.showModal();
 	}
