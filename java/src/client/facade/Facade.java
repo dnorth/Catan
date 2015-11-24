@@ -64,6 +64,18 @@ public class Facade {
 		playerWithLargestArmy = -1;
 	}
 	
+	public Facade(ClientModel clientModel, String hostname, String port) {
+		this.client = clientModel;
+		this.canDo = new CanDoManager(client);
+		this.clientCommunicator = new ClientCommunicator(hostname, Integer.parseInt(port));
+		this.jsonToModel = new JSONToModel();
+		this.modelToJSON = new ModelToJSON();
+		this.localPlayer = null;
+		this.newRobberLocation = null;
+		playerWithLongestRoad = -1;
+		playerWithLargestArmy = -1;
+	}
+
 	public void setTradeOffer(TradeOffer tradeOffer) {
 		this.client.setTradeOffer(tradeOffer);
 	}

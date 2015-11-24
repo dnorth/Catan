@@ -4,6 +4,10 @@ import com.google.gson.JsonObject;
 
 public class UserProxy extends ServerProxy{
 
+	public UserProxy(String host, int port) {
+		super(host, port);
+	}
+
 	/**
 	 * @return
 	 * @throws ClientException 

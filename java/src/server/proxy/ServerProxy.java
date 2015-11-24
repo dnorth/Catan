@@ -28,9 +28,9 @@ abstract class ServerProxy {
     private static final String HTTP_POST = "POST";
 
 
-    public ServerProxy() { 
-        SERVER_HOST = "localhost";
-        SERVER_PORT = 8081;
+    public ServerProxy(String host, int port) { 
+        SERVER_HOST = host;
+        SERVER_PORT = port;
         URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
     }    
     

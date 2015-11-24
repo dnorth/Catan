@@ -13,7 +13,12 @@ import com.google.gson.JsonObject;
 
 public class MovesProxy extends ServerProxy{
     
-   /**
+   public MovesProxy(String host, int port) {
+		super(host, port);
+	}
+
+
+/**
      * @pre The player is logged in.
      * @pre Player index is positive
      * @pre content message is non-null

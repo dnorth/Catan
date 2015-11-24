@@ -8,6 +8,10 @@ import client.models.ClientModel;
 
 public class GameProxy extends ServerProxy{
 
+	public GameProxy(String host, int port) {
+		super(host, port);
+	}
+
 	/**
 	 * @return 
 	 * @pre Must log in and join a game. This comes from the model, not the server???

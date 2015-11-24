@@ -21,6 +21,8 @@ public class Catan extends JFrame
 	private CatanPanel catanPanel;
 	private static Facade mainFacade;
 	private static StateManager stateManager; 
+	private static String hostname;
+	private static String port;
 	
 	public Catan()
 	{
@@ -30,7 +32,9 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		mainFacade = new Facade(new ClientModel());
+		System.out.println("HOST: " + hostname);
+		System.out.println("PORT: " + String.valueOf(port));
+		mainFacade = new Facade(new ClientModel(), hostname, port);
 		stateManager = new StateManager(mainFacade);
 		catanPanel = new CatanPanel(this.stateManager);
 		this.setContentPane(catanPanel);
@@ -50,6 +54,15 @@ public class Catan extends JFrame
 	
 	public static void main(final String[] args)
 	{
+		if (args.length < 1) {
+			hostname = "localhost";
+			port = "8081";
+		}
+		else {
+			hostname = args[0];
+			port = args[1];
+		}
+		
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

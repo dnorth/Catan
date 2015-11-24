@@ -40,11 +40,11 @@ public class ClientCommunicator implements IProxy{
 	}
 	
 	private void initialize() {
-		gameProxy = new GameProxy();
-		gamesProxy = new GamesProxy();
-		movesProxy = new MovesProxy();
-		utilProxy = new UtilProxy();
-		userProxy = new UserProxy();
+		gameProxy = new GameProxy(host, port);
+		gamesProxy = new GamesProxy(host, port);
+		movesProxy = new MovesProxy(host, port);
+		utilProxy = new UtilProxy(host, port);
+		userProxy = new UserProxy(host, port);
 	}
 	
 	/**

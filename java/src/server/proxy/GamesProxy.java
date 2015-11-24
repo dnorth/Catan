@@ -9,6 +9,9 @@ import client.models.Game;
 
 public class GamesProxy extends ServerProxy{
 
+	public GamesProxy(String host, int port) {
+		super(host, port);
+	}
 
 	/**
 	 * @pre NA
