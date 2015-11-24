@@ -52,6 +52,7 @@ public class GamesHandler implements HttpHandler{
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 				break;
 			case "join":
+				exchange.getResponseHeaders().set("Content-Type", "text/html");
 				cookie = jsonToModel.getCookieFromExchange(exchange);
 				if(Authenticate.isValidCookie(cookie, false)) {	
 					JsonObject jsonObject = jsonToModel.exchangeToJson(exchange);

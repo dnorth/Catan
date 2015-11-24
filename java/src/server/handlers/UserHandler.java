@@ -49,7 +49,7 @@ public class UserHandler implements HttpHandler {
 			int playerID = -1;
 			
 			
-			exchange.getResponseHeaders().set("Content-Type", "application/json");
+			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			
 			logger.info(specificContext);
 
