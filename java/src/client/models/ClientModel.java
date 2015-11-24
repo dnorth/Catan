@@ -39,17 +39,17 @@ public class ClientModel extends Observable
 	private boolean newCli;
 	boolean playedDevCard=false;
 	int playersToDiscard;
-	
+
 	public ClientModel() {
 		super();
 		newCli = true;
-		
+
 		bank = new Resources(24,24,24,24,24);
 		deck = new DevCards(2,5,2,14,2);
 		board = new Board();
 		players = new Player[4];
 	}
-	
+
 	public void fillClientModel() {
 		chat = new MessageList();
 		log = new MessageList();
@@ -58,7 +58,7 @@ public class ClientModel extends Observable
 		winner = -1;
 		playersToDiscard = 0;
 	}
-	
+
 	public void update(ClientModel model) {
 		newCli = false;
 		this.setBank(model.getBank());
@@ -73,12 +73,12 @@ public class ClientModel extends Observable
 		this.setDeck(model.getDeck());
 		System.out.println("ClientModel.update()");
 	}
-	
+
 	public void runUpdates() {
 		this.setChanged();
 		this.notifyObservers();
 	}
-	
+
 	public int getVersion() {
 		return version;
 	}
@@ -166,7 +166,7 @@ public class ClientModel extends Observable
 	public void setWinnerIndex(int winnerIndex) {
 		this.winner = winnerIndex;
 	}
-	
+
 	public boolean needToDiscard(){
 		for (Player p : players) {
 			if (p.getResources().getTotalCount() > 7)
@@ -174,15 +174,15 @@ public class ClientModel extends Observable
 		}
 		return false;
 	}
-	
+
 	public int getNumToDiscard(){
 		return this.playersToDiscard;
 	}
-	
+
 	public void decNumToDiscard(){
 		this.playersToDiscard--;
 	}
-	
+
 	public void setNumToDiscard(){
 		this.playersToDiscard = 0;
 		for (Player p : players) {
@@ -194,14 +194,14 @@ public class ClientModel extends Observable
 
 	public String playersToString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for(int i=0; i < players.length; i++) {
 			sb.append(players[i].toString() + "\n");
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	@Override
 	public boolean hasChanged() {
 		return hasChanged;
@@ -214,7 +214,7 @@ public class ClientModel extends Observable
 	public void setNewCli(boolean newCli) {
 		this.newCli = newCli;
 	}
-	
+
 	/**
 	 * Adds player to list of players
 	 * @param newPlayer - new player info
@@ -225,8 +225,8 @@ public class ClientModel extends Observable
 		Player p = new Player(newPlayer, playerIndex);
 		players[playerIndex] = p;
 	}
-	
-	
+
+
 	/**
 	 * Sends chat to player from player
 	 * @param sendPlayerIndex - index of player sending message
@@ -234,7 +234,7 @@ public class ClientModel extends Observable
 	 * @param message - message to send
 	 */
 	public void sendChat(int sendPlayerIndex, int receivePlayerIndex, String message) {}
-	
+
 	/**
 	 * Updates dice rolled, gives players nece//		
 //		try{
@@ -254,7 +254,7 @@ public class ClientModel extends Observable
 	 * @param playerIndex - player that rolled dice
 	 */
 	public void rollNumber(int numRolled, int playerIndex){}
-	
+
 	/**
 	 * Places robber in new location, and takes one resource from victim player and adds it to player
 	 * @param playerIndex - index of player who is robbing
@@ -262,19 +262,19 @@ public class ClientModel extends Observable
 	 * @param hex - new location of robber
 	 */
 	public void robPlayer(int playerIndex, int victimIndex, HexLocation hex) {}
-	
+
 	/**
 	 * Sets current turn to next player
 	 * @param playerIndex - index of player sending command
 	 */
 	public void finishTurn(int playerIndex){}
-	
+
 	/**
 	 * Takes one devcard from bank and gives it to player, decreases players resources
 	 * @param playerIndex - player buying devcard
 	 */
 	public void buyDevCard(int playerIndex){}
-	
+
 	/**
 	 * Plays Year of Plenty devcard - removes YOP card from players hand, increments indicated resources
 	 * @param playerIndex - index of player playing card
@@ -282,7 +282,7 @@ public class ClientModel extends Observable
 	 * @param resource2 - second resource to be added
 	 */
 	public void playYearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2){}
-	
+
 	/**
 	 * Plays Road Building devcard - removes RB card from player's hand, places roads in indicated locations
 	 * @param playerIndex - index of player playing card
@@ -290,7 +290,7 @@ public class ClientModel extends Observable
 	 * @param edge2 - location of second road
 	 */
 	public void playRoadBuilding(int playerIndex, EdgeLocation edge1, EdgeLocation edge2){}
-	
+
 	/**
 	 * Plays Soldier devcard - removes S card from player's hand, robs player and sets robber
 	 * @param playerIndex - index of player playing card
@@ -298,20 +298,20 @@ public class ClientModel extends Observable
 	 * @param hex - new location of robber
 	 */
 	public void playSoldier(int playerIndex, int victimIndex, HexLocation hex){}
-	
+
 	/**
 	 * Plays Monopoly devcard - removes Monopoly card from player's hand, moves indicated resource from other players' hands to this player's hand
 	 * @param playerIndex - index of player playing card
 	 * @param resource - resource to be taken
 	 */
 	public void playMonopoly(int playerIndex, ResourceType resource){}
-	
+
 	/**
 	 * Plays Monument devcard - removes Monument card from player's hand, adds victory point
 	 * @param playerIndex - index of player playing card
 	 */
 	public void playMonument(int playerIndex){}
-	
+
 	/**
 	 * Places road on indicated edge, ownership of indicated player.  If necessary, decrements player's resources.
 	 * @param playerIndex - index of player placing road
@@ -319,7 +319,7 @@ public class ClientModel extends Observable
 	 * @param free - if road is free (should only be in first two (setup) turns
 	 */
 	public void buildRoad(int playerIndex, EdgeLocation edge, boolean free){}
-	
+
 	/**
 	 * Places settlement on indicated vertex, ownership of indicated player.  If necessary, decrements player's resources.
 	 * @param playerIndex - index of player placing road
@@ -327,7 +327,7 @@ public class ClientModel extends Observable
 	 * @param free - if settlement is free (should only be in first two (setup) turns
 	 */
 	public void buildSettlement(int playerIndex, EdgeLocation vertex, boolean free){}
-	
+
 	/**
 	 * Builds the city. Decrements player's resources.
 	 *
@@ -336,7 +336,7 @@ public class ClientModel extends Observable
 	 * @param vertexLocation the vertex location where the city will be placed
 	 */
 	public void buildCity(String type, int playerIndex, VertexLocation vertexLocation){}
-	
+
 	/**
 	 * Offers a trade. If the trade is accepted, the positive numbered resources are taken from the player index o
 	 * the person offering the trade, and the negative numbered resources are taken from the person receiving it
@@ -347,7 +347,7 @@ public class ClientModel extends Observable
 	 * @param receiver the receiver
 	 */
 	public void offerTrade(String type, int playerIndex, Resources offer, int receiver){}
-	
+
 	/**
 	 * Whether or not to Accept a trade. 
 	 *
@@ -356,7 +356,7 @@ public class ClientModel extends Observable
 	 * @param willAccept whether or not the player accepts the trade
 	 */
 	public void acceptTrade(String type, int playerIndex, boolean willAccept){}
-	
+
 	/**
 	 * Maritime trade. Decrements the inputResource and increments the output resource based on 
 	 * the ratio. Or 4:1 if no ratio is specified
@@ -367,7 +367,7 @@ public class ClientModel extends Observable
 	 * @param outputResource the resource type that is being received 
 	 */
 	public void maritimeTrade(String type, int playerIndex, int ratio, String inputResource, String outputResource){}
-	
+
 	/**
 	 * Discard cards. Decrements resources
 	 *
@@ -377,7 +377,7 @@ public class ClientModel extends Observable
 	 */
 	public void discardCards(String type, int playerIndex, Resources discardedCards){}
 
-	
+
 	public void checkPlayerIndex(int playerIndex) throws InvalidPlayerIndexException{
 		if(playerIndex<0 || playerIndex>3){
 			throw new InvalidPlayerIndexException();
@@ -393,7 +393,7 @@ public class ClientModel extends Observable
 			throw new NotYourTurnException();
 		}
 	}
-	
+
 	public void checkRoad(Road road) throws CantBuildThereException
 	{
 		CanDoManager cd = new CanDoManager(this);
@@ -401,7 +401,7 @@ public class ClientModel extends Observable
 			throw new CantBuildThereException();
 		}
 	}
-	
+
 	public void checkInitialRoad(Road road) throws CantBuildThereException
 	{
 		CanDoManager cd = new CanDoManager(this);
@@ -409,7 +409,7 @@ public class ClientModel extends Observable
 			throw new CantBuildThereException();
 		}
 	}
-	
+
 	public void checkSettlement(int playerIndex, EdgeLocation edge) throws CantBuildThereException
 	{
 		CanDoManager cd = new CanDoManager(this);
@@ -417,7 +417,7 @@ public class ClientModel extends Observable
 			throw new CantBuildThereException();
 		}
 	}
-	
+
 	public void checkCity(int playerIndex, EdgeLocation edge) throws CantBuildThereException
 	{
 		CanDoManager cd = new CanDoManager(this);
@@ -425,17 +425,17 @@ public class ClientModel extends Observable
 			throw new CantBuildThereException();
 		}
 	}
-	
+
 	public void checkMaritimeTrade(int playerIndex, ResourceType type, int ratio) throws InvalidMaritimeTradeException{
 		if(ratio==4) {
 			return;
-			}
+		}
 		Player p = players[playerIndex];
 		if(p.getPortTrade().getCost(type)!=ratio){
 			throw new InvalidMaritimeTradeException();
 		}
 	}
-	
+
 	public void checkDevCard(int playerIndex, DevCard type) throws DontHaveDevCardException, AlreadyPlayedDevCardException{
 		Player p = players[playerIndex];
 		if (type == DevCard.MONUMENT) {
@@ -450,64 +450,92 @@ public class ClientModel extends Observable
 			throw new AlreadyPlayedDevCardException();
 		}
 	}
-	
+
 	public void updateMaritimeTradeCosts(int playerIndex){
-	CanDoManager canDo = new CanDoManager(this);
-		
+		CanDoManager canDo = new CanDoManager(this);
+
 		canDo.getBoardManager().updatePlayerMaritimeTradeCosts(players[playerIndex], board);
 	}
 	public boolean playerHasLongestRoad(Player p){
 		int roadsPlayed = 15-p.getRoads();
-		for(Player player : players){
-			int playerRoadsPlayed = 15-player.getRoads();
-			if(playerRoadsPlayed>roadsPlayed){
-				return false;
-			}
+
+		if(roadsPlayed > getMostRoads(p.getPlayerIndex()))
+		{
+			return roadsPlayed>=5;
 		}
-		return roadsPlayed>=5;
+		else {
+			return false;
+		}
 	}
-	
+
+	public int getMostRoads(int playerIndexToIgnore)
+	{
+		int roads=0;
+		for(Player p: players){
+			if(p.getPlayerIndex()==playerIndexToIgnore){
+				continue;
+			}
+			int playerRoads = 15 - p.getRoads();
+			if(playerRoads> roads){roads=playerRoads;}
+		}
+		return roads;
+	}
+
 	public void awardLongestRoad(Player p){
 		int longestRoadIndex = turnTracker.getLongestRoad();
 		if(longestRoadIndex==p.getPlayerIndex()){return;}
-		
+
 		else if(longestRoadIndex!=-1){
-		Player loser = players[longestRoadIndex];	
-		loser.setVictoryPoints(loser.getVictoryPoints()-2);
-			
+			Player loser = players[longestRoadIndex];	
+			loser.setVictoryPoints(loser.getVictoryPoints()-2);
+
 		}	
-			p.setVictoryPoints(p.getVictoryPoints()+2);
-			turnTracker.setLongestRoad(p.getPlayerIndex());
+		p.setVictoryPoints(p.getVictoryPoints()+2);
+		turnTracker.setLongestRoad(p.getPlayerIndex());
 	}
-	
+
 	public boolean playerHasLargestArmy(Player p){
 		int soldiersPlayed = p.getSoldiers();
-		for(Player player : players){
-			int playerSoldiersPlayed = player.getSoldiers();
-			if(playerSoldiersPlayed>soldiersPlayed){
-				return false;
-			}
+
+		if(soldiersPlayed > getMostSoldiers(p.getPlayerIndex()))
+		{
+			return soldiersPlayed>=3;
 		}
-		return soldiersPlayed>=3;
+		else {
+			return false;
+		}
+	}
+
+	public int getMostSoldiers(int playerIndexToIgnore)
+	{
+		int soldierss=0;
+		for(Player p: players){
+			if(p.getPlayerIndex()==playerIndexToIgnore){
+				continue;
+			}
+			int playerRoads = p.getSoldiers();
+			if(playerRoads> soldierss){soldierss=playerRoads;}
+		}
+		return soldierss;
 	}
 	
 	public void awardLargestArmy(Player p){
 		int largestArmyIndex = turnTracker.getLargestArmy();
 		if(largestArmyIndex==p.getPlayerIndex()){return;}
-		
+
 		else if(largestArmyIndex!=-1){
-		Player loser = players[largestArmyIndex];	
-		loser.setVictoryPoints(loser.getVictoryPoints()-2);
-			
+			Player loser = players[largestArmyIndex];	
+			loser.setVictoryPoints(loser.getVictoryPoints()-2);
+
 		}	
-			p.setVictoryPoints(p.getVictoryPoints()+2);
-			turnTracker.setLargestArmy(p.getPlayerIndex());
+		p.setVictoryPoints(p.getVictoryPoints()+2);
+		turnTracker.setLargestArmy(p.getPlayerIndex());
 	}
-	
+
 	public boolean isInitializingPhase()
 	{
 		if (turnTracker.getStatus().equals("FirstRound")|| turnTracker.getStatus().equals("SecondRound")) {
-		return true;
+			return true;
 		}
 		else{
 			return false;
@@ -521,6 +549,6 @@ public class ClientModel extends Observable
 	public void setPlayedDevCard(boolean playedDevCard) {
 		this.playedDevCard = playedDevCard;
 	}
-	
-	
+
+
 }
