@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import client.facade.BoardManager;
@@ -125,19 +127,19 @@ public class CanDoTests {
 		BoardManager bm = new BoardManager(board);
 
 
-//		System.out.println("Testing Player 1 with a settlement N trying to build a road SW on hex 0,0");
-//		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,0,"NW"))});
-//		board.setRoads(new Road[]{});
-//		assertFalse(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"SW")));
-//
-//		System.out.println("Testing Player 1 with a settlement N trying to build a road NE on hex 0,0)");
-//		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"N")));
-//
-//
-//		System.out.println("Testing Player 2 with a settlement N trying to build a road SW on hex 1,0");
-//		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(1,0,"NW"))});
-//		board.setRoads(new Road[]{});
-//		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"S")));
+		System.out.println("Testing Player 1 with a settlement N trying to build a road SW on hex 0,0");
+		board.setSettlements(Arrays.asList(new VertexObject(0,new EdgeLocation(0,0,"NW"))));
+		board.setRoads(new Road[]{});
+		assertFalse(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"SW")));
+
+		System.out.println("Testing Player 1 with a settlement N trying to build a road NE on hex 0,0)");
+		assertTrue(bm.canPlaceRoadAtLocation(0, new EdgeLocation(0,0,"N")));
+
+
+		System.out.println("Testing Player 2 with a settlement N trying to build a road SW on hex 1,0");
+		board.setSettlements(Arrays.asList(new VertexObject(1,new EdgeLocation(1,0,"NW"))));
+		board.setRoads(new Road[]{});
+		assertFalse(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"S")));
 
 		System.out.println("Testing Player 2 with a settlement N trying to build a road NE on hex 1,0)");
 		assertTrue(bm.canPlaceRoadAtLocation(1, new EdgeLocation(1,0,"NW")));
@@ -178,46 +180,46 @@ public class CanDoTests {
 		System.out.println();
 	}
 
-	/*@Test
-	public void testCanAcceptTrade() {
-
-		System.out.println("Testing canAcceptTrade()");
-		Player p1 = new Player();
-		Player p2 = new Player();
-		PlayerManager pm = new PlayerManager(new Player[]{p1,p2});
-
-		TradeOffer to = new TradeOffer(1,0,new Resources(1,0,0,0,1), new Resources(1,0,0,0,0));
-		TradeOffer to2 = new TradeOffer(0,1,new Resources(1,0,0,0,1), new Resources(1,0,0,0,0));
-
-		System.out.println("TradeOffer is one wood from sender for one wood and one ore from receiver");
-
-		p1.setResources(new Resources(0,0,0,0,0));
-		printPlayerResources(1,p1);
-		assertFalse(pm.hasSpecifiedResources(0, to));
-
-		p1.setResources(new Resources(1,0,0,0,0));
-		printPlayerResources(1,p1);
-		assertFalse(pm.hasSpecifiedResources(0, to));
-
-		p1.setResources(new Resources(1,0,0,0,1));
-		printPlayerResources(1,p1);
-		assertTrue(pm.hasSpecifiedResources(0, to));
-
-
-		p2.setResources(new Resources(0,0,0,0,0));
-		printPlayerResources(2,p2);
-		assertFalse(pm.hasSpecifiedResources(1, to2));
-
-		p2.setResources(new Resources(1,0,0,0,0));
-		printPlayerResources(2,p2);
-		assertFalse(pm.hasSpecifiedResources(1, to2));
-
-		p2.setResources(new Resources(1,0,0,0,1));
-		printPlayerResources(2,p2);
-		assertTrue(pm.hasSpecifiedResources(1, to2));
-
-		System.out.println();
-	}*/
+//	@Test
+//	public void testCanAcceptTrade() {
+//
+//		System.out.println("Testing canAcceptTrade()");
+//		Player p1 = new Player();
+//		Player p2 = new Player();
+//		PlayerManager pm = new PlayerManager(new Player[]{p1,p2});
+//
+//		TradeOffer to = new TradeOffer(1,0,new Resources(0,1,0,1,0));
+//		TradeOffer to2 = new TradeOffer(0,1,new Resources(1,0,1,0,1));
+//
+//		System.out.println("TradeOffer is one wood from sender for one wood and one ore from receiver");
+//
+//		p1.setResources(new Resources(0,0,0,0,0));
+//		printPlayerResources(1,p1);
+//		assertFalse(pm.hasSpecifiedResources(0, to));
+//
+//		p1.setResources(new Resources(1,0,0,0,0));
+//		printPlayerResources(1,p1);
+//		assertFalse(pm.hasSpecifiedResources(0, to));
+//
+//		p1.setResources(new Resources(1,0,0,0,1));
+//		printPlayerResources(1,p1);
+//		assertTrue(pm.hasSpecifiedResources(0, to));
+//
+//
+//		p2.setResources(new Resources(0,0,0,0,0));
+//		printPlayerResources(2,p2);
+//		assertFalse(pm.hasSpecifiedResources(1, to2));
+//
+//		p2.setResources(new Resources(1,0,0,0,0));
+//		printPlayerResources(2,p2);
+//		assertFalse(pm.hasSpecifiedResources(1, to2));
+//
+//		p2.setResources(new Resources(1,0,0,0,1));
+//		printPlayerResources(2,p2);
+//		assertTrue(pm.hasSpecifiedResources(1, to2));
+//
+//		System.out.println();
+//	}
 
 	@Test
 	public void testCanMaritimeTrade() {
@@ -227,22 +229,21 @@ public class CanDoTests {
 		Board board = createDefaultBoard();
 		BoardManager bm = new BoardManager(board);
 
-//
-//		System.out.println("Testing Player index 0 with no settlements on ports trying to maritime trade");
-//		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,2,"E"))});
-//		assertFalse(bm.canMaritimeTrade(0));
-//
-//		System.out.println("Testing Player index 0 with settlement N on a port trying to maritime trade");
-//		board.setSettlements(new VertexObject[]{new VertexObject(0,new EdgeLocation(0,2,"SE"))});
-//		assertTrue(bm.canMaritimeTrade(0));
-//
-//		System.out.println("Testing Player index 1 with no settlements on ports trying to maritime trade");
-//		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(2,-2,"SE"))});
-//		assertFalse(bm.canMaritimeTrade(1));
-//
-//		System.out.println("Testing Player index 1 with settlement N on a port trying to maritime trade");
-//		board.setSettlements(new VertexObject[]{new VertexObject(1,new EdgeLocation(2,-2,"E"))});
-//		assertTrue(bm.canMaritimeTrade(1));
+		System.out.println("Testing Player index 0 with no settlements on ports trying to maritime trade");
+		board.setSettlements(Arrays.asList(new VertexObject(0,new EdgeLocation(0,2,"E"))));
+		assertFalse(bm.canMaritimeTrade(0));
+
+		System.out.println("Testing Player index 0 with settlement N on a port trying to maritime trade");
+		board.setSettlements(Arrays.asList(new VertexObject(0,new EdgeLocation(0,2,"SE"))));
+		assertTrue(bm.canMaritimeTrade(0));
+
+		System.out.println("Testing Player index 1 with no settlements on ports trying to maritime trade");
+		board.setSettlements(Arrays.asList(new VertexObject(1,new EdgeLocation(2,-2,"SE"))));
+		assertFalse(bm.canMaritimeTrade(1));
+
+		System.out.println("Testing Player index 1 with settlement N on a port trying to maritime trade");
+		board.setSettlements(Arrays.asList(new VertexObject(1,new EdgeLocation(2,-2,"E"))));
+		assertTrue(bm.canMaritimeTrade(1));
 	}
 
 	@Test
