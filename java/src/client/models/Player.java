@@ -36,6 +36,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 
 	public Player(ServerPlayer p){
@@ -48,6 +49,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 	
 	public Player(ServerPlayer p, int playerIndex){
@@ -62,6 +64,7 @@ public class Player
 		cities = 4;
 		settlements = 5;
 		roads = 15;
+		monuments = 0;
 	}
 	
 	public int getCitiesNum() {
@@ -151,6 +154,8 @@ public class Player
 	public int getVictoryPoints() {
 		return victoryPoints + monuments;
 	}
+	
+
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
@@ -309,7 +314,7 @@ public class Player
 	}
 	public void decRoads() throws OutOfPiecesException{
 		if(roads>0)
-		roads--;
+			roads--;
 		else{
 			throw new OutOfPiecesException();
 		}
