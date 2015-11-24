@@ -10,6 +10,7 @@ import client.models.Resources;
 import client.models.TradeOffer;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
+import client.models.mapdata.Hex;
 import server.Server;
 import server.commands.*;
 import server.commands.games.*;
@@ -33,6 +34,7 @@ import server.exceptions.RobberIsAlreadyThereException;
 import server.facade.MovesFacade;
 import server.model.ServerData;
 import server.model.ServerGame;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -428,7 +430,7 @@ public class CommandTests {
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command = new FinishTurnCommand(game, 0);
 			command.execute();
-			assertEquals(game.getClientModel().getBank().getBrickCount(), 21);
+			assertEquals(game.getClientModel().getBank().getBrickCount(), 19);
 			assertEquals(game.getClientModel().getBank().getWoodCount(), 22);
 			assertEquals(game.getClientModel().getBank().getOreCount(), 20);
 			assertEquals(game.getClientModel().getBank().getWheatCount(), 24);
@@ -477,8 +479,330 @@ public class CommandTests {
 				| InvalidPlayerIndexException e) {
 			e.printStackTrace();
 			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyBothBrickTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.BRICK);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,4,1,0,1);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyBothWoodTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WOOD, ResourceType.WOOD);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(2,2,1,0,1);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyBothOreTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.ORE, ResourceType.ORE);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,1,0,3);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyBothWheatTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.WHEAT);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,1,2,1);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyBothSheepTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.SHEEP, ResourceType.SHEEP);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,3,0,1);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyMixed1Test() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.ORE);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,3,1,0,2);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useYearOfPlentyMixed2Test() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.SHEEP);
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,2,1,1);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void useSoldierTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6);
+		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,1,1,0,2);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+			assertEquals(game.getClientModel().getPlayers()[0].getSoldiers(), 1);
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void biggestArmyTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,3,0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6);
+		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0)); //2
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			game.getClientModel().getPlayers()[0].incSoldiers();
+			game.getClientModel().getPlayers()[0].incSoldiers();
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 4);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,1,1,0,2);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+			assertEquals(game.getClientModel().getPlayers()[0].getSoldiers(), 3);
+			assertEquals(game.getClientModel().getTurnTracker().getLargestArmy(), 0);
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
+	}
+	
+	@Test
+	public void robPlayerTest() {
+		ServerData serverData  = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7);
+		IMovesCommand command = new RobPlayerCommand(game, 0, 1, new HexLocation(-2,0));
+		try {
+			rollCommand.execute();
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[1].getResources(), new Resources(0,0,0,0,0));
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,1,1,0,2));
+			client.models.mapdata.HexLocation hex = game.getClientModel().getBoard().getRobber();
+			assertEquals(hex, new client.models.mapdata.HexLocation(-2,0));
+
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
 		}
-		
+	}
+	
+	@Test
+	public void offerTradeTest() {
+		ServerData serverData = new ServerData();
+		Server.setServerData(serverData);
+		this.preGameRoadPlacement(serverData);
+		ServerGame game = serverData.getGameByID(0);
+		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0));
+		try {
+			rollCommand.execute();
+			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
+			command.execute();
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			Resources playersResources = game.getClientModel().getPlayers()[0].getResources();
+			Resources toCompare = new Resources(0,2,1,0,2);
+			assertEquals(playersResources, toCompare); //wood, brick, sheep, wheat, ore
+		} catch (InvalidStatusException | InsufficientResourcesException
+				| CantBuildThereException | NotYourTurnException
+				| OutOfPiecesException | NoTradeOfferedException
+				| InvalidPlayerException | InvalidMaritimeTradeException
+				| RobberIsAlreadyThereException | InvalidRollException
+				| DontHaveDevCardException | AlreadyPlayedDevCardException
+				| InvalidPlayerIndexException e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}	
 	}
 	
 	private void SetPlayerResources(ServerGame game){

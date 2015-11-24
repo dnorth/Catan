@@ -57,15 +57,15 @@ public class HexLocation
 	}
 	
 	@Override
-	public boolean equals(Object obj)
+	public boolean equals(Object o)
 	{
-		if(this == obj)
+		if(this == o)
 			return true;
-		if(obj == null)
+		if(o == null)
 			return false;
-		if(getClass() != obj.getClass())
+		if(getClass() != o.getClass())
 			return false;
-		HexLocation other = (HexLocation)obj;
+		HexLocation other = (HexLocation)o;
 		if(x != other.x)
 			return false;
 		if(y != other.y)
@@ -94,6 +94,5 @@ public class HexLocation
 				return null;
 		}
 	}
-	
 }
 

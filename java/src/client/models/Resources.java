@@ -319,5 +319,14 @@ public class Resources{
 		this.wheat *= -1;
 		this.ore *= -1;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Resources res = (Resources)o;
+		return res.getBrickCount() == this.brick && res.getWheatCount() == this.wheat
+				&& res.getWoodCount() == this.wood && res.getOreCount() == this.ore
+				&& res.getSheepCount() == this.sheep ? true : false;
+	}
+	
 
 }
