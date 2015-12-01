@@ -1098,8 +1098,6 @@ public class CommandAndModelTests {
 		}	
 	}
 	
-	
-	
 	private void SetPlayerResources(ServerGame game){
 		
 		Resources resources = new Resources(10,10,10,10,10);
