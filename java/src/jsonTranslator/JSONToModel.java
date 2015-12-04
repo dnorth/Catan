@@ -9,6 +9,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 import shared.definitions.CatanColor;
@@ -36,6 +37,9 @@ import client.models.communication.MessageList;
 import client.models.mapdata.Board;
 import server.exceptions.InvalidJsonException;
 import server.exceptions.MissingCookieException;
+import server.model.ServerData;
+import server.model.ServerGame;
+import server.model.ServerUser;
 
 /**
  * Translates JSON documentation to class structure used in model
@@ -54,6 +58,27 @@ public class JSONToModel {
 		
 		this.g = new Gson();
 		
+	}
+	
+	public static ServerData translateServerData(JsonObject data) {
+		
+		ServerData serverData = new ServerData();
+		
+		List<ServerUser> users = translateServerUserList(data);
+		List<ServerGame> games = translateServerGameList(data);
+		int nextUserID = getNextUserID(data);
+		int nextGameID = getNextGameID(data);
+		int checkpoint = getCheckpoint(data);
+		
+		
+		serverData.setNextUserID(nextUserID);
+		serverData.setNextGameID(nextGameID);
+		serverData.setCheckpoint(checkpoint);
+		serverData.setUsers(users);
+		serverData.setGames(games);
+		
+		
+		return serverData;
 	}
 	
 	public static ClientModel translateClientModel(JsonObject serverModel) {
@@ -93,6 +118,28 @@ public class JSONToModel {
 		clientModel.setDeck(deck);
 
 		return clientModel;
+	}
+	
+	public static List<ServerUser> translateServerUserList(JsonObject data) {
+		final JsonArray playersArray = data.get("users").getAsJsonArray();
+		List<ServerUser>users = new ArrayList<ServerUser>();
+		
+		for (int i = 0; i < playersArray.size(); i++) {
+		      users.add((ServerUser)g.fromJson(playersArray.get(i), ServerUser.class));
+		}
+
+		return users;
+	}
+	
+	public static List<ServerGame> translateServerGameList(JsonObject data) {
+		final JsonArray playersArray = data.get("games").getAsJsonArray();
+		List<ServerGame>games = new ArrayList<ServerGame>();
+		
+		for (int i = 0; i < playersArray.size(); i++) {
+		      games.add((ServerGame)g.fromJson(playersArray.get(i), ServerGame.class));
+		}
+
+		return games;
 	}
 	
 	public static DevCards translateDeck(JsonObject serverModel) {
@@ -413,7 +460,15 @@ public class JSONToModel {
 	public int getGameID(JsonObject object) {
 		return object.get("id").getAsInt();
 	}
-	
+	public static int getNextUserID(JsonObject object) {
+		return object.get("nextUserID").getAsInt();
+	}
+	public static int getNextGameID(JsonObject object) {
+		return object.get("nextGameID").getAsInt();
+	}
+	public static int getCheckpoint(JsonObject object) {
+		return object.get("checkpoint").getAsInt();
+	}
 	
 	
 }

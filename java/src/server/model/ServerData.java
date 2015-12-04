@@ -3,8 +3,11 @@ package server.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import PluginFactory.IPlugin;
 import PluginFactory.PluginFactory;
+import jsonTranslator.JSONToModel;
 import server.commands.IMovesCommand;
 
 /**
@@ -181,5 +184,22 @@ public class ServerData {
 	public void setCheckpoint(int cp) {
 		this.checkpoint = cp;
 	}
+
+	public int getCheckpoint() {
+		return checkpoint;
+	}
+
+	public void setNextUserID(int nextUserID) {
+		this.nextUserID = nextUserID;
+	}
+
+	public void setNextGameID(int nextGameID) {
+		this.nextGameID = nextGameID;
+	}
+
+	public void setPlugin(IPlugin plugin) {
+		this.plugin = plugin;
+	}
+	
 	
 }
