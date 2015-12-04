@@ -1,5 +1,7 @@
 package PluginFactory;
 
+import java.util.List;
+
 import server.commands.IMovesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
@@ -17,21 +19,27 @@ public class JSONPlugin extends IPlugin {
 	private ModelJSONDAO modelDAO;
 	
 	@Override
-	public JsonObject loadUsers() {
+	public List<ServerUser> loadUsers() {
 		// TODO Auto-generated method stub
 		return super.loadUsers();
 	}
 
 	@Override
-	public JsonObject loadGames() {
+	public List<IMovesCommand> loadUnexecutedCommands() {
+		// TODO Auto-generated method stub
+		return super.loadUnexecutedCommands();
+	}
+
+	@Override
+	public List<ServerGame> loadGames() {
 		// TODO Auto-generated method stub
 		return super.loadGames();
 	}
 
 	@Override
-	public void saveUsers(ServerUser[] users) {
+	public void saveUser(ServerUser user) {
 		// TODO Auto-generated method stub
-		super.saveUsers(users);
+		super.saveUser(user);
 	}
 
 	@Override
