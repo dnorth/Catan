@@ -2,6 +2,7 @@ package server.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import PluginFactory.IPlugin;
 
 /**
  * Holds all user, game, and child info for those things.
@@ -12,6 +13,7 @@ public class ServerData {
 	private List<ServerGame> games;
 	private int nextUserID = 12;
 	private int nextGameID = 3;
+	private IPlugin plugin;
 	
 	public ServerData() {
 		initServerData();
@@ -139,6 +141,14 @@ public class ServerData {
 
 	public void incNextGameID() {
 		nextGameID++;
+	}
+
+	public IPlugin getPlugin() {
+		return plugin;
+	}
+
+	public void setPlugin(IPlugin plugin) {
+		this.plugin = plugin;
 	}
 	
 	
