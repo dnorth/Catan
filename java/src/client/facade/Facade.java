@@ -461,8 +461,7 @@ public class Facade {
 	 *            The road location
 	 */
 	public void placeRoad(EdgeLocation edgeLoc) {
-		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, false);
+		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edgeLoc, false);
 		JsonObject cookie = this.getFullCookie();
 		clientCommunicator.buildRoad(roadCommand, cookie);
 	}
@@ -473,8 +472,7 @@ public class Facade {
 	 * @param edgeLoc
 	 */
 	public void placeFreeRoad(EdgeLocation edgeLoc) {
-		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(edgeLoc);
-		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edge, true);
+		JsonObject roadCommand = modelToJSON.getBuildRoadCommand(this.getPlayerIndex(), edgeLoc, true);
 		JsonObject cookie = this.getFullCookie();
 		clientCommunicator.buildRoad(roadCommand, cookie);
 	}
@@ -487,8 +485,7 @@ public class Facade {
 	 *            The settlement location
 	 */
 	public void placeSettlement(VertexLocation vertLoc) {
-		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, false);
+		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), vertLoc, false);
 		JsonObject cookie = this.getFullCookie();
 		clientCommunicator.buildSettlement(settlementCommand, cookie);
 	}
@@ -499,8 +496,7 @@ public class Facade {
 	 * @param vertLoc
 	 */
 	public void placeFreeSettlement(VertexLocation vertLoc) {
-		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), edge, true);
+		JsonObject settlementCommand = modelToJSON.getBuildSettlementCommand(this.getPlayerIndex(), vertLoc, true);
 		JsonObject cookie = this.getFullCookie();
 		clientCommunicator.buildSettlement(settlementCommand, cookie);
 	}
@@ -512,8 +508,7 @@ public class Facade {
 	 *            The city location
 	 */
 	public void placeCity(VertexLocation vertLoc) {
-		client.models.mapdata.EdgeLocation edge = new client.models.mapdata.EdgeLocation(vertLoc);
-		JsonObject cityCommand = modelToJSON.getBuildCityCommand(this.getPlayerIndex(), edge);
+		JsonObject cityCommand = modelToJSON.getBuildCityCommand(this.getPlayerIndex(), vertLoc);
 		JsonObject cookie = this.getFullCookie();
 		clientCommunicator.buildCity(cityCommand, cookie);
 	}
@@ -566,8 +561,7 @@ public class Facade {
 	 */
 	public void playSoldierCard(RobPlayerInfo victim, HexLocation hexLoc) {
 		JsonObject commandCookie = modelToJSON.getPlaySoldierCommand(
-				getPlayerIndex(), victim.getPlayerIndex(),
-				new client.models.mapdata.HexLocation(hexLoc));
+				getPlayerIndex(), victim.getPlayerIndex(), hexLoc);
 		clientCommunicator.playSoldier(commandCookie, getFullCookie());
 	}
 	
@@ -593,8 +587,7 @@ public class Facade {
 	 */
 	public void robPlayer(RobPlayerInfo victim) {
 		if(newRobberLocation != null) {
-			client.models.mapdata.HexLocation hex = new client.models.mapdata.HexLocation(newRobberLocation);
-			JsonObject command = this.modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victim.getPlayerIndex(), hex);
+			JsonObject command = this.modelToJSON.getRobPlayerCommand(this.getPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
 			JsonObject cookie = this.getFullCookie();
 			newRobberLocation = null;
 			clientCommunicator.robPlayer(command, cookie);
