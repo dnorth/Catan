@@ -1,5 +1,7 @@
 package PluginFactory;
 
+import java.util.List;
+
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import server.model.ServerUser;
@@ -8,13 +10,16 @@ import com.google.gson.JsonObject;
 
 public abstract class IPlugin {
 	
-	public JsonObject loadUsers() {
+	public List<ServerUser> loadUsers() {
 		return null;
 	}
-	public JsonObject loadGames() {
+	public List<IMovesCommand> loadUnexecutedCommands() {
 		return null;
 	}
-	public void saveUsers(ServerUser[] users) {}
+	public List<ServerGame> loadGames() {
+		return null;
+	}
+	public void saveUser(ServerUser user) {}
 	public void saveGame(ServerGame game) {}
 	public void saveCommand(ServerGame game, IMovesCommand command) {}
 	
