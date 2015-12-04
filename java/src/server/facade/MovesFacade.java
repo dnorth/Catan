@@ -69,6 +69,7 @@ public class MovesFacade implements iMovesFacade {
 		SendChatCommand command = new SendChatCommand(game,playerIndex,content);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -87,6 +88,7 @@ public class MovesFacade implements iMovesFacade {
 		
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -105,6 +107,7 @@ public class MovesFacade implements iMovesFacade {
 		RobPlayerCommand command = new RobPlayerCommand(game, playerIndex, victimIndex, location);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -120,6 +123,7 @@ public class MovesFacade implements iMovesFacade {
 		FinishTurnCommand  command = new FinishTurnCommand(game, playerIndex);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -136,6 +140,7 @@ public class MovesFacade implements iMovesFacade {
 		BuyDevCardCommand command = new BuyDevCardCommand(game, playerIndex);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -155,6 +160,7 @@ public class MovesFacade implements iMovesFacade {
 
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -175,6 +181,7 @@ public class MovesFacade implements iMovesFacade {
 		RoadBuildingCommand command = new RoadBuildingCommand(game, playerIndex, spot1, spot2);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -195,6 +202,7 @@ public class MovesFacade implements iMovesFacade {
 		SoldierCommand command = new SoldierCommand(game, playerIndex, victimIndex, location);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -214,6 +222,7 @@ public class MovesFacade implements iMovesFacade {
 		MonopolyCommand command = new MonopolyCommand(game, resource, playerIndex);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -232,6 +241,7 @@ public class MovesFacade implements iMovesFacade {
 		MonumentCommand command = new MonumentCommand(game,playerIndex);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -251,6 +261,7 @@ public class MovesFacade implements iMovesFacade {
 		BuildRoadCommand command = new BuildRoadCommand(game, playerIndex, roadLocation, free);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 	/**
@@ -269,6 +280,7 @@ public class MovesFacade implements iMovesFacade {
 		BuildCityCommand command = new BuildCityCommand(game, playerIndex, location);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -288,6 +300,7 @@ public class MovesFacade implements iMovesFacade {
 		BuildSettlementCommand command = new BuildSettlementCommand(game, playerIndex, vertexLocation, free);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -305,6 +318,7 @@ public class MovesFacade implements iMovesFacade {
 		OfferTradeCommand command = new OfferTradeCommand(game, playerIndex, offer, receiver);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -322,6 +336,7 @@ public class MovesFacade implements iMovesFacade {
 		AcceptTradeCommand command = new AcceptTradeCommand(game, playerIndex, willAccept);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -341,6 +356,7 @@ public class MovesFacade implements iMovesFacade {
 		MaritimeTradeCommand command = new MaritimeTradeCommand(game, playerIndex, ratio, inputResource, outputResource);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 
@@ -357,6 +373,7 @@ public class MovesFacade implements iMovesFacade {
 		DiscardCardsCommand command = new DiscardCardsCommand(game, playerIndex, discardedCards);
 		command.execute();
 		game.addCommand(command);
+		data.getPlugin().saveCommand(game, command);
 		return game.getClientModel();
 	}
 	

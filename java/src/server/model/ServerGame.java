@@ -75,7 +75,9 @@ public class ServerGame {
 		this.title = title;
 	}
 	
-	public void addCommand(IMovesCommand command){commands.add(command);}
+	public void addCommand(IMovesCommand command){
+		commands.add(command);
+	}
 	
 	
 	public List<IMovesCommand> getCommands() {
