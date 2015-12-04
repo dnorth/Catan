@@ -57,18 +57,16 @@ public class BuyDevCardCommand implements IMovesCommand {
 		model.checkPlayerIndex(playerIndex);
 
 		DevCards deck = model.getDeck();
-		DevCard selectedDevCard;
+		//DevCard selectedDevCard;
 
 		if(this.selectedDevCard==null){
 
 			Random rand = new Random();
 			List<DevCard> devCardTypes = deck.getDevCardTypes();
-			selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
+			this.selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
 		}
 
-		else{selectedDevCard = this.selectedDevCard;}
-
-		deck.addSpecifiedDevCard(selectedDevCard, -1);
+		deck.addSpecifiedDevCard(this.selectedDevCard, -1);
 
 		Resources bank = game.getClientModel().getBank();
 		Player p = model.getPlayers()[playerIndex];
@@ -79,14 +77,13 @@ public class BuyDevCardCommand implements IMovesCommand {
 
 			if(selectedDevCard==DevCard.MONUMENT)
 			{
-				p.getOldDevCards().addSpecifiedDevCard(selectedDevCard, 1);	
+				p.getOldDevCards().addSpecifiedDevCard(this.selectedDevCard, 1);	
 			}
 			else{
-				p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
+				p.getNewDevCards().addSpecifiedDevCard(this.selectedDevCard, 1);
 			}
 
-			deck.decSpecifiedDevCard(selectedDevCard);
-			this.selectedDevCard=selectedDevCard;
+			deck.decSpecifiedDevCard(this.selectedDevCard);
 		}
 		game.getClientModel().increaseVersion();
 	}
