@@ -2,7 +2,9 @@ package server.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import PluginFactory.IPlugin;
+import PluginFactory.PluginFactory;
 
 /**
  * Holds all user, game, and child info for those things.
@@ -13,6 +15,7 @@ public class ServerData {
 	private List<ServerGame> games;
 	private int nextUserID = 12;
 	private int nextGameID = 3;
+	private int checkpoint = 10;
 	private IPlugin plugin;
 	
 	public ServerData() {
@@ -122,6 +125,8 @@ public class ServerData {
 		initGame2.addUser(getUserByID(10), "red");
 		initGame2.addUser(getUserByID(11), "green");
 		this.games.add(initGame2);
+		
+		
 	}
 
 
@@ -147,9 +152,13 @@ public class ServerData {
 		return plugin;
 	}
 
-	public void setPlugin(IPlugin plugin) {
-		this.plugin = plugin;
+	public void setPlugin(String pluginName) {
+		PluginFactory factory = new PluginFactory();
+		this.plugin = factory.CreatePlugin(pluginName);
 	}
 	
+	public void setCheckpoint(int cp) {
+		this.checkpoint = cp;
+	}
 	
 }

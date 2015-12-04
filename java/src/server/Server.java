@@ -152,6 +152,12 @@ public class Server {
 				server_port_number = Integer.parseInt(args[0]);
 			}
 			new Server().run();
+			if(args.length > 1) {
+				serverData.setPlugin(args[1]);
+			}
+			if(args.length > 2) {
+				serverData.setCheckpoint(Integer.parseInt(args[2]));
+			}
 		}
 		catch (NumberFormatException e)
 		{
