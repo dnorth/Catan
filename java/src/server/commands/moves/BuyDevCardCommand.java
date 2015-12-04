@@ -30,6 +30,8 @@ public class BuyDevCardCommand implements IMovesCommand {
 	int playerIndex;
 	int commandNumber;
 
+	DevCard selectedDevCard;
+
 
 	public BuyDevCardCommand(ServerGame game, int playerIndex, int commandNumber) {
 		super();
@@ -48,16 +50,24 @@ public class BuyDevCardCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
-		Random rand = new Random();
+
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Playing");
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
 
 		DevCards deck = model.getDeck();
-		List<DevCard> devCardTypes = deck.getDevCardTypes();
+		DevCard selectedDevCard;
 
-		DevCard selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
+		if(this.selectedDevCard==null){
+
+			Random rand = new Random();
+			List<DevCard> devCardTypes = deck.getDevCardTypes();
+			selectedDevCard = devCardTypes.get(rand.nextInt(devCardTypes.size()));
+		}
+
+		else{selectedDevCard = this.selectedDevCard;}
+
 		deck.addSpecifiedDevCard(selectedDevCard, -1);
 
 		Resources bank = game.getClientModel().getBank();
@@ -74,12 +84,11 @@ public class BuyDevCardCommand implements IMovesCommand {
 			else{
 				p.getNewDevCards().addSpecifiedDevCard(selectedDevCard, 1);
 			}
+
 			deck.decSpecifiedDevCard(selectedDevCard);
+			this.selectedDevCard=selectedDevCard;
 		}
-
 		game.getClientModel().increaseVersion();
-
-
 	}
 
 
