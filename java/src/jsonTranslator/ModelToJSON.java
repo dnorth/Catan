@@ -26,6 +26,7 @@ import server.model.ServerGame;
 import server.model.ServerPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
+import shared.locations.VertexLocation;
 
 /**
  * Translates Model class structure to JSON format
@@ -396,7 +397,7 @@ public class ModelToJSON {
 		return command;
 	}
 	
-	public JsonObject getRobPlayerCommand(int playerIndex, int victimIndex, HexLocation hex) {
+	public JsonObject getRobPlayerCommand(int playerIndex, int victimIndex, shared.locations.HexLocation hex) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "robPlayer");
 		object.addProperty("playerIndex", playerIndex);
@@ -434,25 +435,25 @@ public class ModelToJSON {
 		return command;
 	}
 	
-	public JsonObject getPlayRoadBuildingCommand(int playerIndex, EdgeLocation edge1, EdgeLocation edge2) {
+	public JsonObject getPlayRoadBuildingCommand(int playerIndex, shared.locations.EdgeLocation edge1, shared.locations.EdgeLocation edge2) {
 		JsonObject command = new JsonObject();
 		command.addProperty("type", "Road_Building");
 		command.addProperty("playerIndex", playerIndex);
 		
 		JsonObject edgeLoc1 = new JsonObject();
-		edgeLoc1.addProperty("x", edge1.getXcoord());
-		edgeLoc1.addProperty("y", edge1.getYcoord());
+		edgeLoc1.addProperty("x", edge1.getHexLoc().getX());
+		edgeLoc1.addProperty("y", edge1.getHexLoc().getY());
 		
 		JsonObject edgeLoc2 = new JsonObject();
-		edgeLoc2.addProperty("x", edge2.getXcoord());
-		edgeLoc2.addProperty("y", edge2.getYcoord());
+		edgeLoc2.addProperty("x", edge2.getHexLoc().getX());
+		edgeLoc2.addProperty("y", edge2.getHexLoc().getY());
 		
 		command.add("spot1", edgeLoc1);
 		command.add("spot2", edgeLoc2);
 		return command;
 	}
 	
-	public JsonObject getPlaySoldierCommand(int playerIndex, int victimIndex, HexLocation hex) {
+	public JsonObject getPlaySoldierCommand(int playerIndex, int victimIndex, shared.locations.HexLocation hex) {
 		JsonObject command = new JsonObject();
 		command.addProperty("type", "Soldier");
 		command.addProperty("playerIndex", playerIndex);
@@ -481,15 +482,15 @@ public class ModelToJSON {
 		return command;
 	}
 
-	public JsonObject getBuildRoadCommand(int playerIndex, EdgeLocation edge, boolean free) {
+	public JsonObject getBuildRoadCommand(int playerIndex, shared.locations.EdgeLocation edge, boolean free) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "buildRoad");
 		object.addProperty("playerIndex", playerIndex);
 		
 		JsonObject edgeLoc = new JsonObject();
-		edgeLoc.addProperty("x", edge.getXcoord());
-		edgeLoc.addProperty("y", edge.getYcoord());
-		edgeLoc.addProperty("direction", edge.getDirection());
+		edgeLoc.addProperty("x", edge.getHexLoc().getX());
+		edgeLoc.addProperty("y", edge.getHexLoc().getY());
+		edgeLoc.addProperty("direction", edge.getDir().toString());
 		object.add("roadLocation", edgeLoc);
 		
 		if (free) object.addProperty("free", true);
@@ -497,15 +498,15 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	public JsonObject getBuildSettlementCommand(int playerIndex, EdgeLocation edge, boolean free) {
+	public JsonObject getBuildSettlementCommand(int playerIndex, VertexLocation location, boolean free) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "buildSettlement");
 		object.addProperty("playerIndex", playerIndex);
 
 		JsonObject vertex = new JsonObject();
-		vertex.addProperty("x", edge.getXcoord());
-		vertex.addProperty("y", edge.getYcoord());
-		vertex.addProperty("direction", edge.getDirection());
+		vertex.addProperty("x", location.getHexLoc().getX());
+		vertex.addProperty("y", location.getHexLoc().getY());
+		vertex.addProperty("direction", location.getDir().toString());
 		object.add("vertexLocation", vertex);
 		
 		if (free) object.addProperty("free", true);
@@ -513,15 +514,15 @@ public class ModelToJSON {
 		return object;
 	}
 	
-	public JsonObject getBuildCityCommand(int playerIndex, EdgeLocation edge) {
+	public JsonObject getBuildCityCommand(int playerIndex, VertexLocation location) {
 		JsonObject object = new JsonObject();
 		object.addProperty("type", "buildCity");
 		object.addProperty("playerIndex", playerIndex);
 		
 		JsonObject vertex = new JsonObject();
-		vertex.addProperty("x", edge.getXcoord());
-		vertex.addProperty("y", edge.getYcoord());
-		vertex.addProperty("direction", edge.getDirection());
+		vertex.addProperty("x", location.getHexLoc().getX());
+		vertex.addProperty("y", location.getHexLoc().getY());
+		vertex.addProperty("direction", location.getDir().toString());
 		
 		object.add("vertexLocation", vertex);
 		return object;
