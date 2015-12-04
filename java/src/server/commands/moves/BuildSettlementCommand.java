@@ -3,6 +3,10 @@ package server.commands.moves;
 import java.util.ArrayList;
 import java.util.List;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -34,14 +38,16 @@ public class BuildSettlementCommand implements IMovesCommand {
 	int playerIndex;
 	VertexLocation location;
 	boolean free;
+	int commandNumber;
 	
 	public BuildSettlementCommand(ServerGame game, int playerIndex,
-			VertexLocation location, boolean free) {
+			VertexLocation location, boolean free, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.location = location;
 		this.free = free;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -97,6 +103,25 @@ public class BuildSettlementCommand implements IMovesCommand {
 		}
 		board.updatePlayerMaritimeTradeCosts(p);
 		game.getClientModel().increaseVersion();
+	}
+
+
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getBuildSettlementCommand(playerIndex, location, free);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

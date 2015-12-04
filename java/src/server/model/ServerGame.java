@@ -33,7 +33,9 @@ public class ServerGame {
 		this.clientModel = new ClientModel();
 		this.clientModel.fillClientModel();
 		this.commands = new ArrayList<>();
-	}	
+	}
+	
+	
 	
 	public boolean addUser(ServerUser user, String color) {
 		if (players.size() > 3) return false;
@@ -82,6 +84,10 @@ public class ServerGame {
 	
 	public List<IMovesCommand> getCommands() {
 		return commands;
+	}
+	
+	public int getNumberOfCommands() {
+		return commands.size();
 	}
 
 	/**

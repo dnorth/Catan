@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.TurnTracker;
@@ -18,10 +22,12 @@ public class FinishTurnCommand implements IMovesCommand {
 
 	ServerGame game;
 	int playerIndex;
+	int commandNumber;
 	
-	public FinishTurnCommand(ServerGame game, int playerIndex){
+	public FinishTurnCommand(ServerGame game, int playerIndex, int commandNumber){
 		this.game = game;
-		this.playerIndex=playerIndex;
+		this.playerIndex = playerIndex;
+		this.commandNumber = commandNumber;
 		}
 	/**
 	 *  Finishes a turn.
@@ -62,9 +68,28 @@ public class FinishTurnCommand implements IMovesCommand {
 
 		game.getClientModel().increaseVersion();
 	}
+	
 	private boolean endOfRound(int count) {
 		if (game.getClientModel().getBoard().getRoads().length == 4*count &&
 				game.getClientModel().getBoard().getSettlements().size() == 4*count) return true;
 		return false;
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getFinishTurnCommand(playerIndex);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 }

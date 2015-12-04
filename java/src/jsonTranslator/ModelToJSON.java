@@ -595,6 +595,24 @@ public class ModelToJSON {
 		object.addProperty("playerID", playerID);
 		return object;
 	}
+	
+	public JsonObject generateServerGameObject(ServerGame game) {
+		JsonObject returnObject = new JsonObject();
+		JsonObject gameObject = new JsonObject();
+		gameObject.addProperty("title", game.getTitle());
+		gameObject.addProperty("id", game.getId());
+		JsonArray playersArray = new JsonArray();
+		for (ServerPlayer p : game.getPlayers()) {
+			JsonObject playerObject = new JsonObject();
+			playerObject.addProperty("color", p.getColor());
+			playerObject.addProperty("name", p.getName());
+			playerObject.addProperty("id", p.getId());
+			playersArray.add(playerObject);
+		}
+		gameObject.add("players", playersArray);
+		returnObject.add("Response-body", gameObject);
+		return returnObject;
+	}
 
 	public JsonArray generateServerGamesObject(List<ServerGame> games) {
 		JsonObject returnObject = new JsonObject();

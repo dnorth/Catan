@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -12,7 +16,6 @@ import server.exceptions.InvalidStatusException;
 import server.exceptions.NotYourTurnException;
 import server.model.ServerGame;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class OfferTradeCommand.
  */
@@ -22,15 +25,17 @@ public class OfferTradeCommand implements IMovesCommand {
 	int playerIndex;
 	Resources offer;
 	int receiver;
+	int commandNumber;
 
 
 	public OfferTradeCommand(ServerGame game, int playerIndex, Resources offer,
-			int receiver) {
+			int receiver, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.offer = offer;
 		this.receiver = receiver;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -59,6 +64,24 @@ public class OfferTradeCommand implements IMovesCommand {
 		
 		game.getClientModel().getLog().getLines().add(new MessageLine(offerer.getName() + " offered a trade", offerer.getName()));
 		game.getClientModel().increaseVersion();
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getOfferTradeCommand(playerIndex, receiver, offer);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

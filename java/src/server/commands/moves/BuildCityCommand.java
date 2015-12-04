@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import java.util.List;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -30,13 +34,15 @@ public class BuildCityCommand implements IMovesCommand {
 	ServerGame game;
 	int playerIndex;
 	VertexLocation location;
+	int commandNumber;
 
 	public BuildCityCommand(ServerGame game, int playerIndex,
-			VertexLocation location) {
+			VertexLocation location, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.location = location;
+		this.commandNumber = commandNumber;
 	}
 
 	/**
@@ -78,6 +84,22 @@ public class BuildCityCommand implements IMovesCommand {
 			game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a city", p.getName()));
 		}
 		game.getClientModel().increaseVersion();
+	}
+
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getBuildCityCommand(playerIndex, location);
+	}
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

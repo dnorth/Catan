@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -20,14 +24,16 @@ public class MonopolyCommand implements IMovesCommand  {
 	ServerGame game;
 	ResourceType type;
 	int playerIndex;
+	int commandNumber;
 
 
 	public MonopolyCommand(ServerGame game, ResourceType type,
-			int playerIndex) {
+			int playerIndex, int commandNumber) {
 		super();
 		this.game = game;
 		this.type = type;
 		this.playerIndex = playerIndex;
+		this.commandNumber = commandNumber;
 	}
 
 	/**
@@ -67,4 +73,21 @@ public class MonopolyCommand implements IMovesCommand  {
 		game.getClientModel().increaseVersion();
 	}
 
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getPlayMonopolyCommand(playerIndex, type);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
+	}
 }

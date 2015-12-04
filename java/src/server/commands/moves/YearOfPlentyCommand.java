@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -24,16 +28,18 @@ public class YearOfPlentyCommand implements IMovesCommand{
 	int playerIndex;
 	ResourceType resource1;
 	ResourceType resource2;
+	int commandNumber;
 	
 
 
 	public YearOfPlentyCommand(ServerGame game, int playerIndex,
-			ResourceType resource1, ResourceType resource2) {
+			ResourceType resource1, ResourceType resource2, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.resource1 = resource1;
 		this.resource2 = resource2;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -67,4 +73,19 @@ public class YearOfPlentyCommand implements IMovesCommand{
 		game.getClientModel().increaseVersion();
 	}
 
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getPlayYearOfPlentyCommand(playerIndex, resource1, resource2);
+	}
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+	@Override
+	public int getGameID() {
+		return game.getId();
+	}
 }

@@ -3,6 +3,10 @@ package server.commands.moves;
 import java.util.List;
 import java.util.Random;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -30,14 +34,16 @@ public class SoldierCommand implements IMovesCommand {
 	int playerIndex;
 	int victimIndex;
 	HexLocation location;
+	int commandNumber;
 
 	public SoldierCommand(ServerGame game, int playerIndex, int victimIndex,
-			HexLocation location) {
+			HexLocation location, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.victimIndex = victimIndex;
 		this.location = location;
+		this.commandNumber = commandNumber;
 	}
 
 	/**
@@ -101,6 +107,24 @@ public class SoldierCommand implements IMovesCommand {
 		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " played a soldier card", p.getName()));
 		
 		game.getClientModel().increaseVersion();
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getPlaySoldierCommand(playerIndex, victimIndex, this.location);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

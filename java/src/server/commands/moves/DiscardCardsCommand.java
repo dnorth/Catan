@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.Player;
 import client.models.Resources;
 import server.commands.IMovesCommand;
@@ -18,9 +22,10 @@ public class DiscardCardsCommand implements IMovesCommand {
 	ServerGame game;
 	int playerIndex;
 	Resources discardedCards;
+	int commandNumber;
 
 	public DiscardCardsCommand(ServerGame game, int playerIndex,
-			Resources discardedCards) {
+			Resources discardedCards, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
@@ -83,6 +88,24 @@ public class DiscardCardsCommand implements IMovesCommand {
 		
 		game.getClientModel().increaseVersion();
 		
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getDiscardCardsCommand(playerIndex, discardedCards);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

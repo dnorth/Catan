@@ -40,7 +40,7 @@ public class GamesFacade implements iGamesFacade {
 	@Override
 	public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
 		
-		int gameID =serverData.getNextGameID();
+		int gameID = serverData.getNextGameID();
 		CreateCommand command = new CreateCommand(serverData, randomTiles, randomNumbers, randomPorts, name, gameID); 
 		
 		try{

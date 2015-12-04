@@ -3,6 +3,10 @@ package server.commands.moves;
 import java.util.List;
 import java.util.Random;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -27,15 +31,17 @@ public class RobPlayerCommand implements IMovesCommand {
 	int playerIndex;
 	int victimIndex;
 	HexLocation location;
+	int commandNumber;
 
 
 	public RobPlayerCommand(ServerGame game, int playerIndex, int victimIndex,
-			HexLocation location) {
+			HexLocation location, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.victimIndex = victimIndex;
 		this.location = location;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -85,6 +91,24 @@ public class RobPlayerCommand implements IMovesCommand {
 		game.getClientModel().getTurnTracker().setStatus("Playing");
 		game.getClientModel().getLog().getLines().add(new MessageLine(p2.getName() + " robbed " + p.getName(), p2.getName()));
 		game.getClientModel().increaseVersion();
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getRobPlayerCommand(playerIndex, victimIndex, this.location);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

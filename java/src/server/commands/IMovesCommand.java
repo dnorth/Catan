@@ -1,18 +1,10 @@
 package server.commands;
 
-import server.exceptions.AlreadyPlayedDevCardException;
-import server.exceptions.CantBuildThereException;
-import server.exceptions.DontHaveDevCardException;
-import server.exceptions.InsufficientResourcesException;
-import server.exceptions.InvalidMaritimeTradeException;
-import server.exceptions.InvalidPlayerException;
-import server.exceptions.InvalidPlayerIndexException;
-import server.exceptions.InvalidRollException;
-import server.exceptions.InvalidStatusException;
-import server.exceptions.NoTradeOfferedException;
-import server.exceptions.NotYourTurnException;
-import server.exceptions.OutOfPiecesException;
-import server.exceptions.RobberIsAlreadyThereException;
+import com.google.gson.JsonObject;
+
+import server.exceptions.*;
+import jsonTranslator.ModelToJSON;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,4 +29,7 @@ public interface IMovesCommand {
 	 * @throws InvalidPlayerIndexException 
 	 */
 	public void execute() throws InvalidStatusException, InsufficientResourcesException, CantBuildThereException, NotYourTurnException, OutOfPiecesException, NoTradeOfferedException, InvalidPlayerException, InvalidMaritimeTradeException, RobberIsAlreadyThereException, InvalidRollException, DontHaveDevCardException, AlreadyPlayedDevCardException, InvalidPlayerIndexException;
+	public JsonObject toJSON();
+	public int getCommandNumber();
+	public int getGameID();
 }

@@ -217,15 +217,15 @@ public class CommandAndModelTests {
 		System.out.println("Testing sendChat command, checking messages");
 		ServerData serverData = new ServerData();
 		Server.setServerData(serverData);
-		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0");
+		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0", 1);
 		
 		try {
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 1, "This is a chat from player 1");
+			command = new SendChatCommand(serverData.getGameByID(1), 1, "This is a chat from player 1", 2);
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 2, "This is a chat from player 2");
+			command = new SendChatCommand(serverData.getGameByID(1), 2, "This is a chat from player 2", 3);
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 3, "This is a chat from player 3");
+			command = new SendChatCommand(serverData.getGameByID(1), 3, "This is a chat from player 3", 4);
 			command.execute();
 			MessageList messageList = serverData.getGameByID(1).getClientModel().getChat();
 			assertTrue(messageList.getLines().size() == 4);
@@ -244,14 +244,14 @@ public class CommandAndModelTests {
 		System.out.println("Testing sendChat command, checking sources");
 		ServerData serverData = new ServerData();
 		Server.setServerData(serverData);
-		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0");
+		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0", 1);
 		try {
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 1, "This is a chat from player 1");
+			command = new SendChatCommand(serverData.getGameByID(1), 1, "This is a chat from player 1", 2);
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 2, "This is a chat from player 2");
+			command = new SendChatCommand(serverData.getGameByID(1), 2, "This is a chat from player 2", 3);
 			command.execute();
-			command = new SendChatCommand(serverData.getGameByID(1), 3, "This is a chat from player 3");
+			command = new SendChatCommand(serverData.getGameByID(1), 3, "This is a chat from player 3", 4);
 			command.execute();
 			MessageList messageList = serverData.getGameByID(1).getClientModel().getChat();
 			assertTrue(messageList.getLines().size() == 4);
@@ -274,11 +274,11 @@ public class CommandAndModelTests {
 		Board board = game.getClientModel().getBoard();
 		
 		try {
-			IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-2, "NW"), true);
+			IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-2, "NW"), true, 1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-2), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-2), VertexDirection.NorthWest), true, 1);
 			command.execute();
-			command = new FinishTurnCommand(game, 0);
+			command = new FinishTurnCommand(game, 0, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 1);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "FirstRound");
@@ -288,11 +288,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getSettlements().get(0).getOwner(), 0);
 			
 			
-			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-2, "NW"), true);
+			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-2, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-2), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-2), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 1);
+			command = new FinishTurnCommand(game, 1, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 2);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "FirstRound");
@@ -301,11 +301,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[1].getOwner(), 1);
 			assertEquals(board.getSettlements().get(1).getOwner(), 1);
 			
-			command = new BuildRoadCommand(game, 2, new EdgeLocation(-1,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 2, new EdgeLocation(-1,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-1,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-1,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 2);
+			command = new FinishTurnCommand(game, 2, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 3);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "FirstRound");
@@ -314,11 +314,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[2].getOwner(), 2);
 			assertEquals(board.getSettlements().get(2).getOwner(), 2);
 			
-			command = new BuildRoadCommand(game, 3, new EdgeLocation(0,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 3, new EdgeLocation(0,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(0,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(0,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 3);
+			command = new FinishTurnCommand(game, 3, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 3);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "SecondRound");
@@ -327,11 +327,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[3].getOwner(), 3);
 			assertEquals(board.getSettlements().get(3).getOwner(), 3);
 			
-			command = new BuildRoadCommand(game, 3, new EdgeLocation(-1,0, "NW"), true);
+			command = new BuildRoadCommand(game, 3, new EdgeLocation(-1,0, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 3);
+			command = new FinishTurnCommand(game, 3, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 2);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "SecondRound");
@@ -340,11 +340,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[4].getOwner(), 3);
 			assertEquals(board.getSettlements().get(4).getOwner(), 3);
 			
-			command = new BuildRoadCommand(game, 2, new EdgeLocation(-2,0, "NW"), true);
+			command = new BuildRoadCommand(game, 2, new EdgeLocation(-2,0, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 2);
+			command = new FinishTurnCommand(game, 2, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 1);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "SecondRound");
@@ -353,11 +353,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[5].getOwner(), 2);
 			assertEquals(board.getSettlements().get(5).getOwner(), 2);
 
-			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 1);
+			command = new FinishTurnCommand(game, 1, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 0);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "SecondRound");
@@ -366,11 +366,11 @@ public class CommandAndModelTests {
 			assertEquals(board.getRoads()[6].getOwner(), 1);
 			assertEquals(board.getSettlements().get(6).getOwner(), 1);
 	
-			command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 0);
+			command = new FinishTurnCommand(game, 0, -1);
 			command.execute();
 			assertTrue(game.getClientModel().getTurnTracker().getCurrentTurn() == 0);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Rolling");
@@ -390,62 +390,61 @@ public class CommandAndModelTests {
 	private void preGameRoadPlacement(ServerData serverData) {
 		System.out.println("Testing first two rounds buildRoad command");
 		ServerGame game = serverData.getGameByID(0);
-		Board board = game.getClientModel().getBoard();
 		try {
-			IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-2, "NW"), true);
+			IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(1,-2, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-2), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(1,-2), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 0);
+			command = new FinishTurnCommand(game, 0, -1);
 			command.execute();
 					
-			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-2, "NW"), true);
+			command = new BuildRoadCommand(game, 1, new EdgeLocation(2,-2, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-2), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(2,-2), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 1);
+			command = new FinishTurnCommand(game, 1, -1);
 			command.execute();
 			
-			command = new BuildRoadCommand(game, 2, new EdgeLocation(-1,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 2, new EdgeLocation(-1,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-1,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(-1,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 2);
+			command = new FinishTurnCommand(game, 2, -1);
 			command.execute();
 	
-			command = new BuildRoadCommand(game, 3, new EdgeLocation(0,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 3, new EdgeLocation(0,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(0,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(0,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 3);
-			command.execute();
-			
-			command = new BuildRoadCommand(game, 3, new EdgeLocation(1,-1, "NW"), true);
-			command.execute();
-			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true);
-			command.execute();
-			command = new FinishTurnCommand(game, 3);
+			command = new FinishTurnCommand(game, 3, -1);
 			command.execute();
 			
-			command = new BuildRoadCommand(game, 2, new EdgeLocation(2,-1, "NW"), true);
+			command = new BuildRoadCommand(game, 3, new EdgeLocation(1,-1, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 3, new VertexLocation(new HexLocation(1,-1), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 2);
+			command = new FinishTurnCommand(game, 3, -1);
+			command.execute();
+			
+			command = new BuildRoadCommand(game, 2, new EdgeLocation(2,-1, "NW"), true, -1);
+			command.execute();
+			command = new BuildSettlementCommand(game, 2, new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthWest), true, -1);
+			command.execute();
+			command = new FinishTurnCommand(game, 2, -1);
 			command.execute();
 
-			command = new BuildRoadCommand(game, 1, new EdgeLocation(-2,0, "NW"), true);
+			command = new BuildRoadCommand(game, 1, new EdgeLocation(-2,0, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 1, new VertexLocation(new HexLocation(-2,0), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 1);
+			command = new FinishTurnCommand(game, 1, -1);
 			command.execute();
 	
-			command = new BuildRoadCommand(game, 0, new EdgeLocation(-1,0, "NW"), true);
+			command = new BuildRoadCommand(game, 0, new EdgeLocation(-1,0, "NW"), true, -1);
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.NorthWest), true, -1);
 			command.execute();
-			command = new FinishTurnCommand(game, 0);
+			command = new FinishTurnCommand(game, 0, -1);
 			command.execute();
 			
 			assertEquals(game.getClientModel().getBank().getBrickCount(), 22);
@@ -496,11 +495,11 @@ public class CommandAndModelTests {
 		assertEquals(game.getClientModel().getTurnTracker().getCurrentTurn(), 0);
 		assertEquals(game.getClientModel().getTurnTrackerStatus(), "Rolling");
 		try {
-			IMovesCommand command = new RollNumberCommand(game, 0, 4);
+			IMovesCommand command = new RollNumberCommand(game, 0, 4, -1);
 			command.execute();
 			assertEquals(game.getClientModel().getTurnTracker().getCurrentTurn(), 0);
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
-			command = new FinishTurnCommand(game, 0);
+			command = new FinishTurnCommand(game, 0, -1);
 			command.execute();
 			assertEquals(game.getClientModel().getBank().getBrickCount(), 19);
 			assertEquals(game.getClientModel().getBank().getWoodCount(), 22);
@@ -524,8 +523,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,3,0,0,0));
-		IMovesCommand command = new MonumentCommand(game, 0);
-		IMovesCommand command2 = new RollNumberCommand(game, 0, 4);
+		IMovesCommand command = new MonumentCommand(game, 0, -1);
+		IMovesCommand command2 = new RollNumberCommand(game, 0, 4, -1);
 		try {
 			command2.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -546,8 +545,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.BRICK);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.BRICK, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -570,8 +569,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WOOD, ResourceType.WOOD);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WOOD, ResourceType.WOOD, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -594,8 +593,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.ORE, ResourceType.ORE);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.ORE, ResourceType.ORE, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -618,8 +617,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.WHEAT);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.WHEAT, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -642,8 +641,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.SHEEP, ResourceType.SHEEP);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.SHEEP, ResourceType.SHEEP, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -666,8 +665,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.ORE);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.BRICK, ResourceType.ORE, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -690,8 +689,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,0,1));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.SHEEP);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new YearOfPlentyCommand(game, 0, ResourceType.WHEAT, ResourceType.SHEEP, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -713,8 +712,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6);
-		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6, -1);
+		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0), -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -737,8 +736,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,3,0));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6);
-		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0)); //2
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 6, -1);
+		IMovesCommand command = new SoldierCommand(game, 0, 1, new HexLocation(-2, 0), -1); //2
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -764,8 +763,8 @@ public class CommandAndModelTests {
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7);
-		IMovesCommand command = new RobPlayerCommand(game, 0, 1, new HexLocation(-2,0));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7, -1);
+		IMovesCommand command = new RobPlayerCommand(game, 0, 1, new HexLocation(-2,0), -1);
 		try {
 			rollCommand.execute();
 			command.execute();
@@ -788,13 +787,13 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			command = new AcceptTradeCommand(game, 1, true);
+			command = new AcceptTradeCommand(game, 1, true, -1);
 			command.execute();
 			Resources player0Resources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,0,1,0,2);
@@ -816,13 +815,13 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,0,1,0));
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new OfferTradeCommand(game, 0, new Resources(0,2,0,0,-1), 1, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			command = new AcceptTradeCommand(game, 1, false);
+			command = new AcceptTradeCommand(game, 1, false, -1);
 			command.execute();
 			Resources player0Resources = game.getClientModel().getPlayers()[0].getResources();
 			Resources toCompare = new Resources(0,2,1,0,1);
@@ -844,8 +843,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest), -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -866,8 +865,8 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthEast));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthEast), -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -890,8 +889,8 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuildCityCommand(game, 0, new VertexLocation(new HexLocation(1, -2), VertexDirection.NorthWest), -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -915,8 +914,8 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(1, -2), EdgeDirection.North), false);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(1, -2), EdgeDirection.North), false, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -941,13 +940,13 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.SouthWest), false);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuildRoadCommand(game, 0, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.SouthWest), false, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.SouthWest), false);
+			command = new BuildSettlementCommand(game, 0, new VertexLocation(new HexLocation(-1,0), VertexDirection.SouthWest), false, -1);
 			command.execute();
 
 			assertEquals(game.getClientModel().getBoard().getSettlements().size(), 9);
@@ -972,8 +971,8 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(5,5,5,5,5));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new BuyDevCardCommand(game, 0);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new BuyDevCardCommand(game, 0, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -1000,13 +999,13 @@ public class CommandAndModelTests {
 		game.getClientModel().getPlayers()[2].setResources(new Resources(0,0,0,0,0));
 
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7);
-		IMovesCommand command = new DiscardCardsCommand(game, 0, new Resources(2,2,2,2,2));
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 7, -1);
+		IMovesCommand command = new DiscardCardsCommand(game, 0, new Resources(2,2,2,2,2), -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Discarding");
 			command.execute();
-			command = new DiscardCardsCommand(game, 1, new Resources(5,4,3,2,1));
+			command = new DiscardCardsCommand(game, 1, new Resources(5,4,3,2,1), -1);
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(2,2,2,2,2));
 			assertEquals(game.getClientModel().getPlayers()[1].getResources(), new Resources(5,4,3,2,1));
@@ -1026,8 +1025,8 @@ public class CommandAndModelTests {
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new FinishTurnCommand(game, 0);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new FinishTurnCommand(game, 0, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
@@ -1049,20 +1048,20 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setResources(new Resources(4,4,4,4,4));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
-		IMovesCommand command = new MaritimeTradeCommand(game, 0, 4, "wood", "brick");
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
+		IMovesCommand command = new MaritimeTradeCommand(game, 0, 4, "wood", "brick", -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,6,4,4,4));  //wood brick sheep wheat ore
-			command = new MaritimeTradeCommand(game, 0, 3, "brick", "sheep");
+			command = new MaritimeTradeCommand(game, 0, 3, "brick", "sheep", -1);
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,5,4,4));
-			command = new MaritimeTradeCommand(game, 0, 2, "sheep", "wheat");
+			command = new MaritimeTradeCommand(game, 0, 2, "sheep", "wheat", -1);
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,3,5,4));
-			command = new MaritimeTradeCommand(game, 0, 2, "wheat", "ore");
+			command = new MaritimeTradeCommand(game, 0, 2, "wheat", "ore", -1);
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(0,3,3,3,5));
 		} catch (Exception e) {
@@ -1080,10 +1079,10 @@ public class CommandAndModelTests {
 		ServerGame game = serverData.getGameByID(0);
 		game.getClientModel().getPlayers()[0].setOldDevCards(new DevCards(0,0,1,0,0));
 
-		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4);
+		IMovesCommand rollCommand = new RollNumberCommand(game, 0, 4, -1);
 		EdgeLocation e1 = new EdgeLocation(new HexLocation(-1,0), EdgeDirection.SouthWest);
 		EdgeLocation e2 = new EdgeLocation(new HexLocation(-1,0), EdgeDirection.South);
-		IMovesCommand command = new RoadBuildingCommand(game, 0, e1, e2);
+		IMovesCommand command = new RoadBuildingCommand(game, 0, e1, e2, -1);
 		try {
 			rollCommand.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");

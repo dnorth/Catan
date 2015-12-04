@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -24,17 +28,18 @@ public class MaritimeTradeCommand implements IMovesCommand {
 	int ratio;
 	ResourceType inputResource;
 	ResourceType outputResource;
-	
+	int commandNumber;
 
 
 	public MaritimeTradeCommand(ServerGame game, int playerIndex, int ratio,
-			String inputResource, String outputResource) {
+			String inputResource, String outputResource, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.ratio = ratio;
 		this.inputResource = ResourceType.getResourceType(inputResource);
 		this.outputResource = ResourceType.getResourceType(outputResource);
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -70,4 +75,21 @@ public class MaritimeTradeCommand implements IMovesCommand {
 		game.getClientModel().increaseVersion();
 	}
 
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getMaritimeTradeCommand(playerIndex, ratio, inputResource, outputResource);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
+	}
 }

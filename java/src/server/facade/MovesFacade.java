@@ -65,8 +65,8 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel sendChat(int gameIndex, int playerIndex, String content) throws InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
-		SendChatCommand command = new SendChatCommand(game,playerIndex,content);
+		ServerGame game = data.getGameByID(gameIndex);
+		SendChatCommand command = new SendChatCommand(game, playerIndex, content, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -83,8 +83,8 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel rollNumber(int gameIndex, int playerIndex, int number) throws InvalidRollException, InvalidStatusException, InsufficientResourcesException, NotYourTurnException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
-		RollNumberCommand command = new RollNumberCommand(game, playerIndex, number);
+		ServerGame game = data.getGameByID(gameIndex);
+		RollNumberCommand command = new RollNumberCommand(game, playerIndex, number, game.getNumberOfCommands());
 		
 		command.execute();
 		game.addCommand(command);
@@ -102,9 +102,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel robPlayer(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, RobberIsAlreadyThereException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		RobPlayerCommand command = new RobPlayerCommand(game, playerIndex, victimIndex, location);
+		RobPlayerCommand command = new RobPlayerCommand(game, playerIndex, victimIndex, location, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -119,8 +119,8 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel finishTurn(int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
-		FinishTurnCommand  command = new FinishTurnCommand(game, playerIndex);
+		ServerGame game = data.getGameByID(gameIndex);
+		FinishTurnCommand  command = new FinishTurnCommand(game, playerIndex, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -136,8 +136,8 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel buyDevCard(int gameIndex, int playerIndex) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
-		BuyDevCardCommand command = new BuyDevCardCommand(game, playerIndex);
+		ServerGame game = data.getGameByID(gameIndex);
+		BuyDevCardCommand command = new BuyDevCardCommand(game, playerIndex, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -155,8 +155,8 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel playYearOfPlenty(int gameIndex, int playerIndex, ResourceType resource1, ResourceType resource2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
-		YearOfPlentyCommand command = new YearOfPlentyCommand(game, playerIndex, resource1, resource2);
+		ServerGame game = data.getGameByID(gameIndex);
+		YearOfPlentyCommand command = new YearOfPlentyCommand(game, playerIndex, resource1, resource2, game.getNumberOfCommands());
 
 		command.execute();
 		game.addCommand(command);
@@ -176,9 +176,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel playRoadBuilding(int gameIndex, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		RoadBuildingCommand command = new RoadBuildingCommand(game, playerIndex, spot1, spot2);
+		RoadBuildingCommand command = new RoadBuildingCommand(game, playerIndex, spot1, spot2, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -197,9 +197,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel playSoldier(int gameIndex, int playerIndex, int victimIndex, HexLocation location) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, RobberIsAlreadyThereException, InsufficientResourcesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		SoldierCommand command = new SoldierCommand(game, playerIndex, victimIndex, location);
+		SoldierCommand command = new SoldierCommand(game, playerIndex, victimIndex, location, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -217,9 +217,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel playMonopoly(ResourceType resource, int gameIndex, int playerIndex) throws InvalidStatusException, NotYourTurnException, DontHaveDevCardException, AlreadyPlayedDevCardException, InsufficientResourcesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		MonopolyCommand command = new MonopolyCommand(game, resource, playerIndex);
+		MonopolyCommand command = new MonopolyCommand(game, resource, playerIndex, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -236,9 +236,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel playMonument(int gameIndex, int playerIndex) throws NotYourTurnException, InvalidStatusException, DontHaveDevCardException, AlreadyPlayedDevCardException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		MonumentCommand command = new MonumentCommand(game,playerIndex);
+		MonumentCommand command = new MonumentCommand(game,playerIndex, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -256,9 +256,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel buildRoad(int gameIndex, int playerIndex, EdgeLocation roadLocation, boolean free) throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		BuildRoadCommand command = new BuildRoadCommand(game, playerIndex, roadLocation, free);
+		BuildRoadCommand command = new BuildRoadCommand(game, playerIndex, roadLocation, free, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -275,9 +275,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel buildCity(int gameIndex, int playerIndex, VertexLocation location) throws InsufficientResourcesException, NotYourTurnException, InvalidStatusException, OutOfPiecesException, CantBuildThereException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		BuildCityCommand command = new BuildCityCommand(game, playerIndex, location);
+		BuildCityCommand command = new BuildCityCommand(game, playerIndex, location, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -295,9 +295,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel buildSettlement(int gameIndex, int playerIndex, VertexLocation vertexLocation, boolean free) throws InsufficientResourcesException, CantBuildThereException, InvalidStatusException, NotYourTurnException, OutOfPiecesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		BuildSettlementCommand command = new BuildSettlementCommand(game, playerIndex, vertexLocation, free);
+		BuildSettlementCommand command = new BuildSettlementCommand(game, playerIndex, vertexLocation, free, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -313,9 +313,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel offerTrade(int gameIndex, int playerIndex, Resources offer, int receiver) throws InvalidStatusException, NotYourTurnException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		OfferTradeCommand command = new OfferTradeCommand(game, playerIndex, offer, receiver);
+		OfferTradeCommand command = new OfferTradeCommand(game, playerIndex, offer, receiver, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -331,9 +331,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel acceptTrade(int gameIndex, int playerIndex, boolean willAccept) throws NoTradeOfferedException, InvalidPlayerException, InsufficientResourcesException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		AcceptTradeCommand command = new AcceptTradeCommand(game, playerIndex, willAccept);
+		AcceptTradeCommand command = new AcceptTradeCommand(game, playerIndex, willAccept, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -351,9 +351,9 @@ public class MovesFacade implements iMovesFacade {
 	@Override
 	public ClientModel maritimeTrade(int gameIndex, int playerIndex, int ratio, String inputResource,
 			String outputResource) throws InsufficientResourcesException, InvalidStatusException, NotYourTurnException, InvalidMaritimeTradeException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		MaritimeTradeCommand command = new MaritimeTradeCommand(game, playerIndex, ratio, inputResource, outputResource);
+		MaritimeTradeCommand command = new MaritimeTradeCommand(game, playerIndex, ratio, inputResource, outputResource, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);
@@ -368,9 +368,9 @@ public class MovesFacade implements iMovesFacade {
 	 */
 	@Override
 	public ClientModel discardCards(int gameIndex, int playerIndex, Resources discardedCards) throws InsufficientResourcesException, InvalidStatusException, InvalidPlayerIndexException {
-		ServerGame game =data.getGameByID(gameIndex);
+		ServerGame game = data.getGameByID(gameIndex);
 
-		DiscardCardsCommand command = new DiscardCardsCommand(game, playerIndex, discardedCards);
+		DiscardCardsCommand command = new DiscardCardsCommand(game, playerIndex, discardedCards, game.getNumberOfCommands());
 		command.execute();
 		game.addCommand(command);
 		data.getPlugin().saveCommand(game, command);

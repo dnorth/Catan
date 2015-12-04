@@ -51,13 +51,6 @@ public class CreateCommand implements IGamesCommand {
 			board.CreateRandomPorts();
 		}
 		Server.getServerData().getGames().add(game);
-		
-		
-		for(Hex h: board.getHexes()){
-//			System.out.println("Hex Type: "+h.getHexType() + " Hex Number: "+h.getNumberToken()+ " Hex ResourceType: " +h.getResourceType() + " HexLocation: "+h.getLocation());
-		}
-		
-//		System.out.println("Robber is at: "+board.getRobber());
 	}
 
 }

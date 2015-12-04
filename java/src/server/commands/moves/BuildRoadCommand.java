@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -27,13 +31,15 @@ public class BuildRoadCommand implements IMovesCommand {
 	int playerIndex;
 	EdgeLocation spot;
 	boolean free;
+	int commandNumber;
 	
-	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free) {
+	public BuildRoadCommand(ServerGame game, int playerIndex, EdgeLocation spot, boolean free, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.spot = spot;
 		this.free = free;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -83,6 +89,34 @@ public class BuildRoadCommand implements IMovesCommand {
 			model.awardLongestRoad(p);
 		}
 		model.increaseVersion();
+	}
+
+
+
+
+
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getBuildRoadCommand(playerIndex, spot, free);
+	}
+
+
+
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

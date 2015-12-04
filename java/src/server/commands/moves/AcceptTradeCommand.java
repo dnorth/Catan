@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.Player;
 import client.models.Resources;
 import client.models.TradeOffer;
@@ -21,14 +25,16 @@ public class AcceptTradeCommand implements IMovesCommand {
 	ServerGame game;
 	int playerIndex;
 	boolean willAccept;
+	int commandNumber;
 
 
 	public AcceptTradeCommand(ServerGame game, int playerIndex,
-			boolean willAccept) {
+			boolean willAccept, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.willAccept = willAccept;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -76,6 +82,25 @@ public class AcceptTradeCommand implements IMovesCommand {
 		}
 		game.getClientModel().increaseVersion();
 
+	}
+
+
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getAcceptTradeCommand(playerIndex, willAccept);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }

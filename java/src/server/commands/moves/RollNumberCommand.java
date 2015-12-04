@@ -1,5 +1,9 @@
 package server.commands.moves;
 
+import jsonTranslator.ModelToJSON;
+
+import com.google.gson.JsonObject;
+
 import client.models.ClientModel;
 import client.models.Player;
 import client.models.Resources;
@@ -27,14 +31,15 @@ public class RollNumberCommand implements IMovesCommand {
 	ServerGame game;
 	int playerIndex;
 	int number;
+	int commandNumber;
 
 
-
-	public RollNumberCommand(ServerGame game, int playerIndex, int number) {
+	public RollNumberCommand(ServerGame game, int playerIndex, int number, int commandNumber) {
 		super();
 		this.game = game;
 		this.playerIndex = playerIndex;
 		this.number = number;
+		this.commandNumber = commandNumber;
 	}
 
 
@@ -137,6 +142,24 @@ public class RollNumberCommand implements IMovesCommand {
 			}
 		}
 
+	}
+	
+	@Override
+	public JsonObject toJSON() {
+		ModelToJSON toJSON = new ModelToJSON();
+		return toJSON.getRollNumberCommand(playerIndex, number);
+	}
+
+
+	@Override
+	public int getCommandNumber() {
+		return commandNumber;
+	}
+
+
+	@Override
+	public int getGameID() {
+		return game.getId();
 	}
 
 }
