@@ -530,7 +530,7 @@ public class CommandAndModelTests {
 			command2.execute();
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
-			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 2);
+			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 5);
 			assertEquals(game.getClientModel().getPlayers()[0].getMonuments(), 3);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1097,8 +1097,6 @@ public class CommandAndModelTests {
 			assertTrue(false);
 		}	
 	}
-	
-	
 	
 	private void SetPlayerResources(ServerGame game){
 		

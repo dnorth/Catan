@@ -168,7 +168,7 @@ public class ServerProxyTests {
 		assertEquals(responseBody2, "\"Success\"");
 	}
 
-	@Test
+	//@Test
 	public void createGameAllRandomTest () {
 		JsonObject inputGame = new JsonObject();
 		inputGame.addProperty("randomTiles", true);
