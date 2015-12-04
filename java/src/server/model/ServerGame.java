@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import server.commands.IMovesCommand;
 import client.models.ClientModel;
 import client.models.Player;
 
@@ -15,6 +16,7 @@ public class ServerGame {
 	private int id;
 	private List<ServerPlayer> players;
 	private ClientModel clientModel;
+	private List<IMovesCommand> commands;
 	
 	/**
 	 * Get title.
@@ -71,6 +73,14 @@ public class ServerGame {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public void addCommand(IMovesCommand command){commands.add(command);}
+	
+	
+	public List<IMovesCommand> getCommands() {
+		return commands;
+	}
+
 	/**
 	 * Get id.
 	 * @return id

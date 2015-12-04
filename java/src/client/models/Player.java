@@ -304,6 +304,7 @@ public class Player
 	public void decCities() throws OutOfPiecesException {
 		if(cities>0){
 		cities--;
+		settlements++;
 		}
 		else{
 			throw new OutOfPiecesException();

@@ -57,8 +57,6 @@ public class AcceptTradeCommand implements IMovesCommand {
 		Player receiver = game.getClientModel().getPlayers()[offer.getReceiver()];
 		
 		if(willAccept){
-
-
 			if(receiver.hasSpecifiedResources(offer)){
 				offerer.getResources().subtractResource(ResourceType.BRICK, offer.getBrickCount(), receiver.getResources());
 				offerer.getResources().subtractResource(ResourceType.ORE, offer.getOreCount(), receiver.getResources());
