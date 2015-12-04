@@ -1,5 +1,7 @@
 package PluginFactory;
 
+import java.util.List;
+
 import server.commands.IMovesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
@@ -17,33 +19,33 @@ public class SQLPlugin extends IPlugin {
 	private GameUserMapSQLDAO gameUserMapDAO;
 	
 	@Override
-	public JsonObject loadUsers() {
-		// TODO Auto-generated method stub
-		return super.loadUsers();
+	public List<ServerUser> loadUsers() {
+		return userDAO.getAll();
+	}
+	
+	@Override
+	public List<IMovesCommand> loadUnexecutedCommands() {
+		return commandDAO.getCommandsByGameAfterIndex(gameIDs, indeces);
 	}
 
 	@Override
-	public JsonObject loadGames() {
-		// TODO Auto-generated method stub
-		return super.loadGames();
+	public List<ServerGame> loadGames() {
+		return gameDAO.getAll();
 	}
 
 	@Override
-	public void saveUsers(ServerUser[] users) {
-		// TODO Auto-generated method stub
-		super.saveUsers(users);
+	public void saveUser(ServerUser user) {
+		userDAO.add(user);
 	}
 
 	@Override
 	public void saveGame(ServerGame game) {
-		// TODO Auto-generated method stub
-		super.saveGame(game);
+		gameDAO.update(game);
 	}
 
 	@Override
 	public void saveCommand(ServerGame game, IMovesCommand command) {
-		// TODO Auto-generated method stub
-		super.saveCommand(game, command);
+		commandDAO.add(game, command);
 	}
 
 	public ServerData getServerData() {
