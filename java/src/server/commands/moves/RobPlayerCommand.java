@@ -32,6 +32,8 @@ public class RobPlayerCommand implements IMovesCommand {
 	int victimIndex;
 	HexLocation location;
 	int commandNumber;
+	
+	ResourceType resourceType;
 
 
 	public RobPlayerCommand(ServerGame game, int playerIndex, int victimIndex,
@@ -82,10 +84,11 @@ public class RobPlayerCommand implements IMovesCommand {
 			Resources victimResources = p.getResources();
 			Resources takerResources = game.getClientModel().getPlayers()[playerIndex].getResources();
 			List<ResourceType> resourceTypes = victimResources.getResourceTypes();
-
-			Random rand = new Random();
-			ResourceType type = resourceTypes.get(rand.nextInt(resourceTypes.size()));
-			victimResources.subtractResource(type, 1,takerResources);
+			if (this.resourceType == null){
+				Random rand = new Random();
+				this.resourceType = resourceTypes.get(rand.nextInt(resourceTypes.size()));
+			}
+			victimResources.subtractResource(this.resourceType, 1,takerResources);
 
 		}
 		game.getClientModel().getTurnTracker().setStatus("Playing");
