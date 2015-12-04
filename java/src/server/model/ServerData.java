@@ -5,6 +5,7 @@ import java.util.List;
 
 import PluginFactory.IPlugin;
 import PluginFactory.PluginFactory;
+import server.commands.IMovesCommand;
 
 /**
  * Holds all user, game, and child info for those things.
@@ -155,6 +156,26 @@ public class ServerData {
 	public void setPlugin(String pluginName) {
 		PluginFactory factory = new PluginFactory();
 		this.plugin = factory.CreatePlugin(pluginName);
+	}
+	
+	public void uploadFromPlugin() {
+		this.uploadUsers(plugin.loadUsers());
+		this.uploadGames(plugin.loadGames());
+		this.executeNewCommands(plugin.loadUnexecutedCommands());
+	}
+	
+	private void uploadUsers (List<ServerUser> newUsers) {
+		this.users.addAll(newUsers);
+	}
+	
+	private void uploadGames (List<ServerGame> newGames) {
+		this.games.addAll(newGames);
+	}
+	
+	private void executeNewCommands (List<IMovesCommand> commands){
+		// iterate through each command
+		//		set command's serverGame by ID
+		//		execute command
 	}
 	
 	public void setCheckpoint(int cp) {
