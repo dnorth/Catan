@@ -16,18 +16,23 @@ import server.model.ServerUser;
 public class UserJSONDAO extends JSONDAO{
 	
 	ModelToJSON modelToJson;
+	String dir;
 	String filename;
 	BufferedReader br;
 	
 	public UserJSONDAO() throws FileNotFoundException {
 		modelToJson = new ModelToJSON();
-		filename = "jsonFiles/user.json";
+		dir = "jsonFiles";
+		filename = "/user.json";
 	}
 	
-	public List<ServerUser> getAll() throws FileNotFoundException {
-		br = super.getBufferedReaderFromFilename(filename);
+	public List<ServerUser> getAll() throws IOException {
+		br = super.getBufferedReaderFromFilename(dir, filename);
 		ServerUser[] serverUsers = new Gson().fromJson(br, ServerUser[].class);
-		List<ServerUser> asList = Arrays.asList(serverUsers);
+		List<ServerUser> asList = new ArrayList<ServerUser>();
+		if(serverUsers != null) {
+			asList = Arrays.asList(serverUsers);
+		}
 		return asList;
 	}
 	
@@ -35,7 +40,7 @@ public class UserJSONDAO extends JSONDAO{
 		List<ServerUser> serverUsers = new ArrayList<ServerUser>(getAll());
 		serverUsers.add(user);
 		JsonArray jsonServerUsers = modelToJson.translateServerUsers(serverUsers);
-		super.writeJsonArrayToFile(jsonServerUsers, filename);
+		super.writeJsonArrayToFile(jsonServerUsers, dir + filename);
 	}
 
 	

@@ -17,22 +17,32 @@ import server.model.ServerUser;
 
 public class JSONPlugin extends IPlugin {
 
-	private ServerData serverData;
 	private GameJSONDAO gameDAO;
 	private UserJSONDAO userDAO;
 	private CommandJSONDAO commandDAO;
 	private ModelJSONDAO modelDAO;
 	
+	
+	
+	
+	public JSONPlugin() {
+		this.gameDAO = new GameJSONDAO();
+		try {
+			this.userDAO = new UserJSONDAO();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.commandDAO = new CommandJSONDAO();
+		this.modelDAO = new ModelJSONDAO();
+	}
 
-	
-	
 	@Override
 	public List<ServerUser> loadUsers() {
 		List<ServerUser> serverUsers = null;
 		
 		try {
 			serverUsers = userDAO.getAll();
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -99,14 +109,6 @@ public class JSONPlugin extends IPlugin {
 				file.delete();
 			}
 		}
-	}
-
-	public ServerData getServerData() {
-		return serverData;
-	}
-
-	public void setServerData(ServerData serverData) {
-		this.serverData = serverData;
 	}
 
 	public GameJSONDAO getGameDAO() {
