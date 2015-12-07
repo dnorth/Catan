@@ -51,7 +51,7 @@ public class UserSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT username, password, color FROM Users WHERE id = ?";
+			String query = "SELECT username, password FROM Users WHERE id = ?";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setInt(1, userID);
 			
@@ -59,9 +59,7 @@ public class UserSQLDAO {
 			if(rs.next()){
 				String username = rs.getString(1);
 				String password = rs.getString(2);
-				String color = rs.getString(3);
 				ServerUser user = new ServerUser(username, password, userID);
-				user.setColor(color);
 				return user;
 			}
 			else {

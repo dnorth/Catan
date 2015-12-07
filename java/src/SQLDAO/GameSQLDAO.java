@@ -20,20 +20,33 @@ public class GameSQLDAO {
 		this.db = db;
 	}
 	
+	public void resetDatabase() {
+		
+		String statement = "DROP TABLE IF EXISTS Commands;"
+				+ "DROP TABLE IF EXISTS Games;"
+				+ "DROP TABLE IF EXISTS UserGameMap;"
+				+ "DROP TABLE IF EXISTS Users;"
+				+ "CREATE TABLE Commands(id integer not null primary key autoincrement,commandJSON text not null,commandNumber integer not null,gameID integer not null,foreign key (gameID) references Games(id));"
+				+ "CREATE TABLE Games(id integer not null primary key,blobJSON text not null,lastCommandNumSaved integer);"
+				+ "CREATE TABLE UserGameMap(id integer not null primary key autoincrement,gameID integer not null,userID integer not null,color text not null,foreign key (gameID) references Games(id),foreign key (userID) references Users(id));"
+				+ "CREATE TABLE Users(id integer not null primary key,username text not null,password text not null);";
+		
+	}
+	
 	public ArrayList<ServerGame> getAll() throws DatabaseException {//I need get 1 user instead of getAll
 		
 		ArrayList<ServerGame> result = new ArrayList<ServerGame>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT modelJSON, lastCommandNumSaved From Games";
+			String query = "SELECT blobJSON, lastCommandNumSaved From Games";
 			stmt = db.getConnection().prepareStatement(query);
 			
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				String modelJSONString = rs.getString(1);
-				JsonObject modelJSON = new JsonParser().parse(modelJSONString).getAsJsonObject();
-				ServerGame game = JSONToModel.translateServerGame(modelJSON);
+				JsonObject blobJSON = new JsonParser().parse(modelJSONString).getAsJsonObject();
+				ServerGame game = JSONToModel.translateServerGame(blobJSON);
 				result.add(game);
 			}
 		}

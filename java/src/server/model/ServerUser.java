@@ -12,21 +12,13 @@ public class ServerUser {
 	/**
 	 * this is only for the SQLDatabase class
 	 */
-	private String color;
 	
 	public ServerUser(String username, String password, int playerID) {
 		this.username = username;
 		this.password = password;
 		this.playerID = playerID;
 	}
-	public String getColor() {
-		return color;
-	}
-	
-	public void setColor(String color) {
-		this.color = color;
-	}
-	
+
 	/**
 	 * Get username.
 	 * @return username

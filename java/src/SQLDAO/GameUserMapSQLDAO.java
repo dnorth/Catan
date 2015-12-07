@@ -16,22 +16,31 @@ public class GameUserMapSQLDAO {
 		this.db = db;
 	}
 	
-	public void addPlayerToGame(int playerID, int gameID) throws DatabaseException {
+	public void addPlayerToGame(int userID, int gameID, String color) throws DatabaseException {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;		
 		try {
-			String query = "INSERT INTO UserGameMap (playerID, gameID) VALUES (?, ?)";
-			stmt = db.getConnection().prepareStatement(query);
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, gameID);
+			ArrayList<Integer> usersInGame = getUserIDsForGame(gameID);
+			if(usersInGame.contains(userID)) {
+				String query = "INSERT INTO UserGameMap (userID, gameID, color) VALUES (?, ?, ?)";
+				stmt = db.getConnection().prepareStatement(query);
+				stmt.setInt(1, userID);
+				stmt.setInt(2, gameID);
+				stmt.setString(3, color);
+				if(!stmt.execute()) throw new DatabaseException("Could not insert user, game and color");
+			}
+			else {
+				String query = "UPDATE UserGameMap set color = ? WHERE userID = ? AND gameID = ?";
+				stmt = db.getConnection().prepareStatement(query);
+				stmt.setString(1, color);
+				stmt.setInt(2, userID);
+				stmt.setInt(3, gameID);
+				if(!stmt.execute()) throw new DatabaseException("Could not update user's color");
 
-			
-			if (!(stmt.executeUpdate() == 1)) {
-				throw new DatabaseException("Could not add player to game");
 			}
 		}
 		catch (SQLException e) {
-			throw new DatabaseException("Could not add player to game", e);
+			throw new DatabaseException("Could not insert or update user, game and color", e);
 		}
 		finally {
 			Database.safeClose(stmt);
@@ -39,21 +48,21 @@ public class GameUserMapSQLDAO {
 		}
 	}
 	
-	public ArrayList<Integer> getPlayerIDsForGame(int gameID) throws DatabaseException {
+	public ArrayList<Integer> getUserIDsForGame(int gameID) throws DatabaseException {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;
-		ArrayList<Integer> playerIDs = new ArrayList<Integer>();
+		ArrayList<Integer> userIDs = new ArrayList<Integer>();
 		try {
-			String query = "SELECT playerID FROM UserGameMap where gameID = ?";
+			String query = "SELECT userID FROM UserGameMap where gameID = ?";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setInt(1, gameID);
 
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				playerIDs.add(rs.getInt(1));
+				userIDs.add(rs.getInt(1));
 			}
-			return playerIDs;
+			return userIDs;
 		}
 		catch (SQLException e) {
 			throw new DatabaseException("Could not find players", e);
@@ -64,14 +73,39 @@ public class GameUserMapSQLDAO {
 		}
 	}
 	
-	public ArrayList<Integer> getGameIDsForPlayer (int playerID) throws DatabaseException {
+	public String getColorForGameAndUser(int gameID, int userID) throws DatabaseException {
+		PreparedStatement stmt = null;
+		ResultSet keyRS = null;
+		try {
+			String query = "SELECT color FROM UserGameMap WHERE gameID = ? AND  userID = ?";
+			stmt = db.getConnection().prepareStatement(query);
+			stmt.setInt(1, gameID);
+			stmt.setInt(2, userID);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			return null;
+		}
+		catch (SQLException e) {
+			throw new DatabaseException("Could not find users", e);
+		}
+		finally {
+			Database.safeClose(stmt);
+			Database.safeClose(keyRS);
+		}
+	}
+	
+	public ArrayList<Integer> getGameIDsForUser (int userID) throws DatabaseException {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;
 		ArrayList<Integer> gameIDs = new ArrayList<Integer>();
 		try {
-			String query = "SELECT gameID FROM UserGameMap where playerID = ?";
+			String query = "SELECT gameID FROM UserGameMap where userID = ?";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setInt(1, playerID);
+			stmt.setInt(1, userID);
 
 			ResultSet rs = stmt.executeQuery();
 			

@@ -6,11 +6,8 @@ import java.util.List;
 import server.commands.IMovesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
-import server.model.ServerPlayer;
 import server.model.ServerUser;
 import SQLDAO.*;
-
-import com.google.gson.JsonObject;
 
 public class SQLPlugin extends IPlugin {
 
@@ -29,6 +26,7 @@ public class SQLPlugin extends IPlugin {
 	
 	@Override
 	public List<ServerUser> loadUsers() {
+		
 		try {
 			return db.getUserSQLDAO().getAll();
 		} catch (DatabaseException e) {
@@ -59,10 +57,11 @@ public class SQLPlugin extends IPlugin {
 		try {
 			ArrayList<ServerGame> games = db.getGameSQLDAO().getAll();
 			for (ServerGame game : games) {
-				ArrayList<Integer> userIDs = db.getGameUserMapSQLDAO().getPlayerIDsForGame(game.getId());
+				ArrayList<Integer> userIDs = db.getGameUserMapSQLDAO().getUserIDsForGame(game.getId());
 				for(int userID : userIDs) {
+					String color = db.getGameUserMapSQLDAO().getColorForGameAndUser(game.getId(), userID);
 					ServerUser user = db.getUserSQLDAO().getById(userID);
-					game.addUser(user, user.getColor());
+					game.addUser(user, color);
 				}
 			}
 			return games;

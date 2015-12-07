@@ -61,6 +61,7 @@ public class JSONToModel {
 		int wheatCount;
 		int woodCount;
 		Resources resources;
+		JsonObject resList;
 		switch (type) {
 		case "acceptTrade":
 			bool1 = data.get("willAccept").getAsBoolean();
@@ -98,7 +99,7 @@ public class JSONToModel {
 			command = new BuyDevCardCommand(game, playerIndex, commandNumber);
 			break;
 		case "discardCards":
-			JsonObject resList = data.get("discardedCards").getAsJsonObject();
+			resList = data.get("discardedCards").getAsJsonObject();
 			brickCount = resList.get("brick").getAsInt();
 			oreCount = resList.get("ore").getAsInt();
 			sheepCount = resList.get("sheep").getAsInt();

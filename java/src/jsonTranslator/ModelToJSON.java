@@ -130,7 +130,6 @@ public class ModelToJSON {
 		serverUser.addProperty("username", user.getUsername());
 		serverUser.addProperty("password", user.getPassword());
 		serverUser.addProperty("playerID", user.getPlayerID());
-		serverUser.addProperty("color", user.getColor());	
 		return serverUser;
 	}
 	
