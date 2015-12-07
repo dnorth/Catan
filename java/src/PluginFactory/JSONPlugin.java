@@ -72,6 +72,12 @@ public class JSONPlugin extends IPlugin {
 		super.saveCommand(game, command);
 	}
 
+	@Override
+	public void resetPersistence() {
+		// TODO Auto-generated method stub
+		super.resetPersistence();
+	}
+
 	public ServerData getServerData() {
 		return serverData;
 	}

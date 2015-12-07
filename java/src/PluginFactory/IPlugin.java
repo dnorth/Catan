@@ -23,5 +23,5 @@ public abstract class IPlugin {
 	public void saveUser(ServerUser user) {}
 	public void saveGame(ServerGame game) {}
 	public void saveCommand(ServerGame game, IMovesCommand command) {}
-	
+	public void resetPersistence() {}
 }

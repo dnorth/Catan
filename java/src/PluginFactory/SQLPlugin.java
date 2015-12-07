@@ -99,6 +99,12 @@ public class SQLPlugin extends IPlugin {
 		}
 	}
 
+	@Override
+	public void resetPersistence() {
+		// TODO Auto-generated method stub
+		super.resetPersistence();
+	}
+
 	public ServerData getServerData() {
 		return serverData;
 	}
