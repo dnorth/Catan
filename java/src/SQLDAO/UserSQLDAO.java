@@ -24,7 +24,7 @@ public class UserSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT username, password, id from Users";
+			String query = "SELECT username, password, id FROM Users";
 			stmt = db.getConnection().prepareStatement(query);
 			
 			rs = stmt.executeQuery();
@@ -45,6 +45,39 @@ public class UserSQLDAO {
 		}
 		return result;
 	}
+	
+	public ServerUser getById(int userID) throws DatabaseException {//I need get 1 user instead of getAll
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String query = "SELECT username, password, color FROM Users WHERE id = ?";
+			stmt = db.getConnection().prepareStatement(query);
+			stmt.setInt(1, userID);
+			
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				String username = rs.getString(1);
+				String password = rs.getString(2);
+				String color = rs.getString(3);
+				ServerUser user = new ServerUser(username, password, userID);
+				user.setColor(color);
+				return user;
+			}
+			else {
+				throw new DatabaseException("Could not find user");
+			}
+		}
+		catch(SQLException e){
+			DatabaseException serverEx = new DatabaseException(e.getMessage(), e);
+			throw serverEx;
+		}
+		finally{
+			Database.safeClose(rs);
+			Database.safeClose(stmt);
+		}
+	}
+	
 	/**
 	 * Adds a User to the database
 	 * @param User
@@ -54,7 +87,7 @@ public class UserSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;		
 		try {
-			String query = "insert into Users (username, password) values (?, ?)";
+			String query = "INSERT INTO Users (username, password) VALUES (?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());

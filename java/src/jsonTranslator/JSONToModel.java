@@ -2,38 +2,24 @@ package jsonTranslator;
 
 import java.io.*;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import shared.definitions.CatanColor;
-import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.definitions.*;
+import shared.locations.*;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
+import com.google.gson.*;
+import com.sun.net.httpserver.*;
 
-import client.data.GameInfo;
-import client.data.PlayerInfo;
-import client.models.ClientModel;
-import client.models.DevCards;
-import client.models.Player;
-import client.models.Resources;
-import client.models.TradeOffer;
-import client.models.TurnTracker;
+import client.data.*;
+import client.models.*;
 import client.models.communication.MessageList;
 import client.models.mapdata.Board;
+import server.commands.IMovesCommand;
+import server.commands.moves.*;
+import server.exceptions.ContextNotFoundException;
 import server.exceptions.InvalidJsonException;
 import server.exceptions.MissingCookieException;
-import server.model.ServerData;
-import server.model.ServerGame;
-import server.model.ServerUser;
+import server.model.*;
 
 /**
  * Translates JSON documentation to class structure used in model
@@ -50,8 +36,152 @@ public class JSONToModel {
 	
 	public JSONToModel() {
 		
-		this.g = new Gson();
+		JSONToModel.g = new Gson();
 		
+	}
+	
+	public static IMovesCommand translateCommand(JsonObject data, ServerGame game, int commandNumber) {
+		
+		String type = data.get("type").getAsString();
+		int playerIndex = data.get("playerIndex").getAsInt();
+		IMovesCommand command = null;
+		boolean bool1;
+		String string1;
+		String string2;
+		JsonObject object1;
+		JsonObject object2;
+		int x;
+		int y;
+		VertexLocation vertLoc;
+		EdgeLocation edgeLoc;
+		EdgeLocation edgeLoc2;
+		int brickCount;
+		int oreCount;
+		int sheepCount;
+		int wheatCount;
+		int woodCount;
+		Resources resources;
+		switch (type) {
+		case "acceptTrade":
+			bool1 = data.get("willAccept").getAsBoolean();
+			command = new AcceptTradeCommand(game, playerIndex, bool1, commandNumber);
+			break;
+		case "buildCity":
+			object1 = data.get("vertexLocation").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			string1 = object1.get("direction").getAsString();
+			vertLoc = new VertexLocation(new HexLocation(x,y), VertexDirection.getVertexDirectionFromString(string1));
+			command = new BuildCityCommand(game, playerIndex, vertLoc, commandNumber);
+			break;
+		case "buildRoad":
+			object1 = data.get("roadLocation").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			string1 = object1.get("direction").getAsString();
+			edgeLoc = new EdgeLocation(new HexLocation(x,y), EdgeDirection.getEdgeDirectionFromString(string1));
+			
+			bool1 = data.get("free").getAsBoolean();
+			command = new BuildRoadCommand(game, playerIndex, edgeLoc, bool1, commandNumber);
+			break;
+		case "buildSettlement":
+			object1 = data.get("vertexLocation").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			string1 = object1.get("direction").getAsString();
+
+			bool1 = data.get("free").getAsBoolean();
+			vertLoc = new VertexLocation(new HexLocation(x,y), VertexDirection.getVertexDirectionFromString(string1));
+			command = new BuildSettlementCommand(game, playerIndex, vertLoc, bool1, commandNumber);
+			break;
+		case "buyDevCard":
+			command = new BuyDevCardCommand(game, playerIndex, commandNumber);
+			break;
+		case "discardCards":
+			JsonObject resList = data.get("discardedCards").getAsJsonObject();
+			brickCount = resList.get("brick").getAsInt();
+			oreCount = resList.get("ore").getAsInt();
+			sheepCount = resList.get("sheep").getAsInt();
+			wheatCount = resList.get("wheat").getAsInt();
+			woodCount = resList.get("wood").getAsInt();
+			resources = new Resources(woodCount, brickCount, sheepCount, wheatCount, oreCount);
+			command = new DiscardCardsCommand(game, playerIndex, resources, commandNumber);
+			break;
+		case "finishTurn":
+			
+			command = new FinishTurnCommand(game, playerIndex, commandNumber);
+			break;
+		case "maritimeTrade":
+			int ratio = data.get("ratio").getAsInt();
+			string1 = data.get("inputResource").getAsString();
+			string2 = data.get("outputResource").getAsString();
+			command = new MaritimeTradeCommand(game, playerIndex, ratio, string1, string2, commandNumber);
+			break;
+		case "Monopoly":
+			string1 = data.get("resource").getAsString();
+			command = new MonopolyCommand(game, ResourceType.getResourceType(string1), playerIndex, commandNumber);
+			break;
+		case "Monument":
+			command = new MonumentCommand(game, playerIndex, commandNumber);
+			break;
+		case "offerTrade":
+			resList = data.get("offer").getAsJsonObject();
+			brickCount = resList.get("brick").getAsInt();
+			oreCount = resList.get("ore").getAsInt();
+			sheepCount = resList.get("sheep").getAsInt();
+			wheatCount = resList.get("wheat").getAsInt();
+			woodCount = resList.get("wood").getAsInt();
+			int receiver = data.get("receiver").getAsInt();
+			resources = new Resources(woodCount, brickCount, sheepCount, wheatCount, oreCount);
+			command = new OfferTradeCommand(game, playerIndex, resources, receiver, commandNumber);
+			break;
+		case "Road_Building":
+			object1 = data.get("spot1").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			string1 = object1.get("direction").getAsString();
+			edgeLoc = new EdgeLocation(new HexLocation(x,y), EdgeDirection.getEdgeDirectionFromString(string1));
+			
+			object2 = data.get("spot2").getAsJsonObject();
+			x = object2.get("x").getAsInt();
+			y = object2.get("y").getAsInt();
+			string2 = object2.get("direction").getAsString();
+			edgeLoc2 = new EdgeLocation(new HexLocation(x,y), EdgeDirection.getEdgeDirectionFromString(string2));
+			
+			command = new RoadBuildingCommand(game, playerIndex, edgeLoc, edgeLoc2, commandNumber);
+			break;
+		case "robPlayer":
+			int victimIndex = data.get("victimIndex").getAsInt();
+			object1 = data.get("location").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			command = new RobPlayerCommand(game, playerIndex, victimIndex, new HexLocation(x,y), commandNumber);
+			break;
+		case "rollNumber":
+			int rollNumber = data.get("number").getAsInt();
+			command = new RollNumberCommand(game, playerIndex, rollNumber, commandNumber);
+			break;
+		case "sendChat":
+			string1 = data.get("content").getAsString();
+			command = new SendChatCommand(game, playerIndex, string1, commandNumber);
+			break;
+		case "Soldier":
+			object1 = data.get("location").getAsJsonObject();
+			x = object1.get("x").getAsInt();
+			y = object1.get("y").getAsInt();
+			
+			int victimIndex2 = data.get("victimIndex").getAsInt();
+			command = new SoldierCommand(game, playerIndex, victimIndex2, new HexLocation(x,y), commandNumber);
+			break;
+		case "Year_Of_Plenty":
+			string1 = data.get("resource1").getAsString();
+			string2 = data.get("resource2").getAsString();
+			command = new YearOfPlentyCommand(game, playerIndex, ResourceType.getResourceType(string1), ResourceType.getResourceType(string2), commandNumber);
+			break;
+		default:
+			System.out.println("Why are we here? This is the default case in JSONToModel in the translate command switch");
+		}
+		return command;
 	}
 	
 	public static ServerData translateServerData(JsonObject data) {
@@ -123,6 +253,10 @@ public class JSONToModel {
 		}
 
 		return users;
+	}
+	
+	public static ServerGame translateServerGame(JsonObject data) {
+		return (ServerGame)g.fromJson(data, ServerGame.class);
 	}
 	
 	public static List<ServerGame> translateServerGameList(JsonObject data) {

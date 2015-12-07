@@ -1,11 +1,6 @@
 package server.proxy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.JsonObject;
-
-import client.models.Game;
 
 public class GamesProxy extends ServerProxy{
 

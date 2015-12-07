@@ -1,15 +1,8 @@
 package server.proxy;
 
-import java.util.ArrayList;
-
 import com.google.gson.JsonObject;
 
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 import client.models.ClientModel;
-import client.models.Game;
-import client.models.Resources;
 
 public class ClientCommunicator implements IProxy{
 

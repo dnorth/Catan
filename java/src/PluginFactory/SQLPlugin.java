@@ -1,10 +1,12 @@
 package PluginFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import server.commands.IMovesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
+import server.model.ServerPlayer;
 import server.model.ServerUser;
 import SQLDAO.*;
 
@@ -20,32 +22,75 @@ public class SQLPlugin extends IPlugin {
 	
 	@Override
 	public List<ServerUser> loadUsers() {
-		return userDAO.getAll();
+		try {
+			return userDAO.getAll();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	@Override
-	public List<IMovesCommand> loadUnexecutedCommands() {
-		return commandDAO.getCommandsByGameAfterIndex(gameIDs, indeces);
+	public ArrayList<IMovesCommand> loadUnexecutedCommands() {
+		ArrayList<ServerGame> games;
+		try {
+			games = gameDAO.getAll();
+			ArrayList<Integer> indeces = new ArrayList<Integer>();
+			for(ServerGame game : games) {
+				indeces.add(game.getNumberOfCommands());
+			}
+			return commandDAO.getCommandsByGameAfterIndex(games, indeces);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public List<ServerGame> loadGames() {
-		return gameDAO.getAll();
+	public ArrayList<ServerGame> loadGames() {
+		try {
+			ArrayList<ServerGame> games = gameDAO.getAll();
+			for (ServerGame game : games) {
+				ArrayList<Integer> userIDs = gameUserMapDAO.getPlayerIDsForGame(game.getId());
+				for(int userID : userIDs) {
+					ServerUser user = userDAO.getById(userID);
+					game.addUser(user, user.getColor());
+				}
+			}
+			return games;
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public void saveUser(ServerUser user) {
-		userDAO.add(user);
+		try {
+			userDAO.add(user);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void saveGame(ServerGame game) {
-		gameDAO.update(game);
+		try {
+			gameDAO.update(game);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void saveCommand(ServerGame game, IMovesCommand command) {
-		commandDAO.add(game, command);
+		//commandDAO.add(game, command);
+		try {
+			commandDAO.add(command);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ServerData getServerData() {
