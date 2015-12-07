@@ -11,6 +11,7 @@ import PluginFactory.PluginFactory;
 import PluginFactory.SQLPlugin;
 import jsonTranslator.JSONToModel;
 import server.commands.IMovesCommand;
+import server.exceptions.GameFullException;
 
 /**
  * Holds all user, game, and child info for those things.
@@ -34,9 +35,22 @@ public class ServerData {
 			if (u.getUsername().equals(username)) return -1;
 		}
 		users.add(new ServerUser(username, password, this.nextUserID));
-		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
+//		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
 		this.nextUserID += 1;
 		return this.nextUserID-1;
+	}
+	
+	public void addUserToGame(int gameID, int playerID, String color) throws GameFullException {
+		ServerGame game = getGameByID(gameID);
+		if (game.hasPlayerID(playerID)) {
+			game.changeUserColor(getUserByID(playerID), color);
+		}
+		else if (game.getPlayers().size() > 3) {
+			throw new GameFullException();
+		}
+		else {
+			game.addUser(getUserByID(playerID), color);
+		}
 	}
 
 	public ServerUser getUserByID(int id) {

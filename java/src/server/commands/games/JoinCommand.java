@@ -27,18 +27,8 @@ public class JoinCommand implements IGamesCommand {
 	 */
 	@Override
 	public void execute() throws GameFullException {
-		ServerGame game = serverData.getGameByID(gameID);
-		if (game.hasPlayerID(playerID)) {
-			game.changeUserColor(serverData.getUserByID(playerID), color);
-		}
-		else if (game.getPlayers().size() > 3) {
-			throw new GameFullException();
-		}
-		else {
-			game.addUser(serverData.getUserByID(playerID), color);
-		}
-		
-		game.getClientModel().increaseVersion();
+		serverData.addUserToGame(gameID, playerID, color);
+		serverData.getGameByID(gameID).getClientModel().increaseVersion();
 	}
 
 }
