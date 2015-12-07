@@ -1,16 +1,18 @@
 package PluginFactory;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import JSONDAO.CommandJSONDAO;
+import JSONDAO.GameJSONDAO;
+import JSONDAO.ModelJSONDAO;
+import JSONDAO.UserJSONDAO;
 import server.commands.IMovesCommand;
 import server.model.ServerData;
 import server.model.ServerGame;
 import server.model.ServerUser;
-import JSONDAO.*;
-import jsonTranslator.ModelToJSON;
-
-import com.google.gson.JsonObject;
 
 public class JSONPlugin extends IPlugin {
 
@@ -39,8 +41,18 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public List<IMovesCommand> loadUnexecutedCommands() {
-		// TODO Auto-generated method stub
-		return super.loadUnexecutedCommands();
+		ArrayList<ServerGame> games;
+		try {
+			games = gameDAO.getAll();
+			ArrayList<Integer> indeces = new ArrayList<Integer>();
+			for(ServerGame game : games) {
+				indeces.add(game.getNumberOfCommands());
+			}
+			return commandDAO.getCommandsByGameAfterIndex(games, indeces);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -57,7 +69,11 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void saveUser(ServerUser user) {
-		userDAO.add(user);
+		try {
+			userDAO.add(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
