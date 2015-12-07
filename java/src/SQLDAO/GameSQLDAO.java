@@ -45,8 +45,9 @@ public class GameSQLDAO {
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				String modelJSONString = rs.getString(1);
-				JsonObject blobJSON = new JsonParser().parse(modelJSONString).getAsJsonObject();
-				ServerGame game = JSONToModel.translateServerGame(blobJSON);
+				JsonObject blobJSON = new JsonParser().parse(modelJSONString).getAsJsonObject().get("Response-body").getAsJsonObject();
+//				System.out.println("HERE'S THE BLOB: " + blobJSON.toString());
+				ServerGame game = new JSONToModel().translateServerGame(blobJSON);
 				result.add(game);
 			}
 		}
@@ -67,16 +68,13 @@ public class GameSQLDAO {
 		try {
 			ModelToJSON toJson = new ModelToJSON();
 			JsonObject blobToAdd = toJson.generateServerGameObject(game);
-			String query = "insert into Games (modelJSON, lastCommandNumSaved) values (?, ?)";
+			String query = "insert into Games (blobJSON, lastCommandNumSaved) values (?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, blobToAdd.getAsString());
+			stmt.setString(1, blobToAdd.toString());
 			stmt.setString(2, "IMPLEMENT ME");
 
 			
-			if (!(stmt.executeUpdate() == 1)) {
-				throw new DatabaseException("Could not insert game");
-			}
-			else {
+			if (stmt.executeUpdate() != 1) {
 				throw new DatabaseException("Could not insert game");
 			}
 		}
@@ -94,9 +92,9 @@ public class GameSQLDAO {
 		try {
 			ModelToJSON toJson = new ModelToJSON();
 			JsonObject blobToAdd = toJson.generateServerGameObject(game);
-			String query = "update Games set modelJSON = ?, lastCommandNumberSaved = ? where id = ?";
+			String query = "update Games set blobJSON = ?, lastCommandNumSaved = ? where id = ?";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, blobToAdd.getAsString());
+			stmt.setString(1, blobToAdd.toString());
 			stmt.setInt(2, game.getNumberOfCommands()-1);
 			stmt.setInt(3, game.getId());
 			

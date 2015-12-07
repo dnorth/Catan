@@ -21,13 +21,13 @@ public class GameUserMapSQLDAO {
 		ResultSet keyRS = null;		
 		try {
 			ArrayList<Integer> usersInGame = getUserIDsForGame(gameID);
-			if(usersInGame.contains(userID)) {
+			if(!usersInGame.contains(userID)) {
 				String query = "INSERT INTO UserGameMap (userID, gameID, color) VALUES (?, ?, ?)";
 				stmt = db.getConnection().prepareStatement(query);
 				stmt.setInt(1, userID);
 				stmt.setInt(2, gameID);
 				stmt.setString(3, color);
-				if(!stmt.execute()) throw new DatabaseException("Could not insert user, game and color");
+				if(stmt.executeUpdate() != 1) throw new DatabaseException("Could not insert user, game and color");
 			}
 			else {
 				String query = "UPDATE UserGameMap set color = ? WHERE userID = ? AND gameID = ?";
@@ -35,7 +35,7 @@ public class GameUserMapSQLDAO {
 				stmt.setString(1, color);
 				stmt.setInt(2, userID);
 				stmt.setInt(3, gameID);
-				if(!stmt.execute()) throw new DatabaseException("Could not update user's color");
+				if(stmt.executeUpdate() != 1) throw new DatabaseException("Could not update user's color");
 
 			}
 		}

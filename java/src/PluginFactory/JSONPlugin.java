@@ -77,9 +77,9 @@ public class JSONPlugin extends IPlugin {
 	}
 	
 	@Override
-	public void addUserToGame(int userID, int gameID) {
+	public void addUserToGame(int userID, int gameID, String color) {
 		// TODO Auto-generated method stub
-		super.addUserToGame(userID, gameID);
+//		super.addUserToGame(userID, gameID);
 	}
 
 	@Override

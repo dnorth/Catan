@@ -41,6 +41,11 @@ public class ServerData {
 		return this.nextUserID-1;
 	}
 	
+	public void addGame(ServerGame game) {
+		games.add(game);
+//		plugin.saveGame(game);
+	}
+	
 	public void addUserToGame(int gameID, int playerID, String color) throws GameFullException {
 		ServerGame game = getGameByID(gameID);
 		if (game.hasPlayerID(playerID)) {
@@ -52,6 +57,7 @@ public class ServerData {
 		else {
 			game.addUser(getUserByID(playerID), color);
 		}
+//		plugin.addUserToGame(playerID, gameID, color);
 	}
 
 	public ServerUser getUserByID(int id) {
@@ -128,28 +134,31 @@ public class ServerData {
 		
 		this.games = new ArrayList<ServerGame>();
 		
-		ServerGame initGame0 = new ServerGame("Default Game", 0);
-		initGame0.addUser(getUserByID(getPlayerID("Sam", "sam")), "orange");
-		initGame0.addUser(getUserByID(getPlayerID("Brooke", "brooke")), "blue");
-		initGame0.addUser(getUserByID(getPlayerID("Pete", "pete")), "red");
-		initGame0.addUser(getUserByID(getPlayerID("Mark", "mark")), "green");
-		this.games.add(initGame0);
-		
-		ServerGame initGame1 = new ServerGame("AI Game", 1);
-		initGame1.addUser(getUserByID(getPlayerID("Pete", "pete")), "orange");
-		initGame1.addUser(getUserByID(getPlayerID("Quinn", "quinn")), "blue");
-		initGame1.addUser(getUserByID(getPlayerID("Scott", "scott")), "puce");
-		initGame1.addUser(getUserByID(getPlayerID("Hannah", "hannah")), "white");
-		this.games.add(initGame1);
-		
-		ServerGame initGame2 = new ServerGame("Empty Game", 2);
-		initGame2.addUser(getUserByID(getPlayerID("Sam", "sam")), "orange");
-		initGame2.addUser(getUserByID(getPlayerID("Brooke", "brooke")), "blue");
-		initGame2.addUser(getUserByID(getPlayerID("Pete", "pete")), "red");
-		initGame2.addUser(getUserByID(getPlayerID("Mark", "mark")), "green");
-		this.games.add(initGame2);
-		
-		
+		try {
+			ServerGame initGame0 = new ServerGame("Default Game", 0);
+			addGame(initGame0);
+			addUserToGame(0, getPlayerID("Sam", "sam"), "orange");
+			addUserToGame(0, getPlayerID("Brooke", "brooke"), "blue");
+			addUserToGame(0, getPlayerID("Pete", "pete"), "red");
+			addUserToGame(0, getPlayerID("Mark", "mark"), "green");
+			
+			ServerGame initGame1 = new ServerGame("AI Game", 1);
+			addGame(initGame1);
+			addUserToGame(1, getPlayerID("Pete", "pete"), "orange");
+			addUserToGame(1, getPlayerID("Quinn", "quinn"), "blue");
+			addUserToGame(1, getPlayerID("Scott", "scott"), "puce");
+			addUserToGame(1, getPlayerID("Hannah", "hannah"), "white");
+			
+			ServerGame initGame2 = new ServerGame("Empty Game", 2);
+			addGame(initGame2);
+			addUserToGame(2, getPlayerID("Sam", "sam"), "orange");
+			addUserToGame(2, getPlayerID("Brooke", "brooke"), "blue");
+			addUserToGame(2, getPlayerID("Pete", "pete"), "red");
+			addUserToGame(2, getPlayerID("Mark", "mark"), "green");
+		} catch (GameFullException e) {
+			System.out.println("ERROR WITH INITIALIZING ServerData");
+			e.printStackTrace();
+		}		
 	}
 
 	public int getNextUserID() {

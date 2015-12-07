@@ -50,7 +50,7 @@ public class CreateCommand implements IGamesCommand {
 		if(randomPorts){
 			board.CreateRandomPorts();
 		}
-		Server.getServerData().getGames().add(game);
+		Server.getServerData().addGame(game);
 	}
 
 }

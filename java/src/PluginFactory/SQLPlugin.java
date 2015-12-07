@@ -80,9 +80,14 @@ public class SQLPlugin extends IPlugin {
 	}
 
 	@Override
-	public void addUserToGame(int userID, int gameID) {
-		// TODO Auto-generated method stub
-//		super.addUserToGame(userID, gameID);
+	public void addUserToGame(int userID, int gameID, String color) {
+		try {
+			db.startTransaction();
+			db.getGameUserMapSQLDAO().addPlayerToGame(userID, gameID, color);
+			db.endTransaction(true);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -104,10 +109,18 @@ public class SQLPlugin extends IPlugin {
 	}
 
 	@Override
-	public void saveGame(ServerGame game) {
+	public void saveGame(ServerGame game) { // updates existing games, adds new ones
 		try {
+			for (ServerGame g : loadGames()) {
+				if (g.getId() == game.getId()) {
+					db.startTransaction();
+					db.getGameSQLDAO().update(game);
+					db.endTransaction(true);
+					return;
+				}
+			}
 			db.startTransaction();
-			db.getGameSQLDAO().update(game);
+			db.getGameSQLDAO().add(game);
 			db.endTransaction(true);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
