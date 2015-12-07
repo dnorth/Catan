@@ -134,6 +134,16 @@ public class ModelToJSON {
 		return serverUser;
 	}
 	
+	public JsonArray translateServerUsers(List<ServerUser> serverUsers) {
+		JsonArray jsonServerUsers = new JsonArray();
+		
+		for(ServerUser user : serverUsers) {
+			jsonServerUsers.add(translateServerUser(user));
+		}
+		
+		return jsonServerUsers;
+	}
+	
 	private JsonObject translateDevCards(DevCards cards) {
 		JsonObject cardList = new JsonObject();
 		cardList.addProperty("yearOfPlenty", cards.getYearOfPlentyCount());
