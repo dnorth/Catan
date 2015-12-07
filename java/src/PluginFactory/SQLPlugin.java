@@ -15,15 +15,22 @@ import com.google.gson.JsonObject;
 public class SQLPlugin extends IPlugin {
 
 	private ServerData serverData;
-	private GameSQLDAO gameDAO;
-	private UserSQLDAO userDAO;
-	private CommandSQLDAO commandDAO;
-	private GameUserMapSQLDAO gameUserMapDAO;
+	private Database db;
+	
+	public SQLPlugin() {
+		this.db = new Database();
+		try {
+			Database.initialize();
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public List<ServerUser> loadUsers() {
 		try {
-			return userDAO.getAll();
+			return db.getUserSQLDAO().getAll();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
@@ -35,12 +42,12 @@ public class SQLPlugin extends IPlugin {
 	public ArrayList<IMovesCommand> loadUnexecutedCommands() {
 		ArrayList<ServerGame> games;
 		try {
-			games = gameDAO.getAll();
+			games = db.getGameSQLDAO().getAll();
 			ArrayList<Integer> indeces = new ArrayList<Integer>();
 			for(ServerGame game : games) {
 				indeces.add(game.getNumberOfCommands());
 			}
-			return commandDAO.getCommandsByGameAfterIndex(games, indeces);
+			return db.getCommandSQLDAO().getCommandsByGameAfterIndex(games, indeces);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 			return null;
@@ -50,11 +57,11 @@ public class SQLPlugin extends IPlugin {
 	@Override
 	public ArrayList<ServerGame> loadGames() {
 		try {
-			ArrayList<ServerGame> games = gameDAO.getAll();
+			ArrayList<ServerGame> games = db.getGameSQLDAO().getAll();
 			for (ServerGame game : games) {
-				ArrayList<Integer> userIDs = gameUserMapDAO.getPlayerIDsForGame(game.getId());
+				ArrayList<Integer> userIDs = db.getGameUserMapSQLDAO().getPlayerIDsForGame(game.getId());
 				for(int userID : userIDs) {
-					ServerUser user = userDAO.getById(userID);
+					ServerUser user = db.getUserSQLDAO().getById(userID);
 					game.addUser(user, user.getColor());
 				}
 			}
@@ -68,13 +75,13 @@ public class SQLPlugin extends IPlugin {
 	@Override
 	public void addUserToGame(int userID, int gameID) {
 		// TODO Auto-generated method stub
-		super.addUserToGame(userID, gameID);
+//		super.addUserToGame(userID, gameID);
 	}
 
 	@Override
 	public void saveUser(ServerUser user) {
 		try {
-			userDAO.add(user);
+			db.getUserSQLDAO().add(user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +90,7 @@ public class SQLPlugin extends IPlugin {
 	@Override
 	public void saveGame(ServerGame game) {
 		try {
-			gameDAO.update(game);
+			db.getGameSQLDAO().update(game);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +100,7 @@ public class SQLPlugin extends IPlugin {
 	public void saveCommand(ServerGame game, IMovesCommand command) {
 		//commandDAO.add(game, command);
 		try {
-			commandDAO.add(command);
+			db.getCommandSQLDAO().add(command);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
@@ -112,37 +119,4 @@ public class SQLPlugin extends IPlugin {
 	public void setServerData(ServerData serverData) {
 		this.serverData = serverData;
 	}
-
-	public GameSQLDAO getGameDAO() {
-		return gameDAO;
-	}
-
-	public void setGameDAO(GameSQLDAO gameDAO) {
-		this.gameDAO = gameDAO;
-	}
-
-	public UserSQLDAO getUserDAO() {
-		return userDAO;
-	}
-
-	public void setUserDAO(UserSQLDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	public CommandSQLDAO getCommandDAO() {
-		return commandDAO;
-	}
-
-	public void setCommandDAO(CommandSQLDAO commandDAO) {
-		this.commandDAO = commandDAO;
-	}
-
-	public GameUserMapSQLDAO getGameUserMapDAO() {
-		return gameUserMapDAO;
-	}
-
-	public void setGameUserMapDAO(GameUserMapSQLDAO gameUserMapDAO) {
-		this.gameUserMapDAO = gameUserMapDAO;
-	}
-
 }

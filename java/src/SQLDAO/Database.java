@@ -22,7 +22,7 @@ public class Database {
 	static{
 		logger = Logger.getLogger("recordindexer");
 	}
-	
+
 	public static void initialize() throws DatabaseException { 
 		try {
 			final String driver = "org.sqlite.JDBC";
@@ -133,4 +133,35 @@ public class Database {
 		}
 	}
 	
+	public CommandSQLDAO getCommandSQLDAO() {
+		return commandSQLDAO;
+	}
+
+	public void setCommandSQLDAO(CommandSQLDAO commandSQLDAO) {
+		this.commandSQLDAO = commandSQLDAO;
+	}
+
+	public GameUserMapSQLDAO getGameUserMapSQLDAO() {
+		return gameUserMapSQLDAO;
+	}
+
+	public void setGameUserMapSQLDAO(GameUserMapSQLDAO gameUserMapSQLDAO) {
+		this.gameUserMapSQLDAO = gameUserMapSQLDAO;
+	}
+
+	public GameSQLDAO getGameSQLDAO() {
+		return gameSQLDAO;
+	}
+
+	public void setGameSQLDAO(GameSQLDAO gameSQLDAO) {
+		this.gameSQLDAO = gameSQLDAO;
+	}
+
+	public UserSQLDAO getUserSQLDAO() {
+		return userDQLDAO;
+	}
+
+	public void setUserSQLDAO(UserSQLDAO userDQLDAO) {
+		this.userDQLDAO = userDQLDAO;
+	}
 }

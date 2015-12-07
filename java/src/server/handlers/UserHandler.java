@@ -73,6 +73,7 @@ public class UserHandler implements HttpHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 			
 		} catch(NullPointerException e) {
+			e.printStackTrace();
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			logger.log(Level.SEVERE, "Null Pointer Exception.");
 			response = "Invalid Keys for the requested operation.";

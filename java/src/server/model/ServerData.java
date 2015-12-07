@@ -35,7 +35,7 @@ public class ServerData {
 			if (u.getUsername().equals(username)) return -1;
 		}
 		users.add(new ServerUser(username, password, this.nextUserID));
-//		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
+		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
 		this.nextUserID += 1;
 		return this.nextUserID-1;
 	}
