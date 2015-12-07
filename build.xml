@@ -37,8 +37,8 @@
     <!-- CLASSPATHS -->
     <!-- ********** -->
     
-    <path id="lib-classpath">
-            <fileset dir="${lib}">
+    <path id="java.lib.classpath">
+            <fileset dir="${java.lib.dir}">
                 <include name="**/*.jar" />
             </fileset>
         </path>
@@ -114,7 +114,7 @@
     
     <target name="compile" depends="init" description="compile the source " >
         <javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
-            <classpath refid="all-classpath" />
+            <classpath refid="java.lib.classpath" />
         </javac>
     </target>
     
@@ -135,14 +135,14 @@
             <manifest>
                 <attribute name="Main-Class" value="client.main.Catan"/>
                 <attribute name="Class-Path" 
-                    value="lib/gson-2.2.4.jar" />
+                    value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
             </manifest>
         </jar>
         <jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
             <manifest>
                 <attribute name="Main-Class" value="server.Server"/>
                 <attribute name="Class-Path" 
-                    value="lib/gson-2.2.4.jar" />
+                    value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
             </manifest>
         </jar>
     </target>
@@ -160,8 +160,8 @@
     
     <target name="our-server" depends="package" description="compiles, packages, and runs the student server">
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-            <arg value="${port}"/>
             <sysproperty key="com.sun.management.jmxremote" value=""/>
+            <arg value="${port}"/>
             <assertions>
                 <enable/>
             </assertions>
