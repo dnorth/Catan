@@ -48,6 +48,12 @@ public class JSONPlugin extends IPlugin {
 		// TODO Auto-generated method stub
 		return super.loadGames();
 	}
+	
+	@Override
+	public void addUserToGame(int userID, int gameID) {
+		// TODO Auto-generated method stub
+		super.addUserToGame(userID, gameID);
+	}
 
 	@Override
 	public void saveUser(ServerUser user) {

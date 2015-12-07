@@ -66,6 +66,12 @@ public class SQLPlugin extends IPlugin {
 	}
 
 	@Override
+	public void addUserToGame(int userID, int gameID) {
+		// TODO Auto-generated method stub
+		super.addUserToGame(userID, gameID);
+	}
+
+	@Override
 	public void saveUser(ServerUser user) {
 		try {
 			userDAO.add(user);

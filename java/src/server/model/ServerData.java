@@ -26,6 +26,7 @@ public class ServerData {
 	
 	public ServerData() {
 		initServerData();
+		setPluginClassSQL();
 	}
 
 	public int addUser(String username, String password) {
