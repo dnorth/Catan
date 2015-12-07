@@ -1,24 +1,27 @@
 package JSONDAO;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import com.google.gson.JsonArray;
 
 public abstract class JSONDAO {
 	
 	public void writeJsonArrayToFile(JsonArray jsonArray, String filename) throws IOException {
-		try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename));)
+		try(FileWriter output = new FileWriter(filename))
 		{
-			output.writeObject(jsonArray);
+			output.write(jsonArray.toString());
 		}
 	}
 	
-	public BufferedReader getBufferedReaderFromFilename(String filename) throws FileNotFoundException {
-		return new BufferedReader(new FileReader(filename)); 
+	public BufferedReader getBufferedReaderFromFilename(String dir, String filename) throws IOException {
+		File directory = new File(dir);
+		directory.mkdir();
+		File file = new File(dir + filename);
+		file.createNewFile();
+		return new BufferedReader(new FileReader(dir + filename)); 
 	}
 }
