@@ -26,8 +26,9 @@ public class ServerData {
 	private IPlugin plugin;
 	
 	public ServerData() {
+		setPluginClassSQL();
 		initServerData();
-		setPluginClassJSON();
+		this.users = plugin.loadUsers();
 	}
 
 	public int addUser(String username, String password) {
@@ -116,36 +117,36 @@ public class ServerData {
 	public void initServerData() {
 		this.users = new ArrayList<ServerUser>();
 		
-		this.users.add(new ServerUser("Sam", "sam", 0));
-		this.users.add(new ServerUser("Brooke", "brooke", 1));
-		this.users.add(new ServerUser("Pete", "pete", 10));
-		this.users.add(new ServerUser("Mark", "mark", 11));
-		this.users.add(new ServerUser("Quinn", "quinn", -2));
-		this.users.add(new ServerUser("Scott", "scott", -3));
-		this.users.add(new ServerUser("Hannah", "hannah", -4));
-		this.users.add(new ServerUser("Sam", "sam", 0));
+		addUser("Sam", "sam");
+		addUser("Brooke", "brooke");
+		addUser("Pete", "pete");
+		addUser("Mark", "mark");
+		addUser("Quinn", "quinn");
+		addUser("Scott", "scott");
+		addUser("Hannah", "hannah");
+		addUser("Sam", "sam");
 		
 		this.games = new ArrayList<ServerGame>();
 		
 		ServerGame initGame0 = new ServerGame("Default Game", 0);
-		initGame0.addUser(getUserByID(0), "orange");
-		initGame0.addUser(getUserByID(1), "blue");
-		initGame0.addUser(getUserByID(10), "red");
-		initGame0.addUser(getUserByID(11), "green");
+		initGame0.addUser(getUserByID(getPlayerID("Sam", "sam")), "orange");
+		initGame0.addUser(getUserByID(getPlayerID("Brooke", "brooke")), "blue");
+		initGame0.addUser(getUserByID(getPlayerID("Pete", "pete")), "red");
+		initGame0.addUser(getUserByID(getPlayerID("Mark", "mark")), "green");
 		this.games.add(initGame0);
 		
 		ServerGame initGame1 = new ServerGame("AI Game", 1);
-		initGame1.addUser(getUserByID(10), "orange");
-		initGame1.addUser(getUserByID(-2), "blue");
-		initGame1.addUser(getUserByID(-3), "puce");
-		initGame1.addUser(getUserByID(-4), "white");
+		initGame1.addUser(getUserByID(getPlayerID("Pete", "pete")), "orange");
+		initGame1.addUser(getUserByID(getPlayerID("Quinn", "quinn")), "blue");
+		initGame1.addUser(getUserByID(getPlayerID("Scott", "scott")), "puce");
+		initGame1.addUser(getUserByID(getPlayerID("Hannah", "hannah")), "white");
 		this.games.add(initGame1);
 		
 		ServerGame initGame2 = new ServerGame("Empty Game", 2);
-		initGame2.addUser(getUserByID(0), "orange");
-		initGame2.addUser(getUserByID(1), "blue");
-		initGame2.addUser(getUserByID(10), "red");
-		initGame2.addUser(getUserByID(11), "green");
+		initGame2.addUser(getUserByID(getPlayerID("Sam", "sam")), "orange");
+		initGame2.addUser(getUserByID(getPlayerID("Brooke", "brooke")), "blue");
+		initGame2.addUser(getUserByID(getPlayerID("Pete", "pete")), "red");
+		initGame2.addUser(getUserByID(getPlayerID("Mark", "mark")), "green");
 		this.games.add(initGame2);
 		
 		
