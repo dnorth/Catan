@@ -1,5 +1,6 @@
 package PluginFactory;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,8 +93,12 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void resetPersistence() {
-		// TODO Auto-generated method stub
-		super.resetPersistence();
+		File dir = new File("jsonFiles");
+		if (dir.exists() && dir.isDirectory()) {
+			for (File file : dir.listFiles()){
+				file.delete();
+			}
+		}
 	}
 
 	public ServerData getServerData() {
