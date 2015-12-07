@@ -6,7 +6,9 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import PluginFactory.IPlugin;
+import PluginFactory.JSONPlugin;
 import PluginFactory.PluginFactory;
+import PluginFactory.SQLPlugin;
 import jsonTranslator.JSONToModel;
 import server.commands.IMovesCommand;
 
@@ -31,6 +33,7 @@ public class ServerData {
 			if (u.getUsername().equals(username)) return -1;
 		}
 		users.add(new ServerUser(username, password, this.nextUserID));
+		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
 		this.nextUserID += 1;
 		return this.nextUserID-1;
 	}
@@ -133,7 +136,6 @@ public class ServerData {
 		
 	}
 
-
 	public int getNextUserID() {
 		return nextUserID;
 	}
@@ -159,6 +161,14 @@ public class ServerData {
 	public void setPlugin(String pluginName) {
 		PluginFactory factory = new PluginFactory();
 		this.plugin = factory.CreatePlugin(pluginName);
+	}
+	
+	public void setPluginClassJSON() {
+		this.plugin = new JSONPlugin();
+	}
+	
+	public void setPluginClassSQL() {
+		this.plugin = new SQLPlugin();
 	}
 	
 	public void uploadFromPlugin() {
