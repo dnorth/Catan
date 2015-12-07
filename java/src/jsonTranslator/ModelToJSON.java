@@ -24,6 +24,7 @@ import client.models.mapdata.Port;
 import client.models.mapdata.Road;
 import server.model.ServerGame;
 import server.model.ServerPlayer;
+import server.model.ServerUser;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.VertexLocation;
@@ -122,6 +123,15 @@ public class ModelToJSON {
 			
 		}
 		return list;
+	}
+	
+	public JsonObject translateServerUser(ServerUser user) {
+		JsonObject serverUser = new JsonObject();
+		serverUser.addProperty("username", user.getUsername());
+		serverUser.addProperty("password", user.getPassword());
+		serverUser.addProperty("playerID", user.getPlayerID());
+		serverUser.addProperty("color", user.getColor());	
+		return serverUser;
 	}
 	
 	private JsonObject translateDevCards(DevCards cards) {

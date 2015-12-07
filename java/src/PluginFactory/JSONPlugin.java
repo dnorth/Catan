@@ -1,5 +1,6 @@
 package PluginFactory;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import server.commands.IMovesCommand;
@@ -7,6 +8,7 @@ import server.model.ServerData;
 import server.model.ServerGame;
 import server.model.ServerUser;
 import JSONDAO.*;
+import jsonTranslator.ModelToJSON;
 
 import com.google.gson.JsonObject;
 
@@ -18,10 +20,21 @@ public class JSONPlugin extends IPlugin {
 	private CommandJSONDAO commandDAO;
 	private ModelJSONDAO modelDAO;
 	
+
+	
+	
 	@Override
 	public List<ServerUser> loadUsers() {
-		// TODO Auto-generated method stub
-		return super.loadUsers();
+		List<ServerUser> serverUsers = null;
+		
+		try {
+			serverUsers = userDAO.getAll();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return serverUsers;
 	}
 
 	@Override
@@ -38,8 +51,7 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void saveUser(ServerUser user) {
-		// TODO Auto-generated method stub
-		super.saveUser(user);
+		userDAO.add(user);
 	}
 
 	@Override
