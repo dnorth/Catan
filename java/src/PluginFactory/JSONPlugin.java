@@ -57,8 +57,12 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public List<ServerGame> loadGames() {
-		// TODO Auto-generated method stub
-		return super.loadGames();
+		try {
+			return gameDAO.getAll();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@Override
@@ -78,14 +82,12 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void saveGame(ServerGame game) {
-		// TODO Auto-generated method stub
-		super.saveGame(game);
+		gameDAO.update(game);
 	}
 
 	@Override
 	public void saveCommand(ServerGame game, IMovesCommand command) {
-		// TODO Auto-generated method stub
-		super.saveCommand(game, command);
+		commandDAO.add(command);
 	}
 
 	@Override
