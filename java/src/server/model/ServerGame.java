@@ -17,6 +17,7 @@ public class ServerGame {
 	private List<ServerPlayer> players;
 	private ClientModel clientModel;
 	private List<IMovesCommand> commands;
+	private int lastCommandSaved = 0;
 	
 	/**
 	 * Get title.
@@ -143,6 +144,14 @@ public class ServerGame {
 	 */
 	public void setClientModel(ClientModel clientModel) {
 		this.clientModel = clientModel;
+	}
+
+	public int getLastCommandSaved() {
+		return lastCommandSaved;
+	}
+
+	public void setLastCommandSaved(int lastCommandSaved) {
+		this.lastCommandSaved = lastCommandSaved;
 	}
 
 }

@@ -85,10 +85,11 @@ public class UserSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;		
 		try {
-			String query = "INSERT INTO Users (username, password) VALUES (?, ?)";
+			String query = "INSERT INTO Users (id, username, password) VALUES (?, ?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, user.getUsername());
-			stmt.setString(2, user.getPassword());
+			stmt.setInt(1, user.getPlayerID());
+			stmt.setString(2, user.getUsername());
+			stmt.setString(3, user.getPassword());
 
 			
 			if (stmt.executeUpdate() == 1) {

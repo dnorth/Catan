@@ -27,9 +27,9 @@ public class GameSQLDAO {
 				+ "DROP TABLE IF EXISTS UserGameMap;"
 				+ "DROP TABLE IF EXISTS Users;"
 				+ "CREATE TABLE Commands(id integer not null primary key autoincrement,commandJSON text not null,commandNumber integer not null,gameID integer not null,foreign key (gameID) references Games(id));"
-				+ "CREATE TABLE Games(id integer not null primary key,blobJSON text not null,lastCommandNumSaved integer);"
+				+ "CREATE TABLE Games(id integer not null,title text not null,blobJSON text not null,lastCommandNumSaved integer);"
 				+ "CREATE TABLE UserGameMap(id integer not null primary key autoincrement,gameID integer not null,userID integer not null,color text not null,foreign key (gameID) references Games(id),foreign key (userID) references Users(id));"
-				+ "CREATE TABLE Users(id integer not null primary key,username text not null,password text not null);";
+				+ "CREATE TABLE Users(id integer not null,username text not null,password text not null);";
 		
 	}
 	
@@ -39,15 +39,20 @@ public class GameSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT blobJSON, lastCommandNumSaved From Games";
+			String query = "SELECT id, title, blobJSON, lastCommandNumSaved From Games";
 			stmt = db.getConnection().prepareStatement(query);
 			
 			rs = stmt.executeQuery();
 			while(rs.next()){
-				String modelJSONString = rs.getString(1);
-				JsonObject blobJSON = new JsonParser().parse(modelJSONString).getAsJsonObject().get("Response-body").getAsJsonObject();
+				int gameID = rs.getInt(1);
+				String title = rs.getString(2);
+				String modelJSONString = rs.getString(3);
+				int lastCommandNumSaved = rs.getInt(4);
+				JsonObject blobJSON = new JsonParser().parse(modelJSONString).getAsJsonObject();
 //				System.out.println("HERE'S THE BLOB: " + blobJSON.toString());
-				ServerGame game = new JSONToModel().translateServerGame(blobJSON);
+				ServerGame game = new ServerGame(title, gameID);
+				game.setClientModel(new JSONToModel().translateClientModel(blobJSON));
+				game.setLastCommandSaved(lastCommandNumSaved);
 				result.add(game);
 			}
 		}
@@ -67,12 +72,13 @@ public class GameSQLDAO {
 		ResultSet keyRS = null;		
 		try {
 			ModelToJSON toJson = new ModelToJSON();
-			JsonObject blobToAdd = toJson.generateServerGameObject(game);
-			String query = "insert into Games (blobJSON, lastCommandNumSaved, id) values (?, ?, ?)";
+			JsonObject blob = toJson.translateModel(game.getClientModel());
+			String query = "insert into Games (blobJSON, lastCommandNumSaved, id, title) values (?, ?, ?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, blobToAdd.toString());
+			stmt.setString(1, blob.toString());
 			stmt.setInt(2, game.getNumberOfCommands());
 			stmt.setInt(3, game.getId());
+			stmt.setString(4, game.getTitle());
 
 			
 			if (stmt.executeUpdate() != 1) {
@@ -92,10 +98,10 @@ public class GameSQLDAO {
 		PreparedStatement stmt = null;
 		try {
 			ModelToJSON toJson = new ModelToJSON();
-			JsonObject blobToAdd = toJson.generateServerGameObject(game);
+			JsonObject blob = toJson.translateModel(game.getClientModel());
 			String query = "update Games set blobJSON = ?, lastCommandNumSaved = ? where id = ?";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, blobToAdd.toString());
+			stmt.setString(1, blob.toString());
 			stmt.setInt(2, game.getNumberOfCommands()-1);
 			stmt.setInt(3, game.getId());
 			

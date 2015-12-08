@@ -66,6 +66,7 @@ public class SQLPlugin extends IPlugin {
 			for (ServerGame game : games) {
 				ArrayList<Integer> userIDs = db.getGameUserMapSQLDAO().getUserIDsForGame(game.getId());
 				for(int userID : userIDs) {
+//					System.out.println("GETTING USER WITH ID: " + String.valueOf(userID));
 					String color = db.getGameUserMapSQLDAO().getColorForGameAndUser(game.getId(), userID);
 					ServerUser user = db.getUserSQLDAO().getById(userID);
 					game.addUser(user, color);
