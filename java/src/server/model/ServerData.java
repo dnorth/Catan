@@ -35,15 +35,15 @@ public class ServerData {
 		for (ServerUser u : users) {
 			if (u.getUsername().equals(username)) return -1;
 		}
-		users.add(new ServerUser(username, password, this.nextUserID));
-		plugin.saveUser(new ServerUser(username, password, this.nextUserID));
-		this.nextUserID += 1;
-		return this.nextUserID-1;
+		ServerUser user = new ServerUser(username, password, this.nextUserID);
+		users.add(user);
+		plugin.saveUser(user);
+		return this.nextUserID++;
 	}
 	
 	public void addGame(ServerGame game) {
 		games.add(game);
-//		plugin.saveGame(game);
+		plugin.saveGame(game);
 	}
 	
 	public void addUserToGame(int gameID, int playerID, String color) throws GameFullException {
@@ -57,7 +57,7 @@ public class ServerData {
 		else {
 			game.addUser(getUserByID(playerID), color);
 		}
-//		plugin.addUserToGame(playerID, gameID, color);
+		plugin.addUserToGame(playerID, gameID, color);
 	}
 
 	public ServerUser getUserByID(int id) {

@@ -68,10 +68,11 @@ public class GameSQLDAO {
 		try {
 			ModelToJSON toJson = new ModelToJSON();
 			JsonObject blobToAdd = toJson.generateServerGameObject(game);
-			String query = "insert into Games (blobJSON, lastCommandNumSaved) values (?, ?)";
+			String query = "insert into Games (blobJSON, lastCommandNumSaved, id) values (?, ?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setString(1, blobToAdd.toString());
-			stmt.setString(2, "IMPLEMENT ME");
+			stmt.setInt(2, game.getNumberOfCommands());
+			stmt.setInt(3, game.getId());
 
 			
 			if (stmt.executeUpdate() != 1) {
