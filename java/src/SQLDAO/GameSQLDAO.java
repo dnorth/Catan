@@ -39,7 +39,7 @@ public class GameSQLDAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT id, title, blobJSON, lastCommandNumSaved From Games";
+			String query = "SELECT id, title, blobJSON, lastCommandNumSaved FROM Games";
 			stmt = db.getConnection().prepareStatement(query);
 			
 			rs = stmt.executeQuery();
@@ -52,7 +52,9 @@ public class GameSQLDAO {
 //				System.out.println("HERE'S THE BLOB: " + blobJSON.toString());
 				ServerGame game = new ServerGame(title, gameID);
 				game.setClientModel(new JSONToModel().translateClientModel(blobJSON));
+//				System.out.println("GAME: " + String.valueOf(gameID) + " THIS TIME?: " + String.valueOf(lastCommandNumSaved));
 				game.setLastCommandSaved(lastCommandNumSaved);
+				game.setNumberOfCommands(lastCommandNumSaved);
 				result.add(game);
 			}
 		}
@@ -76,7 +78,7 @@ public class GameSQLDAO {
 			String query = "insert into Games (blobJSON, lastCommandNumSaved, id, title) values (?, ?, ?, ?)";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setString(1, blob.toString());
-			stmt.setInt(2, game.getNumberOfCommands());
+			stmt.setInt(2, game.getLastCommandSaved());
 			stmt.setInt(3, game.getId());
 			stmt.setString(4, game.getTitle());
 
@@ -102,7 +104,14 @@ public class GameSQLDAO {
 			String query = "update Games set blobJSON = ?, lastCommandNumSaved = ? where id = ?";
 			stmt = db.getConnection().prepareStatement(query);
 			stmt.setString(1, blob.toString());
-			stmt.setInt(2, game.getNumberOfCommands()-1);
+			for (ServerGame g : getAll()) {
+				if (g.getId() == game.getId()) {
+					if (g.getLastCommandSaved() > game.getLastCommandSaved()) {
+						game.setLastCommandSaved(g.getLastCommandSaved());
+					}
+				}
+			}
+			stmt.setInt(2, game.getLastCommandSaved());
 			stmt.setInt(3, game.getId());
 			
 			if (stmt.executeUpdate() != 1) {

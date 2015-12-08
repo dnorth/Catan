@@ -120,11 +120,13 @@ public class MovesHandler implements HttpHandler{
 
 
 		} catch(NullPointerException e) {
+			e.printStackTrace();
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			logger.log(Level.SEVERE, "Null Pointer Exception.");
 			response = "Invalid Keys for the requested operation.";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 		} catch (Exception e) {
+			e.printStackTrace();
 			exchange.getResponseHeaders().set("Content-Type", "text/html");
 			logger.log(Level.SEVERE, e.getMessage());//, e);
 			response = e.getMessage();

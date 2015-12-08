@@ -1,6 +1,8 @@
 package PluginFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import server.commands.IMovesCommand;
 import server.model.ServerGame;

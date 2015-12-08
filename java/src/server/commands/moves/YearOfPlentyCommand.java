@@ -88,4 +88,9 @@ public class YearOfPlentyCommand implements IMovesCommand{
 	public int getGameID() {
 		return game.getId();
 	}
+	
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+	}
 }

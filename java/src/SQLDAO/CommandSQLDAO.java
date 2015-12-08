@@ -29,20 +29,21 @@ public class CommandSQLDAO {
 		ResultSet keyRS = null;		
 		try {
 			JsonObject blobToAdd = command.toJSON();
-			String query = "insert into Users (commandJSON, commandNumber, gameID) values (?, ?, ?)";
+			String query = "INSERT INTO Commands (commandJSON, commandNumber, gameID) SELECT ?, ?, ?";
+			query += " WHERE NOT EXISTS(SELECT 0 FROM Commands WHERE commandNumber = ? AND gameID = ?)";
 			stmt = db.getConnection().prepareStatement(query);
-			stmt.setString(1, blobToAdd.getAsString());
+			stmt.setString(1, blobToAdd.toString());
 			stmt.setInt(2, command.getCommandNumber());
 			stmt.setInt(3, command.getGameID());
+			stmt.setInt(4, command.getCommandNumber());
+			stmt.setInt(5, command.getGameID());
 		
-			if (!(stmt.executeUpdate() == 1)) {
-				throw new DatabaseException("Could not insert command");
-			}
-			else {
-				throw new DatabaseException("Could not insert command");
+			if (stmt.executeUpdate() != 1) {
+//				throw new DatabaseException("Could not insert command");
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
 			throw new DatabaseException("Could not insert command", e);
 		}
 		finally {
@@ -53,24 +54,22 @@ public class CommandSQLDAO {
 	//add()
 	//getcommandsafterindex
 
-	public ArrayList<IMovesCommand> getCommandsByGameAfterIndex(ArrayList<ServerGame> games, ArrayList<Integer> indeces) {
+	public ArrayList<IMovesCommand> getCommandsByGameAfterIndex(ServerGame game, int commandNumber) {
 		PreparedStatement stmt = null;
 		ResultSet keyRS = null;
 		ArrayList<IMovesCommand> listOCommands = new ArrayList<IMovesCommand>();
 		try {
-			for(int i = 0; i < games.size(); i++) {
-				String query1 = "SELECT commandJSON, commandNumber FROM Commands WHERE gameID = ? AND commandNumber > ?";
-				stmt = db.getConnection().prepareStatement(query1);
-				stmt.setInt(1, games.get(i).getId());
-				stmt.setInt(2, indeces.get(i));
-				ResultSet rs = stmt.executeQuery();
-				while(rs.next()) {
-					String commandJSONString = rs.getString(1);
-					int commandNumber = rs.getInt(2);
-					JsonObject commandJSONObject = new JsonParser().parse(commandJSONString).getAsJsonObject();
-					IMovesCommand command = JSONToModel.translateCommand(commandJSONObject, games.get(i), commandNumber);
-					listOCommands.add(command);
-				}
+			String query1 = "SELECT commandJSON, commandNumber FROM Commands WHERE gameID = ? AND commandNumber > ?";
+			stmt = db.getConnection().prepareStatement(query1);
+			stmt.setInt(1, game.getId());
+			stmt.setInt(2, commandNumber);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				String commandJSONString = rs.getString(1);
+				int commandNum = rs.getInt(2);
+				JsonObject commandJSONObject = new JsonParser().parse(commandJSONString).getAsJsonObject();
+				IMovesCommand command = JSONToModel.translateCommand(commandJSONObject, game, commandNum);
+				listOCommands.add(command);
 			}
 		}
 		catch (SQLException e) {

@@ -57,31 +57,31 @@ public class BuildRoadCommand implements IMovesCommand {
 	 */
 	@Override
 	public void execute() throws NotYourTurnException, InvalidStatusException, CantBuildThereException, InsufficientResourcesException, OutOfPiecesException, InvalidPlayerIndexException {
-
+		
 		ClientModel model = game.getClientModel();
 		if(!free) {
 			model.checkStatus("Playing");			
 		}
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
-
+		
 		if(model.isInitializingPhase()){
 			model.checkInitialRoad(new Road(playerIndex, spot));
 		}
 		else{
 			model.checkRoad(new Road(playerIndex, spot));
 		}
-
+		
 		Board board = model.getBoard();
 		Player p = model.getPlayers()[playerIndex];
 		Resources bank = model.getBank();
-
+		
 		if (free == false) {
 			p.payForRoad(bank);
 		}
 		p.decRoads();
 		board.addRoad(new Road(playerIndex, spot));
-
+		
 		game.getClientModel().getLog().getLines().add(new MessageLine(p.getName() + " built a road", p.getName()));
 		
 		if(model.playerHasLongestRoad(p)){
@@ -119,4 +119,8 @@ public class BuildRoadCommand implements IMovesCommand {
 		return game.getId();
 	}
 
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+	}
 }

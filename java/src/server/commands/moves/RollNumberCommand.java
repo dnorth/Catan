@@ -55,7 +55,7 @@ public class RollNumberCommand implements IMovesCommand {
 	@Override
 	public void execute() throws InvalidRollException, InvalidStatusException, InsufficientResourcesException, NotYourTurnException, InvalidPlayerIndexException {
 		
-		if(number<2 || number > 12) // throw exception
+		if(number < 2 || number > 12) // throw exception
 		{throw new InvalidRollException();}
 		
 		
@@ -63,6 +63,7 @@ public class RollNumberCommand implements IMovesCommand {
 
 		ClientModel model = game.getClientModel();
 		model.checkStatus("Rolling");
+//		System.out.println(String.valueOf(playerIndex) + " " + String.valueOf(model.getTurnTracker().getCurrentTurn()));
 		model.checkTurn(playerIndex);
 		model.checkPlayerIndex(playerIndex);
 		
@@ -120,11 +121,6 @@ public class RollNumberCommand implements IMovesCommand {
 					p.getResources().addResource(h.getResourceType(), 1, bank);
 				}
 			}
-			/*if(h.getLocation().Equals(v.getVertexLocation().getHexLoc()))
-			{
-				Player p = model.getPlayers()[v.getOwner()];
-					p.getResources().addResource(h.getResourceType(),1,bank);
-			}*/
 		}
 
 		for(VertexObject v  : model.getBoard().getCities())
@@ -162,4 +158,8 @@ public class RollNumberCommand implements IMovesCommand {
 		return game.getId();
 	}
 
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+	}
 }

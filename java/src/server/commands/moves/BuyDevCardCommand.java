@@ -107,4 +107,8 @@ public class BuyDevCardCommand implements IMovesCommand {
 		return game.getId();
 	}
 
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
+	}
 }

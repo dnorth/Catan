@@ -10,8 +10,22 @@ import PluginFactory.JSONPlugin;
 import PluginFactory.PluginFactory;
 import PluginFactory.SQLPlugin;
 import jsonTranslator.JSONToModel;
+import jsonTranslator.ModelToJSON;
 import server.commands.IMovesCommand;
+import server.exceptions.AlreadyPlayedDevCardException;
+import server.exceptions.CantBuildThereException;
+import server.exceptions.DontHaveDevCardException;
 import server.exceptions.GameFullException;
+import server.exceptions.InsufficientResourcesException;
+import server.exceptions.InvalidMaritimeTradeException;
+import server.exceptions.InvalidPlayerException;
+import server.exceptions.InvalidPlayerIndexException;
+import server.exceptions.InvalidRollException;
+import server.exceptions.InvalidStatusException;
+import server.exceptions.NoTradeOfferedException;
+import server.exceptions.NotYourTurnException;
+import server.exceptions.OutOfPiecesException;
+import server.exceptions.RobberIsAlreadyThereException;
 
 /**
  * Holds all user, game, and child info for those things.
@@ -24,11 +38,37 @@ public class ServerData {
 	private int nextGameID = 3;
 	private int checkpoint = 10;
 	private IPlugin plugin;
+	private int saveInterval = 10;
 	
 	public ServerData() {
 		setPluginClassSQL();
-		initServerData();
 		this.users = plugin.loadUsers();
+		this.games = plugin.loadGames();
+		List<IMovesCommand> commandsToExecute = plugin.loadUnexecutedCommands();
+		executeCommandList(commandsToExecute);
+		if (games.size() == 0) {
+			initServerData();
+		}
+	}
+	
+	public void executeCommandList(List<IMovesCommand> commands) {
+		System.out.println("\nNUMBER OF UNEXECUTED COMMANDS: " + String.valueOf(commands.size()) + "\n");
+		for (IMovesCommand c : commands) {
+			try {
+				c.setGame(getGameByID(c.getGameID()));
+				c.execute();
+				addCommandToGame(getGameByID(c.getGameID()), c);
+			} catch (InvalidStatusException | InsufficientResourcesException
+					| CantBuildThereException | NotYourTurnException
+					| OutOfPiecesException | NoTradeOfferedException
+					| InvalidPlayerException | InvalidMaritimeTradeException
+					| RobberIsAlreadyThereException | InvalidRollException
+					| DontHaveDevCardException | AlreadyPlayedDevCardException
+					| InvalidPlayerIndexException e) {
+				System.out.println("ERROR executing unexecuted command.");
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public int addUser(String username, String password) {
@@ -41,9 +81,13 @@ public class ServerData {
 		return this.nextUserID++;
 	}
 	
-	public void addGame(ServerGame game) {
+	public int addGame(ServerGame game) {
+		for (ServerGame g : games) {
+			if (g.getId() == game.getId()) return -1;
+		}
 		games.add(game);
 		plugin.saveGame(game);
+		return 0;
 	}
 	
 	public void addUserToGame(int gameID, int playerID, String color) throws GameFullException {
@@ -58,6 +102,16 @@ public class ServerData {
 			game.addUser(getUserByID(playerID), color);
 		}
 		plugin.addUserToGame(playerID, gameID, color);
+	}
+	
+	public void addCommandToGame(ServerGame game, IMovesCommand command) {
+		game.addCommand(command);
+		plugin.saveCommand(game, command);
+		if ((command.getCommandNumber() % saveInterval) == 0) {
+			System.out.println("SAVING GAME!!!");
+			game.setLastCommandSaved(command.getCommandNumber());
+			plugin.saveGame(game);
+		}
 	}
 
 	public ServerUser getUserByID(int id) {
@@ -234,6 +288,14 @@ public class ServerData {
 
 	public void setPlugin(IPlugin plugin) {
 		this.plugin = plugin;
+	}
+
+	public int getSaveInterval() {
+		return saveInterval;
+	}
+
+	public void setSaveInterval(int saveInterval) {
+		this.saveInterval = saveInterval;
 	}
 	
 	

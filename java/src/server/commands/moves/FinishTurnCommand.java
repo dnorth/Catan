@@ -59,7 +59,9 @@ public class FinishTurnCommand implements IMovesCommand {
 			if (endOfRound(1)) t.setStatus("SecondRound");
 		}
 		else if (t.getStatus().equals("SecondRound")) {
-			if (endOfRound(2)) t.setStatus("Rolling");
+			if (endOfRound(2)) {
+				t.setStatus("Rolling");
+			}
 		}
 		else {
 			t.setStatus("Rolling");
@@ -91,5 +93,10 @@ public class FinishTurnCommand implements IMovesCommand {
 	@Override
 	public int getGameID() {
 		return game.getId();
+	}
+	
+	@Override
+	public void setGame(ServerGame game) {
+		this.game = game;
 	}
 }

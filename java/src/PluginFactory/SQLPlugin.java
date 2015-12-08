@@ -11,7 +11,6 @@ import SQLDAO.*;
 
 public class SQLPlugin extends IPlugin {
 
-	private ServerData serverData;
 	private Database db;
 	
 	public SQLPlugin() {
@@ -41,15 +40,15 @@ public class SQLPlugin extends IPlugin {
 	
 	@Override
 	public ArrayList<IMovesCommand> loadUnexecutedCommands() {
-		ArrayList<ServerGame> games;
+		ArrayList<ServerGame> games = loadGames();
 		try {
 			db.startTransaction();
-			games = db.getGameSQLDAO().getAll();
-			ArrayList<Integer> indeces = new ArrayList<Integer>();
+			ArrayList<IMovesCommand> commands = new ArrayList<IMovesCommand>();
 			for(ServerGame game : games) {
-				indeces.add(game.getNumberOfCommands());
+//				System.out.println("MY COMMAND NUMBER: " + String.valueOf(game.getLastCommandSaved()));
+				ArrayList<IMovesCommand> newCommands = db.getCommandSQLDAO().getCommandsByGameAfterIndex(game, game.getLastCommandSaved());
+				for (IMovesCommand c : newCommands) commands.add(c);
 			}
-			ArrayList<IMovesCommand> commands = db.getCommandSQLDAO().getCommandsByGameAfterIndex(games, indeces);
 			db.endTransaction(false);
 			return commands;
 		} catch (DatabaseException e) {
@@ -66,13 +65,15 @@ public class SQLPlugin extends IPlugin {
 			for (ServerGame game : games) {
 				ArrayList<Integer> userIDs = db.getGameUserMapSQLDAO().getUserIDsForGame(game.getId());
 				for(int userID : userIDs) {
-//					System.out.println("GETTING USER WITH ID: " + String.valueOf(userID));
 					String color = db.getGameUserMapSQLDAO().getColorForGameAndUser(game.getId(), userID);
 					ServerUser user = db.getUserSQLDAO().getById(userID);
 					game.addUser(user, color);
 				}
 			}
 			db.endTransaction(false);
+//			for (ServerGame game : games) {
+//				System.out.println("GAME: " + String.valueOf(game.getId()) + " THIS TIME?: " + String.valueOf(game.getLastCommandSaved()));
+//			}
 			return games;
 		} catch (DatabaseException e) {
 			e.printStackTrace();
@@ -144,13 +145,5 @@ public class SQLPlugin extends IPlugin {
 	public void resetPersistence() {
 		// TODO Auto-generated method stub
 		super.resetPersistence();
-	}
-
-	public ServerData getServerData() {
-		return serverData;
-	}
-
-	public void setServerData(ServerData serverData) {
-		this.serverData = serverData;
 	}
 }

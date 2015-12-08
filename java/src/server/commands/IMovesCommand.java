@@ -3,6 +3,7 @@ package server.commands;
 import com.google.gson.JsonObject;
 
 import server.exceptions.*;
+import server.model.ServerGame;
 import jsonTranslator.ModelToJSON;
 
 
@@ -32,4 +33,5 @@ public interface IMovesCommand {
 	public JsonObject toJSON();
 	public int getCommandNumber();
 	public int getGameID();
+	public void setGame(ServerGame game);
 }

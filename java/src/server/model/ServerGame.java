@@ -17,7 +17,8 @@ public class ServerGame {
 	private List<ServerPlayer> players;
 	private ClientModel clientModel;
 	private List<IMovesCommand> commands;
-	private int lastCommandSaved = 0;
+	private int lastCommandSaved;
+	private int numberOfCommands;
 	
 	/**
 	 * Get title.
@@ -34,6 +35,8 @@ public class ServerGame {
 		this.clientModel = new ClientModel();
 		this.clientModel.fillClientModel();
 		this.commands = new ArrayList<>();
+		this.lastCommandSaved = 0;
+		this.numberOfCommands = 0;
 	}
 	
 	
@@ -80,6 +83,7 @@ public class ServerGame {
 	
 	public void addCommand(IMovesCommand command){
 		commands.add(command);
+		this.numberOfCommands += 1;
 	}
 	
 	
@@ -88,7 +92,11 @@ public class ServerGame {
 	}
 	
 	public int getNumberOfCommands() {
-		return commands.size();
+		return numberOfCommands;
+	}
+	
+	public void setNumberOfCommands(int numberOfCommands) {
+		this.numberOfCommands = numberOfCommands;
 	}
 
 	/**
