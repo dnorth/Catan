@@ -36,6 +36,16 @@ public class UserJSONDAO extends JSONDAO{
 		return asList;
 	}
 	
+	public ServerUser getUserByID(int userID) throws IOException{
+		List<ServerUser> users = this.getAll();
+		for (ServerUser u : users) {
+			if (u.getPlayerID() == userID){
+				return u;
+			}
+		}
+		return null;
+	}
+	
 	public void add(ServerUser user) throws IOException {		
 		List<ServerUser> serverUsers = new ArrayList<ServerUser>(getAll());
 		serverUsers.add(user);

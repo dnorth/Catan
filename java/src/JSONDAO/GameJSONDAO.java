@@ -47,6 +47,15 @@ public class GameJSONDAO extends JSONDAO {
 		return asList;
 	}
 
+	public ServerGame getGameByID (int gameID) throws IOException {
+		List<ServerGame> serverGames = this.getAll();
+		for (ServerGame sg : serverGames) {
+			if (sg.getId() == gameID) {
+				return sg;
+			}
+		}
+		return null;
+	}
 
 	public void update(ServerGame game) throws IOException { // if game is in database update values, else do nothing.
 		
