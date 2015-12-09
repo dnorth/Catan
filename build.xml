@@ -154,7 +154,14 @@
         </jar>
         <jar jarfile="${java.dist}/Plugins/JSONPlugin.jar" basedir="${java.build}">
             <manifest>
-                <attribute name="Main-Class" value="PluginFactor.JSONPlugin"/>
+                <attribute name="Main-Class" value="PluginFactory.JSONPlugin"/>
+                <attribute name="Class-Path" 
+                    value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
+            </manifest>
+        </jar>
+        <jar jarfile="${java.dist}/reset.jar" basedir="${java.build}">
+            <manifest>
+                <attribute name="Main-Class" value="PluginFactory.ResetPersistence"/>
                 <attribute name="Class-Path" 
                     value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
             </manifest>
@@ -178,6 +185,15 @@
             <arg value="${port}"/>
             <arg value="${plugin}"/>
             <arg value="${checkpoint}"/>
+            <assertions>
+                <enable/>
+            </assertions>
+        </java>
+    </target>
+
+    <target name="reset" depends="package" description="resets persistence data">
+        <java jar="${java.dist}/reset.jar" dir="${java.dist}" fork="yes">
+            <sysproperty key="com.sun.management.jmxremote" value=""/>
             <assertions>
                 <enable/>
             </assertions>
