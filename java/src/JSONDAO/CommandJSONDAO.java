@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import jsonTranslator.ModelToJSON;
@@ -39,9 +41,16 @@ public class CommandJSONDAO extends JSONDAO {
 		return commandsInGame;
 	}
 
-	public List<IMovesCommand> getAll(){
-		return null;
+	public List<IMovesCommand> getAll() throws IOException{
+		br = super.getBufferedReaderFromFilename(dir, filename);
+		IMovesCommand[] commands = new Gson().fromJson(br, IMovesCommand[].class);
+		List<IMovesCommand> asList = new ArrayList<>();
+		if(commands != null) {
+			asList = Arrays.asList(commands);
 		}
+		return asList;
+	}
+	
 	public void add(IMovesCommand command) throws IOException {
 	
 		List<IMovesCommand> commands = new ArrayList<>(getAll());

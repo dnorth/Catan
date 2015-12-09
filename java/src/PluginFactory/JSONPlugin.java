@@ -11,6 +11,7 @@ import JSONDAO.GameJSONDAO;
 import JSONDAO.UserJSONDAO;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
+import server.model.ServerPlayer;
 import server.model.ServerUser;
 
 public class JSONPlugin extends IPlugin {
@@ -63,7 +64,19 @@ public class JSONPlugin extends IPlugin {
 	@Override
 	public List<ServerGame> loadGames() {
 		try {
-			return gameDAO.getAll();
+			List<ServerGame> games = gameDAO.getAll();
+			for(ServerGame game : games) {
+				for(ServerPlayer p : game.getPlayers()) {
+					System.out.println("P: " + p);
+					p.setUser(userDAO.getUserByID(p.getId()));
+				}
+			}
+			
+			//System.out.println("Load games:");
+			//for(ServerGame game : games) {
+			//	System.out.println(game.toString());
+			//}
+			return games;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

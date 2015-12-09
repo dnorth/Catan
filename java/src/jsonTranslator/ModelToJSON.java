@@ -662,6 +662,34 @@ public class ModelToJSON {
 		}
 		return gamesArray;
 	}
+	
+	public JsonArray translateServerGamesList(List<ServerGame> games) {
+		JsonArray gamesArray = new JsonArray();
+		for (ServerGame g : games) {
+			JsonObject gameObject = new JsonObject();
+			gameObject.addProperty("title", g.getTitle());
+			gameObject.addProperty("id", g.getId());
+			JsonArray playersArray = new JsonArray();
+			for (ServerPlayer p : g.getPlayers()) {
+				JsonObject playerObject = new JsonObject();
+				playerObject.addProperty("color", p.getColor());
+				playerObject.addProperty("name", p.getName());
+				playerObject.add("user", translateServerUser(p.getUser()));
+				playersArray.add(playerObject);
+			}
+			gameObject.add("players", playersArray);
+			gameObject.add("clientModel", translateModel(g.getClientModel()));
+			JsonArray commandsArray = new JsonArray();
+			for(IMovesCommand command : g.getCommands()) {
+				commandsArray.add(command.toJSON());
+			}
+			gameObject.add("commands", commandsArray);
+			gameObject.addProperty("lastCommandSaved", g.getLastCommandSaved());
+			gameObject.addProperty("numberOfCommands", g.getNumberOfCommands());
+			gamesArray.add(gameObject);
+		}
+		return gamesArray;
+	}
 		
 	public JsonObject generateGameInfoObject(GameInfo game) {
 		JsonObject returnObject = new JsonObject();
@@ -673,7 +701,7 @@ public class ModelToJSON {
 			JsonObject playerObject = new JsonObject();
 			playerObject.addProperty("color", p.getColor().toString().toLowerCase());
 			playerObject.addProperty("name", p.getName());
-			playerObject.addProperty("id", p.getId());
+			playerObject.addProperty("user", p.getId());
 			playersArray.add(playerObject);
 		}
 		returnObject.add("players", playersArray);

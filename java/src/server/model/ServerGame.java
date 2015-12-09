@@ -162,4 +162,19 @@ public class ServerGame {
 		this.lastCommandSaved = lastCommandSaved;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ServerGame [title=" + title + ", id=" + id + ", players=");
+		for(ServerPlayer player : players) {
+			sb.append("\n" + player.toString());
+		}
+		sb.append(", clientModel=" + clientModel + ", commands=" + commands + ", lastCommandSaved=" + lastCommandSaved + ", numberOfCommands="
+				+ numberOfCommands + "]");
+		
+		return sb.toString(); 
+	}
+	
+	
+
 }

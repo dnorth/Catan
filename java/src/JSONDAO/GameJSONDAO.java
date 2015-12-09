@@ -12,6 +12,7 @@ import com.google.gson.JsonArray;
 
 import jsonTranslator.ModelToJSON;
 import server.model.ServerGame;
+import server.model.ServerPlayer;
 
 public class GameJSONDAO extends JSONDAO {
 
@@ -32,8 +33,7 @@ public class GameJSONDAO extends JSONDAO {
 	{
 		List<ServerGame> serverGames = new ArrayList<ServerGame>(getAll());
 		serverGames.add(game);
-		JsonArray jsonServerUsers = modelToJson.generateServerGamesObject(serverGames);
-		System.out.println(jsonServerUsers);
+		JsonArray jsonServerUsers = modelToJson.translateServerGamesList(serverGames);
 		super.writeJsonArrayToFile(jsonServerUsers, dir + filename);
 	}
 	
@@ -66,7 +66,7 @@ public class GameJSONDAO extends JSONDAO {
 			
 			if(games.get(i).getId() == game.getId() ){
 				games.set(i, game);
-				JsonArray jsonServerGames = modelToJson.generateServerGamesObject(games);
+				JsonArray jsonServerGames = modelToJson.translateServerGamesList(games);
 				super.writeJsonArrayToFile(jsonServerGames, dir + filename);
 				return;
 			}
