@@ -74,7 +74,7 @@ public class ServerProxyTests {
 		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
 		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
 		assertTrue(cookie.get("authentication").toString() != null);
-		assertTrue(cookie.get("playerID").getAsInt() > 11);
+		assertTrue(cookie.get("playerID").getAsInt() > 6);
 		assertEquals(responseBody, "Success");
 	}
 	
@@ -114,7 +114,7 @@ public class ServerProxyTests {
 		assertEquals(cookie.get("name").toString(), shouldMatchUsername);
 		assertEquals(cookie.get("password").toString(), shouldMatchPassword);
 		assertTrue(cookie.get("authentication").toString() != null);
-		assertTrue(cookie.get("playerID").getAsInt() > 11);
+		assertTrue(cookie.get("playerID").getAsInt() > 6);
 		assertEquals(responseBody, "\"Success\"");
 	}
 	

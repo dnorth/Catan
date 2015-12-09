@@ -165,6 +165,14 @@ public class Server {
 			throw new ServerException("Not a valid port number.");
 		}
 	}
+	
+	public void testServer() {
+		server_port_number = 8081;
+		serverData.setPlugin("Null");
+		serverData.setCheckpoint(10);
+		serverData.init();
+		run();
+	}
 
 	public static ServerData getServerData() {
 		return serverData;

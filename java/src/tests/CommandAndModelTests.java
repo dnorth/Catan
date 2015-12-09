@@ -49,7 +49,8 @@ public class CommandAndModelTests {
 	@Test
 	public void createGameTest1AllTrue() {
 		System.out.println("Testing createGame command with all true values.");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		assertEquals(game.getClientModel().getBank().getBrickCount(), 24);
@@ -71,7 +72,8 @@ public class CommandAndModelTests {
 	@Test
 	public void createGameTest2AllFalse() {
 		System.out.println("Testing createGame command with all false values.");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IGamesCommand command = new CreateCommand(serverData, false, false, false, "CreateUnitTest2", 3);
 		try {
@@ -87,7 +89,8 @@ public class CommandAndModelTests {
 	@Test
 	public void createGameTest3EmptyName() {
 		System.out.println("Testing createGame command with empty name.");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IGamesCommand command = new CreateCommand(serverData, true, false, true, "", 3);
 		try {
@@ -103,7 +106,8 @@ public class CommandAndModelTests {
 	@Test
 	public void createGameTest4Mix() {
 		System.out.println("Testing createGame command with mixed values");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IGamesCommand command = new CreateCommand(serverData, false, true, false, "CreateUnitTest4", 6);
 		try {
@@ -119,13 +123,14 @@ public class CommandAndModelTests {
 	@Test
 	public void registerTest() {
 		System.out.println("Testing register command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IUserCommand command = new RegisterCommand(serverData, "Tommy", "Williams");
 		try {
 			command.execute();
-			assertEquals(serverData.getNextUserID(), 13);
-			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getNextUserID(), 9);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 8);
 		} catch (UsernameAlreadyTakenException | InvalidLoginException e) {
 			e.printStackTrace();
 			assertTrue(false);
@@ -135,15 +140,16 @@ public class CommandAndModelTests {
 	@Test
 	public void loginTest() {
 		System.out.println("Testing login command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IUserCommand command = new RegisterCommand(serverData, "Tommy", "Williams");
 		try {
 			command.execute();
 			command = new LoginCommand(serverData, "Tommy", "Williams");
 			command.execute();
-			assertEquals(serverData.getNextUserID(), 13);
-			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getNextUserID(), 9);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 8);
 		} catch (UsernameAlreadyTakenException | InvalidLoginException e) {
 			e.printStackTrace();
 			assertTrue(false);
@@ -153,17 +159,18 @@ public class CommandAndModelTests {
 	@Test
 	public void joinTest() {
 		System.out.println("Testing join command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
 		IGamesCommand createGameCommand = new CreateCommand(serverData, false, false, false, "CreateUnitTest2", 3);
-		IGamesCommand joinCommand = new JoinCommand(serverData, 12, 3, "orange");
+		IGamesCommand joinCommand = new JoinCommand(serverData, 8, 3, "orange");
 		try {
 			registerCommand.execute();
 			createGameCommand.execute();
 			joinCommand.execute();
-			assertEquals(serverData.getNextUserID(), 13);
-			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getNextUserID(), 9);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 8);
 			assertEquals(serverData.getGameByID(3).getClientModel().getPlayers()[0].getColor(), "orange");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -174,22 +181,24 @@ public class CommandAndModelTests {
 	@Test
 	public void getModelTest() {
 		System.out.println("Testing model command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
 		IGamesCommand createGameCommand = new CreateCommand(serverData, false, false, false, "CreateUnitTest2", 3);
-		IGamesCommand joinCommand = new JoinCommand(serverData, 12, 3, "orange");
+		IGamesCommand joinCommand = new JoinCommand(serverData, 8, 3, "orange");
 		IGameCommand modelCommand = new ModelCommand();
 		try {
 			registerCommand.execute();
 			createGameCommand.execute();
 			joinCommand.execute();
 			modelCommand.execute();
-			assertEquals(serverData.getNextUserID(), 13);
-			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getNextUserID(), 9);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 8);
 			assertEquals(serverData.getGameByID(3).getClientModel().getPlayers()[0].getColor(), "orange");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Exception Message: \n" + e.getMessage());
+//			e.printStackTrace();
 			assertTrue(false);
 		}
 	}
@@ -197,15 +206,16 @@ public class CommandAndModelTests {
 	@Test
 	public void listGamesTest() {
 		System.out.println("Testing list command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IUserCommand registerCommand = new RegisterCommand(serverData, "Tommy", "Williams");
 		IGamesCommand listGamesCommand = new ListCommand();
 		try {
 			registerCommand.execute();
 			listGamesCommand.execute();
-			assertEquals(serverData.getNextUserID(), 13);
-			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 12);
+			assertEquals(serverData.getNextUserID(), 9);
+			assertEquals(serverData.getPlayerID("Tommy", "Williams"), 8);
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertTrue(false);
@@ -215,7 +225,8 @@ public class CommandAndModelTests {
 	@Test
 	public void sendChatTestCheckMessages() {
 		System.out.println("Testing sendChat command, checking messages");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0", 1);
 		
@@ -242,7 +253,8 @@ public class CommandAndModelTests {
 	@Test
 	public void sendChatTestCheckSources() {
 		System.out.println("Testing sendChat command, checking sources");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		IMovesCommand command = new SendChatCommand(serverData.getGameByID(1), 0, "This is a chat from player 0", 1);
 		try {
@@ -268,7 +280,8 @@ public class CommandAndModelTests {
 	@Test
 	public void preGameRoadAndSettlementPlacementTest() {
 		System.out.println("Testing placeRoad and placeSettlement commands, first two rounds");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		ServerGame game = serverData.getGameByID(0);
 		Board board = game.getClientModel().getBoard();
@@ -488,7 +501,8 @@ public class CommandAndModelTests {
 	@Test
 	public void rollNumberTurnTrackerTest() {
 		System.out.println("Testing rollNumber command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -518,7 +532,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useMonumentTest() {
 		System.out.println("Testing monument command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -540,7 +555,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyBothBrickTest() {
 		System.out.println("Testing yearOfPlenty command, both brick");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -564,7 +580,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyBothWoodTest() {
 		System.out.println("Testing yearOfPlenty, both wood");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -588,7 +605,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyBothOreTest() {
 		System.out.println("Testing yearOfPlenty, both ore");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -612,7 +630,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyBothWheatTest() {
 		System.out.println("Testing yearOfPlenty, both wheat");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -636,7 +655,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyBothSheepTest() {
 		System.out.println("Testing yearOfPlenty, both sheep");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -660,7 +680,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyMixed1Test() {
 		System.out.println("Testing yearOfPlenty, mixed 1");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -684,7 +705,8 @@ public class CommandAndModelTests {
 	@Test
 	public void useYearOfPlentyMixed2Test() {
 		System.out.println("Testing yearOfPlenty, mixed 2");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -707,7 +729,8 @@ public class CommandAndModelTests {
 	
 	@Test
 	public void useSoldierTest() {
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -731,7 +754,8 @@ public class CommandAndModelTests {
 	
 	@Test
 	public void biggestArmyTest() {
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -759,7 +783,8 @@ public class CommandAndModelTests {
 	@Test
 	public void robPlayerTest() {
 		System.out.println("Testing robPlayer commad");
-		ServerData serverData  = new ServerData();
+		ServerData serverData  = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -782,7 +807,8 @@ public class CommandAndModelTests {
 	@Test
 	public void offerAndAcceptTradeTest() {
 		System.out.println("Testing tradeOffer and tradeAccept commands, accept=true");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -810,7 +836,8 @@ public class CommandAndModelTests {
 	@Test
 	public void offerAndDontAcceptTradeTest() {
 		System.out.println("Testing tradeOffer and tradeAccept comands, accept=false");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -838,7 +865,8 @@ public class CommandAndModelTests {
 	@Test
 	public void buildCityWithNoResourcesTest() {
 		System.out.println("Testing buildCity command with no resources");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -859,7 +887,8 @@ public class CommandAndModelTests {
 	@Test
 	public void buildCityWithNoSettlementTest() {
 		System.out.println("Testing buildCity command with no settlement");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -883,7 +912,8 @@ public class CommandAndModelTests {
 	@Test
 	public void validBuildCityTest() {
 		System.out.println("Testing valid buildCity command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -896,9 +926,9 @@ public class CommandAndModelTests {
 			assertEquals(game.getClientModel().getTurnTrackerStatus(), "Playing");
 			command.execute();
 			assertEquals(game.getClientModel().getPlayers()[0].getCities(), 3);
-			assertEquals(game.getClientModel().getPlayers()[0].getSettlements(), 4);
+			assertEquals(game.getClientModel().getPlayers()[0].getSettlements(), 5);
 			assertEquals(game.getClientModel().getPlayers()[0].getVictoryPoints(), 3);
-			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(5,6, 5, 3, 2));
+			assertEquals(game.getClientModel().getPlayers()[0].getResources(), new Resources(5, 6, 5, 3, 2));
 		} catch (Exception e) {
 			e.printStackTrace();
 			assertFalse(true);
@@ -908,7 +938,8 @@ public class CommandAndModelTests {
 	@Test
 	public void buildRoadTest() {
 		System.out.println("Testing buildRoad command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -934,7 +965,8 @@ public class CommandAndModelTests {
 	@Test
 	public void buildSettlementTest() {
 		System.out.println("Testing buildSettlement command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -965,7 +997,8 @@ public class CommandAndModelTests {
 	@Test
 	public void buyDevCardTest() {
 		System.out.println("Testing buyDevCardTest command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -990,7 +1023,8 @@ public class CommandAndModelTests {
 	@Test
 	public void discardCardsTest() {
 		System.out.println("Testing discard command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -1020,7 +1054,8 @@ public class CommandAndModelTests {
 	@Test
 	public void finishTurnTest() {
 		System.out.println("Testing finishTurn command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -1042,7 +1077,8 @@ public class CommandAndModelTests {
 	@Test
 	public void maritimeTradeTest() {
 		System.out.println("Testing maritimeTrade command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
@@ -1073,7 +1109,8 @@ public class CommandAndModelTests {
 	@Test
 	public void roadBuildingTest() {
 		System.out.println("Testing roadBuilding command");
-		ServerData serverData = new ServerData();
+		ServerData serverData = new ServerData("Null");
+		serverData.initServerData();
 		Server.setServerData(serverData);
 		this.preGameRoadPlacement(serverData);
 		ServerGame game = serverData.getGameByID(0);
