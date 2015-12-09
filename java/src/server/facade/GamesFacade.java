@@ -51,7 +51,7 @@ public class GamesFacade implements iGamesFacade {
 			gameInfo.setTitle(name);
 			gameInfo.setId(gameID);
 			
-			serverData.incNextGameID();
+			//serverData.incNextGameID();
 		    return gameInfo;
 		}
 		

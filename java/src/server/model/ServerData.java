@@ -52,6 +52,10 @@ public class ServerData {
 		if (games.size() == 0 && users.size() == 0) {
 			initServerData();
 		}
+		else {
+			this.nextGameID = games.size();
+			this.nextUserID = users.size() + 1;
+		}
 	}
 	
 	public void executeCommandList(List<IMovesCommand> commands) {
