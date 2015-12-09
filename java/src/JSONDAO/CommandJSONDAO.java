@@ -26,10 +26,17 @@ public class CommandJSONDAO extends JSONDAO {
 		filename = "/game.json";
 	}
 	
-	public List<IMovesCommand> getCommandsByGameAfterIndex(List<ServerGame> games, List<Integer> indeces) throws FileNotFoundException{
+	public List<IMovesCommand> getCommandsByGameAfterIndex(ServerGame game, int index) throws FileNotFoundException{
 
+		List<IMovesCommand> commands = new ArrayList<>();
+		List<IMovesCommand> commandsInGame = game.getCommands();
+			
+		for(int i=index+1; i<commandsInGame.size(); i++)	
+		{
+			commands.add(commandsInGame.get(i));
+		}
 		
-		return null;
+		return commandsInGame;
 	}
 
 	public List<IMovesCommand> getAll(){
