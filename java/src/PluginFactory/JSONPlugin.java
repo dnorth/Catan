@@ -107,7 +107,6 @@ public class JSONPlugin extends IPlugin {
 		try {
 			commandDAO.add(command);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
