@@ -28,11 +28,11 @@ public class JSONPlugin extends IPlugin {
 		try {
 			this.gameDAO = new GameJSONDAO();
 			this.userDAO = new UserJSONDAO();
+			this.commandDAO = new CommandJSONDAO();
+			this.modelDAO = new ModelJSONDAO();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		this.commandDAO = new CommandJSONDAO();
-		this.modelDAO = new ModelJSONDAO();
 	}
 
 	@Override
@@ -50,14 +50,14 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public List<IMovesCommand> loadUnexecutedCommands() {
-		List<ServerGame> games;
 		try {
-			games = gameDAO.getAll();
-			ArrayList<Integer> indeces = new ArrayList<Integer>();
+			List<ServerGame> games = gameDAO.getAll();
+			ArrayList<IMovesCommand> commands = new ArrayList<IMovesCommand>();
 			for(ServerGame game : games) {
-				indeces.add(game.getNumberOfCommands());
+				List<IMovesCommand> newCommands = 	commandDAO.getCommandsByGameAfterIndex(game, game.getLastCommandSaved());
+				for (IMovesCommand c : newCommands) commands.add(c);
 			}
-			return commandDAO.getCommandsByGameAfterIndex(games, indeces);
+			return commands;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -100,7 +100,12 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void saveCommand(ServerGame game, IMovesCommand command) {
-		commandDAO.add(command);
+		try {
+			commandDAO.add(command);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
