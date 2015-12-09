@@ -1,7 +1,9 @@
 package JSONDAO;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,11 +11,15 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import jsonTranslator.JSONToModel;
 import jsonTranslator.ModelToJSON;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
-import server.model.ServerPlayer;
 
 public class GameJSONDAO extends JSONDAO {
 
@@ -46,7 +52,23 @@ public class GameJSONDAO extends JSONDAO {
 		if(serverGame != null) {
 			asList = new ArrayList<>(Arrays.asList(serverGame));
 		}
-		for (ServerGame g : asList) {
+		File jsonFile = new File(dir + filename);
+		if (!jsonFile.exists()){
+			return asList;
+		}
+		JsonParser parser = new JsonParser();
+		
+		JsonArray jArray = null;
+		try {
+			jArray = (JsonArray) parser.parse(new FileReader(dir + filename));
+		} catch (ClassCastException e) {} //this means the file hasn't been made yet, or isn't valid JSON
+		
+		for (int i = 0; i < asList.size(); i++) {
+			ServerGame g = asList.get(i);
+			if (jArray != null) {
+				JsonObject obj = (JsonObject)jArray.get(i);
+				g.setClientModel(JSONToModel.translateClientModel((JsonObject)obj.get("clientModel")));
+			}
 			g.setCommands(new ArrayList<IMovesCommand>());
 		}
 		return asList;
@@ -74,10 +96,7 @@ public class GameJSONDAO extends JSONDAO {
 				return;
 			}
 		}
-		
 		add(game);
 	}
-	
-	
 
 }
