@@ -145,6 +145,20 @@
                     value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
             </manifest>
         </jar>
+        <jar jarfile="${java.dist}/Plugins/SQLPlugin.jar" basedir="${java.build}">
+            <manifest>
+                <attribute name="Main-Class" value="PluginFactory.SQLPlugin"/>
+                <attribute name="Class-Path" 
+                    value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
+            </manifest>
+        </jar>
+        <jar jarfile="${java.dist}/Plugins/JSONPlugin.jar" basedir="${java.build}">
+            <manifest>
+                <attribute name="Main-Class" value="PluginFactor.JSONPlugin"/>
+                <attribute name="Class-Path" 
+                    value="lib/gson-2.2.4.jar lib/sqlite-jdbc-3.7.2.jar" />
+            </manifest>
+        </jar>
     </target>
     
     <target name="our-client" depends="package" description="compiles, packages, and runs the student client">
@@ -162,6 +176,8 @@
         <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
             <sysproperty key="com.sun.management.jmxremote" value=""/>
             <arg value="${port}"/>
+            <arg value="${plugin}"/>
+            <arg value="${checkpoint}"/>
             <assertions>
                 <enable/>
             </assertions>

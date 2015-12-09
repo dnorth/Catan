@@ -7,11 +7,12 @@ import java.net.URLClassLoader;
 public class PluginFactory {
 	
 	public IPlugin CreatePlugin(String arg) {
-		String jarFilePath = "Plugins" + File.separator + arg + ".jar";
+		String jarFilePath = "file:" + File.separator + File.separator + "."
+				+ File.separator + "Plugins" + File.separator + arg + ".jar";
 		try {
 			URL jarURL = new URL(jarFilePath);
 			URLClassLoader child = new URLClassLoader(new URL[] {jarURL}, this.getClass().getClassLoader());
-			Class classToLoad = Class.forName(arg + "Plugin", true, child);
+			Class classToLoad = Class.forName("PluginFactory." + arg, true, child);
 			IPlugin plugin = (IPlugin)classToLoad.newInstance(); //if errors here, try getConstructor().newInstance()
 			return plugin;
 		}

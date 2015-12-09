@@ -158,6 +158,7 @@ public class Server {
 			if(args.length > 2) {
 				serverData.setCheckpoint(Integer.parseInt(args[2]));
 			}
+			serverData.init();
 		}
 		catch (NumberFormatException e)
 		{

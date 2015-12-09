@@ -34,10 +34,10 @@ public class ServerData {
 	private int nextGameID = 3;
 	private int checkpoint = 10;
 	private IPlugin plugin;
-	private int saveInterval = 10;
 	
 	public ServerData() {
-		setPluginClassSQL();
+	}
+	public void init() {
 		this.users = plugin.loadUsers();
 		this.games = plugin.loadGames();
 		List<IMovesCommand> commandsToExecute = plugin.loadUnexecutedCommands();
@@ -103,7 +103,7 @@ public class ServerData {
 	public void addCommandToGame(ServerGame game, IMovesCommand command) {
 		game.addCommand(command);
 		plugin.saveCommand(game, command);
-		if ((command.getCommandNumber() % saveInterval) == 0) {
+		if ((command.getCommandNumber() % checkpoint) == 0) {
 			System.out.println("SAVING GAME!!!");
 			game.setLastCommandSaved(command.getCommandNumber());
 			plugin.saveGame(game);
@@ -234,6 +234,7 @@ public class ServerData {
 	}
 
 	public void setPlugin(String pluginName) {
+		System.out.println("SET PLUGIN: " + pluginName);
 		PluginFactory factory = new PluginFactory();
 		this.plugin = factory.CreatePlugin(pluginName);
 	}
@@ -285,14 +286,5 @@ public class ServerData {
 	public void setPlugin(IPlugin plugin) {
 		this.plugin = plugin;
 	}
-
-	public int getSaveInterval() {
-		return saveInterval;
-	}
-
-	public void setSaveInterval(int saveInterval) {
-		this.saveInterval = saveInterval;
-	}
-	
 	
 }
