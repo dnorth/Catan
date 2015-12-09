@@ -11,7 +11,6 @@ import JSONDAO.GameJSONDAO;
 import JSONDAO.ModelJSONDAO;
 import JSONDAO.UserJSONDAO;
 import server.commands.IMovesCommand;
-import server.model.ServerData;
 import server.model.ServerGame;
 import server.model.ServerUser;
 
@@ -26,8 +25,8 @@ public class JSONPlugin extends IPlugin {
 	
 	
 	public JSONPlugin() {
-		this.gameDAO = new GameJSONDAO();
 		try {
+			this.gameDAO = new GameJSONDAO();
 			this.userDAO = new UserJSONDAO();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -43,7 +42,6 @@ public class JSONPlugin extends IPlugin {
 		try {
 			serverUsers = userDAO.getAll();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -52,7 +50,7 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public List<IMovesCommand> loadUnexecutedCommands() {
-		ArrayList<ServerGame> games;
+		List<ServerGame> games;
 		try {
 			games = gameDAO.getAll();
 			ArrayList<Integer> indeces = new ArrayList<Integer>();
@@ -93,7 +91,11 @@ public class JSONPlugin extends IPlugin {
 
 	@Override
 	public void saveGame(ServerGame game) {
-		gameDAO.update(game);
+		try {
+			gameDAO.update(game);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import server.model.ServerGame;
 
 public class CommandJSONDAO {
 
-	public List<IMovesCommand> getCommandsByGameAfterIndex(ArrayList<ServerGame> games, ArrayList<Integer> indeces) throws FileNotFoundException{
+	public List<IMovesCommand> getCommandsByGameAfterIndex(List<ServerGame> games, List<Integer> indeces) throws FileNotFoundException{
 		// TODO Auto-generated method stub
 		return null;
 	}
