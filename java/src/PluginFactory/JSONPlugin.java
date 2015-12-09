@@ -65,12 +65,6 @@ public class JSONPlugin extends IPlugin {
 	public List<ServerGame> loadGames() {
 		try {
 			List<ServerGame> games = gameDAO.getAll();
-			for(ServerGame game : games) {
-				for(ServerPlayer p : game.getPlayers()) {
-					System.out.println("P: " + p);
-					p.setUser(userDAO.getUserByID(p.getId()));
-				}
-			}
 			
 			//System.out.println("Load games:");
 			//for(ServerGame game : games) {
