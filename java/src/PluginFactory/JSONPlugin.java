@@ -78,7 +78,11 @@ public class JSONPlugin extends IPlugin {
 	public void addUserToGame(int userID, int gameID, String color) {
 		try {
 			ServerUser su = userDAO.getUserByID(userID);
-			
+			ServerGame sg = gameDAO.getGameByID(gameID);
+			if (su != null && sg != null) {
+				sg.addUser(su, color);
+				gameDAO.update(sg);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
