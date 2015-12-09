@@ -52,6 +52,9 @@ public class ServerPlayer {
 	 * @return id
 	 */
 	public int getId() {
+		if(user == null) {
+			return -1;
+		}
 		return user.getPlayerID();
 	}
 
@@ -62,4 +65,11 @@ public class ServerPlayer {
 	public void setUser(ServerUser user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return "ServerPlayer [color=" + color + ", name=" + name + ", user=" + user + "]";
+	}
+	
+	
 }

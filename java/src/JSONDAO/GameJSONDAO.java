@@ -33,6 +33,7 @@ public class GameJSONDAO extends JSONDAO {
 		List<ServerGame> serverGames = new ArrayList<ServerGame>(getAll());
 		serverGames.add(game);
 		JsonArray jsonServerUsers = modelToJson.generateServerGamesObject(serverGames);
+		System.out.println(jsonServerUsers);
 		super.writeJsonArrayToFile(jsonServerUsers, dir + filename);
 	}
 	
@@ -67,9 +68,11 @@ public class GameJSONDAO extends JSONDAO {
 				games.set(i, game);
 				JsonArray jsonServerGames = modelToJson.generateServerGamesObject(games);
 				super.writeJsonArrayToFile(jsonServerGames, dir + filename);
-				break;
+				return;
 			}
 		}
+		
+		add(game);
 	}
 	
 	

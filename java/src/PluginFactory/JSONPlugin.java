@@ -41,7 +41,6 @@ public class JSONPlugin extends IPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return serverUsers;
 	}
 

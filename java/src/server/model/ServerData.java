@@ -42,7 +42,7 @@ public class ServerData {
 		this.games = plugin.loadGames();
 		List<IMovesCommand> commandsToExecute = plugin.loadUnexecutedCommands();
 		executeCommandList(commandsToExecute);
-		if (games.size() == 0) {
+		if (games.size() == 0 && users.size() == 0) {
 			initServerData();
 		}
 	}
@@ -157,6 +157,7 @@ public class ServerData {
 	}
 
 	public int getPlayerID(String username, String password) {
+		
 		for (ServerUser u : users) {
 			if (u.getUsername().equals(username)) {
 				if (u.getPassword().equals(password)) return u.getPlayerID();

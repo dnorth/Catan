@@ -54,4 +54,11 @@ public class ServerUser {
 		this.playerID = playerID;
 	}
 
+	@Override
+	public String toString() {
+		return "ServerUser [username=" + username + ", password=" + password + ", playerID=" + playerID + "]";
+	}
+
+	
+	
 }

@@ -636,7 +636,6 @@ public class ModelToJSON {
 	}
 
 	public JsonArray generateServerGamesObject(List<ServerGame> games) {
-		JsonObject returnObject = new JsonObject();
 		JsonArray gamesArray = new JsonArray();
 		for (ServerGame g : games) {
 			JsonObject gameObject = new JsonObject();
@@ -651,9 +650,16 @@ public class ModelToJSON {
 				playersArray.add(playerObject);
 			}
 			gameObject.add("players", playersArray);
+			gameObject.add("clientModel", translateModel(g.getClientModel()));
+			JsonArray commandsArray = new JsonArray();
+			for(IMovesCommand command : g.getCommands()) {
+				commandsArray.add(command.toJSON());
+			}
+			gameObject.add("commands", commandsArray);
+			gameObject.addProperty("lastCommandSaved", g.getLastCommandSaved());
+			gameObject.addProperty("numberOfCommands", g.getNumberOfCommands());
 			gamesArray.add(gameObject);
 		}
-		returnObject.add("Response-body", gamesArray);
 		return gamesArray;
 	}
 		

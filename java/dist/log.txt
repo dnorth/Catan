@@ -1,42 +1,6 @@
-Nov 24, 2015 1:36:15 PM server.Server run
+Dec 08, 2015 10:50:39 PM server.Server run
 INFO: Initializing Model
-Nov 24, 2015 1:36:15 PM server.Server run
+Dec 08, 2015 10:50:39 PM server.Server run
 INFO: Initializing HTTP Server on port 8081
-Nov 24, 2015 1:36:15 PM server.Server run
+Dec 08, 2015 10:50:39 PM server.Server run
 INFO: Starting HTTP Server.
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:36:24 PM server.handlers.UserHandler handle
-INFO: login
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:37:37 PM server.handlers.UserHandler handle
-INFO: login
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: register
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: Handling User
-Nov 24, 2015 1:38:51 PM server.handlers.UserHandler handle
-INFO: login
