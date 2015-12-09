@@ -8,7 +8,6 @@ import java.util.List;
 
 import JSONDAO.CommandJSONDAO;
 import JSONDAO.GameJSONDAO;
-import JSONDAO.ModelJSONDAO;
 import JSONDAO.UserJSONDAO;
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
@@ -19,7 +18,6 @@ public class JSONPlugin extends IPlugin {
 	private GameJSONDAO gameDAO;
 	private UserJSONDAO userDAO;
 	private CommandJSONDAO commandDAO;
-	private ModelJSONDAO modelDAO;
 	
 	
 	
@@ -29,7 +27,6 @@ public class JSONPlugin extends IPlugin {
 			this.gameDAO = new GameJSONDAO();
 			this.userDAO = new UserJSONDAO();
 			this.commandDAO = new CommandJSONDAO();
-			this.modelDAO = new ModelJSONDAO();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -78,7 +75,11 @@ public class JSONPlugin extends IPlugin {
 	public void addUserToGame(int userID, int gameID, String color) {
 		try {
 			ServerUser su = userDAO.getUserByID(userID);
-			
+			ServerGame sg = gameDAO.getGameByID(gameID);
+			if (su != null && sg != null) {
+				sg.addUser(su, color);
+				gameDAO.update(sg);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,7 +108,6 @@ public class JSONPlugin extends IPlugin {
 		try {
 			commandDAO.add(command);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -145,15 +145,5 @@ public class JSONPlugin extends IPlugin {
 	public void setCommandDAO(CommandJSONDAO commandDAO) {
 		this.commandDAO = commandDAO;
 	}
-
-	public ModelJSONDAO getModelDAO() {
-		return modelDAO;
-	}
-
-	public void setModelDAO(ModelJSONDAO modelDAO) {
-		this.modelDAO = modelDAO;
-	}
-
-	
 	
 }
