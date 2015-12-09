@@ -673,11 +673,11 @@ public class ModelToJSON {
 			}
 			gameObject.add("players", playersArray);
 			gameObject.add("clientModel", translateModel(g.getClientModel()));
-			JsonArray commandsArray = new JsonArray();
-			for(IMovesCommand command : g.getCommands()) {
-				commandsArray.add(command.toJSON());
-			}
-			gameObject.add("commands", commandsArray);
+//			JsonArray commandsArray = new JsonArray();
+//			for(IMovesCommand command : g.getCommands()) {
+//				commandsArray.add(command.toJSON());
+//			}
+//			gameObject.add("commands", commandsArray);
 			gameObject.addProperty("lastCommandSaved", g.getLastCommandSaved());
 			gameObject.addProperty("numberOfCommands", g.getNumberOfCommands());
 			gamesArray.add(gameObject);

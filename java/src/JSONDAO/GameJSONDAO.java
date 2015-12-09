@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import jsonTranslator.ModelToJSON;
+import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import server.model.ServerPlayer;
 
@@ -44,6 +45,9 @@ public class GameJSONDAO extends JSONDAO {
 		List<ServerGame> asList = new ArrayList<>();
 		if(serverGame != null) {
 			asList = Arrays.asList(serverGame);
+		}
+		for (ServerGame g : asList) {
+			g.setCommands(new ArrayList<IMovesCommand>());
 		}
 		return asList;
 	}

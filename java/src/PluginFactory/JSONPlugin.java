@@ -51,7 +51,7 @@ public class JSONPlugin extends IPlugin {
 			List<ServerGame> games = gameDAO.getAll();
 			ArrayList<IMovesCommand> commands = new ArrayList<IMovesCommand>();
 			for(ServerGame game : games) {
-				List<IMovesCommand> newCommands = 	commandDAO.getCommandsByGameAfterIndex(game, game.getLastCommandSaved());
+				List<IMovesCommand> newCommands = commandDAO.getCommandsByGameAfterIndex(game);
 				for (IMovesCommand c : newCommands) commands.add(c);
 			}
 			return commands;

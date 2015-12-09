@@ -34,7 +34,7 @@ public class ServerGame {
 		this.players = new ArrayList<ServerPlayer>();
 		this.clientModel = new ClientModel();
 		this.clientModel.fillClientModel();
-		this.commands = new ArrayList<>();
+		this.commands = new ArrayList<IMovesCommand>();
 		this.lastCommandSaved = 0;
 		this.numberOfCommands = 0;
 	}
@@ -173,6 +173,10 @@ public class ServerGame {
 				+ numberOfCommands + "]");
 		
 		return sb.toString(); 
+	}
+
+	public void setCommands(ArrayList<IMovesCommand> commands) {
+		this.commands = commands;
 	}
 	
 	
