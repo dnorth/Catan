@@ -22,6 +22,7 @@ import client.models.mapdata.Hex;
 import client.models.mapdata.HexLocation;
 import client.models.mapdata.Port;
 import client.models.mapdata.Road;
+import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import server.model.ServerPlayer;
 import server.model.ServerUser;
@@ -672,6 +673,18 @@ public class ModelToJSON {
 		returnObject.add("players", playersArray);
 		
 		return returnObject;
+	}
+	
+	public JsonArray generateCommands(List<IMovesCommand> commands){
+		
+		JsonArray jsonCommands = new JsonArray();
+		
+		for(IMovesCommand c : commands){
+			jsonCommands.add(c.toJSON());
+		}
+		
+		return jsonCommands;
+		
 	}
 	
 }

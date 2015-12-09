@@ -12,7 +12,6 @@ import com.google.gson.JsonArray;
 
 import jsonTranslator.ModelToJSON;
 import server.model.ServerGame;
-import server.model.ServerUser;
 
 public class GameJSONDAO extends JSONDAO {
 
@@ -25,7 +24,7 @@ public class GameJSONDAO extends JSONDAO {
 	public GameJSONDAO() throws FileNotFoundException {
 		modelToJson = new ModelToJSON();
 		dir = "jsonFiles";
-		filename = "/game.json";
+		filename = "/games.json";
 	}
 	
 	
