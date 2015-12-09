@@ -12,6 +12,7 @@ import server.model.ServerGame;
  * The Class CreateCommand.
  */
 public class CreateCommand implements IGamesCommand {
+	ServerData serverData;
 	boolean randomTiles;
 	boolean randomNumbers;
 	boolean randomPorts;
@@ -21,6 +22,7 @@ public class CreateCommand implements IGamesCommand {
 	public CreateCommand(ServerData serverData, boolean randomTiles,
 			boolean randomNumbers, boolean randomPorts, String name, int gameID) {
 		super();
+		this.serverData = serverData;
 		this.randomTiles = randomTiles;
 		this.randomNumbers = randomNumbers;
 		this.randomPorts = randomPorts;
@@ -50,7 +52,7 @@ public class CreateCommand implements IGamesCommand {
 		if(randomPorts){
 			board.CreateRandomPorts();
 		}
-		Server.getServerData().addGame(game);
+		serverData.addGame(game);
 	}
 
 }

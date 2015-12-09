@@ -11,10 +11,7 @@ import java.util.logging.Logger;
 
 public class Database {
 
-	private static final String DATABASE_DIRECTORY = new File("")
-			.getAbsolutePath().substring(0,(new File("").getAbsolutePath()).length() - 4)
-			+ File.separator + "database";
-	//private static final String DATABASE_DIRECTORY = "C:\\Users\\James\\workspace\\RecordIndexer";
+	private static final String DATABASE_DIRECTORY = ".." + File.separator + "database";
 	private static final String DATABASE_FILE = "catan.sqlite";
 	private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY +
 			File.separator + DATABASE_FILE;

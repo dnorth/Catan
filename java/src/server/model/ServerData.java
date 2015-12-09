@@ -36,6 +36,13 @@ public class ServerData {
 	private IPlugin plugin;
 	
 	public ServerData() {
+		users = new ArrayList<ServerUser>();
+		games = new ArrayList<ServerGame>();
+	}
+	public ServerData(String plugin) {
+		setPlugin(plugin);
+		users = new ArrayList<ServerUser>();
+		games = new ArrayList<ServerGame>();
 	}
 	public void init() {
 		this.users = plugin.loadUsers();
@@ -235,7 +242,6 @@ public class ServerData {
 	}
 
 	public void setPlugin(String pluginName) {
-		System.out.println("SET PLUGIN: " + pluginName);
 		PluginFactory factory = new PluginFactory();
 		this.plugin = factory.CreatePlugin(pluginName);
 	}
