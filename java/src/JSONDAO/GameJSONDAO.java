@@ -43,7 +43,7 @@ public class GameJSONDAO extends JSONDAO {
 		ServerGame[] serverGame = new Gson().fromJson(br, ServerGame[].class);
 		List<ServerGame> asList = new ArrayList<>();
 		if(serverGame != null) {
-			asList = Arrays.asList(serverGame);
+			asList = new ArrayList<>(Arrays.asList(serverGame));
 		}
 		return asList;
 	}
@@ -59,7 +59,6 @@ public class GameJSONDAO extends JSONDAO {
 	}
 
 	public void update(ServerGame game) throws IOException { // if game is in database update values, else do nothing.
-		
 		List<ServerGame> games = getAll();
 		
 		for(int i=0; i<games.size(); i++){

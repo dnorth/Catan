@@ -56,7 +56,9 @@ public class GamesFacade implements iGamesFacade {
 		}
 		
 		
-		catch(Exception e){}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return null;
 	}
 
