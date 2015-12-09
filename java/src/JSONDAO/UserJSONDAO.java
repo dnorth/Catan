@@ -31,7 +31,7 @@ public class UserJSONDAO extends JSONDAO{
 		ServerUser[] serverUsers = new Gson().fromJson(br, ServerUser[].class);
 		List<ServerUser> asList = new ArrayList<ServerUser>();
 		if(serverUsers != null) {
-			asList = Arrays.asList(serverUsers);
+			asList = new ArrayList<>(Arrays.asList(serverUsers));
 		}
 		return asList;
 	}
