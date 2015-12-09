@@ -44,7 +44,7 @@
         </path>
         
         <path id="all-classpath">
-            <path refid="lib-classpath"/>
+            <path refid="java.lib.classpath"/>
             <pathelement location="${build}"/>
         </path>
 
