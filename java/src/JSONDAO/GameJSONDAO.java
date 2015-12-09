@@ -24,7 +24,7 @@ public class GameJSONDAO extends JSONDAO {
 	
 	public GameJSONDAO() throws FileNotFoundException {
 		modelToJson = new ModelToJSON();
-		dir = "jsonFiles";
+		dir = "../jsonFiles";
 		filename = "/games.json";
 	}
 	

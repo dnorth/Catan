@@ -22,7 +22,7 @@ public class UserJSONDAO extends JSONDAO{
 	
 	public UserJSONDAO() throws FileNotFoundException {
 		modelToJson = new ModelToJSON();
-		dir = "jsonFiles";
+		dir = "../jsonFiles";
 		filename = "/user.json";
 	}
 	
