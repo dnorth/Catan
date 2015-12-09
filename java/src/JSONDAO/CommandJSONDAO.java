@@ -26,6 +26,7 @@ public class CommandJSONDAO extends JSONDAO {
 		modelToJson = new ModelToJSON();
 		dir = "jsonFiles";
 		filename = "/commands.json";
+
 	}
 	
 	public List<IMovesCommand> getCommandsByGameAfterIndex(ServerGame game, int index) throws FileNotFoundException{
