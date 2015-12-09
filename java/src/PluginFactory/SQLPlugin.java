@@ -3,11 +3,11 @@ package PluginFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import SQLDAO.Database;
+import SQLDAO.DatabaseException;
 import server.commands.IMovesCommand;
-import server.model.ServerData;
 import server.model.ServerGame;
 import server.model.ServerUser;
-import SQLDAO.*;
 
 public class SQLPlugin extends IPlugin {
 

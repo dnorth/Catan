@@ -3,14 +3,10 @@ package server.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
-
 import PluginFactory.IPlugin;
 import PluginFactory.JSONPlugin;
 import PluginFactory.PluginFactory;
 import PluginFactory.SQLPlugin;
-import jsonTranslator.JSONToModel;
-import jsonTranslator.ModelToJSON;
 import server.commands.IMovesCommand;
 import server.exceptions.AlreadyPlayedDevCardException;
 import server.exceptions.CantBuildThereException;

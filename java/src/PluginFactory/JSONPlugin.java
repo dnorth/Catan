@@ -76,8 +76,12 @@ public class JSONPlugin extends IPlugin {
 	
 	@Override
 	public void addUserToGame(int userID, int gameID, String color) {
-		// TODO Auto-generated method stub
-//		super.addUserToGame(userID, gameID);
+		try {
+			ServerUser su = userDAO.getUserByID(userID);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

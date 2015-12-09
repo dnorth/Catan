@@ -1,14 +1,10 @@
 package PluginFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import server.commands.IMovesCommand;
 import server.model.ServerGame;
 import server.model.ServerUser;
-
-import com.google.gson.JsonObject;
 
 public abstract class IPlugin {
 	
